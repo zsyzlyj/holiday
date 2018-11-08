@@ -313,8 +313,105 @@ class Holiday extends Admin_Controller
     }
     public function export()
     {
+        Header("Content-type:application/octet-stream");
+        Header("Accept-Ranges:bytes");
+        Header("Content-type:application/vnd.ms-excel");
+        Header("Content-Disposition:attachment;filename=test.xls");
+        $result = $this->model_holiday->getHolidayData();
+        echo "姓名\t部门\t社会工龄\t公司工龄\t可休假总数\t荣誉假期\t上年可休数\t今年可休数\t一月\t二月\t三月\t四月\t五月\t六月\t七月\t八月\t九月\t十月\t十一月\t十二月\t已休假数\t未休假数";
+        while ($rs=mysql_fetch_array($result)){
+            echo "\n";//用\n换行
+            echo $rs['name']."\t".$rs['department']."\t".$rs['Totalage']."\t".$rs['Companyage']."\t".$rs['Totalday']."\t".$rs['Bonus']."\t".$rs['Lastyear']."\t".$rs['Thisyear']."\t".$rs['Jan']."\t".$rs['Feb']."\t".$rs['Mar']."\t".$rs['Apr']."\t".$rs['May']."\t".$rs['Jun']."\t".$rs['Jul']."\t".$rs['Aug']."\t".$rs['Sep']."\t".$rs['Oct']."\t".$rs['Nov']."\t".$rs['Dece'];
+        }
+        function cleanData(&$str)
+  {
+    $str = preg_replace("/\t/", "\\t", $str);
+    $str = preg_replace("/\r?\n/", "\\n", $str);
+    if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
+  }
+
+  // filename for download
+  $filename = "website_data_" . date('Ymd') . ".xls";
+
+  header("Content-Disposition: attachment; filename=\"$filename\"");
+  header("Content-Type: application/vnd.ms-excel");
+
+  $flag = false;
+  $result = pg_query("SELECT * FROM table ORDER BY field") or die('Query failed!');
+  while(false !== ($row = pg_fetch_assoc($result))) {
+    if(!$flag) {
+      // display field/column names as first row
+      echo implode("\t", array_keys($row)) . "\r\n";
+      $flag = true;
+    }
+    array_walk($row, __NAMESPACE__ . '\cleanData');
+    echo implode("\t", array_values($row)) . "\r\n";
+  }
+  exit;
+        $this->render_template('holiday/export', $this->data);
+
+        /*
+        Header("Content-type:application/octet-stream");
+        Header("Accept-Ranges:bytes");
+        Header("Content-type:application/vnd.ms-excel");
+        Header("Content-Disposition:attachment;filename=test.xls");
+
         $holiday_data = $this->model_holiday->getHolidayData();
 
+        //引入phpExcel类
+        require_once('phpExcel.php');
+        $obj=new PHPExcel();		//创建对象
+        $str='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        //表格第一行(标题)
+        for($i=0;$i<count($key);$i++){
+            $obj->setActiveSheetIndex(0)->setCellValue($str[$i].'1',$key[$i]);
+        }
+        //设置单元格格式 背景颜色
+        $obj->getActiveSheet()->getStyle( 'A1:'.$str[$i-1].'1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+        $obj->getActiveSheet()->getStyle( 'A1:'.$str[$i-1].'1')->getFill()->getStartColor()->setARGB('FF808080');
+        
+        
+        //写入数据
+        foreach($data as $ke=>$val){
+            $ke+=2;
+            for($j=0;$j<count($val);$j++){
+                $obj->setActiveSheetIndex(0)->setCellValue($str[$j].$ke,$val[$key[$j]]);
+            }
+        }
+        //表格默认字体  字体大小
+        $obj->getDefaultStyle()->getFont()->setName('ARial');
+        $obj->getDefaultStyle()->getFont()->setSize(12);
+        
+        
+        //设置每列的宽
+        $obj->getActiveSheet()->getDefaultColumnDimension()->setWidth(14);
+        //具体到某列
+        $obj->getActiveSheet()->getColumnDimension('F')->setWidth(20);
+        
+        
+        // $obj->getDefaultStyle()->getAlignemnt()->setHorizontal(PHPExcel_Style_Alignemnt::HORIZONTAL_CENTER);
+        
+        
+        $obj->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        
+        
+        $obj->getActiveSheet() -> setTitle('用户列表');
+        $obj-> setActiveSheetIndex(0);
+        //生成下载文件
+        $objWriter=PHPExcel_IOFactory::createWriter($obj,'Excel2007');
+        $filename = '用户列表.xlsx';
+        // ob_end_clean();//清除缓存以免乱码出现
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        
+        $objWriter -> save('php://output');
+        $this->render_template('holiday/export', $this->data);
+        */
+
+    }
+
+}
+
+/*
         <?php 
  
  
@@ -383,7 +480,5 @@ $objWriter -> save('php://output');
 作者：s听风忆雪 
 来源：CSDN 
 原文：https://blog.csdn.net/qq_36999656/article/details/79787790 
-版权声明：本文为博主原创文章，转载请附上博文链接！
-    }
 
-}
+*/

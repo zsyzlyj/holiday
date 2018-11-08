@@ -1,0 +1,26 @@
+
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        文件下载
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Holiday</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <a href="/images/myw3schoolimage.jpg" download="w3logo">文件</a>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  
+  
+  
