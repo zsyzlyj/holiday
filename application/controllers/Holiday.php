@@ -311,174 +311,95 @@ class Holiday extends Admin_Controller
     {
 
     }
-    public function export()
-    {
-        Header("Content-type:application/octet-stream");
-        Header("Accept-Ranges:bytes");
-        Header("Content-type:application/vnd.ms-excel");
-        Header("Content-Disposition:attachment;filename=test.xls");
-        $result = $this->model_holiday->getHolidayData();
-        echo "姓名\t部门\t社会工龄\t公司工龄\t可休假总数\t荣誉假期\t上年可休数\t今年可休数\t一月\t二月\t三月\t四月\t五月\t六月\t七月\t八月\t九月\t十月\t十一月\t十二月\t已休假数\t未休假数";
-        while ($rs=mysql_fetch_array($result)){
-            echo "\n";//用\n换行
-            echo $rs['name']."\t".$rs['department']."\t".$rs['Totalage']."\t".$rs['Companyage']."\t".$rs['Totalday']."\t".$rs['Bonus']."\t".$rs['Lastyear']."\t".$rs['Thisyear']."\t".$rs['Jan']."\t".$rs['Feb']."\t".$rs['Mar']."\t".$rs['Apr']."\t".$rs['May']."\t".$rs['Jun']."\t".$rs['Jul']."\t".$rs['Aug']."\t".$rs['Sep']."\t".$rs['Oct']."\t".$rs['Nov']."\t".$rs['Dece'];
-        }
-        function cleanData(&$str)
-  {
-    $str = preg_replace("/\t/", "\\t", $str);
-    $str = preg_replace("/\r?\n/", "\\n", $str);
-    if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
-  }
+     // Original PHP code by Chirp Internet: www.chirp.com.au
+  // Please acknowledge use of this code by including this header.
 
-  // filename for download
-  $filename = "website_data_" . date('Ymd') . ".xls";
-
-  header("Content-Disposition: attachment; filename=\"$filename\"");
-  header("Content-Type: application/vnd.ms-excel");
-
-  $flag = false;
-  $result = pg_query("SELECT * FROM table ORDER BY field") or die('Query failed!');
-  while(false !== ($row = pg_fetch_assoc($result))) {
-    if(!$flag) {
-      // display field/column names as first row
-      echo implode("\t", array_keys($row)) . "\r\n";
-      $flag = true;
-    }
-    array_walk($row, __NAMESPACE__ . '\cleanData');
-    echo implode("\t", array_values($row)) . "\r\n";
-  }
-  exit;
-        $this->render_template('holiday/export', $this->data);
-
-        /*
-        Header("Content-type:application/octet-stream");
-        Header("Accept-Ranges:bytes");
-        Header("Content-type:application/vnd.ms-excel");
-        Header("Content-Disposition:attachment;filename=test.xls");
-
-        $holiday_data = $this->model_holiday->getHolidayData();
-
-        //引入phpExcel类
-        require_once('phpExcel.php');
-        $obj=new PHPExcel();		//创建对象
-        $str='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        //表格第一行(标题)
-        for($i=0;$i<count($key);$i++){
-            $obj->setActiveSheetIndex(0)->setCellValue($str[$i].'1',$key[$i]);
-        }
-        //设置单元格格式 背景颜色
-        $obj->getActiveSheet()->getStyle( 'A1:'.$str[$i-1].'1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-        $obj->getActiveSheet()->getStyle( 'A1:'.$str[$i-1].'1')->getFill()->getStartColor()->setARGB('FF808080');
+    public function excel(){
+        $this->load->library('PHPExcel');
+        $this->load->library('PHPExcel/IOFactory');
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
+ 
+        $objPHPExcel->setActiveSheetIndex(0);
         
-        
-        //写入数据
-        foreach($data as $ke=>$val){
-            $ke+=2;
-            for($j=0;$j<count($val);$j++){
-                $obj->setActiveSheetIndex(0)->setCellValue($str[$j].$ke,$val[$key[$j]]);
+        $result = $this->model_holiday->exportHolidayData();
+        // Field names in the first row
+        $fields = $result->list_fields();
+        $col = 0;
+        foreach ($fields as $field)
+        {
+            $v="";
+            #echo gettype($field);
+            switch($field)
+            {
+                case 'name':$v="姓名\t";break;
+                case 'department':$v="部门\t";break;
+                case 'initdate':$v="开始工作时间\t";break;
+                case 'indate':$v="入职时间\t";break;
+                case 'Companyage':$v="社会工龄\t";break;
+                case 'Totalage':$v="公司工龄\t";break;
+                case 'Totalday':$v="可休假总数\t";break;
+                case 'Lastyear':$v="去年休假数\t";break;
+                case 'Thisyear':$v="今年休假数\t";break;
+                case 'Bonus':$v="荣誉休假数\t";break;
+                case 'Used':$v="已休假数\t";break;
+                case 'Rest':$v="未休假数\t";break;
+                case 'Jan':$v="一月\t";break;
+                case 'Feb':$v="二月\t";break;
+                case 'Mar':$v="三月\t";break;
+                case 'Apr':$v="四月\t";break;
+                case 'May':$v="五月\t";break;
+                case 'Jun':$v="六月\t";break;
+                case 'Jul':$v="七月\t";break;
+                case 'Aug':$v="八月\t";break;
+                case 'Sep':$v="九月\t";break;
+                case 'Oct':$v="十月\t";break;
+                case 'Nov':$v="十一月\t";break;
+                case 'Dece':$v="十二月\t";break;    	
+            }
+            if($field != 'initflag'){
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
+                $col++;
             }
         }
-        //表格默认字体  字体大小
-        $obj->getDefaultStyle()->getFont()->setName('ARial');
-        $obj->getDefaultStyle()->getFont()->setSize(12);
-        
-        
-        //设置每列的宽
-        $obj->getActiveSheet()->getDefaultColumnDimension()->setWidth(14);
-        //具体到某列
-        $obj->getActiveSheet()->getColumnDimension('F')->setWidth(20);
-        
-        
-        // $obj->getDefaultStyle()->getAlignemnt()->setHorizontal(PHPExcel_Style_Alignemnt::HORIZONTAL_CENTER);
-        
-        
-        $obj->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-        
-        
-        $obj->getActiveSheet() -> setTitle('用户列表');
-        $obj-> setActiveSheetIndex(0);
-        //生成下载文件
-        $objWriter=PHPExcel_IOFactory::createWriter($obj,'Excel2007');
-        $filename = '用户列表.xlsx';
-        // ob_end_clean();//清除缓存以免乱码出现
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        
-        $objWriter -> save('php://output');
-        $this->render_template('holiday/export', $this->data);
-        */
+ 
+        // Fetching the table data
+        $row = 2;
+        foreach($result->result() as $data)
+        {
+            $col = 0;
+            foreach ($fields as $field)
+            {
+                if($field != 'initflag')
+                {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
+                    $col++;
+                }
+            }
+ 
+            $row++;
+        }
+ 
+        $objPHPExcel->setActiveSheetIndex(0);
+ 
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
+ 
+        $filename = date('YmdHis').".xlsx";
+        // Sending headers to force the user to download the file
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$filename);
+        header("Content-Disposition:filename=".$filename);
+        header('Cache-Control: max-age=0');
+ 
+        $objWriter->save('php://output');
 
     }
 
-}
+    
+    public function export()
+    {
+        $this->excel();
+        redirect('holiday/index', 'refresh');
 
-/*
-        <?php 
- 
- 
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Type: application/octet-stream');
-header('Cache-Control: max-age=0');
- 
- 
-//连接数据库
-$PDO = new PDO('mysql:host=127.0.0.1;dbname=test','username','password');
-//写入前1000条数据
-$sql='SELECT * FROM `sysuser` LIMIT 0, 1000';
-$data=$PDO->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-$key=[];
-//得到所有键名
-foreach($data[0] as $k=>$v){
-	$key[]=$k;
+    }
 }
-//引入phpExcel类
-require_once('phpExcel.php');
-$obj=new PHPExcel();		//创建对象
-$str='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-//表格第一行(标题)
-for($i=0;$i<count($key);$i++){
-	$obj->setActiveSheetIndex(0)->setCellValue($str[$i].'1',$key[$i]);
-}
-//设置单元格格式 背景颜色
-$obj->getActiveSheet()->getStyle( 'A1:'.$str[$i-1].'1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$obj->getActiveSheet()->getStyle( 'A1:'.$str[$i-1].'1')->getFill()->getStartColor()->setARGB('FF808080');
- 
- 
-//写入数据
-foreach($data as $ke=>$val){
-	$ke+=2;
-	for($j=0;$j<count($val);$j++){
-		$obj->setActiveSheetIndex(0)->setCellValue($str[$j].$ke,$val[$key[$j]]);
-	}
-}
-//表格默认字体  字体大小
-$obj->getDefaultStyle()->getFont()->setName('ARial');
-$obj->getDefaultStyle()->getFont()->setSize(12);
- 
- 
-//设置每列的宽
-$obj->getActiveSheet()->getDefaultColumnDimension()->setWidth(14);
-//具体到某列
-$obj->getActiveSheet()->getColumnDimension('F')->setWidth(20);
- 
- 
-// $obj->getDefaultStyle()->getAlignemnt()->setHorizontal(PHPExcel_Style_Alignemnt::HORIZONTAL_CENTER);
- 
- 
-$obj->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
- 
- 
-$obj->getActiveSheet() -> setTitle('用户列表');
-$obj-> setActiveSheetIndex(0);
-//生成下载文件
-$objWriter=PHPExcel_IOFactory::createWriter($obj,'Excel2007');
-$filename = '用户列表.xlsx';
-// ob_end_clean();//清除缓存以免乱码出现
-header('Content-Disposition: attachment; filename="' . $filename . '"');
- 
-$objWriter -> save('php://output');
---------------------- 
-作者：s听风忆雪 
-来源：CSDN 
-原文：https://blog.csdn.net/qq_36999656/article/details/79787790 
-
-*/

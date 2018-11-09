@@ -16,6 +16,7 @@
 
     <!-- Main content -->
     <section class="content">
+        <a href="#">$value</a>
         <a href="/images/myw3schoolimage.jpg" download="w3logo">文件</a>
     </section>
     <!-- /.content -->

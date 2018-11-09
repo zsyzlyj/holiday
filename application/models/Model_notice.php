@@ -10,14 +10,14 @@ class Model_notice extends CI_Model
 	/* get the brand data */
 	public function getNoticeData($id = null)
 	{
-		$sql = "SELECT * FROM notice order by pubtime asc";
+		$sql = "SELECT * FROM notice order by pubtime desc";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 
 	public function getNoticeLatest($id = null)
 	{
-		$sql = "SELECT * FROM notice order by pubtime asc limit 1";
+		$sql = "SELECT * FROM notice order by pubtime desc limit 1";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}

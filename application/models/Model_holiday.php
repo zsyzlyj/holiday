@@ -30,15 +30,20 @@ class Model_holiday extends CI_Model
 		}
 		$sql = "SELECT * FROM holiday";
 		$query = $this->db->query($sql);
-		return $query->result_array();
+		return $query->result();
 	}
-	public function getActiveHolidayData()
+	public function exportHolidayData($id = null)
 	{
-		$sql = "SELECT * FROM holiday";
-		$query = $this->db->query($sql, array(1));
-		return $query->result_array();
-	}
+		if($id) {
+			$sql = "SELECT * FROM holiday where name = ?";
+			$query = $this->db->query($sql, array($name));
+			return $query->row_array();
+		}
 
+		$sql = "SELECT * FROM holiday";
+		return $this->db->query($sql);
+	}
+	
 	public function create($data)
 	{
 		if($data) {
