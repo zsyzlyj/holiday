@@ -13,6 +13,7 @@ class Holiday extends Admin_Controller
 		$this->data['page_title'] = 'Holiday';
 
         $this->load->model('model_holiday');
+        $this->load->model('model_plan');
         $this->load->model('model_notice');
 	}
 
@@ -23,7 +24,7 @@ class Holiday extends Admin_Controller
 	{
         $holiday_data = $this->model_holiday->getHolidayData();
         $notice_data = $this->model_notice->getNoticeLatest();
-        $result = array();
+
         $notice_result=array();
         foreach ($notice_data as $k => $v) {
             $notice_result[$k] = $v;
@@ -46,7 +47,7 @@ class Holiday extends Admin_Controller
                 else if($result[$k]['Companyage']>=20){
                     $result[$k]['Thisyear']=15;
                 }
-                $result[$k]['Totalday']=$result[$k]['Thisyear']+$result[$k]['Lastyear'];
+                $result[$k]['Totalday']=$result[$k]['Thisyear']+$result[$k]['Lastyear']+$result[$k]['Bonus'];
                 $result[$k]['Rest']=$result[$k]['Totalday'];
                 $result[$k]['initflag']=1;
                 $result[$k]['Used']=$result[$k]['Jan']+$result[$k]['Feb']+$result[$k]['Mar']+$result[$k]['Apr']+$result[$k]['May']+$result[$k]['Jun']+$result[$k]['Jul']+$result[$k]['Aug']+$result[$k]['Sep']+$result[$k]['Oct']+$result[$k]['Nov']+$result[$k]['Dece'];
@@ -76,9 +77,8 @@ class Holiday extends Admin_Controller
 	{
         $user_id=$this->session->userdata('user_id');
 
-        $user_data=$this->model_users->getUserById($user_id);        
+        $user_data=$this->model_users->getUserById($user_id);
         $holiday_data = $this->model_holiday->getHolidayById($user_data['username']);
-        $result = array();
         $notice_data = $this->model_notice->getNoticeLatest();
         $result = array();
         $notice_result=array();
@@ -421,55 +421,7 @@ class Holiday extends Admin_Controller
 
 
 
-    private function excel_fileput($filePath,$data,$tablename){
-        $this->load->library("phpexcel");//ci框架中引入excel类
-        $this->load->library('PHPExcel/IOFactory');
-        $PHPExcel = new PHPExcel();
-        $PHPReader = new PHPExcel_Reader_Excel2007();
-        if(!$PHPReader->canRead($filePath)){
-            $PHPReader = new PHPExcel_Reader_Excel5();
-            if(!$PHPReader->canRead($filePath)){
-                echo 'no Excel';
-                return ;
-            }
-        }
-        // 加载excel文件
-        $PHPExcel = $PHPReader->load($filePath);
 
-        // 读取excel文件中的第一个工作表
-        $currentSheet = $PHPExcel->getSheet(0);
-        // 取得最大的列号
-        $allColumn = $currentSheet->getHighestColumn();
-        // 取得一共有多少行
-        $allRow = $currentSheet->getHighestRow();
-
-        // 从第二行开始输出，因为excel表中第一行为列名
-        for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
-            /**从第A列开始输出*/
-            //echo $allColumn;
-
-            for($currentColumn= 'A';$currentColumn<= $allColumn; $currentColumn++){
-                $val = $currentSheet->getCellByColumnAndRow(ord($currentColumn) - 65,$currentRow)->getValue();
-                //print_r($val);
-                //die;
-
-                if($currentColumn == 'A')
-                {
-                    //echo $val."\t";
-                }else if($currentColumn <= $allColumn){
-                    $data1[$currentColumn]=$val;
-                }
-            }
-            foreach($data as $key=>$val){
-                $data2[$val]=$data1[$key];
-            }
-            $this->db->insert($tablename,$data2);
-            //print_r($data2);
-            //echo "</br>";
-        }
-        //echo "\n";
-        echo "导入成功";
-    }
     public function excel_put(){
         
         $this->load->library("phpexcel");//ci框架中引入excel类
@@ -510,9 +462,7 @@ class Holiday extends Admin_Controller
                 $data[$rowIndex][$colIndex] = $cell;
             }
         }
-        #echo var_dump($data);
-        /**/
-        #echo var_dump($data);
+
         $column=array();
         $column_name=array();
         $attribute_data=array();
@@ -552,23 +502,9 @@ class Holiday extends Admin_Controller
                 }
             }
             else{
-                #echo $v;
                 array_push($column,$v);
             }
-            /*
-            if($counter==3){
-                break;
-            }
-            $counter++;
-            */
         }
-        /*
-        foreach($column_name as $a =>$b){
-            echo $b;
-            echo '<br />';
-        }
-        echo '<br />';
-        */
         $initflag=0;
         foreach($column as $k => $v)
         {
@@ -601,7 +537,6 @@ class Holiday extends Admin_Controller
                     case 'X':$Dece=$b;break;
                 }
             }
-            
             
             $Update_data=array(
                 'name' => $name,
@@ -647,30 +582,56 @@ class Holiday extends Admin_Controller
         
         $this->data['user_permission'] = $this->session->userdata('user_permission');
         if($_FILES){
-        if($_FILES["file"]){
-            if ($_FILES["file"]["error"] > 0)
+        if($_FILES["file"])
             {
-                echo "Error: " . $_FILES["file"]["error"] . "<br />";
-            }
-            else
-            {
-                /*
-                echo "Upload: " . $_FILES["file"]["name"] . "<br />";
-                echo "Type: " . $_FILES["file"]["type"] . "<br />";
-                echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
-                echo "Stored in: " . $_FILES["file"]["tmp_name"]. " <br />";
-                */
-                $this->excel_put();
-                $this->index();
-            }
+                if ($_FILES["file"]["error"] > 0)
+                {
+                    echo "Error: " . $_FILES["file"]["error"] . "<br />";
+                }
+                else
+                {
+                    $this->excel_put();
+                    $this->index();
+                }
             }
         }
         else{
             $this->render_template('holiday/import',$this->data);
-        }
+        }        
+    }
+    
 
 
+
+
+    public function plan_set()
+    {
+        $user_id=$this->session->userdata('user_id');
+        echo $user_id;
+        $user_data=$this->model_users->getUserById($user_id);
+        echo $user_data['username'];
+        $plan_data = $this->model_plan->getPlanData();
         
+        $result = array();
+        
+        if($plan_data)
+        {
+            foreach($plan_data as $k => $v)
+            {
+                $result[$k]=$v;
+            }
+            
+        }
+        foreach($plan_data as $k => $v)
+        {
+            $result[$k]=$v;
+        }
+        $this->data['plan_data'] = $result;
+        
+        $this->data['user_permission'] = $this->session->userdata('user_permission');
+        
+
+		$this->render_template('holiday/plan', $this->data);
     }
 
 
@@ -687,6 +648,125 @@ class Holiday extends Admin_Controller
 
 
 
+
+
+
+
+
+    public function plan()
+    {
+        $user_id=$this->session->userdata('user_id');
+        echo $user_id;
+        $user_data=$this->model_users->getUserById($user_id);
+        echo $user_data['username'];
+        $plan_data = $this->model_plan->getplanById($user_data['username']);
+        
+        $notice_data = $this->model_notice->getNoticeLatest();
+        $result = array();
+        
+
+        $notice_result=array();
+        if($notice_data)
+        {
+            foreach ($notice_data as $k => $v) {
+                $notice_result[$k] = $v;
+            }
+        }
+        if($plan_data)
+        {
+            $plan_data['Totalday']=$plan_data['Thisyear']+$plan_data['Lastyear']+$plan_data['Bonus'];
+    
+            $data = array(
+                'Totalday' => $plan_data['Totalday'],
+            );
+
+            $update = $this->model_plan->update($data, $plan_data['name']);
+        }
+        $this->data['plan_data'] = $plan_data;
+        $this->data['notice_data'] = $notice_result;
+        $this->data['user_permission'] = $this->session->userdata('user_permission');
+        
+
+		$this->render_template('holiday/plan', $this->data);
+    }
+    public function update_plan()
+    {
+        /*============================================================*/
+        /*
+            首页必须要的信息，包括用户名（后会改身份证），通知信息
+        */
+        /*============================================================*/
+        $user_id=$this->session->userdata('user_id');
+        $user_data=$this->model_users->getUserById($user_id);
+        $plan_data = $this->model_plan->getPlanById($user_data['username']);
+        $notice_data = $this->model_notice->getNoticeLatest();
+        $result = array();
+        $notice_result=array();
+        foreach ($notice_data as $k => $v) {
+            $notice_result[$k] = $v;
+        }
+        foreach ($plan_data as $k => $v) {
+            $result[$k] = $v;
+            #echo $v;
+        }
+        
+        $this->data['plan_data'] = $result;
+        $this->data['notice_data'] = $notice_result;
+        $this->data['user_permission'] = $this->session->userdata('user_permission');
+        /**/
+        /*============================================================*/
+
+        /*============================================================*/
+        $response = array();
+        $this->form_validation->set_rules('firstquater', 'firstquater','is_natural|greater_than[-1]');
+        $this->form_validation->set_rules('secondquater', 'secondquater','is_natural|greater_than[-1]');
+        $this->form_validation->set_rules('thirdquater', 'thirdquater','is_natural|greater_than[-1]');
+        $this->form_validation->set_rules('fourthquater', 'fourthquater','is_natural|greater_than[-1]');
+
+        echo $_POST['total'];
+
+
+        if ($this->form_validation->run() == TRUE) {
+            #echo $_POST['total'];
+            if($_POST['firstquater']+$_POST['secondquater']+$_POST['thirdquater']+$_POST['fourthquater']<=$_POST['total'])
+            {
+                $data = array(
+                    'firstquater' => $_POST['firstquater'],
+                    'secondquater' => $_POST['secondquater'],
+                    'thirdquater' => $_POST['thirdquater'],
+                    'fourthquater' => $_POST['fourthquater']
+                );
+
+                $create = $this->model_plan->update($data,$user_data['username']);
+                
+                if($create == true) {
+                    $this->session->set_flashdata('success', 'Successfully created');
+                    $this->plan();
+                }
+                else {
+                    $this->session->set_flashdata('error', 'Error occurred!!');
+                    $this->render_template('holiday/plan', $this->data);
+                }
+            }
+            else
+            {
+
+                $this->session->set_flashdata('error', '数据错误');
+                $this->render_template('holiday/plan', $this->data);
+                
+            }
+            /**/
+        }
+        else {
+            $this->render_template('holiday/plan', $this->data);
+        }
+    }
+
+
+
+
+
+   
 
 
 

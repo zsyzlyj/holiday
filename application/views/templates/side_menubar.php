@@ -10,11 +10,22 @@
             <i class="fa fa-bar-chart"></i> <span>年假信息</span>
           </a>
         </li>
+        <li id="PlanMainMenu">
+          <a href="<?php echo base_url('holiday/plan') ?>">
+            <i class="fa fa-edit"></i> <span>年假计划</span>
+          </a>
+        </li>
+        
         <?php endif ?>
         <?php if($user_permission == 1): ?>
         <li id="dashboardMainMenu">
           <a href="<?php echo base_url('holiday') ?>">
             <i class="fa fa-bar-chart"></i> <span>年假汇总</span>
+          </a>
+        </li>
+        <li id="PlansetMainMenu">
+          <a href="<?php echo base_url('holiday/plan_set') ?>">
+            <i class="fa fa-edit"></i> <span>年假计划汇总</span>
           </a>
         </li>
         
