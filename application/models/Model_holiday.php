@@ -64,7 +64,7 @@ class Model_holiday extends CI_Model
 	public function remove($id)
 	{
 		if($id) {
-			$this->db->where('id', $id);
+			$this->db->where('name', $id);
 			$delete = $this->db->delete('holiday');
 			return ($delete == true) ? true : false;
 		}

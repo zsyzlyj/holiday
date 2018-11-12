@@ -32,7 +32,7 @@
           <?php endif; ?>
           <?php if($user_permission == 1): ?>
           
-            <a href="<?php echo base_url('users/create') ?>" class="btn btn-primary">上传文件</a>
+            <a href="<?php echo base_url('holiday/import') ?>" class="btn btn-primary">上传文件</a>
             <a href="<?php echo base_url('holiday/export') ?>" class="btn btn-info">导出表格</a>
             <br /> <br />
           <?php endif; ?>
@@ -122,9 +122,9 @@
 
 
                         <td>
-                            <a href="<?php echo base_url('users/edit/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                            <a href="<?php echo base_url('holiday/edit/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
 
-                            <a href="<?php echo base_url('users/delete/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-trash"></i></a>
+                            <a href="<?php echo base_url('holiday/delete/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-trash"></i></a>
                         </td>
 
                       </tr>
@@ -226,9 +226,9 @@
 
 
                         <td>
-                            <a href="<?php echo base_url('users/edit/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                            <a href="<?php echo base_url('holiday/edit/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
 
-                            <a href="<?php echo base_url('users/delete/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-trash"></i></a>
+                            <a href="<?php echo base_url('holiday/delete/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-trash"></i></a>
                         </td>
 
                       </tr>
@@ -247,30 +247,7 @@
       </div>
       <!-- /.row -->
 
-      <!--TEST-->
-      <!-- remove brand modal -->
-<div class="modal fade" tabindex="-1" role="dialog" id="removeModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Remove Order</h4>
-      </div>
-
-      <form role="form" action="<?php echo base_url('orders/remove') ?>" method="post" id="removeForm">
-        <div class="modal-body">
-          <p>Do you really want to remove?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-      </form>
-
-
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+      
     </section>
     <!-- /.content -->
   </div>

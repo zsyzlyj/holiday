@@ -277,7 +277,27 @@ class Holiday extends Admin_Controller
             $this->render_template('products/edit', $this->data); 
         }   
 	}
-
+    public function delete($id)
+	{
+		if($id) {
+			if($this->input->post('confirm')) {
+				$delete = $this->model_holiday->remove($id);
+				if($delete == true) {
+                    $this->session->set_flashdata('success', 'Successfully removed');
+                    #redirect('holiday/', 'refresh');
+                    $this->index();
+                }
+                else {
+                    $this->session->set_flashdata('error', 'Error occurred!!');
+                    redirect('holiday/delete/'.$id, 'refresh');
+                }
+			}	
+			else {
+				$this->data['user_id'] = $id;
+				$this->render_template('holiday/delete', $this->data);
+			}	
+		}
+	}
     /*
     * It removes the data from the database
     * and it returns the response into the json format
@@ -285,6 +305,7 @@ class Holiday extends Admin_Controller
 	public function remove()
 	{
         
+
         $product_id = $this->input->post('product_id');
 
         $response = array();
@@ -306,13 +327,6 @@ class Holiday extends Admin_Controller
 
         echo json_encode($response);
     }
-    
-    public function import()
-    {
-
-    }
-     // Original PHP code by Chirp Internet: www.chirp.com.au
-  // Please acknowledge use of this code by including this header.
 
     public function excel(){
         $this->load->library('PHPExcel');
@@ -402,4 +416,282 @@ class Holiday extends Admin_Controller
         redirect('holiday/index', 'refresh');
 
     }
+
+
+
+
+
+    private function excel_fileput($filePath,$data,$tablename){
+        $this->load->library("phpexcel");//ci框架中引入excel类
+        $this->load->library('PHPExcel/IOFactory');
+        $PHPExcel = new PHPExcel();
+        $PHPReader = new PHPExcel_Reader_Excel2007();
+        if(!$PHPReader->canRead($filePath)){
+            $PHPReader = new PHPExcel_Reader_Excel5();
+            if(!$PHPReader->canRead($filePath)){
+                echo 'no Excel';
+                return ;
+            }
+        }
+        // 加载excel文件
+        $PHPExcel = $PHPReader->load($filePath);
+
+        // 读取excel文件中的第一个工作表
+        $currentSheet = $PHPExcel->getSheet(0);
+        // 取得最大的列号
+        $allColumn = $currentSheet->getHighestColumn();
+        // 取得一共有多少行
+        $allRow = $currentSheet->getHighestRow();
+
+        // 从第二行开始输出，因为excel表中第一行为列名
+        for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
+            /**从第A列开始输出*/
+            //echo $allColumn;
+
+            for($currentColumn= 'A';$currentColumn<= $allColumn; $currentColumn++){
+                $val = $currentSheet->getCellByColumnAndRow(ord($currentColumn) - 65,$currentRow)->getValue();
+                //print_r($val);
+                //die;
+
+                if($currentColumn == 'A')
+                {
+                    //echo $val."\t";
+                }else if($currentColumn <= $allColumn){
+                    $data1[$currentColumn]=$val;
+                }
+            }
+            foreach($data as $key=>$val){
+                $data2[$val]=$data1[$key];
+            }
+            $this->db->insert($tablename,$data2);
+            //print_r($data2);
+            //echo "</br>";
+        }
+        //echo "\n";
+        echo "导入成功";
+    }
+    public function excel_put(){
+        
+        $this->load->library("phpexcel");//ci框架中引入excel类
+        $this->load->library('PHPExcel/IOFactory');
+        //先做一个文件上传，保存文件
+        $path=$_FILES['file'];
+        $filePath = "uploads/".$path["name"];
+        #echo $filePath;
+        move_uploaded_file($path["tmp_name"],$filePath);
+        #echo $_FILES["file"]["type"];
+        #$file_type=$_FILES["file"]["type"];
+        //根据上传类型做不同处理
+        
+        if (strstr($_FILES['file']['name'],'xlsx')) {
+            $reader = new PHPExcel_Reader_Excel2007();
+            #echo $path["tmp_name"];
+        }
+        else{
+            if (strstr($_FILES['file']['name'], 'xls')) {
+                $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
+                #echo $path["tmp_name"];
+            }
+        }
+
+        $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
+        $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+        $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+
+        $data = array();
+        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++) {        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            for ($colIndex = 'A'; $colIndex <= $highestColumm; $colIndex++) {
+                $addr = $colIndex . $rowIndex;
+                $cell = $sheet->getCell($addr)->getValue();
+                if ($cell instanceof PHPExcel_RichText) { //富文本转换字符串
+                    $cell = $cell->__toString();
+                }
+                $data[$rowIndex][$colIndex] = $cell;
+            }
+        }
+        #echo var_dump($data);
+        /**/
+        #echo var_dump($data);
+        $column=array();
+        $column_name=array();
+        $attribute_data=array();
+        $first=true;
+        $flag=false;
+        $counter=0;
+        $name="";
+        $dept="";
+        $Initdate=date("Y-m-d") ;
+        $Indate=date("Y-m-d") ;
+        $Totalage=0;
+        $Comage=0;
+        $Totalday=0;
+        $Lastyear=0;
+        $Thisyear=0;
+        $Bonus=0;
+        $Used=0;
+        $Rest=0;
+        $Jan=0;
+        $Feb=0;
+        $Mar=0;
+        $Apr=0;
+        $May=0;
+        $Jun=0;
+        $Jul=0;
+        $Aug=0;
+        $Sep=0;
+        $Oct=0;
+        $Nov=0;
+        $Dece=0;
+        foreach($data as $k => $v){
+            #echo gettype($v);
+            if($first){
+                $first=false;
+                foreach($v as $a =>$b){
+                    array_push($column_name,$b);
+                }
+            }
+            else{
+                #echo $v;
+                array_push($column,$v);
+            }
+            /*
+            if($counter==3){
+                break;
+            }
+            $counter++;
+            */
+        }
+        /*
+        foreach($column_name as $a =>$b){
+            echo $b;
+            echo '<br />';
+        }
+        echo '<br />';
+        */
+        $initflag=0;
+        foreach($column as $k => $v)
+        {
+            foreach($v as $a => $b)
+            {
+                switch($a){
+                    case 'A':$name=$b;break;
+                    case 'B':$dept=$b;break;
+                    case 'C':$Initdate=$b;break;
+                    case 'D':$Indate=$b;break;
+                    case 'E':$Totalage=$b;break;
+                    case 'F':$Comage=$b;break;
+                    case 'G':$Totalday=$b;break;
+                    case 'H':$Lastyear=$b;break;
+                    case 'I':$Thisyear=$b;break;
+                    case 'J':$Bonus=$b;break;
+                    case 'K':$Used=$b;break;
+                    case 'L':$Rest=$b;break;
+                    case 'M':$Jan=$b;break;
+                    case 'N':$Feb=$b;break;
+                    case 'O':$Mar=$b;break;
+                    case 'P':$Apr=$b;break;
+                    case 'Q':$May=$b;break;
+                    case 'R':$Jun=$b;break;
+                    case 'S':$Jul=$b;break;
+                    case 'T':$Aug=$b;break;
+                    case 'U':$Sep=$b;break;
+                    case 'V':$Oct=$b;break;
+                    case 'W':$Nov=$b;break;
+                    case 'X':$Dece=$b;break;
+                }
+            }
+            
+            
+            $Update_data=array(
+                'name' => $name,
+                'department' => $dept,
+                'initdate' => $Initdate,
+                'indate' => $Indate,
+                'Companyage' => $Comage,
+                'Totalage' => $Totalage,
+                'Totalday' => $Totalday,
+                'Lastyear' => $Lastyear,
+                'Thisyear' => $Thisyear,
+                'Bonus' => $Bonus,
+                'Used' => $Used,
+                'Rest' => $Rest,
+                'Jan' => $Jan,
+                'Feb' => $Feb,
+                'Mar' => $Mar,
+                'Apr' => $Apr,
+                'May' => $May,
+                'Jun' => $Jun,
+                'Jul' => $Jul,
+                'Aug' => $Aug,
+                'Sep' => $Sep,
+                'Oct' => $Oct,
+                'Nov' => $Nov,
+                'Dece' => $Dece,
+                'initflag' => $initflag
+            );
+            $update=$this->model_holiday->create($Update_data);
+            if($update == true) {
+                $response['success'] = true;
+                $response['messages'] = 'Succesfully updated';
+            }
+            else {
+                $response['success'] = false;
+                $response['messages'] = 'Error in the database while updated the brand information';			
+            }
+            
+        }
+    }
+    public function import($filename=NULL)
+    {
+        
+        $this->data['user_permission'] = $this->session->userdata('user_permission');
+        if($_FILES){
+        if($_FILES["file"]){
+            if ($_FILES["file"]["error"] > 0)
+            {
+                echo "Error: " . $_FILES["file"]["error"] . "<br />";
+            }
+            else
+            {
+                /*
+                echo "Upload: " . $_FILES["file"]["name"] . "<br />";
+                echo "Type: " . $_FILES["file"]["type"] . "<br />";
+                echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
+                echo "Stored in: " . $_FILES["file"]["tmp_name"]. " <br />";
+                */
+                $this->excel_put();
+                $this->index();
+            }
+            }
+        }
+        else{
+            $this->render_template('holiday/import',$this->data);
+        }
+
+
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
