@@ -65,9 +65,10 @@
                         <?php if($v['permission']!='超级管理员'): ?>
                         <td><?php echo $v['dept']; ?></td>
                         <?php endif; ?>
-                        <form action="<?php echo base_url('users/update/'.$v['username']) ?>" method="post">
+                        <form action="<?php echo base_url('users/update/') ?>" method="post">
                           
                         <td>
+                          <input id="user_id" name="user_id" type="hidden" value="<?php echo $v['user_id'] ?>"/>
                           <select id="permit" name="permit">
                             <option value="<?php $v['permission'];?>"><?php echo $v['permission']; ?></option>
                             <?php foreach ($permission_set as $a => $b): ?>

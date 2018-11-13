@@ -782,10 +782,6 @@ class Holiday extends Admin_Controller
         }
     }
 
-    public function authorize()
-    {
-        $this->render_template('holiday/authorize', $this->data);
-    }
 
 
 

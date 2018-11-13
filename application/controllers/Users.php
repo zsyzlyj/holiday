@@ -176,14 +176,18 @@ class Users extends Admin_Controller
 			$this->render_template('users/edit', $this->data);	
 		}
 	}
-	public function update($id)
+	public function update()
 	{
-		echo $_POST['permit'];
+
+		$id=$_POST['user_id'];
 
 		$user_data=array(
 			'permission' => $_POST['permit']
 		);
-		#$this->index();
+		$this->model_users->update($user_data,$id);
+		
+		$this->index();
+
 	}
 	public function delete($id)
 	{
