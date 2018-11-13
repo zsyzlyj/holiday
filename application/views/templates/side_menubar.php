@@ -28,14 +28,26 @@
             <i class="fa fa-edit"></i> <span>年假计划汇总</span>
           </a>
         </li>
-        <li id="">
-          <a href="<?php echo base_url('holiday/plan_set') ?>">
-            <i class="fa fa-edit"></i> <span>年假计划汇总</span>
+        <li class="treeview" id="mainSyncNav">
+          <a href="#">
+            <i class="fa fa-cloud"></i>
+            <span>数据同步</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
           </a>
+          <ul class="treeview-menu">
+            <li id="uploadFileNav"><a href="<?php echo base_url('holiday/import') ?>"><i class="fa fa-circle-o"></i> 上传数据</a></li>
+
+        
+            <li id="downloadFileNav"><a href="<?php echo base_url('holiday/download_page') ?>"><i class="fa fa-circle-o"></i> 下载数据</a></li>
+          
+          </ul>
+            
         </li>
-        <li id="planMainMenu">
-          <a href="<?php echo base_url('holiday/plan_set') ?>">
-            <i class="fa fa-edit"></i> <span>年假计划汇总</span>
+        <li id="authMainMenu">
+          <a href="<?php echo base_url('holiday/authorize') ?>">
+            <i class="fa fa-cc-visa"></i> <span>身份授权</span>
           </a>
         </li>
         

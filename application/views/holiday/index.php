@@ -30,12 +30,6 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
-          <?php if($user_permission == 0): ?>
-          
-            <a href="<?php echo base_url('holiday/import') ?>" class="btn btn-primary">上传文件</a>
-            <a href="<?php echo base_url('holiday/export') ?>" class="btn btn-info">导出表格</a>
-            <br /> <br />
-          <?php endif; ?>
           
 
 

@@ -18,11 +18,12 @@
         <form action="<?php echo base_url('holiday/import') ?>" method="post"
             name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
             <div>
-                <label>Choose Excel
-                    File</label> <input type="file" name="file"
-                    id="file" accept=".xls,.xlsx">
-                <button type="submit" id="submit" name="import"
-                    class="btn-submit">Import</button>
+                <label>选择上传文件</label> 
+                <br />
+                <br />
+                <h5><input type="file" name="file" id="file" accept=".xls,.xlsx"/></h5>
+                <br />
+                <button type="submit" id="submit" name="import" class="btn btn-warning" >Import</button>
         
             </div>
         

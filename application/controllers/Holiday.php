@@ -409,13 +409,18 @@ class Holiday extends Admin_Controller
 
     }
 
-    
+    public function download_page()
+    {
+        $this->render_template('holiday/export',$this->data);
+    }
+
     public function export()
     {
         $this->excel();
         redirect('holiday/index', 'refresh');
 
     }
+    
 
 
 

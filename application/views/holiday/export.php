@@ -16,12 +16,18 @@
 
     <!-- Main content -->
     <section class="content">
-        <a href="#">$value</a>
-        <a href="/images/myw3schoolimage.jpg" download="w3logo">文件</a>
+        <a href="<?php echo base_url('holiday/export') ?>" class="btn btn-info">导出表格</a>
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
   
   
-  
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#mainSyncNav").addClass('active');
+      $("#downloadFileNav").addClass('active');
+      
+    });
+    
+  </script>
