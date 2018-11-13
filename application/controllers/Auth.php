@@ -42,14 +42,16 @@ class Auth extends Admin_Controller
 
 					$this->session->set_userdata($logged_in_sess);
 					switch($login['permission']){
-						case -1:
 						case 0:
-						case 1:
 							redirect('holiday/index', 'refresh');
 							break;
+						case 1:
+							break;
 						case 2:
+							break;
+						case 3:	
 							redirect('holiday/staff', 'refresh');
-							break;						
+							break;	
 					}
 
            		}

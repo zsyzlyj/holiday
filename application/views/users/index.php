@@ -65,13 +65,28 @@
                         <?php if($v['permission']!='超级管理员'): ?>
                         <td><?php echo $v['dept']; ?></td>
                         <?php endif; ?>
-                        
-                        <td><?php echo $v['permission']; ?></td>
+                        <form action="<?php echo base_url('users/update/'.$v['username']) ?>" method="post">
+                          
+                        <td>
+                          <select id="permit" name="permit">
+                            <option value="<?php $v['permission'];?>"><?php echo $v['permission']; ?></option>
+                            <?php foreach ($permission_set as $a => $b): ?>
+                              <?php if($b != $v['permission']):?>
+                                <option value="<?php echo $a; ?>"><?php echo $b; ?></option>
+                              <?php endif ?>
+                            <?php endforeach ?>
+                          </select>
+                        </div>
+                        </td>
                         
                         <td>
-                            <a href="<?php echo base_url('users/edit/'.$v['user_id']) ?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
-
-                            <a href="<?php echo base_url('users/delete/'.$v['user_id']) ?>" class="btn btn-default"><i class="fa fa-trash"></i></a>
+                            <!--
+                            <a href="<?php echo base_url('users/update/'.$v['user_id']) ?>" class="btn btn-success"><i class="fa fa-edit">提交</i></a>
+                            <input type="submit" class="btn btn-primary" name="confirm" value="确定">
+                            -->
+                            <button class="btn btn-success" type="submit"><i class="fa fa-edit"> 提交</i></button>
+                        </form>
+                            <a href="<?php echo base_url('users/delete/'.$v['user_id']) ?>" class="btn btn-danger"><i class="fa fa-trash"> 删除</i></a>
                         </td>
 
                       </tr>

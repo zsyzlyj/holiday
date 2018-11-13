@@ -538,6 +538,7 @@ class Holiday extends Admin_Controller
                     case 'V':$Oct=$b;break;
                     case 'W':$Nov=$b;break;
                     case 'X':$Dece=$b;break;
+                    case 'Y':$User_id=$b;break;
                 }
             }
             
@@ -568,6 +569,7 @@ class Holiday extends Admin_Controller
                 'Dece' => $Dece,
                 'initflag' => $initflag
             );
+
             $update_user=true;
             if($this->model_holiday->getHolidaybyID($name))
             {
@@ -576,6 +578,7 @@ class Holiday extends Admin_Controller
             else{
                 $update=$this->model_holiday->create($Update_data);
                 $Update_user_data=array(
+                    'user_id' => $User_id,
                     'username' => $name,
                     'password' => md5('hr'),
                     'permission' => '3'
