@@ -16,14 +16,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`,`permission`) VALUES
-('123456','lyj',md5('hr'),1),
-('234567','test-1',md5('hr'),2),
-('345678','test-2',md5('hr'),2),
-('456789','test-3',md5('hr'),2),
-('567890','test-4',md5('hr'),2),
-('678901','test-5',md5('hr'),2);
+('123456','lyj',md5('hr'),0),
+('234567','test-1',md5('hr'),3),
+('345678','test-2',md5('hr'),3),
+('456789','test-3',md5('hr'),3),
+('567890','test-4',md5('hr'),3),
+('678901','test-5',md5('hr'),3);
 INSERT INTO `users` (`user_id`, `username`, `password`,`permission`) VALUES
-('000000','王欢',md5('hr'),2);
+('000000','王欢',md5('hr'),3);
 
 
 CREATE TABLE `holiday` (

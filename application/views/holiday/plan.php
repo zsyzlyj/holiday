@@ -30,7 +30,7 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
-          <?php if($user_permission == 1): ?>
+          <?php if($user_permission == 0): ?>
           
             <a href="<?php echo base_url('holiday/import') ?>" class="btn btn-primary">上传文件</a>
             <a href="<?php echo base_url('holiday/export') ?>" class="btn btn-info">导出表格</a>
@@ -49,7 +49,7 @@
               <div style="overflow:scroll;">
               
               
-              <?php if($user_permission == 1): ?>
+              <?php if($user_permission == 0): ?>
               <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="100%">
                 <thead>
                 <tr>
@@ -67,26 +67,37 @@
                 <tbody>
                   <?php if($plan_data): ?>    
               
-                      <?php foreach($plan_data as $k => $v): ?>
-                        <tr>
-                        
-                          <td><?php echo $v['name']; ?></td>
-                          <td><?php echo $v['Totalday']; ?></td>
-                          <td><?php echo $v['Lastyear']; ?></td>
-                          <td><?php echo $v['Thisyear']; ?></td>
-                          <td><?php echo $v['Bonus']; ?></td>
-                          <td><?php echo $v['firstquater']; ?></td>
-                          <td><?php echo $v['secondquater']; ?></td>
-                          <td><?php echo $v['thirdquater']; ?></td>
-                          <td><?php echo $v['fourthquater']; ?></td>
-                        </tr>
-                      <?php endforeach; ?>
-                  </tbody>
+                    <?php foreach($plan_data as $k => $v): ?>
+                      <tr>
+                      
+                        <td><?php echo $v['name']; ?></td>
+                        <td><?php echo $v['Totalday']; ?></td>
+                        <td><?php echo $v['Lastyear']; ?></td>
+                        <td><?php echo $v['Thisyear']; ?></td>
+                        <td><?php echo $v['Bonus']; ?></td>
+                        <td><?php echo $v['firstquater']; ?></td>
+                        <td><?php echo $v['secondquater']; ?></td>
+                        <td><?php echo $v['thirdquater']; ?></td>
+                        <td><?php echo $v['fourthquater']; ?></td>
+                      </tr>
+                    <?php endforeach; ?>
                   <?php endif; ?>
-                  </table>
-                  <?php endif; ?>
-                <?php if($user_permission == 2): ?>
+                </tbody>
+                </table>
+                <!--end_permission==1 -->
+                <?php endif; ?>
+
+                <?php if($user_permission == 3): ?>
+                <h3>状态：
                 <?php echo validation_errors(); ?>
+                <?php if(validation_errors()): ?>
+                  填写规范有误
+                <?php endif; ?>
+                <?php if($this->session->flashdata('success')): ?>
+                  已填写
+                <?php endif ?>
+                </h3>
+                <br />
                 <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="120%">
                 <thead>
                 <tr>
@@ -125,15 +136,17 @@
                           <td><input type="text" style="width:100px;" id='thirdquater' name='thirdquater' value="<?php echo $v['thirdquater']; ?>"></td>
                           <td><input type="text" style="width:100px;" id='fourthquater' name='fourthquater' value="<?php echo $v['fourthquater']; ?>"></td>
                           <td>
-                              
                               <button class="btn btn-success" type="submit"><i class="fa fa-check-circle"></i></button>
                           </td>
                         </form>
                       </tr>
+                  <!-- end plan_data -->
                   <?php endif; ?>
                 </tbody>
-                <?php endif; ?>
+                
               </table>
+              <!-- end permission==2 -->
+              <?php endif; ?>
               </div>
               <!-- /.overflow:scroll -->
             </div>
@@ -156,39 +169,43 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#planTable').DataTable({
-  
-      language: {
-          "sProcessing": "处理中...",
-          "sLengthMenu": "显示 _MENU_ 项",
-          "sZeroRecords": "没有匹配结果",
-          "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-          "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-          "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-          "sInfoPostFix": "",
-          "sSearch": "搜索:",
-          "sUrl": "",
-          "sEmptyTable": "表中数据为空",
-          "sLoadingRecords": "载入中...",
-          "sInfoThousands": ",",
-          "oPaginate": {
-              "sFirst": "首页",
-              "sPrevious": "上页",
-              "sNext": "下页",
-              "sLast": "末页"
-          },
-          "oAria": {
-              "sSortAscending": ": 以升序排列此列",
-              "sSortDescending": ": 以降序排列此列"
-          }
+      if(if($user_permission == 0)
+      {
+        $('#planTable').DataTable({
+          language: {
+              "sProcessing": "处理中...",
+              "sLengthMenu": "显示 _MENU_ 项",
+              "sZeroRecords": "没有匹配结果",
+              "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+              "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+              "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+              "sInfoPostFix": "",
+              "sSearch": "搜索:",
+              "sUrl": "",
+              "sEmptyTable": "表中数据为空",
+              "sLoadingRecords": "载入中...",
+              "sInfoThousands": ",",
+              "oPaginate": {
+                  "sFirst": "首页",
+                  "sPrevious": "上页",
+                  "sNext": "下页",
+                  "sLast": "末页"
+              },
+              "oAria": {
+                  "sSortAscending": ": 以升序排列此列",
+                  "sSortDescending": ": 以降序排列此列"
+              }
+          }          
+        });
       }
-    });
+
+      $("#planMainMenu").addClass('active');
 
 
 
 
-      $("#PlanMainMenu").addClass('active');
-      $("#PlansetMainMenu").addClass('active');
+      
+      
       
     });
     

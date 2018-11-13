@@ -30,7 +30,7 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
-          <?php if($user_permission == 1): ?>
+          <?php if($user_permission == 0): ?>
           
             <a href="<?php echo base_url('holiday/import') ?>" class="btn btn-primary">上传文件</a>
             <a href="<?php echo base_url('holiday/export') ?>" class="btn btn-info">导出表格</a>
@@ -50,7 +50,7 @@
                 <?php endforeach;?>
                 <?php endif ?>
               </h4>
-              <?php if($user_permission == 2): ?>
+              <?php if($user_permission == 3): ?>
               <h4><font color="blue">点击已休假数可以查看每个月已休明细</font></h4>
               <?php endif ?>
             </div>
@@ -60,7 +60,7 @@
               <div style="overflow:scroll;">
               
               
-              <?php if($user_permission == 1): ?>
+              <?php if($user_permission == 0): ?>
               <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;" width="250%">
                 <thead>
                 <tr>
@@ -133,7 +133,7 @@
                   <?php endif; ?>
                   </table>
                 <?php endif; ?>
-                <?php if($user_permission == 2): ?>
+                <?php if($user_permission == 3): ?>
                 <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;" width="100%">
                 <thead>
                 <tr>
