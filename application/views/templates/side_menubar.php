@@ -10,7 +10,7 @@
             <i class="fa fa-bar-chart"></i> <span>年假信息</span>
           </a>
         </li>
-        <li id="planMainMenu">
+        <li id='planMainMenu'>
           <a href="<?php echo base_url('holiday/plan') ?>">
             <i class="fa fa-edit"></i> <span>年假计划</span>
           </a>
@@ -23,7 +23,7 @@
             <i class="fa fa-bar-chart"></i> <span>年假汇总</span>
           </a>
         </li>
-        <li id="planMainMenu">
+        <li id='planMainMenu'>
           <a href="<?php echo base_url('holiday/plan_set') ?>">
             <i class="fa fa-edit"></i> <span>年假计划汇总</span>
           </a>
@@ -45,11 +45,7 @@
           </ul>
             
         </li>
-        <li id="authMainMenu">
-          <a href="<?php echo base_url('holiday/authorize') ?>">
-            <i class="fa fa-cc-visa"></i> <span>身份授权</span>
-          </a>
-        </li>
+        
         
   
           <li class="treeview" id="mainUserNav">
@@ -64,7 +60,7 @@
             <li id="createUserNav"><a href="<?php echo base_url('users/create') ?>"><i class="fa fa-circle-o"></i> 添加用户</a></li>
 
         
-            <li id="manageUserNav"><a href="<?php echo base_url('users') ?>"><i class="fa fa-circle-o"></i> 用户信息表</a></li>
+            <li id="manageUserNav"><a href="<?php echo base_url('users') ?>"><i class="fa fa-circle-o"></i> 用户权限管理</a></li>
           
           </ul>
             

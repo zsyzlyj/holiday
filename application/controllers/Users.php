@@ -11,6 +11,7 @@ class Users extends Admin_Controller
 		$this->data['page_title'] = 'Users';
 		
 		$this->load->model('model_users');
+		$this->load->model('model_holiday');
 	}
 
 	
@@ -18,14 +19,29 @@ class Users extends Admin_Controller
 	{
 		$user_data = $this->model_users->getUserData();
 
+		$holiday = $this->model_holiday->getHolidayData();
+
 		$result = array();
 		
 		foreach ($user_data as $k => $v) {
 			$result[$k] = $v;
+			foreach($holiday as $a => $b){
+				#echo $a.':'.$b['name'];
+				if($b['name'] == $v['username'] )
+				{
+					$result[$k]['dept']=$b['department'];
+				}
+			}
+			if($v['permission']==0){
+				$result[$k]['permission']='超级管理员';
+			}
 			if($v['permission']==1){
-				$result[$k]['permission']='管理员';
+				$result[$k]['permission']='部门经理';
 			}
 			if($v['permission']==2){
+				$result[$k]['permission']='综合管理员';
+			}
+			if($v['permission']==3){
 				$result[$k]['permission']='普通用户';
 			}
 		}

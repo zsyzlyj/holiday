@@ -73,3 +73,8 @@ CREATE TABLE `notice` (
   `username` varchar(255) NOT NULL,
   `contents` varchar(2550) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+UPDATE users SET user_id=123456, permission=0
+where username='lyj'

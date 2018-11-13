@@ -6,6 +6,7 @@
     <section class="content-header">
       <h1>
         用户权限管理
+        <small>Users</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -39,14 +40,15 @@
 
           <div class="box">
             <div class="box-header">
+              <h3 class="box-title">Manage Users</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="userTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>编号</th>
                   <th>用户名</th>
-                  <th>部门</th>
                   <th>权限</th>
                   <th>操作</th>
                 </tr>
@@ -56,18 +58,10 @@
                   <?php if($user_data): ?>                  
                     <?php foreach ($user_data as $k => $v): ?>
                       <tr>
+                        <td><?php echo ++$count; ?></td>
                         <td><?php echo $v['username']; ?></td>
-                        
-                        <?php if($v['permission']=='超级管理员'): ?>
-                        <td><?php echo '不需要部门' ?></td>
-                        <?php endif; ?>
-                        <!---->
-                        <?php if($v['permission']!='超级管理员'): ?>
-                        <td><?php echo $v['dept']; ?></td>
-                        <?php endif; ?>
-                        
                         <td><?php echo $v['permission']; ?></td>
-                        
+
                         <td>
                             <a href="<?php echo base_url('users/edit/'.$v['user_id']) ?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
 

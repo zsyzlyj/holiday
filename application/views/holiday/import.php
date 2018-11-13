@@ -34,3 +34,11 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script type="text/javascript">
+    $(document).ready(function() {
+      $("#mainSyncNav").addClass('active');
+      $("#uploadFileNav").addClass('active');
+      
+    });
+    
+  </script>

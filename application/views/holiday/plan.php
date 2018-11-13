@@ -169,6 +169,7 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
+      $('#planMainMenu').addClass('active');
       if(if($user_permission == 0)
       {
         $('#planTable').DataTable({
@@ -199,7 +200,7 @@
         });
       }
 
-      $("#planMainMenu").addClass('active');
+      
 
 
 

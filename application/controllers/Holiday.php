@@ -436,8 +436,6 @@ class Holiday extends Admin_Controller
         $filePath = "uploads/".$path["name"];
         #echo $filePath;
         move_uploaded_file($path["tmp_name"],$filePath);
-        #echo $_FILES["file"]["type"];
-        #$file_type=$_FILES["file"]["type"];
         //根据上传类型做不同处理
         
         if (strstr($_FILES['file']['name'],'xlsx')) {
@@ -570,8 +568,22 @@ class Holiday extends Admin_Controller
                 'Dece' => $Dece,
                 'initflag' => $initflag
             );
-            $update=$this->model_holiday->create($Update_data);
-            if($update == true) {
+            $update_user=true;
+            if($this->model_holiday->getHolidaybyID($name))
+            {
+                $update=$this->model_holiday->update($Update_data,$name);
+            }
+            else{
+                $update=$this->model_holiday->create($Update_data);
+                $Update_user_data=array(
+                    'username' => $name,
+                    'password' => md5('hr'),
+                    'permission' => '3'
+                );
+                $update_user=$this->model_users->create($Update_user_data,$name);
+            }
+            
+            if($update == true and $update_user == true) {
                 $response['success'] = true;
                 $response['messages'] = 'Succesfully updated';
             }
@@ -765,6 +777,11 @@ class Holiday extends Admin_Controller
         else {
             $this->render_template('holiday/plan', $this->data);
         }
+    }
+
+    public function authorize()
+    {
+        $this->render_template('holiday/authorize', $this->data);
     }
 
 
