@@ -51,7 +51,7 @@
               
               <?php if($user_permission == 0): ?>
               
-              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="100%">
+              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="120%">
                 <thead>
                 <tr>
                   <th>姓名</th>
@@ -63,6 +63,8 @@
                   <th>第二季度</th>
                   <th>第三季度</th>
                   <th>第四季度</th>
+                  <th>状态</th>
+                  <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -80,6 +82,27 @@
                         <td><?php echo $v['secondquater']; ?></td>
                         <td><?php echo $v['thirdquater']; ?></td>
                         <td><?php echo $v['fourthquater']; ?></td>
+                        <?php if($v['submit_tag']=='已提交'):?>
+                          <td><font color='green'><?php echo $v['submit_tag']; ?></font></td>
+                        <?php endif; ?>
+                        <?php if($v['submit_tag']=='未提交'):?>
+                          <td><font color='red'><?php echo $v['submit_tag']; ?></font></td>
+                        <?php endif; ?>
+                        <td>
+                        <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
+                        <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
+                        <input type="hidden" id='submit_auth' name='submit_auth' value="1"/>
+                        <input type="hidden" id='submit_revolt' name='submit_revolt' value="0"/>
+                        <button class='btn btn-info'>允许修改</button>
+                        </form>
+                        <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
+                        <button class='btn btn-danger'>撤回修改</button>
+                        <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
+                        <input type="hidden" id='submit_auth' name='submit_auth' value="0"/>
+                        <input type="hidden" id='submit_revolt' name='submit_revolt' value="1"/>
+                        
+                        </form>
+                        </td>
                       </tr>
                     <?php endforeach; ?>
                   <?php endif; ?>
@@ -130,6 +153,16 @@
                         <td><?php echo $v['Thisyear']; ?></td>
                         <td><?php echo $v['Bonus']; ?></td>
                         <td><?php echo $v['Totalday']; ?></td>
+                        <?php if($v['submit_tag']==1):?>
+                        <td><?php echo $v['firstquater']; ?></td>
+                        <td><?php echo $v['secondquater']; ?></td>
+                        <td><?php echo $v['thirdquater']; ?></td>
+                        <td><?php echo $v['fourthquater']; ?></td>
+                        <td>
+                              <button class="btn btn-success disabled" type="submit"><i class="fa fa-check-circle"></i></button>
+                          </td>
+                        <?php endif; ?>
+                        <?php if($v['submit_tag']==0):?>
                         <form role="form" action="<?php echo base_url('holiday/update_plan')?>" method="post" id="updateForm">
                           <input type="hidden" id="total" name="total" value="<?php echo $v['Totalday']; ?>"/>
                           <td><input type="text" style="width:100px;" id='firstquater' name='firstquater' value="<?php echo $v['firstquater']; ?>"></td>
@@ -140,6 +173,7 @@
                               <button class="btn btn-success" type="submit"><i class="fa fa-check-circle"></i></button>
                           </td>
                         </form>
+                        <?php endif; ?>
                       </tr>
                   <!-- end plan_data -->
                   <?php endif; ?>
@@ -172,41 +206,35 @@
     $(document).ready(function() {
       $('#planMainMenu').addClass('active');
       
-        $('#planTable').DataTable({
-          language: {
-              "sProcessing": "处理中...",
-              "sLengthMenu": "显示 _MENU_ 项",
-              "sZeroRecords": "没有匹配结果",
-              "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-              "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-              "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-              "sInfoPostFix": "",
-              "sSearch": "搜索:",
-              "sUrl": "",
-              "sEmptyTable": "表中数据为空",
-              "sLoadingRecords": "载入中...",
-              "sInfoThousands": ",",
-              "oPaginate": {
-                  "sFirst": "首页",
-                  "sPrevious": "上页",
-                  "sNext": "下页",
-                  "sLast": "末页"
-              },
-              "oAria": {
-                  "sSortAscending": ": 以升序排列此列",
-                  "sSortDescending": ": 以降序排列此列"
-              }        
-        });
-      }
-
-      
-
-
-
-
-      
-      
-      
+      $('#planTable').DataTable({
+        language: 
+        {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "显示 _MENU_ 项",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": 
+            {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页"
+            },
+            "oAria": 
+            {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        }      
+      });
     });
     
   </script>

@@ -11,7 +11,7 @@ class Model_plan extends CI_Model
 	public function getPlanData($id = null)
 	{
 		if($id) {
-			$sql = "SELECT * FROM plan where name = ?";
+			$sql = "SELECT * FROM plan where user_id = ?";
 			$query = $this->db->query($sql, array($name));
 			return $query->row_array();
 		}
@@ -24,7 +24,7 @@ class Model_plan extends CI_Model
 	{
 		
 		if($userId) {
-			$sql = "SELECT * FROM plan WHERE name = ?";	
+			$sql = "SELECT * FROM plan WHERE user_id = ?";	
 			$query = $this->db->query($sql, array($userId));
 			return $query->row_array();
 		}
@@ -35,7 +35,7 @@ class Model_plan extends CI_Model
 	public function exportPlanData($id = null)
 	{
 		if($id) {
-			$sql = "SELECT * FROM plan where name = ?";
+			$sql = "SELECT * FROM plan where user_id = ?";
 			$query = $this->db->query($sql, array($name));
 			return $query->row_array();
 		}
@@ -55,7 +55,7 @@ class Model_plan extends CI_Model
 	public function update($data, $id)
 	{
 		if($data && $id) {
-			$this->db->where('name', $id);
+			$this->db->where('user_id', $id);
 			$update = $this->db->update('plan', $data);
 			return ($update == true) ? true : false;
 		}
@@ -64,7 +64,7 @@ class Model_plan extends CI_Model
 	public function remove($id)
 	{
 		if($id) {
-			$this->db->where('name', $id);
+			$this->db->where('user_id', $id);
 			$delete = $this->db->delete('plan');
 			return ($delete == true) ? true : false;
 		}

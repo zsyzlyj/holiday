@@ -631,10 +631,8 @@ class Holiday extends Admin_Controller
     public function plan_set()
     {
         $user_id=$this->session->userdata('user_id');
-        echo $user_id;
 
         $user_data=$this->model_users->getUserById($user_id);
-        echo $user_data['username'];
         $plan_data = $this->model_plan->getPlanData();
         
         $result = array();
@@ -643,6 +641,12 @@ class Holiday extends Admin_Controller
         {
             foreach($plan_data as $k => $v)
             {
+                if($v['submit_tag']==1){
+                    $v['submit_tag']='已提交';
+                }
+                else if($v['submit_tag']==0){
+                    $v['submit_tag']='未提交';
+                }
                 $result[$k]=$v;
             }
             
@@ -652,7 +656,6 @@ class Holiday extends Admin_Controller
             $holiday_data=$this->model_holiday->getHolidayData();
             foreach($holiday_data as $k =>$v)
             {
-                echo $v['user_id'];
                 $plan_data=array(
                     'user_id' => $v['user_id'],
                     'name' => $v['name'],
@@ -663,7 +666,8 @@ class Holiday extends Admin_Controller
                     'firstquater' => 0,
                     'secondquater' => 0,
                     'thirdquater' => 0,
-                    'fourthquater' => 0
+                    'fourthquater' => 0,
+                    'submit_tag' => 0,
 
                 );
                 $this->model_plan->create($plan_data);
@@ -714,7 +718,6 @@ class Holiday extends Admin_Controller
         $notice_data = $this->model_notice->getNoticeLatest();
         $result = array();
         
-
         $notice_result=array();
         if($notice_data)
         {
@@ -725,7 +728,7 @@ class Holiday extends Admin_Controller
         if($plan_data)
         {
             $plan_data['Totalday']=$plan_data['Thisyear']+$plan_data['Lastyear']+$plan_data['Bonus'];
-    
+            echo $plan_data['submit_tag'];
             $data = array(
                 'Totalday' => $plan_data['Totalday'],
             );
@@ -749,25 +752,20 @@ class Holiday extends Admin_Controller
         $user_id=$this->session->userdata('user_id');
         $user_data=$this->model_users->getUserById($user_id);
         $plan_data = $this->model_plan->getPlanById($user_data['username']);
-        $notice_data = $this->model_notice->getNoticeLatest();
         $result = array();
-        $notice_result=array();
-        foreach ($notice_data as $k => $v) {
-            $notice_result[$k] = $v;
-        }
+
+
         foreach ($plan_data as $k => $v) {
             $result[$k] = $v;
             #echo $v;
         }
         
         $this->data['plan_data'] = $result;
-        $this->data['notice_data'] = $notice_result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
         /**/
         /*============================================================*/
 
         /*============================================================*/
-        $response = array();
         $this->form_validation->set_rules('firstquater', 'firstquater','is_natural|greater_than[-1]');
         $this->form_validation->set_rules('secondquater', 'secondquater','is_natural|greater_than[-1]');
         $this->form_validation->set_rules('thirdquater', 'thirdquater','is_natural|greater_than[-1]');
@@ -784,7 +782,8 @@ class Holiday extends Admin_Controller
                     'firstquater' => $_POST['firstquater'],
                     'secondquater' => $_POST['secondquater'],
                     'thirdquater' => $_POST['thirdquater'],
-                    'fourthquater' => $_POST['fourthquater']
+                    'fourthquater' => $_POST['fourthquater'],
+                    'submit_tag' => 1
                 );
 
                 $create = $this->model_plan->update($data,$user_data['username']);
@@ -812,6 +811,28 @@ class Holiday extends Admin_Controller
         }
     }
 
+    public function change_submit(){
+
+        if($_POST['submit_auth']==1){
+            $data = array(
+                'submit_tag' => 0
+            );
+            
+        }
+        if($_POST['submit_revolt']==1){
+            $data = array(
+                'submit_tag' => 1
+            );
+        }
+
+        $update = $this->model_plan->update($data,$_POST['user_id']);
+        
+        if($update == true) {
+            $this->session->set_flashdata('success', 'Successfully created');
+            $this->plan_set();
+        }
+
+    }
 
 
 
