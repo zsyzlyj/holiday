@@ -13,12 +13,12 @@ class Model_auth extends CI_Model
 	public function check_id($id) 
 	{
 		if($id) {
+			echo $id;
 			$sql = 'SELECT * FROM users WHERE user_id = ?';
 			$query = $this->db->query($sql, array($id));
 			$result = $query->num_rows();
 			return ($result == 1) ? true : false;
 		}
-
 		return false;
 	}
 

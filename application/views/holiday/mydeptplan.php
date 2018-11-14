@@ -29,8 +29,9 @@
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <?php echo $this->session->flashdata('error'); ?>
             </div>
-          <?php endif; ?>         
-        
+          <?php endif; ?>
+          
+
 
           <div class="box">
             <div class="box-header">
@@ -42,7 +43,7 @@
               <div style="overflow:scroll;">
               
               
-              <?php if($user_permission == 0): ?>
+              <?php if($user_permission == 1): ?>
               
               <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="120%">
                 <thead>
@@ -62,7 +63,7 @@
                 </thead>
                 <tbody>
                   <?php if($plan_data): ?>    
-              
+
                     <?php foreach($plan_data as $k => $v): ?>
                       <tr>
                       
@@ -75,6 +76,7 @@
                         <td><?php echo $v['secondquater']; ?></td>
                         <td><?php echo $v['thirdquater']; ?></td>
                         <td><?php echo $v['fourthquater']; ?></td>
+                        <!--
                         <?php if($v['submit_tag']=='已提交'):?>
                           <td><font color='green'><?php echo $v['submit_tag']; ?></font></td>
                         <?php endif; ?>
@@ -82,6 +84,7 @@
                           <td><font color='red'><?php echo $v['submit_tag']; ?></font></td>
                         <?php endif; ?>
                         <td>
+                        
                         <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="1"/>
@@ -93,88 +96,18 @@
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="0"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="1"/>
-                        
                         </form>
+                        -->
                         </td>
                       </tr>
                     <?php endforeach; ?>
                   <?php endif; ?>
                 </tbody>
                 </table>
-                <!--end_permission==0 -->
+                <!--end_permission==1 -->
                 <?php endif; ?>
 
-                <?php if($user_permission == 3): ?>
-                <h3>状态：
-                <?php echo validation_errors(); ?>
-                <?php if(validation_errors()): ?>
-                  填写规范有误
-                <?php endif; ?>
-                <?php if($this->session->flashdata('success')): ?>
-                  已填写
-                <?php endif ?>
-                </h3>
-                <br />
-                <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="120%">
-                <thead>
-                <tr>
-                  <th>姓名</th>
-                  <!-- 
-                  <th>部门</th>     
-                            
-                  <th>社会工龄</th>
-                  <th>公司工龄</th>
-                  -->
-                  <th>上年可休数</th>
-                  <th>今年可休数</th>
-                  <th>荣誉假期数</th>
-                  <th>可休假总数</th>
-                  <th>第一季度</th>
-                  <th>第二季度</th>
-                  <th>第三季度</th>
-                  <th>第四季度</th>
-                  <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                  <?php if($plan_data): ?>                  
-                    <?php $v=$plan_data ?>
-                      <tr>
-                      
-                        <td><?php echo $v['name']; ?></td>
-                        <td><?php echo $v['Lastyear']; ?></td>
-                        <td><?php echo $v['Thisyear']; ?></td>
-                        <td><?php echo $v['Bonus']; ?></td>
-                        <td><?php echo $v['Totalday']; ?></td>
-                        <?php if($v['submit_tag']==1):?>
-                        <td><?php echo $v['firstquater']; ?></td>
-                        <td><?php echo $v['secondquater']; ?></td>
-                        <td><?php echo $v['thirdquater']; ?></td>
-                        <td><?php echo $v['fourthquater']; ?></td>
-                        <td>
-                              <button class="btn btn-success disabled" type="submit"><i class="fa fa-check-circle"></i></button>
-                          </td>
-                        <?php endif; ?>
-                        <?php if($v['submit_tag']==0):?>
-                        <form role="form" action="<?php echo base_url('holiday/update_plan')?>" method="post" id="updateForm">
-                          <input type="hidden" id="total" name="total" value="<?php echo $v['Totalday']; ?>"/>
-                          <td><input type="text" style="width:100px;" id='firstquater' name='firstquater' value="<?php echo $v['firstquater']; ?>"></td>
-                          <td><input type="text" style="width:100px;" id='secondquater' name='secondquater' value="<?php echo $v['secondquater']; ?>"></td>
-                          <td><input type="text" style="width:100px;" id='thirdquater' name='thirdquater' value="<?php echo $v['thirdquater']; ?>"></td>
-                          <td><input type="text" style="width:100px;" id='fourthquater' name='fourthquater' value="<?php echo $v['fourthquater']; ?>"></td>
-                          <td>
-                              <button class="btn btn-success" type="submit"><i class="fa fa-check-circle"></i></button>
-                          </td>
-                        </form>
-                        <?php endif; ?>
-                      </tr>
-                  <!-- end plan_data -->
-                  <?php endif; ?>
-                </tbody>
                 
-              </table>
-              <!-- end permission==2 -->
-              <?php endif; ?>
               </div>
               <!-- /.overflow:scroll -->
             </div>

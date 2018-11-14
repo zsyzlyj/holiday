@@ -72,33 +72,6 @@ class Holiday extends Admin_Controller
         
 		$this->render_template('holiday/index', $this->data);
     }
-    
-    public function staff()
-	{
-        $user_id=$this->session->userdata('user_id');
-
-        $user_data=$this->model_users->getUserById($user_id);
-        $holiday_data = $this->model_holiday->getHolidayById($user_data['username']);
-        $notice_data = $this->model_notice->getNoticeLatest();
-        $result = array();
-        $notice_result=array();
-        foreach ($notice_data as $k => $v) {
-            $notice_result[$k] = $v;
-        }
-        foreach ($holiday_data as $k => $v) {
-            $result[$k] = $v;
-        }
-        //$result['']
-        /**/
-
-        $this->data['holiday_data'] = $result;
-        $this->data['notice_data'] = $notice_result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        
-
-		$this->render_template('holiday/index', $this->data);
-    }
-    
     /*
     * It Fetches the products data from the product table 
     * this function is called from the datatable ajax function
@@ -659,6 +632,7 @@ class Holiday extends Admin_Controller
                 $plan_data=array(
                     'user_id' => $v['user_id'],
                     'name' => $v['name'],
+                    'department' => $v['department'],
                     'Thisyear' => $v['Thisyear'],
                     'Lastyear' => $v['Lastyear'],
                     'Bonus' => $v['Bonus'],
@@ -667,7 +641,7 @@ class Holiday extends Admin_Controller
                     'secondquater' => 0,
                     'thirdquater' => 0,
                     'fourthquater' => 0,
-                    'submit_tag' => 0,
+                    'submit_tag' => 0
 
                 );
                 $this->model_plan->create($plan_data);
@@ -675,8 +649,15 @@ class Holiday extends Admin_Controller
             $plan_data = $this->model_plan->getPlanData();
             foreach($plan_data as $k => $v)
             {
+                if($v['submit_tag']==1){
+                    $v['submit_tag']='已提交';
+                }
+                else if($v['submit_tag']==0){
+                    $v['submit_tag']='未提交';
+                }
                 $result[$k]=$v;
             }
+            
         }
 
         $this->data['plan_data'] = $result;
@@ -688,6 +669,141 @@ class Holiday extends Admin_Controller
         /**/
     }
 
+    /*
+    ==============================================================================
+    普通员工
+    ==============================================================================
+    */
+
+    public function staff()
+	{
+        $user_id=$this->session->userdata('user_id');
+        $holiday_data = $this->model_holiday->getHolidayById($user_id);
+        $notice_data = $this->model_notice->getNoticeLatest();
+        $result = array();
+        $notice_result=array();
+        foreach ($notice_data as $k => $v) {
+            $notice_result[$k] = $v;
+        }
+        foreach ($holiday_data as $k => $v) {
+            $result[$k] = $v;
+        }
+        //$result['']
+        /**/
+
+        $this->data['holiday_data'] = $result;
+        $this->data['notice_data'] = $notice_result;
+        $this->data['user_permission'] = $this->session->userdata('user_permission');
+        
+
+		$this->render_template('holiday/index', $this->data);
+    }
+    
+
+
+    /*
+    ==============================================================================
+    综合管理员
+    ==============================================================================
+    */
+    public function admin()
+	{
+        $user_id=$this->session->userdata('user_id');
+        $holiday_data = $this->model_holiday->getHolidayById($user_id);
+        $notice_data = $this->model_notice->getNoticeLatest();
+        $result = array();
+        $notice_result=array();
+        foreach ($notice_data as $k => $v) {
+            $notice_result[$k] = $v;
+        }
+        if($user_id!='111111')
+        {
+            foreach ($holiday_data as $k => $v) {
+                $result[$k] = $v;
+            }
+        }
+
+        $this->data['holiday_data'] = $result;
+        $this->data['notice_data'] = $notice_result;
+        $this->data['user_permission'] = $this->session->userdata('user_permission');
+        
+
+		$this->render_template('holiday/index', $this->data);
+    }
+
+    public function mydeptplan()
+    {
+        $user_id=$this->session->userdata('user_id');
+        $my_data = $this->model_plan->getPlanById($user_id);
+
+        $result = array();
+        #$holiday_data = $this->model_holiday->getHolidayByDept($my_data['department']);
+        $plan_data = $this->model_plan->getPlanByDept($my_data['department']);
+        #echo $plan_data;
+        if($plan_data){
+            foreach ($plan_data as $k => $v) {
+                echo $v;
+                if($k=='submit_tag'){
+                    if($v==1){
+                        $result[$k] = '已提交';
+                    }
+                    else{
+                        $result[$k] = '未提交';
+                    }
+                }
+                else{
+                    $result[$k] = $v;
+                }
+            }
+        }
+        
+        $notice_data = $this->model_notice->getNoticeLatest();
+        
+        $notice_result=array();
+        foreach ($notice_data as $k => $v) {
+            $notice_result[$k] = $v;
+        }
+        
+        $this->data['plan_data'] = $result;
+        $this->data['notice_data'] = $notice_result;
+        $this->data['user_permission'] = $this->session->userdata('user_permission');
+        $this->render_template('holiday/mydeptplan', $this->data);
+        /**/
+    }
+    
+
+    /*
+    ==============================================================================
+    部门经理
+    ==============================================================================
+    */
+    public function manager()
+	{
+        $user_id=$this->session->userdata('user_id');
+        $holiday_data = $this->model_holiday->getHolidayById($user_id);
+        $notice_data = $this->model_notice->getNoticeLatest();
+        $result = array();
+        $notice_result=array();
+        foreach ($notice_data as $k => $v) {
+            $notice_result[$k] = $v;
+        }
+        if($user_id!='222222')
+        {
+            foreach ($holiday_data as $k => $v) {
+                $result[$k] = $v;
+            }
+        }
+        //$result['']
+        /**/
+
+        $this->data['holiday_data'] = $result;
+        $this->data['notice_data'] = $notice_result;
+        $this->data['user_permission'] = $this->session->userdata('user_permission');
+        
+
+		$this->render_template('holiday/index', $this->data);
+    }
+    
 
 
 
@@ -701,19 +817,17 @@ class Holiday extends Admin_Controller
 
 
 
-
-
-
-
-
+    /*
+    ==============================================================================
+    单个人的年假计划显示
+    ==============================================================================
+    */
 
     public function plan()
     {
         $user_id=$this->session->userdata('user_id');
-        echo $user_id;
-        $user_data=$this->model_users->getUserById($user_id);
-        echo $user_data['username'];
-        $plan_data = $this->model_plan->getplanById($user_data['username']);
+        
+        $plan_data = $this->model_plan->getplanById($user_id);
         
         $notice_data = $this->model_notice->getNoticeLatest();
         $result = array();
@@ -742,6 +856,11 @@ class Holiday extends Admin_Controller
 
 		$this->render_template('holiday/plan', $this->data);
     }
+    /*
+    ==============================================================================
+    年假计划提交
+    ==============================================================================
+    */
     public function update_plan()
     {
         /*============================================================*/
@@ -811,6 +930,11 @@ class Holiday extends Admin_Controller
         }
     }
 
+    /*
+    ==============================================================================
+    超级管理员，综合管理员修改年假计划编辑权限
+    ==============================================================================
+    */
     public function change_submit(){
 
         if($_POST['submit_auth']==1){

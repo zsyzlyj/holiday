@@ -4,9 +4,41 @@
       
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <?php if($user_permission == 3): ?>
+        <?php if($user_permission == 3 ): ?>
         <li id="dashboardMainMenu">
           <a href="<?php echo base_url('holiday/staff') ?>">
+            <i class="fa fa-bar-chart"></i> <span>年假信息</span>
+          </a>
+        </li>
+        <li id='planMainMenu'>
+          <a href="<?php echo base_url('holiday/plan') ?>">
+            <i class="fa fa-edit"></i> <span>年假计划</span>
+          </a>
+        </li>
+        
+        <?php endif ?>
+        <?php if($user_permission == 1 ): ?>
+        <li id="dashboardMainMenu">
+          <a href="<?php echo base_url('holiday/admin') ?>">
+            <i class="fa fa-bar-chart"></i> <span>年假信息</span>
+          </a>
+        </li>
+        <li id='planMainMenu'>
+          <a href="<?php echo base_url('holiday/plan') ?>">
+            <i class="fa fa-edit"></i> <span>年假计划</span>
+          </a>
+        </li>
+        <li id="myDeptPlanNav">
+          <a href="<?php echo base_url('holiday/mydeptplan') ?>">
+            <i class="fa fa-folder-o"></i>
+            <span>本部门年假提交汇总</span>
+          </a>
+        </li>
+        
+        <?php endif ?>
+        <?php if($user_permission == 2 ): ?>
+        <li id="dashboardMainMenu">
+          <a href="<?php echo base_url('holiday/manager') ?>">
             <i class="fa fa-bar-chart"></i> <span>年假信息</span>
           </a>
         </li>

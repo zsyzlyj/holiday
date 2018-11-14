@@ -87,3 +87,10 @@ DELETE FROM USERS;
 DELETE FROM PLAN;
 INSERT INTO `users` (`user_id`, `username`, `password`,`permission`) VALUES
 ('123456','lyj',md5('hr'),0);
+INSERT INTO `users` (`user_id`, `username`, `password`,`permission`) VALUES
+('111111','zongguan',md5('hr'),1);
+INSERT INTO `users` (`user_id`, `username`, `password`,`permission`) VALUES
+('222222','jingli',md5('hr'),2);
+
+UPDATE users SET permission=0
+where user_id='440603199101193847'

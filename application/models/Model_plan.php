@@ -32,6 +32,18 @@ class Model_plan extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
+	public function getPlanByDept($dept = null) 
+	{
+		
+		if($dept) {
+			$sql = "SELECT * FROM Plan WHERE department = ?";	
+			$query = $this->db->query($sql, array($dept));
+			return $query->row_array();
+		}
+		$sql = "SELECT * FROM Plan";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 	public function exportPlanData($id = null)
 	{
 		if($id) {

@@ -52,7 +52,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <?php $count=0; ?>
                   <?php if($user_data): ?>                  
                     <?php foreach ($user_data as $k => $v): ?>
                       <tr>
@@ -81,10 +80,6 @@
                         </td>
                         
                         <td>
-                            <!--
-                            <a href="<?php echo base_url('users/update/'.$v['user_id']) ?>" class="btn btn-success"><i class="fa fa-edit">提交</i></a>
-                            <input type="submit" class="btn btn-primary" name="confirm" value="确定">
-                            -->
                             <button class="btn btn-success" type="submit"><i class="fa fa-edit"> 提交</i></button>
                         </form>
                             <a href="<?php echo base_url('users/delete/'.$v['user_id']) ?>" class="btn btn-danger"><i class="fa fa-trash"> 删除</i></a>

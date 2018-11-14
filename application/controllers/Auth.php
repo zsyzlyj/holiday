@@ -27,11 +27,10 @@ class Auth extends Admin_Controller
         if ($this->form_validation->run() == TRUE) {
             // true case
            	$id_exists = $this->model_auth->check_id($this->input->post('user_id'));
-
            	if($id_exists == TRUE) {
            		$login = $this->model_auth->login($this->input->post('user_id'), $this->input->post('password'));
-				#echo $login['user_id'];
-				echo $login['permission'];
+				echo $login['user_id'];
+				#echo $login['permission'];
            		if($login) {
            			$logged_in_sess = array(
 						'user_id' => $login['user_id'],
@@ -46,8 +45,10 @@ class Auth extends Admin_Controller
 							redirect('holiday/index', 'refresh');
 							break;
 						case 1:
+							redirect('holiday/admin', 'refresh');
 							break;
 						case 2:
+							redirect('holiday/manager', 'refresh');
 							break;
 						case 3:	
 							redirect('holiday/staff', 'refresh');

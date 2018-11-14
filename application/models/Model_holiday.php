@@ -24,13 +24,25 @@ class Model_holiday extends CI_Model
 	{
 		
 		if($userId) {
-			$sql = "SELECT * FROM holiday WHERE name = ?";	
+			$sql = "SELECT * FROM holiday WHERE user_id = ?";	
 			$query = $this->db->query($sql, array($userId));
 			return $query->row_array();
 		}
 		$sql = "SELECT * FROM holiday";
 		$query = $this->db->query($sql);
 		return $query->result();
+	}
+	public function getHolidayByDept($dept = null) 
+	{
+		
+		if($dept) {
+			$sql = "SELECT * FROM holiday WHERE department = ?";	
+			$query = $this->db->query($sql, array($dept));
+			return $query->row_array();
+		}
+		$sql = "SELECT * FROM holiday";
+		$query = $this->db->query($sql);
+		return $query->result_array();
 	}
 	public function exportHolidayData($id = null)
 	{

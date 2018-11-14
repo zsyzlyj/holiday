@@ -44,7 +44,7 @@
                 <?php endforeach;?>
                 <?php endif ?>
               </h4>
-              <?php if($user_permission == 3): ?>
+              <?php if($user_permission == 3 or $user_permission == 2 or $user_permission == 1): ?>
               <h4><font color="blue">点击已休假数可以查看每个月已休明细</font></h4>
               <?php endif ?>
             </div>
