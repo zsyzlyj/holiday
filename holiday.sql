@@ -23,6 +23,7 @@ INSERT INTO `users` (`user_id`, `username`, `password`,`permission`) VALUES
 ('567890','test-4',md5('hr'),3),
 ('678901','test-5',md5('hr'),3);
 INSERT INTO `users` (`user_id`, `username`, `password`,`permission`) VALUES
+('123456','lyj',md5('hr'),0),
 ('000000','王欢',md5('hr'),3);
 
 
@@ -78,3 +79,11 @@ CREATE TABLE `notice` (
 
 UPDATE users SET user_id=123456, permission=0
 where username='lyj'
+
+
+
+DELETE FROM HOLIDAY;
+DELETE FROM USERS;
+DELETE FROM PLAN;
+INSERT INTO `users` (`user_id`, `username`, `password`,`permission`) VALUES
+('123456','lyj',md5('hr'),0);

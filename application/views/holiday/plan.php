@@ -50,6 +50,7 @@
               
               
               <?php if($user_permission == 0): ?>
+              
               <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="100%">
                 <thead>
                 <tr>
@@ -84,7 +85,7 @@
                   <?php endif; ?>
                 </tbody>
                 </table>
-                <!--end_permission==1 -->
+                <!--end_permission==0 -->
                 <?php endif; ?>
 
                 <?php if($user_permission == 3): ?>
@@ -170,8 +171,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $('#planMainMenu').addClass('active');
-      if(if($user_permission == 0)
-      {
+      
         $('#planTable').DataTable({
           language: {
               "sProcessing": "处理中...",
@@ -195,8 +195,7 @@
               "oAria": {
                   "sSortAscending": ": 以升序排列此列",
                   "sSortDescending": ": 以降序排列此列"
-              }
-          }          
+              }        
         });
       }
 

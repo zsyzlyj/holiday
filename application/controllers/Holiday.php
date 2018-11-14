@@ -379,6 +379,7 @@ class Holiday extends Admin_Controller
  
         // Fetching the table data
         $row = 2;
+        
         foreach($result->result() as $data)
         {
             $col = 0;
@@ -390,6 +391,8 @@ class Holiday extends Admin_Controller
                     $col++;
                 }
             }
+            
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
  
             $row++;
         }
@@ -567,7 +570,8 @@ class Holiday extends Admin_Controller
                 'Oct' => $Oct,
                 'Nov' => $Nov,
                 'Dece' => $Dece,
-                'initflag' => $initflag
+                'initflag' => $initflag,
+                'User_id' => $User_id
             );
 
             $update_user=true;
@@ -628,6 +632,7 @@ class Holiday extends Admin_Controller
     {
         $user_id=$this->session->userdata('user_id');
         echo $user_id;
+
         $user_data=$this->model_users->getUserById($user_id);
         echo $user_data['username'];
         $plan_data = $this->model_plan->getPlanData();
@@ -642,16 +647,41 @@ class Holiday extends Admin_Controller
             }
             
         }
-        foreach($plan_data as $k => $v)
+        else
         {
-            $result[$k]=$v;
+            $holiday_data=$this->model_holiday->getHolidayData();
+            foreach($holiday_data as $k =>$v)
+            {
+                echo $v['user_id'];
+                $plan_data=array(
+                    'user_id' => $v['user_id'],
+                    'name' => $v['name'],
+                    'Thisyear' => $v['Thisyear'],
+                    'Lastyear' => $v['Lastyear'],
+                    'Bonus' => $v['Bonus'],
+                    'Totalday' => $v['Totalday'],
+                    'firstquater' => 0,
+                    'secondquater' => 0,
+                    'thirdquater' => 0,
+                    'fourthquater' => 0
+
+                );
+                $this->model_plan->create($plan_data);
+            }
+            $plan_data = $this->model_plan->getPlanData();
+            foreach($plan_data as $k => $v)
+            {
+                $result[$k]=$v;
+            }
         }
+
         $this->data['plan_data'] = $result;
         
         $this->data['user_permission'] = $this->session->userdata('user_permission');
         
 
-		$this->render_template('holiday/plan', $this->data);
+        $this->render_template('holiday/plan', $this->data);
+        /**/
     }
 
 
