@@ -11,7 +11,7 @@
           </a>
         </li>
         <li id='planMainMenu'>
-          <a href="<?php echo base_url('holiday/plan') ?>">
+          <a href="<?php echo base_url('holiday/staff_plan') ?>">
             <i class="fa fa-edit"></i> <span>年假计划</span>
           </a>
         </li>
@@ -24,7 +24,7 @@
           </a>
         </li>
         <li id='planMainMenu'>
-          <a href="<?php echo base_url('holiday/plan') ?>">
+          <a href="<?php echo base_url('holiday/staff_plan') ?>">
             <i class="fa fa-edit"></i> <span>年假计划</span>
           </a>
         </li>
@@ -43,21 +43,27 @@
           </a>
         </li>
         <li id='planMainMenu'>
-          <a href="<?php echo base_url('holiday/plan') ?>">
+          <a href="<?php echo base_url('holiday/staff_plan') ?>">
             <i class="fa fa-edit"></i> <span>年假计划</span>
           </a>
         </li>
         
         <?php endif ?>
         <?php if($user_permission == 0): ?>
-        <li id="dashboardMainMenu">
+        <li id="dashboardGatherMainMenu">
           <a href="<?php echo base_url('holiday') ?>">
             <i class="fa fa-bar-chart"></i> <span>年假汇总</span>
           </a>
         </li>
-        <li id='planMainMenu'>
+        <li id='planGatherMainMenu'>
           <a href="<?php echo base_url('holiday/plan_set') ?>">
             <i class="fa fa-edit"></i> <span>年假计划汇总</span>
+          </a>
+        </li>
+        <li id="myDeptPlanNav">
+          <a href="<?php echo base_url('holiday/mydeptplan') ?>">
+            <i class="fa fa-folder-o"></i>
+            <span>本部门年假提交汇总</span>
           </a>
         </li>
         <li class="treeview" id="mainSyncNav">
@@ -70,15 +76,10 @@
           </a>
           <ul class="treeview-menu">
             <li id="uploadFileNav"><a href="<?php echo base_url('holiday/import') ?>"><i class="fa fa-circle-o"></i> 上传数据</a></li>
-
-        
             <li id="downloadFileNav"><a href="<?php echo base_url('holiday/download_page') ?>"><i class="fa fa-circle-o"></i> 下载数据</a></li>
-          
           </ul>
             
         </li>
-        
-        
   
           <li class="treeview" id="mainUserNav">
           <a href="#">
@@ -111,7 +112,16 @@
             
             <li id="manage_notice"><a href="<?php echo base_url('notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
           </ul>
-            
+            <li id="dashboardMainMenu">
+            <a href="<?php echo base_url('holiday/staff') ?>">
+              <i class="fa fa-bar-chart"></i> <span>年假信息</span>
+            </a>
+          </li>
+          <li id='planMainMenu'>
+            <a href="<?php echo base_url('holiday/staff_plan') ?>">
+              <i class="fa fa-edit"></i> <span>年假计划</span>
+            </a>
+          </li>
           <?php endif; ?>
 
           <!--

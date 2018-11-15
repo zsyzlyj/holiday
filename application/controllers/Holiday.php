@@ -666,7 +666,6 @@ class Holiday extends Admin_Controller
         
 
         $this->render_template('holiday/plan', $this->data);
-        /**/
     }
 
     /*
@@ -696,7 +695,7 @@ class Holiday extends Admin_Controller
         $this->data['user_permission'] = $this->session->userdata('user_permission');
         
 
-		$this->render_template('holiday/index', $this->data);
+		$this->render_template('holiday/staff', $this->data);
     }
     
 
@@ -823,7 +822,7 @@ class Holiday extends Admin_Controller
     ==============================================================================
     */
 
-    public function plan()
+    public function staff_plan()
     {
         $user_id=$this->session->userdata('user_id');
         
@@ -842,7 +841,6 @@ class Holiday extends Admin_Controller
         if($plan_data)
         {
             $plan_data['Totalday']=$plan_data['Thisyear']+$plan_data['Lastyear']+$plan_data['Bonus'];
-            echo $plan_data['submit_tag'];
             $data = array(
                 'Totalday' => $plan_data['Totalday'],
             );
@@ -854,7 +852,7 @@ class Holiday extends Admin_Controller
         $this->data['user_permission'] = $this->session->userdata('user_permission');
         
 
-		$this->render_template('holiday/plan', $this->data);
+		$this->render_template('holiday/staff_plan', $this->data);
     }
     /*
     ==============================================================================

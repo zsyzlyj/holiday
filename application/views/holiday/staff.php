@@ -52,33 +52,17 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              
-              
-              <?php if($user_permission == 0): ?>
-              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;" width="250%">
+                <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;" width="100%">
                 <thead>
                 <tr>
                   <th>姓名</th>
                   <th>部门</th>                
                   <th>社会工龄</th>
                   <th>公司工龄</th>
-                  <th>可休假总数</th>
-                  <th>荣誉假期</th>
+                  <th>休假总数</th>
                   <th>上年可休数</th>
                   <th>今年可休数</th>
-                  <th>一月</th>
-                  <th>二月</th>
-                  <th>三月</th>
-                  <th>四月</th>
-                  <th>五月</th>
-                  <th>六月</th>
-                  <th>七月</th>
-                  <th>八月</th>
-                  <th>九月</th>
-                  <th>十月</th>
-                  <th>十一月</th>
-                  <th>十二月</th>
-                  
+                  <th>荣誉假期</th>
                   <th>已休假数</th>
                   <th>剩下休假数</th>
                   <th>操作</th>
@@ -86,7 +70,7 @@
                 </thead>
                 <tbody>
                   <?php if($holiday_data): ?>                  
-                    <?php foreach ($holiday_data as $v): ?>
+                    <?php $v=$holiday_data ?>
                       <tr>
                         <td><?php echo $v['name']; ?></td>
                         <td><?php echo $v['department']; ?></td>
@@ -97,21 +81,65 @@
                         <td><?php echo $v['Lastyear']; ?></td>
                         <td><?php echo $v['Thisyear']; ?></td>
                         <td><?php echo $v['Bonus']; ?></td>
-                        <td><?php echo $v['Jan']; ?></td>
-                        <td><?php echo $v['Feb']; ?></td>
-                        <td><?php echo $v['Mar']; ?></td>
-                        <td><?php echo $v['Apr']; ?></td>
-                        <td><?php echo $v['May']; ?></td>
-                        <td><?php echo $v['Jun']; ?></td>
-                        <td><?php echo $v['Jul']; ?></td>
-                        <td><?php echo $v['Aug']; ?></td>
-                        <td><?php echo $v['Sep']; ?></td>
-                        <td><?php echo $v['Oct']; ?></td>
-                        <td><?php echo $v['Nov']; ?></td>
-                        <td><?php echo $v['Dece']; ?></td>
-                        
-                        <td><?php echo $v['Used']; ?></td>
-                        
+                        <td>
+                          
+                          <!-- 打开弹窗按钮 -->
+                          <a href="javascript:void(0)" id="myBtn"><?php echo $v['Used']; ?></a>
+                          
+                          <!-- 弹窗 -->
+                          <div id="myModal" class="modal">
+                            
+                            <!-- 弹窗内容 -->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <span class="close">&times;</span>
+                                  <h3>每月已休假明细</h3>
+                                </div>
+
+                                <div class="modal-body">
+                                <table id="MonthTable" class="table table-bordered table-striped" width="100%">
+                                  <thead>
+                                    <tr>
+                                      <th>一月</th>
+                                      <th>二月</th>
+                                      <th>三月</th>
+                                      <th>四月</th>
+                                      <th>五月</th>
+                                      <th>六月</th>
+                                      <th>七月</th>
+                                      <th>八月</th>
+                                      <th>九月</th>
+                                      <th>十月</th>
+                                      <th>十一月</th>
+                                      <th>十二月</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                          <td><?php echo $v['Jan']; ?></td>
+                                          <td><?php echo $v['Feb']; ?></td>
+                                          <td><?php echo $v['Mar']; ?></td>
+                                          <td><?php echo $v['Apr']; ?></td>
+                                          <td><?php echo $v['May']; ?></td>
+                                          <td><?php echo $v['Jun']; ?></td>
+                                          <td><?php echo $v['Jul']; ?></td>
+                                          <td><?php echo $v['Aug']; ?></td>
+                                          <td><?php echo $v['Sep']; ?></td>
+                                          <td><?php echo $v['Oct']; ?></td>
+                                          <td><?php echo $v['Nov']; ?></td>
+                                          <td><?php echo $v['Dece']; ?></td>
+                                        </tr>
+                                        </tbody>
+                                </table>
+                                </div>
+                              </div>
+                            
+                          </div>
+ 
+                          
+ 
+                        </td>
+
                         <td><?php echo $v['Rest']; ?></td>
 
 
@@ -122,12 +150,9 @@
                         </td>
 
                       </tr>
-                    <?php endforeach ?>
-                    </tbody>
                   <?php endif; ?>
-                  </table>
-                <?php endif; ?>
-                
+                </tbody>
+              </table>
               </div>
               <!-- /.overflow:scroll -->
             </div>
@@ -179,7 +204,9 @@
     });
 
 
-      $("#dashboardGatherMainMenu").addClass('active');
+
+    
+    $("#dashboardMainMenu").addClass('active');
     
       
     });
