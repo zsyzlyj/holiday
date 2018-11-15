@@ -739,23 +739,23 @@ class Holiday extends Admin_Controller
         #$holiday_data = $this->model_holiday->getHolidayByDept($my_data['department']);
         $plan_data = $this->model_plan->getPlanByDept($my_data['department']);
         #echo $plan_data;
+        $submitted=0;
         if($plan_data){
             foreach ($plan_data as $k => $v) {
-                echo $v;
-                if($k=='submit_tag'){
-                    if($v==1){
-                        $result[$k] = '已提交';
-                    }
-                    else{
-                        $result[$k] = '未提交';
-                    }
+                $result[$k]=$v;
+                if($v['submit_tag']==1){
+                    $result[$k]['submit_tag'] = '已提交';
+                    $submitted++;
                 }
                 else{
-                    $result[$k] = $v;
+                    $result[$k]['submit_tag'] = '未提交';
                 }
+                
             }
         }
-        
+        echo $submitted;
+        echo count($plan_data);
+
         $notice_data = $this->model_notice->getNoticeLatest();
         
         $notice_result=array();
@@ -763,6 +763,7 @@ class Holiday extends Admin_Controller
             $notice_result[$k] = $v;
         }
         
+        $this->data['submitted'] = $submitted;
         $this->data['plan_data'] = $result;
         $this->data['notice_data'] = $notice_result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');

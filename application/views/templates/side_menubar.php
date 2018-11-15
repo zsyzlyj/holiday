@@ -60,10 +60,16 @@
             <i class="fa fa-edit"></i> <span>年假计划汇总</span>
           </a>
         </li>
+        <li id="myDeptHolidayNav">
+          <a href="<?php echo base_url('holiday/mydeptplan') ?>">
+            <i class="fa fa-file-archive-o"></i>
+            <span>本部门年假信息汇总</span>
+          </a>
+        </li>
         <li id="myDeptPlanNav">
           <a href="<?php echo base_url('holiday/mydeptplan') ?>">
             <i class="fa fa-folder-o"></i>
-            <span>本部门年假提交汇总</span>
+            <span>本部门年假计划汇总</span>
           </a>
         </li>
         <li class="treeview" id="mainSyncNav">

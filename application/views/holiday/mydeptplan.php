@@ -12,7 +12,7 @@
         <li class="active">plan</li>
       </ol>
     </section>
-
+    
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
@@ -30,20 +30,27 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
-          
+
+
 
 
           <div class="box">
+            <?php if($plan_data): ?>  
             <div class="box-header">
 
+                <h3>
+                提交进度：<?php echo '<font color="green">'.$submitted.'</font> / '.count($plan_data)?>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <?php if($submitted!=count($plan_data)):?><button class="btn btn-success disabled">提交</button><?php endif; ?>
+                <?php if($submitted==count($plan_data)):?><button class="btn btn-success">提交</button><?php endif; ?>
+                
+                <button class='btn btn-warning'>导出</button>
+                </h3>
             </div>
             
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              
-              
-              <?php if($user_permission == 1): ?>
               
               <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="120%">
                 <thead>
@@ -62,8 +69,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <?php if($plan_data): ?>    
-
                     <?php foreach($plan_data as $k => $v): ?>
                       <tr>
                       
@@ -76,7 +81,7 @@
                         <td><?php echo $v['secondquater']; ?></td>
                         <td><?php echo $v['thirdquater']; ?></td>
                         <td><?php echo $v['fourthquater']; ?></td>
-                        <!--
+                        
                         <?php if($v['submit_tag']=='已提交'):?>
                           <td><font color='green'><?php echo $v['submit_tag']; ?></font></td>
                         <?php endif; ?>
@@ -84,7 +89,6 @@
                           <td><font color='red'><?php echo $v['submit_tag']; ?></font></td>
                         <?php endif; ?>
                         <td>
-                        
                         <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="1"/>
@@ -97,17 +101,14 @@
                         <input type="hidden" id='submit_auth' name='submit_auth' value="0"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="1"/>
                         </form>
-                        -->
                         </td>
                       </tr>
                     <?php endforeach; ?>
-                  <?php endif; ?>
+                  
                 </tbody>
                 </table>
-                <!--end_permission==1 -->
-                <?php endif; ?>
 
-                
+                <?php endif; ?>
               </div>
               <!-- /.overflow:scroll -->
             </div>

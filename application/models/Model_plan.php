@@ -13,7 +13,7 @@ class Model_plan extends CI_Model
 		if($id) {
 			$sql = "SELECT * FROM plan where user_id = ?";
 			$query = $this->db->query($sql, array($name));
-			return $query->row_array();
+			return $query->result_array();
 		}
 
 		$sql = "SELECT * FROM plan";
@@ -38,7 +38,7 @@ class Model_plan extends CI_Model
 		if($dept) {
 			$sql = "SELECT * FROM Plan WHERE department = ?";	
 			$query = $this->db->query($sql, array($dept));
-			return $query->row_array();
+			return $query->result_array();
 		}
 		$sql = "SELECT * FROM Plan";
 		$query = $this->db->query($sql);
