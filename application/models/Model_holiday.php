@@ -38,7 +38,7 @@ class Model_holiday extends CI_Model
 		if($dept) {
 			$sql = "SELECT * FROM holiday WHERE department = ?";	
 			$query = $this->db->query($sql, array($dept));
-			return $query->row_array();
+			return $query->result_array();
 		}
 		$sql = "SELECT * FROM holiday";
 		$query = $this->db->query($sql);
@@ -50,6 +50,16 @@ class Model_holiday extends CI_Model
 			$sql = "SELECT * FROM holiday where name = ?";
 			$query = $this->db->query($sql, array($name));
 			return $query->row_array();
+		}
+
+		$sql = "SELECT * FROM holiday";
+		return $this->db->query($sql);
+	}
+	public function exportmydeptHolidayData($dept = null)
+	{
+		if($dept) {
+			$sql = "SELECT * FROM holiday where department = ?";
+			return $this->db->query($sql, array($dept));	
 		}
 
 		$sql = "SELECT * FROM holiday";

@@ -44,7 +44,7 @@
                 <?php if($submitted!=count($plan_data)):?><button class="btn btn-success disabled">提交</button><?php endif; ?>
                 <?php if($submitted==count($plan_data)):?><button class="btn btn-success">提交</button><?php endif; ?>
                 
-                <button class='btn btn-warning'>导出</button>
+                <a href='<?php echo base_url('holiday/export_mydeptplan') ?>' class="btn btn-warning">导出</a>
                 </h3>
             </div>
             
@@ -131,7 +131,7 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#planMainMenu').addClass('active');
+      $('#myDeptPlanNav').addClass('active');
       
       $('#planTable').DataTable({
         language: 

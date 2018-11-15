@@ -61,7 +61,7 @@
           </a>
         </li>
         <li id="myDeptHolidayNav">
-          <a href="<?php echo base_url('holiday/mydeptplan') ?>">
+          <a href="<?php echo base_url('holiday/mydeptholiday') ?>">
             <i class="fa fa-file-archive-o"></i>
             <span>本部门年假信息汇总</span>
           </a>

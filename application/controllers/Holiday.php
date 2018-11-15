@@ -29,7 +29,7 @@ class Holiday extends Admin_Controller
         foreach ($notice_data as $k => $v) {
             $notice_result[$k] = $v;
         }
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
+        
         $result = array();
         foreach ($holiday_data as $k => $v) {
             $result[$k] = $v;
@@ -69,7 +69,7 @@ class Holiday extends Admin_Controller
 
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
-        
+        $this->data['user_permission'] = $this->session->userdata('user_permission');
 		$this->render_template('holiday/index', $this->data);
     }
     /*
@@ -343,8 +343,9 @@ class Holiday extends Admin_Controller
                 case 'Oct':$v="十月\t";break;
                 case 'Nov':$v="十一月\t";break;
                 case 'Dece':$v="十二月\t";break;    	
+                default:break;
             }
-            if($field != 'initflag'){
+            if($v != ""){
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
                 $col++;
             }
@@ -358,15 +359,19 @@ class Holiday extends Admin_Controller
             $col = 0;
             foreach ($fields as $field)
             {
-                if($field != 'initflag')
+                if($field != 'initflag' and $field != 'user_id')
                 {
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
                     $col++;
                 }
             }
-            
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
+            /*
+            if($field != 'initflag' and $field != 'user_id')
+            {
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
+            }
  
+            */
             $row++;
         }
  
@@ -390,11 +395,270 @@ class Holiday extends Admin_Controller
         $this->render_template('holiday/export',$this->data);
     }
 
-    public function export()
+    public function excel_mydeptholiday($dept){
+        $this->load->library('PHPExcel');
+        $this->load->library('PHPExcel/IOFactory');
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
+ 
+        $objPHPExcel->setActiveSheetIndex(0);
+        
+        #$result = $this->model_holiday->exportHolidayData();
+        $result = $this->model_holiday->exportmydeptHolidayData($dept);
+        
+        // Field names in the first row
+        
+        $fields = $result->list_fields();
+        $col = 0;
+        
+        foreach ($fields as $field)
+        {
+            $v="";
+            #echo gettype($field);
+            switch($field)
+            {
+                case 'name':$v="姓名\t";break;
+                case 'department':$v="部门\t";break;
+                case 'initdate':$v="开始工作时间\t";break;
+                case 'indate':$v="入职时间\t";break;
+                case 'Companyage':$v="社会工龄\t";break;
+                case 'Totalage':$v="公司工龄\t";break;
+                case 'Totalday':$v="可休假总数\t";break;
+                case 'Lastyear':$v="去年休假数\t";break;
+                case 'Thisyear':$v="今年休假数\t";break;
+                case 'Bonus':$v="荣誉休假数\t";break;
+                case 'Used':$v="已休假数\t";break;
+                case 'Rest':$v="未休假数\t";break;
+                case 'Jan':$v="一月\t";break;
+                case 'Feb':$v="二月\t";break;
+                case 'Mar':$v="三月\t";break;
+                case 'Apr':$v="四月\t";break;
+                case 'May':$v="五月\t";break;
+                case 'Jun':$v="六月\t";break;
+                case 'Jul':$v="七月\t";break;
+                case 'Aug':$v="八月\t";break;
+                case 'Sep':$v="九月\t";break;
+                case 'Oct':$v="十月\t";break;
+                case 'Nov':$v="十一月\t";break;
+                case 'Dece':$v="十二月\t";break;    	
+                default:break;
+            }
+            if($v != ""){
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
+                $col++;
+            }
+        }
+ 
+        // Fetching the table data
+        $row = 2;
+        
+        foreach($result->result() as $data)
+        {
+            $col = 0;
+            foreach ($fields as $field)
+            {
+                if($field != 'initflag' and $field != 'user_id')
+                {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
+                    $col++;
+                }
+            }
+            $row++;
+            
+        }
+ 
+        $objPHPExcel->setActiveSheetIndex(0);
+ 
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
+ 
+        $filename = date('YmdHis').".xlsx";
+        // Sending headers to force the user to download the file
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$filename);
+        header("Content-Disposition:filename=".$filename);
+        header('Cache-Control: max-age=0');
+ 
+        $objWriter->save('php://output');
+
+    }
+    public function export_holiday()
     {
         $this->excel();
         redirect('holiday/index', 'refresh');
 
+    }
+
+    public function excel_plan(){
+        $this->load->library('PHPExcel');
+        $this->load->library('PHPExcel/IOFactory');
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
+ 
+        $objPHPExcel->setActiveSheetIndex(0);
+        
+        $result = $this->model_plan->exportPlanData();
+        // Field names in the first row
+        $fields = $result->list_fields();
+        $col = 0;
+        foreach ($fields as $field)
+        {
+            $v="";
+            #echo gettype($field);
+            switch($field)
+            {
+                case 'name':$v="姓名\t";break;
+                case 'department':$v="部门\t";break;
+                case 'Totalday':$v="可休假总数\t";break;
+                case 'Lastyear':$v="去年休假数\t";break;
+                case 'Thisyear':$v="今年休假数\t";break;
+                case 'Bonus':$v="荣誉休假数\t";break;
+                case 'firstquater':$v="第一季度\t";break;
+                case 'secondquater':$v="第二季度\t";break;
+                case 'thirdquater':$v="第三季度\t";break;
+                case 'fourthquater':$v="第四季度\t";break;
+                default:break;
+            }
+            if($v!="")
+            {
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
+                $col++;
+            }
+        }
+ 
+        // Fetching the table data
+        $row = 2;
+        
+        foreach($result->result() as $data)
+        {
+            $col = 0;
+            
+            foreach ($fields as $field)
+            {
+                if($field != 'user_id' and $field != 'submit_tag')
+                {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
+                    $col++;
+                }
+            }
+            /*
+            if($field != 'user_id' and $field != 'submit_tag')
+            {
+               $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
+            }
+            */
+            $row++;
+        }
+ 
+        $objPHPExcel->setActiveSheetIndex(0);
+ 
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
+ 
+        $filename = date('YmdHis').".xlsx";
+        
+        // Sending headers to force the user to download the file
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$filename);
+        header("Content-Disposition:filename=".$filename);
+        header('Cache-Control: max-age=0');
+ 
+        $objWriter->save('php://output');
+
+    }
+    public function export_plan()
+    {
+
+        $this->excel_plan();
+    }
+    public function excel_mydeptplan($dept){
+        $this->load->library('PHPExcel');
+        $this->load->library('PHPExcel/IOFactory');
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
+ 
+        $objPHPExcel->setActiveSheetIndex(0);
+        $result=array();
+        $result = $this->model_plan->exportmydeptPlanData($dept);
+        // Field names in the first row
+        $fields = $result->list_fields();
+        $col = 0;
+        foreach ($fields as $field)
+        {
+            $v="";
+            switch($field)
+            {
+                case 'name':$v="姓名\t";break;
+                case 'department':$v="部门\t";break;
+                case 'Thisyear':$v="今年休假数\t";break;
+                case 'Lastyear':$v="去年休假数\t";break;
+                case 'Bonus':$v="荣誉休假数\t";break;
+                case 'Totalday':$v="可休假总数\t";break;                
+                case 'firstquater':$v="第一季度\t";break;
+                case 'secondquater':$v="第二季度\t";break;
+                case 'thirdquater':$v="第三季度\t";break;
+                case 'fourthquater':$v="第四季度\t";break;
+                default:break;
+            }
+            if($v!="")
+            {
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
+                $col++;
+            }
+        }
+ 
+        // Fetching the table data
+        $row = 2;
+        
+        foreach($result->result() as $data)
+        {
+            $col = 0;
+            
+            foreach ($fields as $field)
+            {
+                if($field != 'user_id' and $field != 'submit_tag')
+                {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
+                    $col++;
+                }
+            }
+            /*
+            if($field != 'user_id' and $field != 'submit_tag')
+            {
+               $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
+            }
+            */
+            $row++;
+        }
+        /**/
+ 
+        $objPHPExcel->setActiveSheetIndex(0);
+ 
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
+ 
+        $filename = date('YmdHis').".xlsx";
+        
+        // Sending headers to force the user to download the file
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$filename);
+        header("Content-Disposition:filename=".$filename);
+        header('Cache-Control: max-age=0');
+ 
+        $objWriter->save('php://output');
+
+    }
+    
+    public function export_mydeptplan()
+    {
+        $user_id=$this->session->userdata('user_id');
+        $my_data = $this->model_plan->getPlanById($user_id);
+        
+        $this->excel_mydeptplan($my_data['department']);
+    }
+
+    public function export_mydeptholiday()
+    {   $user_id=$this->session->userdata('user_id');
+        $my_data = $this->model_plan->getPlanById($user_id);
+        #echo $my_data['department'];
+        $this->excel_mydeptholiday($my_data['department']);
     }
     
 
@@ -730,6 +994,32 @@ class Holiday extends Admin_Controller
 		$this->render_template('holiday/index', $this->data);
     }
 
+    public function mydeptholiday()
+    {
+        
+        $user_id=$this->session->userdata('user_id');
+
+        $user_data = $this->model_holiday->getHolidayById($user_id);
+        $holiday_data = $this->model_holiday->getHolidayByDept($user_data['department']);
+        
+        $notice_data = $this->model_notice->getNoticeLatest();
+
+        $notice_result=array();
+        foreach ($notice_data as $k => $v) {
+            $notice_result[$k] = $v;
+        }
+        
+        $result = array();
+        foreach ($holiday_data as $k => $v)
+        {
+            $result[$k] = $v;
+        }
+
+        $this->data['holiday_data'] = $result;
+        $this->data['notice_data'] = $notice_result;
+        $this->data['user_permission'] = $this->session->userdata('user_permission');
+		$this->render_template('holiday/mydeptholiday', $this->data);
+    }
     public function mydeptplan()
     {
         $user_id=$this->session->userdata('user_id');

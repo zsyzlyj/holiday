@@ -13,10 +13,14 @@
         <li class="active">Holiday</li>
       </ol>
     </section>
-
+    <hr />
     <!-- Main content -->
     <section class="content">
-        <a href="<?php echo base_url('holiday/export') ?>" class="btn btn-info">导出表格</a>
+        <h3>年假汇总</h3>
+        <a href="<?php echo base_url('holiday/export_holiday') ?>" class="btn btn-info">导出表格</a>
+        <hr />
+        <h3>年假计划汇总</h3>
+        <a href="<?php echo base_url('holiday/export_plan') ?>" class="btn btn-info">导出表格</a>
     </section>
     <!-- /.content -->
   </div>

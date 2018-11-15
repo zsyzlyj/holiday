@@ -8,13 +8,8 @@ class Model_plan extends CI_Model
 	}
 
 	/* get the brand data */
-	public function getPlanData($id = null)
+	public function getPlanData()
 	{
-		if($id) {
-			$sql = "SELECT * FROM plan where user_id = ?";
-			$query = $this->db->query($sql, array($name));
-			return $query->result_array();
-		}
 
 		$sql = "SELECT * FROM plan";
 		$query = $this->db->query($sql);
@@ -46,10 +41,15 @@ class Model_plan extends CI_Model
 	}
 	public function exportPlanData($id = null)
 	{
-		if($id) {
-			$sql = "SELECT * FROM plan where user_id = ?";
-			$query = $this->db->query($sql, array($name));
-			return $query->row_array();
+		$sql = "SELECT * FROM plan";
+		return $this->db->query($sql);
+	}
+	public function exportmydeptPlanData($dept=null)
+	{
+		if($dept) {
+			$sql = "SELECT * FROM plan where department = ?";
+			$query = $this->db->query($sql, array($dept));
+			return $query;
 		}
 
 		$sql = "SELECT * FROM plan";
