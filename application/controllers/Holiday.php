@@ -657,7 +657,7 @@ class Holiday extends Admin_Controller
     public function export_mydeptholiday()
     {   $user_id=$this->session->userdata('user_id');
         $my_data = $this->model_plan->getPlanById($user_id);
-        #echo $my_data['department'];
+
         $this->excel_mydeptholiday($my_data['department']);
     }
     
@@ -737,7 +737,6 @@ class Holiday extends Admin_Controller
         $Nov=0;
         $Dece=0;
         foreach($data as $k => $v){
-            #echo gettype($v);
             if($first){
                 $first=false;
                 foreach($v as $a =>$b){
@@ -1028,7 +1027,6 @@ class Holiday extends Admin_Controller
         $result = array();
         #$holiday_data = $this->model_holiday->getHolidayByDept($my_data['department']);
         $plan_data = $this->model_plan->getPlanByDept($my_data['department']);
-        #echo $plan_data;
         $submitted=0;
         if($plan_data){
             foreach ($plan_data as $k => $v) {
@@ -1043,8 +1041,7 @@ class Holiday extends Admin_Controller
                 
             }
         }
-        echo $submitted;
-        echo count($plan_data);
+
 
         $notice_data = $this->model_notice->getNoticeLatest();
         

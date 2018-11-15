@@ -26,7 +26,6 @@ class Users extends Admin_Controller
 		foreach ($user_data as $k => $v) {
 			$result[$k] = $v;
 			foreach($holiday as $a => $b){
-				#echo $a.':'.$b['name'];
 				if($b['name'] == $v['username'] )
 				{
 					$result[$k]['dept']=$b['department'];
@@ -52,6 +51,8 @@ class Users extends Admin_Controller
 			3 => '普通员工'
 
 		);
+
+		
 		$this->data['user_permission']=$this->session->userdata('user_permission');
 
 		$this->data['user_data'] = $result;
