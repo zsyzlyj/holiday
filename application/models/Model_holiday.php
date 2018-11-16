@@ -8,13 +8,8 @@ class Model_holiday extends CI_Model
 	}
 
 	/* get the brand data */
-	public function getHolidayData($id = null)
+	public function getHolidayData()
 	{
-		if($id) {
-			$sql = "SELECT * FROM holiday where name = ?";
-			$query = $this->db->query($sql, array($name));
-			return $query->row_array();
-		}
 
 		$sql = "SELECT * FROM holiday";
 		$query = $this->db->query($sql);
@@ -46,12 +41,6 @@ class Model_holiday extends CI_Model
 	}
 	public function exportHolidayData($id = null)
 	{
-		if($id) {
-			$sql = "SELECT * FROM holiday where name = ?";
-			$query = $this->db->query($sql, array($name));
-			return $query->row_array();
-		}
-
 		$sql = "SELECT * FROM holiday";
 		return $this->db->query($sql);
 	}
@@ -86,7 +75,7 @@ class Model_holiday extends CI_Model
 	public function remove($id)
 	{
 		if($id) {
-			$this->db->where('name', $id);
+			$this->db->where('user_id', $id);
 			$delete = $this->db->delete('holiday');
 			return ($delete == true) ? true : false;
 		}

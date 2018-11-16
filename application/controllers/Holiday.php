@@ -736,6 +736,7 @@ class Holiday extends Admin_Controller
         $Oct=0;
         $Nov=0;
         $Dece=0;
+        $User_id="";
         foreach($data as $k => $v){
             if($first){
                 $first=false;

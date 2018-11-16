@@ -1,37 +1,33 @@
 <?php 
 
-class Model_users extends CI_Model
+class Model_manager extends CI_Model
 {
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function getUserData() 
+	public function getManagerData() 
 	{
-		$sql = "SELECT * FROM users WHERE user_id != ?";
+		$sql = "SELECT * FROM manager WHERE user_id != ?";
 		$query = $this->db->query($sql, array(1));
 		return $query->result_array();
 	}
-	public function getUserById($userId = null) 
+	public function getManagerById($userId = null) 
 	{
-		
 		if($userId) {
-			$sql = "SELECT * FROM users WHERE user_id = ?";	
+			$sql = "SELECT * FROM manager WHERE user_id = ?";	
 			$query = $this->db->query($sql, array($userId));
 			return $query->row_array();
 		}
 	}
 
-	public function create($data = '', $group_id = null)
+	public function create($data = '')
 	{
 
-		if($data && $group_id) {
-			$create = $this->db->insert('users', $data);
-
+		if($data) {
+			$create = $this->db->insert('manager', $data);
 			$user_id = $this->db->insert_id();
-
-
 			return ($create == true) ? true : false;
 		}
 	}
@@ -41,13 +37,13 @@ class Model_users extends CI_Model
 	public function update($data=array(),$id)
 	{
 		$this->db->where('user_id',$id);
-		$update = $this->db->update('users', $data);
+		$update = $this->db->update('manager', $data);
 		return ($update == true) ? true : false;	
 	}
 	public function edit($data = array(), $id = null, $group_id = null)
 	{
 		$this->db->where('user_id', $id);
-		$update = $this->db->update('users', $data);
+		$update = $this->db->update('manager', $data);
 
 		if($group_id) {
 			// user group
@@ -63,13 +59,13 @@ class Model_users extends CI_Model
 	public function delete($id)
 	{
 		$this->db->where('user_id', $id);
-		$delete = $this->db->delete('users');
+		$delete = $this->db->delete('manager');
 		return ($delete == true) ? true : false;
 	}
 
-	public function countTotalUsers()
+	public function countTotalmanager()
 	{
-		$sql = "SELECT * FROM users";
+		$sql = "SELECT * FROM manager";
 		
 		$query = $this->db->query($sql);
 		echo $query->num_rows();

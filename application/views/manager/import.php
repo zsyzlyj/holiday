@@ -15,7 +15,7 @@
   <section class="content">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-        <form action="<?php echo base_url('holiday/import') ?>" method="post"
+        <form action="<?php echo base_url('manager/import') ?>" method="post"
             name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
             <div>
                 <label>选择上传文件</label> 
@@ -36,9 +36,9 @@
 <!-- /.content-wrapper -->
 <script type="text/javascript">
     $(document).ready(function() {
-      $("#mainSyncNav").addClass('active');
-      $("#uploadFileNav").addClass('active');
       
+      $("#mainUserNav").addClass('active');
+      $("#manageUserNav").addClass('active');
     });
     
   </script>

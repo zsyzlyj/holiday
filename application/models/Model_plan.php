@@ -17,15 +17,11 @@ class Model_plan extends CI_Model
 	}
 	public function getPlanById($userId = null) 
 	{
-		
 		if($userId) {
 			$sql = "SELECT * FROM plan WHERE user_id = ?";	
 			$query = $this->db->query($sql, array($userId));
 			return $query->row_array();
 		}
-		$sql = "SELECT * FROM plan";
-		$query = $this->db->query($sql);
-		return $query->result();
 	}
 	public function getPlanByDept($dept = null) 
 	{
@@ -35,9 +31,6 @@ class Model_plan extends CI_Model
 			$query = $this->db->query($sql, array($dept));
 			return $query->result_array();
 		}
-		$sql = "SELECT * FROM Plan";
-		$query = $this->db->query($sql);
-		return $query->result_array();
 	}
 	public function exportPlanData($id = null)
 	{
@@ -52,8 +45,6 @@ class Model_plan extends CI_Model
 			return $query;
 		}
 
-		$sql = "SELECT * FROM plan";
-		return $this->db->query($sql);
 	}
 	
 	public function create($data)

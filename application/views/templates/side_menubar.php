@@ -96,10 +96,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="createUserNav"><a href="<?php echo base_url('users/create') ?>"><i class="fa fa-circle-o"></i> 添加用户</a></li>
+            <!--<li id="createUserNav"><a href="<?php echo base_url('users/create') ?>"><i class="fa fa-circle-o"></i> 添加用户</a></li>-->
 
         
-            <li id="manageUserNav"><a href="<?php echo base_url('users') ?>"><i class="fa fa-circle-o"></i> 用户权限管理</a></li>
+            <li id="manageUserNav"><a href="<?php echo base_url('manager') ?>"><i class="fa fa-circle-o"></i> 权限管理</a></li>
           
           </ul>
             
@@ -205,7 +205,7 @@
 
             <li id="companyNav"><a href="<?php echo base_url('company/') ?>"><i class="fa fa-files-o"></i> <span>Company</span></a></li>
 
--->
+
 
             <li class="treeview" id="mainProductNav">
               <a href="#">
@@ -227,13 +227,13 @@
 
         
 
-        <!-- <li class="header">Settings</li> -->
+         <li class="header">Settings</li>
 
           <li><a href="<?php echo base_url('users/profile/') ?>"><i class="fa fa-user-o"></i> <span>个人信息</span></a></li>
 
           <li><a href="<?php echo base_url('users/setting/') ?>"><i class="fa fa-wrench"></i> <span>设置</span></a></li>
         
-
+          -->
         
         <!-- user permission info -->
         
