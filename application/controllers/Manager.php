@@ -95,7 +95,8 @@ class Manager extends Admin_Controller
                 array_push($column,$v);
             }
         }
-        $initflag=0;
+		$initflag=0;
+		$reset=false;
         foreach($column as $k => $v)
         {
             foreach($v as $a => $b)
@@ -106,45 +107,45 @@ class Manager extends Admin_Controller
 					case 'C':$dept=$b;break;
 					case 'D':$role=$b;break;
                 }
-            }
-            
-            $Update_data=array(
+			}
+			$Update_data=array(
 				'user_id' => $user_id,
-                'name' => $name,
+				'name' => $name,
 				'dept' => $dept,
 				'role' => $role
 			);
-			$User_default=array(
-				'permission' => 3
-			);
-			$user=$this->model_users->getUserData();
-			foreach ($user as $c => $d){
-
-				$this->model_users->update($User_default,$user_id);
+			if(!$reset){
+				$User_default=array(
+					'permission' => 3
+				);
+				$user=$this->model_users->getUserData();
+				foreach ($user as $c => $d){
+					$this->model_users->update($User_default,$user_id);
+				}
+				$reset=true;
 			}
 			$update_user=false;
             if($this->model_manager->getManagerbyID($user_id))
             {
 				$update=$this->model_manager->update($Update_data,$user_id);
-				$update_user=true;
             }
             else{
-				
 				$update=$this->model_manager->create($Update_data);
-				if($Update_data['role']=='综管员'){
-					$permission=1;
-				}
-				if($Update_data['role']=='部门负责人'){
-					$permission=2;
-				}
-				$Update_user=array(
-					'permission' => $permission
-				);
-				
-				$update_user=$this->model_users->update($Update_user,$user_id);
             }
-            
-            if($update == true) {
+            if($Update_data['role']=='超级管理员'){
+				$permission=0;
+			}
+			if($Update_data['role']=='综管员'){
+				$permission=1;
+			}
+			if($Update_data['role']=='部门负责人'){
+				$permission=2;
+			}
+			$Update_user=array(
+				'permission' => $permission
+			);
+			$update_user=$this->model_users->update($Update_user,$user_id);
+            if($update == true and $update_user== true) {
                 $response['success'] = true;
                 $response['messages'] = 'Succesfully updated';
             }

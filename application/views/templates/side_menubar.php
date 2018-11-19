@@ -4,55 +4,33 @@
       
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <?php if($user_permission == 3 ): ?>
-        <li id="dashboardMainMenu">
-          <a href="<?php echo base_url('holiday/staff') ?>">
-            <i class="fa fa-bar-chart"></i> <span>年假信息</span>
-          </a>
-        </li>
-        <li id='planMainMenu'>
-          <a href="<?php echo base_url('holiday/staff_plan') ?>">
-            <i class="fa fa-edit"></i> <span>年假计划</span>
-          </a>
-        </li>
-        
-        <?php endif ?>
-        <?php if($user_permission == 1 ): ?>
-        <li id="dashboardMainMenu">
-          <a href="<?php echo base_url('holiday/admin') ?>">
-            <i class="fa fa-bar-chart"></i> <span>年假信息</span>
-          </a>
-        </li>
-        <li id='planMainMenu'>
-          <a href="<?php echo base_url('holiday/staff_plan') ?>">
-            <i class="fa fa-edit"></i> <span>年假计划</span>
+        <?php if($user_permission == 1 or $user_permission == 2 ): ?>
+        <li id="myDeptHolidayMainMenu">
+          <a href="<?php echo base_url('holiday/mydeptholiday') ?>">
+            <i class="fa fa-file-archive-o"></i>
+            <span>部门年假信息汇总</span>
           </a>
         </li>
         <li id="myDeptPlanNav">
           <a href="<?php echo base_url('holiday/mydeptplan') ?>">
             <i class="fa fa-folder-o"></i>
-            <span>本部门年假提交汇总</span>
+            <span>部门年假计划汇总</span>
           </a>
         </li>
-        
         <?php endif ?>
         <?php if($user_permission == 2 ): ?>
-        <li id="dashboardMainMenu">
-          <a href="<?php echo base_url('holiday/manager') ?>">
-            <i class="fa fa-bar-chart"></i> <span>年假信息</span>
-          </a>
-        </li>
-        <li id='planMainMenu'>
-          <a href="<?php echo base_url('holiday/staff_plan') ?>">
-            <i class="fa fa-edit"></i> <span>年假计划</span>
-          </a>
-        </li>
+
         
         <?php endif ?>
         <?php if($user_permission == 0): ?>
-        <li id="dashboardGatherMainMenu">
+        <li id="dashboardMainMenu">
+          <a href="<?php echo base_url('dashboard') ?>">
+            <i class="fa fa-dashboard"></i> <span>总览</span>
+          </a>
+        </li>
+        <li id="holidayGatherMainMenu">
           <a href="<?php echo base_url('holiday') ?>">
-            <i class="fa fa-bar-chart"></i> <span>年假汇总</span>
+            <i class="fa fa-leaf"></i> <span>年假汇总</span>
           </a>
         </li>
         <li id='planGatherMainMenu'>
@@ -60,16 +38,16 @@
             <i class="fa fa-edit"></i> <span>年假计划汇总</span>
           </a>
         </li>
-        <li id="myDeptHolidayNav">
+        <li id="myDeptHolidayMainMenu">
           <a href="<?php echo base_url('holiday/mydeptholiday') ?>">
             <i class="fa fa-file-archive-o"></i>
-            <span>本部门年假信息汇总</span>
+            <span>部门年假信息汇总</span>
           </a>
         </li>
         <li id="myDeptPlanNav">
           <a href="<?php echo base_url('holiday/mydeptplan') ?>">
             <i class="fa fa-folder-o"></i>
-            <span>本部门年假计划汇总</span>
+            <span>部门年假计划汇总</span>
           </a>
         </li>
         <li class="treeview" id="mainSyncNav">
@@ -118,20 +96,21 @@
             
             <li id="manage_notice"><a href="<?php echo base_url('notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
           </ul>
-            <li id="dashboardMainMenu">
-            <a href="<?php echo base_url('holiday/staff') ?>">
-              <i class="fa fa-bar-chart"></i> <span>年假信息</span>
-            </a>
+          
+          <?php endif; ?>
+          <li id="holidayMainMenu">
+          <a href="<?php echo base_url('holiday/staff') ?>">
+            <i class="fa fa-tasks"></i> <span>我的年假信息</span>
+          </a>
           </li>
           <li id='planMainMenu'>
             <a href="<?php echo base_url('holiday/staff_plan') ?>">
-              <i class="fa fa-edit"></i> <span>年假计划</span>
+              <i class="fa fa-edit"></i> <span>我的年假计划</span>
             </a>
           </li>
-          <?php endif; ?>
-
           <!--
-
+            
+            
             <li class="treeview" id="mainGroupNav">
               <a href="#">
                 <i class="fa fa-files-o"></i>

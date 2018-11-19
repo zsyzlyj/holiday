@@ -197,7 +197,7 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#planMainMenu').addClass('active');
+      $('#planGatherMainMenu').addClass('active');
       
       $('#planTable').DataTable({
         language: 

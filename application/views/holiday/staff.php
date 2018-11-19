@@ -48,7 +48,7 @@
               <h4><font color="blue">点击已休假数可以查看每个月已休明细</font></h4>
               <?php endif ?>
             </div>
-            
+            <br />
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
@@ -65,7 +65,7 @@
                   <th>荣誉假期</th>
                   <th>已休假数</th>
                   <th>剩下休假数</th>
-                  <th>操作</th>
+                  <!--<th>操作</th>-->
                 </tr>
                 </thead>
                 <tbody>
@@ -142,13 +142,13 @@
 
                         <td><?php echo $v['Rest']; ?></td>
 
-
+                        <!--
                         <td>
                             <a href="<?php echo base_url('holiday/edit/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
 
                             <a href="<?php echo base_url('holiday/delete/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-trash"></i></a>
                         </td>
-
+                        -->
                       </tr>
                   <?php endif; ?>
                 </tbody>
@@ -175,6 +175,7 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
+      /*
       $('#holidayTable').DataTable({
   
       language: {
@@ -201,12 +202,12 @@
               "sSortDescending": ": 以降序排列此列"
           }
       }
-    });
+    });*/
 
 
 
     
-    $("#dashboardMainMenu").addClass('active');
+    $("#holidayMainMenu").addClass('active');
     
       
     });

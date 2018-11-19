@@ -30,8 +30,8 @@ class Model_holiday extends CI_Model
 	public function getHolidayByDept($dept = null) 
 	{
 		
-		if($dept) {
-			$sql = "SELECT * FROM holiday WHERE department = ?";	
+		if($dept) {	
+			$sql = "SELECT * FROM holiday WHERE locate(?,department)";
 			$query = $this->db->query($sql, array($dept));
 			return $query->result_array();
 		}
@@ -66,7 +66,7 @@ class Model_holiday extends CI_Model
 	public function update($data, $id)
 	{
 		if($data && $id) {
-			$this->db->where('name', $id);
+			$this->db->where('user_id', $id);
 			$update = $this->db->update('holiday', $data);
 			return ($update == true) ? true : false;
 		}

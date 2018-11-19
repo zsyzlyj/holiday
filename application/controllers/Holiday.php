@@ -15,6 +15,7 @@ class Holiday extends Admin_Controller
         $this->load->model('model_holiday');
         $this->load->model('model_plan');
         $this->load->model('model_notice');
+        $this->load->model('model_manager');
 	}
 
     /* 
@@ -38,6 +39,7 @@ class Holiday extends Admin_Controller
             if($result[$k]['initflag']==0){
                 $result[$k]['Companyage']=floor((strtotime(date("Y-m-d"))-strtotime($result[$k]['indate']))/86400/365);
                 $result[$k]['Totalage']=floor((strtotime(date("Y-m-d"))-strtotime($result[$k]['initdate']))/86400/365);
+
                 if($result[$k]['Companyage']>=1 and $result[$k]['Companyage']<10){
                     $result[$k]['Thisyear']=5;
                 }
@@ -650,15 +652,15 @@ class Holiday extends Admin_Controller
     {
         $user_id=$this->session->userdata('user_id');
         $my_data = $this->model_plan->getPlanById($user_id);
-        
-        $this->excel_mydeptplan($my_data['department']);
+        #echo $_POST['current_dept'];
+        $this->excel_mydeptplan($_POST['current_dept']);
     }
 
     public function export_mydeptholiday()
     {   $user_id=$this->session->userdata('user_id');
         $my_data = $this->model_plan->getPlanById($user_id);
 
-        $this->excel_mydeptholiday($my_data['department']);
+        $this->excel_mydeptholiday($_POST['current_dept']);
     }
     
 
@@ -714,8 +716,8 @@ class Holiday extends Admin_Controller
         $counter=0;
         $name="";
         $dept="";
-        $Initdate=date("Y-m-d") ;
-        $Indate=date("Y-m-d") ;
+        $Initdate=gmdate("Y-m-d") ;
+        $Indate=gmdate("Y-m-d");
         $Totalage=0;
         $Comage=0;
         $Totalday=0;
@@ -748,6 +750,7 @@ class Holiday extends Admin_Controller
                 array_push($column,$v);
             }
         }
+        /* excel导入时间的方法！ */
         $initflag=0;
         foreach($column as $k => $v)
         {
@@ -756,8 +759,8 @@ class Holiday extends Admin_Controller
                 switch($a){
                     case 'A':$name=$b;break;
                     case 'B':$dept=$b;break;
-                    case 'C':$Initdate=$b;break;
-                    case 'D':$Indate=$b;break;
+                    case 'C':$Initdate=$b;break;#gmdate('Y-m-d',intval((strtotime($b)-25569)*3600*24));break;
+                    case 'D':$Indate=$b;break;#=gmdate('Y-m-d',intval((strtotime($b)-25569)*3600*24));break;
                     case 'E':$Totalage=$b;break;
                     case 'F':$Comage=$b;break;
                     case 'G':$Totalday=$b;break;
@@ -812,19 +815,24 @@ class Holiday extends Admin_Controller
             );
 
             $update_user=true;
-            if($this->model_holiday->getHolidaybyID($name))
+            if($this->model_holiday->getHolidaybyID($User_id))
             {
-                $update=$this->model_holiday->update($Update_data,$name);
+                #if(!(serialize($Update_data) == serialize($this->model_holiday->getHolidaybyID($User_id)))){
+                   $update=$this->model_holiday->update($Update_data,$User_id);
+                #}
             }
             else{
                 $update=$this->model_holiday->create($Update_data);
-                $Update_user_data=array(
-                    'user_id' => $User_id,
-                    'username' => $name,
-                    'password' => md5('hr'),
-                    'permission' => '3'
-                );
-                $update_user=$this->model_users->create($Update_user_data,$name);
+                if($this->model_users->getUserById($User_id)==1){
+                    $Update_user_data=array(
+                        'user_id' => $User_id,
+                        'username' => $name,
+                        'password' => md5('hr'),
+                        'permission' => '3'
+                    );
+            
+                    $update_user=$this->model_users->create($Update_user_data,$name);
+                }
             }
             
             if($update == true and $update_user == true) {
@@ -835,7 +843,6 @@ class Holiday extends Admin_Controller
                 $response['success'] = false;
                 $response['messages'] = 'Error in the database while updated the brand information';			
             }
-            
         }
     }
     public function import($filename=NULL)
@@ -863,7 +870,9 @@ class Holiday extends Admin_Controller
     
 
 
-
+    /*
+        获取所有的计划，超管可以查看
+     */
 
     public function plan_set()
     {
@@ -885,8 +894,7 @@ class Holiday extends Admin_Controller
                     $v['submit_tag']='未提交';
                 }
                 $result[$k]=$v;
-            }
-            
+            }  
         }
         else
         {
@@ -906,7 +914,6 @@ class Holiday extends Admin_Controller
                     'thirdquater' => 0,
                     'fourthquater' => 0,
                     'submit_tag' => 0
-
                 );
                 $this->model_plan->create($plan_data);
             }
@@ -979,12 +986,11 @@ class Holiday extends Admin_Controller
         foreach ($notice_data as $k => $v) {
             $notice_result[$k] = $v;
         }
-        if($user_id!='111111')
-        {
-            foreach ($holiday_data as $k => $v) {
-                $result[$k] = $v;
-            }
+
+        foreach ($holiday_data as $k => $v) {
+            $result[$k] = $v;
         }
+        
 
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
@@ -996,40 +1002,45 @@ class Holiday extends Admin_Controller
 
     public function mydeptholiday()
     {
-        
+        $result=array();
         $user_id=$this->session->userdata('user_id');
+        $this->data['current_dept']="";
+        if($_POST){
+            $select_dept=$_POST['selected_dept'];
+            $holiday_data = $this->model_holiday->getHolidayByDept($select_dept);
+            $result = array();
+            foreach ($holiday_data as $k => $v)
+            {
+                $result[$k] = $v;
+            }
 
-        $user_data = $this->model_holiday->getHolidayById($user_id);
-        $holiday_data = $this->model_holiday->getHolidayByDept($user_data['department']);
-        
-        $notice_data = $this->model_notice->getNoticeLatest();
+            $this->data['holiday_data'] = $result;
+            $this->data['current_dept']=$select_dept;
 
-        $notice_result=array();
-        foreach ($notice_data as $k => $v) {
-            $notice_result[$k] = $v;
         }
         
-        $result = array();
-        foreach ($holiday_data as $k => $v)
-        {
-            $result[$k] = $v;
-        }
+        $admin_data = $this->model_manager->getManagerById($user_id);
+
+        $admin_result=array();
+        $admin_result=explode('/',$admin_data['dept']);
+
+        $this->data['dept_options']=$admin_result;
 
         $this->data['holiday_data'] = $result;
-        $this->data['notice_data'] = $notice_result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
 		$this->render_template('holiday/mydeptholiday', $this->data);
     }
     public function mydeptplan()
     {
         $user_id=$this->session->userdata('user_id');
-        $my_data = $this->model_plan->getPlanById($user_id);
-
         $result = array();
-        #$holiday_data = $this->model_holiday->getHolidayByDept($my_data['department']);
-        $plan_data = $this->model_plan->getPlanByDept($my_data['department']);
         $submitted=0;
-        if($plan_data){
+        $this->data['current_dept']="";
+        if($_POST){
+            $select_dept=$_POST['selected_dept'];
+            $plan_data = $this->model_plan->getPlanByDept($select_dept);
+            
+            
             foreach ($plan_data as $k => $v) {
                 $result[$k]=$v;
                 if($v['submit_tag']==1){
@@ -1039,26 +1050,20 @@ class Holiday extends Admin_Controller
                 else{
                     $result[$k]['submit_tag'] = '未提交';
                 }
-                
             }
+            $this->data['current_dept']=$select_dept;
         }
+        $admin_data = $this->model_manager->getManagerById($user_id);
 
+        $admin_result=array();
+        $admin_result=explode('/',$admin_data['dept']);
 
-        $notice_data = $this->model_notice->getNoticeLatest();
-        
-        $notice_result=array();
-        foreach ($notice_data as $k => $v) {
-            $notice_result[$k] = $v;
-        }
-        
+        $this->data['dept_options']=$admin_result;
         $this->data['submitted'] = $submitted;
         $this->data['plan_data'] = $result;
-        $this->data['notice_data'] = $notice_result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
         $this->render_template('holiday/mydeptplan', $this->data);
-        /**/
     }
-    
 
     /*
     ==============================================================================
@@ -1075,14 +1080,10 @@ class Holiday extends Admin_Controller
         foreach ($notice_data as $k => $v) {
             $notice_result[$k] = $v;
         }
-        if($user_id!='222222')
-        {
-            foreach ($holiday_data as $k => $v) {
-                $result[$k] = $v;
-            }
+        
+        foreach ($holiday_data as $k => $v) {
+            $result[$k] = $v;
         }
-        //$result['']
-        /**/
 
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
@@ -1156,14 +1157,12 @@ class Holiday extends Admin_Controller
         */
         /*============================================================*/
         $user_id=$this->session->userdata('user_id');
-        $user_data=$this->model_users->getUserById($user_id);
-        $plan_data = $this->model_plan->getPlanById($user_data['username']);
+        $plan_data = $this->model_plan->getPlanById($user_id);
         $result = array();
 
 
         foreach ($plan_data as $k => $v) {
             $result[$k] = $v;
-            #echo $v;
         }
         
         $this->data['plan_data'] = $result;
@@ -1181,7 +1180,6 @@ class Holiday extends Admin_Controller
 
 
         if ($this->form_validation->run() == TRUE) {
-            #echo $_POST['total'];
             if($_POST['firstquater']+$_POST['secondquater']+$_POST['thirdquater']+$_POST['fourthquater']<=$_POST['total'])
             {
                 $data = array(
@@ -1192,28 +1190,28 @@ class Holiday extends Admin_Controller
                     'submit_tag' => 1
                 );
 
-                $create = $this->model_plan->update($data,$user_data['username']);
+                $create = $this->model_plan->update($data,$user_id);
                 
                 if($create == true) {
                     $this->session->set_flashdata('success', 'Successfully created');
-                    $this->plan();
+                    $this->staff_plan();
                 }
                 else {
                     $this->session->set_flashdata('error', 'Error occurred!!');
-                    $this->render_template('holiday/plan', $this->data);
+                    $this->render_template('holiday/staff_plan', $this->data);
                 }
             }
             else
             {
 
                 $this->session->set_flashdata('error', '数据错误');
-                $this->render_template('holiday/plan', $this->data);
+                $this->render_template('holiday/staff_plan', $this->data);
                 
             }
             /**/
         }
         else {
-            $this->render_template('holiday/plan', $this->data);
+            $this->render_template('holiday/staff_plan', $this->data);
         }
     }
 

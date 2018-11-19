@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        年假计划
+        部门年假计划
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -35,23 +35,39 @@
 
 
           <div class="box">
-            <?php if($plan_data): ?>  
+            
             <div class="box-header">
-
+              <br/>
+                <form action='<?php echo base_url('holiday/mydeptplan' )?>' method="post" id="selected_dept_form">
+                <select id="selected_dept" name="selected_dept" onchange="submitForm();">
+                  <option value="">选择部门</option>
+                  <?php foreach($dept_options as $k => $v):?>
+                  <option value="<?php echo $v;?>"><?php echo $v;?></option>
+                  <?php endforeach;?>
+                </select>
+                </form>
+            </div>
+            <div>
+            <?php if($plan_data): ?>  
                 <h3>
                 提交进度：<?php echo '<font color="green">'.$submitted.'</font> / '.count($plan_data)?>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <?php if($submitted!=count($plan_data)):?><button class="btn btn-success disabled">提交</button><?php endif; ?>
                 <?php if($submitted==count($plan_data)):?><button class="btn btn-success">提交</button><?php endif; ?>
                 
-                <a href='<?php echo base_url('holiday/export_mydeptplan') ?>' class="btn btn-warning">导出</a>
+                <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptplan') ?>' method='post'>
+                  <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
+                  <button class="btn btn-warning">导出</button>
+                </form>
+                
                 </h3>
+            <?php endif;?>
             </div>
             
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              
+              <?php if($plan_data):?>
               <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="120%">
                 <thead>
                 <tr>
@@ -69,6 +85,7 @@
                 </tr>
                 </thead>
                 <tbody>
+                
                     <?php foreach($plan_data as $k => $v): ?>
                       <tr>
                       
@@ -107,8 +124,7 @@
                   
                 </tbody>
                 </table>
-
-                <?php endif; ?>
+                <?php endif;?>
               </div>
               <!-- /.overflow:scroll -->
             </div>
@@ -163,6 +179,11 @@
         }      
       });
     });
+    function submitForm(){
+    //获取form表单对象
+        var form = document.getElementById("selected_dept_form");
+        form.submit();//form表单提交
+    }
     
   </script>
  

@@ -21,6 +21,14 @@ class Model_manager extends CI_Model
 			return $query->row_array();
 		}
 	}
+	public function getManagerByDept($dept = null) 
+	{
+		if($dept) {
+			$sql = "SELECT * FROM manager WHERE locate(?,department)";
+			$query = $this->db->query($sql, array($dept));
+			return $query->result_array();
+		}
+	}
 
 	public function create($data = '')
 	{

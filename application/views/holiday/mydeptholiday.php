@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        本部门年假信息
+        部门年假信息
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -35,7 +35,35 @@
 
           <div class="box">
             <div class="box-header">
-            <a href="<?php echo base_url('holiday/export_mydeptholiday') ?>" class="btn btn-warning">导出</a>
+            
+            
+            <form action='<?php echo base_url('holiday/mydeptholiday' )?>' method="post" id="selected_dept_form">
+            <select id="selected_dept" name="selected_dept" onchange="submitForm();">
+              <option value="">
+                <?php if($current_dept):?>
+                  <?php echo $current_dept;?>
+                <?php else: ?>  
+                  选择部门
+                <?php endif; ?>
+              </option>
+              <?php foreach($dept_options as $k => $v):?>
+              <?php if($current_dept):?>
+                <?php if($current_dept!=$v):?>
+                  <option value="<?php echo $v;?>"><?php echo $v;?></option>
+                <?php endif; ?>
+              <?php else:?>
+                <option value="<?php echo $v;?>"><?php echo $v;?></option>
+              <?php endif; ?>
+              <?php endforeach;?>
+            </select>
+            <br />
+            <br />
+            </form>
+            <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptholiday') ?>' method='post'>
+              <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
+              <button class="btn btn-warning">导出</button>
+            </form>
+
             </div>
             
             <!-- /.box-header -->
@@ -169,6 +197,11 @@
     
       
     });
+    function submitForm(){
+    //获取form表单对象
+        var form = document.getElementById("selected_dept_form");
+        form.submit();//form表单提交
+    }
     
   </script>
  

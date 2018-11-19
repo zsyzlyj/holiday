@@ -40,15 +40,20 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
+              <?php if($plan_data): ?>  
                 <h3>状态：
                 <?php echo validation_errors(); ?>
                 <?php if(validation_errors()): ?>
                   填写规范有误
                 <?php endif; ?>
-                <?php if($this->session->flashdata('success')): ?>
-                  已填写
+                <?php if($plan_data['submit_tag']==1):?>
+                  <font color='blue'>已填写</font>
+                <?php endif ?>
+                <?php if($plan_data['submit_tag']==0):?>
+                  <font color='red'>未填写</font>
                 <?php endif ?>
                 </h3>
+                <br />
                 <br />
                 <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="120%">
                 <thead>
@@ -72,7 +77,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <?php if($plan_data): ?>                  
+                                  
                     <?php $v=$plan_data ?>
                       <tr>
                       
@@ -130,8 +135,8 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#planMainMenu').addClass('active');
-      
+      $("#planMainMenu").addClass('active');
+      /*
       $('#planTable').DataTable({
         language: 
         {
@@ -161,7 +166,9 @@
             }
         }      
       });
+      */
     });
+    
     
   </script>
  

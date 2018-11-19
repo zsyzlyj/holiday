@@ -13,9 +13,15 @@ class Auth extends Admin_Controller
 	}
 
 	/* 
-		Check if the login form is submitted, and validates the user credential
-		If not submitted it redirects to the login page
+		查看登录的表格是否正确，主要是检查user_id和password是否和数据库的一致
+		根据数据库中的permission设置user_permission，根据user_permission确定不同用户登录后界面上的功能
+		permission的值不同分别跳转：
+		0——超级管理员,index
+		1——综管员,admin
+		2——部门负责人，manager
+		3——普通员工,staff
 	*/
+
 	public function login()
 	{
 
@@ -29,13 +35,10 @@ class Auth extends Admin_Controller
            	$id_exists = $this->model_auth->check_id($this->input->post('user_id'));
            	if($id_exists == TRUE) {
            		$login = $this->model_auth->login($this->input->post('user_id'), $this->input->post('password'));
-				echo $login['user_id'];
-				#echo $login['permission'];
            		if($login) {
            			$logged_in_sess = array(
 						'user_id' => $login['user_id'],
 						'user_permission' => $login['permission'],
-						#'permission' => $login['permission'],
 				        'logged_in' => TRUE
 					);
 
@@ -74,7 +77,8 @@ class Auth extends Admin_Controller
 	}
 
 	/*
-		clears the session and redirects to login page
+		清除session，退出
+		
 	*/
 	public function logout()
 	{

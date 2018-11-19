@@ -179,7 +179,7 @@
     });
 
 
-      $("#dashboardGatherMainMenu").addClass('active');
+      $("#holidayGatherMainMenu").addClass('active');
     
       
     });

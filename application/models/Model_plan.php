@@ -26,8 +26,8 @@ class Model_plan extends CI_Model
 	public function getPlanByDept($dept = null) 
 	{
 		
-		if($dept) {
-			$sql = "SELECT * FROM Plan WHERE department = ?";	
+		if($dept) {	
+			$sql = "SELECT * FROM plan WHERE locate(?,department)";
 			$query = $this->db->query($sql, array($dept));
 			return $query->result_array();
 		}
