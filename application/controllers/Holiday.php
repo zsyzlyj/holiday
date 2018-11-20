@@ -24,7 +24,7 @@ class Holiday extends Admin_Controller
 	public function index()
 	{
         $holiday_data = $this->model_holiday->getHolidayData();
-        $notice_data = $this->model_notice->getNoticeLatest();
+        $notice_data = $this->model_notice->getNoticeLatestHoliday();
 
         $notice_result=array();
         foreach ($notice_data as $k => $v) {
@@ -72,6 +72,7 @@ class Holiday extends Admin_Controller
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
+        $this->data['user_name'] = $this->session->userdata('user_name');
 		$this->render_template('holiday/index', $this->data);
     }
     /*
@@ -318,7 +319,6 @@ class Holiday extends Admin_Controller
         foreach ($fields as $field)
         {
             $v="";
-            #echo gettype($field);
             switch($field)
             {
                 case 'name':$v="姓名\t";break;
@@ -405,7 +405,6 @@ class Holiday extends Admin_Controller
  
         $objPHPExcel->setActiveSheetIndex(0);
         
-        #$result = $this->model_holiday->exportHolidayData();
         $result = $this->model_holiday->exportmydeptHolidayData($dept);
         
         // Field names in the first row
@@ -416,7 +415,6 @@ class Holiday extends Admin_Controller
         foreach ($fields as $field)
         {
             $v="";
-            #echo gettype($field);
             switch($field)
             {
                 case 'name':$v="姓名\t";break;
@@ -505,7 +503,6 @@ class Holiday extends Admin_Controller
         foreach ($fields as $field)
         {
             $v="";
-            #echo gettype($field);
             switch($field)
             {
                 case 'name':$v="姓名\t";break;
@@ -652,12 +649,13 @@ class Holiday extends Admin_Controller
     {
         $user_id=$this->session->userdata('user_id');
         $my_data = $this->model_plan->getPlanById($user_id);
-        #echo $_POST['current_dept'];
+
         $this->excel_mydeptplan($_POST['current_dept']);
     }
 
     public function export_mydeptholiday()
-    {   $user_id=$this->session->userdata('user_id');
+    {
+        $user_id=$this->session->userdata('user_id');
         $my_data = $this->model_plan->getPlanById($user_id);
 
         $this->excel_mydeptholiday($_POST['current_dept']);
@@ -676,18 +674,15 @@ class Holiday extends Admin_Controller
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
         $filePath = "uploads/".$path["name"];
-        #echo $filePath;
         move_uploaded_file($path["tmp_name"],$filePath);
         //根据上传类型做不同处理
         
         if (strstr($_FILES['file']['name'],'xlsx')) {
             $reader = new PHPExcel_Reader_Excel2007();
-            #echo $path["tmp_name"];
         }
         else{
             if (strstr($_FILES['file']['name'], 'xls')) {
                 $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
-                #echo $path["tmp_name"];
             }
         }
 
@@ -849,6 +844,7 @@ class Holiday extends Admin_Controller
     {
         
         $this->data['user_permission'] = $this->session->userdata('user_permission');
+        $this->data['user_name'] = $this->session->userdata('user_name');
         if($_FILES){
         if($_FILES["file"])
             {
@@ -934,6 +930,7 @@ class Holiday extends Admin_Controller
         $this->data['plan_data'] = $result;
         
         $this->data['user_permission'] = $this->session->userdata('user_permission');
+        $this->data['user_name'] = $this->session->userdata('user_name');
         
 
         $this->render_template('holiday/plan', $this->data);
@@ -949,7 +946,7 @@ class Holiday extends Admin_Controller
 	{
         $user_id=$this->session->userdata('user_id');
         $holiday_data = $this->model_holiday->getHolidayById($user_id);
-        $notice_data = $this->model_notice->getNoticeLatest();
+        $notice_data = $this->model_notice->getNoticeLatestHoliday();
         $result = array();
         $notice_result=array();
         foreach ($notice_data as $k => $v) {
@@ -964,8 +961,7 @@ class Holiday extends Admin_Controller
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
-        
-
+        $this->data['user_name'] = $this->session->userdata('user_name');
 		$this->render_template('holiday/staff', $this->data);
     }
     
@@ -995,7 +991,7 @@ class Holiday extends Admin_Controller
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
-        
+        $this->data['user_name'] = $this->session->userdata('user_name');
 
 		$this->render_template('holiday/index', $this->data);
     }
@@ -1028,6 +1024,7 @@ class Holiday extends Admin_Controller
 
         $this->data['holiday_data'] = $result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
+        $this->data['user_name'] = $this->session->userdata('user_name');
 		$this->render_template('holiday/mydeptholiday', $this->data);
     }
     public function mydeptplan()
@@ -1062,6 +1059,7 @@ class Holiday extends Admin_Controller
         $this->data['submitted'] = $submitted;
         $this->data['plan_data'] = $result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
+        $this->data['user_name'] = $this->session->userdata('user_name');
         $this->render_template('holiday/mydeptplan', $this->data);
     }
 
@@ -1088,6 +1086,7 @@ class Holiday extends Admin_Controller
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
+        $this->data['user_name'] = $this->session->userdata('user_name');
         
 
 		$this->render_template('holiday/index', $this->data);
@@ -1118,7 +1117,7 @@ class Holiday extends Admin_Controller
         
         $plan_data = $this->model_plan->getplanById($user_id);
         
-        $notice_data = $this->model_notice->getNoticeLatest();
+        $notice_data = $this->model_notice->getNoticeLatestPlan();
         $result = array();
         
         $notice_result=array();
@@ -1140,7 +1139,7 @@ class Holiday extends Admin_Controller
         $this->data['plan_data'] = $plan_data;
         $this->data['notice_data'] = $notice_result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
-        
+        $this->data['user_name'] = $this->session->userdata('user_name');
 
 		$this->render_template('holiday/staff_plan', $this->data);
     }
@@ -1167,6 +1166,7 @@ class Holiday extends Admin_Controller
         
         $this->data['plan_data'] = $result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
+        $this->data['user_name'] = $this->session->userdata('user_name');
         /**/
         /*============================================================*/
 
@@ -1175,9 +1175,6 @@ class Holiday extends Admin_Controller
         $this->form_validation->set_rules('secondquater', 'secondquater','is_natural|greater_than[-1]');
         $this->form_validation->set_rules('thirdquater', 'thirdquater','is_natural|greater_than[-1]');
         $this->form_validation->set_rules('fourthquater', 'fourthquater','is_natural|greater_than[-1]');
-
-        echo $_POST['total'];
-
 
         if ($this->form_validation->run() == TRUE) {
             if($_POST['firstquater']+$_POST['secondquater']+$_POST['thirdquater']+$_POST['fourthquater']<=$_POST['total'])
@@ -1277,6 +1274,7 @@ class Holiday extends Admin_Controller
         $this->data['submitted'] = $submitted;
         $this->data['plan_data'] = $result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
+        $this->data['user_name'] = $this->session->userdata('user_name');
         $this->render_template('holiday/audit', $this->data);
 
     }

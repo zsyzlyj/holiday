@@ -29,7 +29,7 @@ class Dashboard extends Admin_Controller
 		$this->data['user_permission']=$this->session->userdata('user_permission');;
 
 		#$this->data['holiday_data'] = $result;
-
+		$this->data['user_name'] = $this->session->userdata('user_name');
 		$this->render_template('dashboard', $this->data);
 		#$this->render_template('holiday/index', $this->data);
 

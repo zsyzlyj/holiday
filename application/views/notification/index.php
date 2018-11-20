@@ -43,6 +43,7 @@
                   <th>发布者</th>                
                   <th>标题</th>
                   <th>内容</th>
+                  <th>分类</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -53,6 +54,7 @@
                         <td><?php echo $v['username']; ?></td>
                         <td><?php echo $v['title']; ?></td>
                         <td><?php echo $v['content']; ?></td>
+                        <td><?php echo $v['type']; ?></td>
 
                         <td>
                             <!--<a href="<?php echo base_url('users/delete/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-trash"></i></a>-->

@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        公告编辑
+        公告编辑（年假）
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -73,6 +73,6 @@
  <script type="text/javascript">
     $(document).ready(function() {
       $("#mainNoticeNav").addClass('active');
-      $("#publish_notice").addClass('active');
+      $("#publish_holiday").addClass('active');
     });
 </script>

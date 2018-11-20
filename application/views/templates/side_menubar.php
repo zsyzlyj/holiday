@@ -98,14 +98,11 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <!--<li id="createUserNav"><a href="<?php echo base_url('users/create') ?>"><i class="fa fa-circle-o"></i> 添加用户</a></li>-->
-
-        
+            <li id="UserNav"><a href="<?php echo base_url('users') ?>"><i class="fa fa-circle-o"></i> 用户管理</a></li>
             <li id="manageUserNav"><a href="<?php echo base_url('manager') ?>"><i class="fa fa-circle-o"></i> 权限管理</a></li>
-          
           </ul>
-            
           </li>
+          
           <li class="treeview" id="mainNoticeNav">
           <a href="#">
             <i class="fa fa-bullhorn"></i>
@@ -115,11 +112,11 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="publish_notice"><a href="<?php echo base_url('notification/publish') ?>"><i class="fa fa-circle-o"></i> 发布公告</a></li>        
-
-            
+            <li id="publish_holiday"><a href="<?php echo base_url('notification/publish_holiday') ?>"><i class="fa fa-circle-o"></i> 发布假期公告</a></li>        
+            <li id="publish_plan"><a href="<?php echo base_url('notification/publish_plan') ?>"><i class="fa fa-circle-o"></i> 发布年假计划公告</a></li>        
             <li id="manage_notice"><a href="<?php echo base_url('notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
           </ul>
+          </li>
           
           <?php endif; ?>
           <li id="holidayMainMenu">

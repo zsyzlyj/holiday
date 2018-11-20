@@ -34,7 +34,15 @@
 
           <div class="box">
             <div class="box-header">
-
+              <h3 class="box-title"><font color="red">公告说明：</font></h3>
+                </br>              </br>
+              <h4>
+              <?php if($notice_data): ?> 
+              <?php foreach ($notice_data as $notice): ?>
+              <?php echo $notice['content'];?>
+              <?php endforeach;?>
+              <?php endif ?>
+              </h4>
             </div>
             
             <!-- /.box-header -->

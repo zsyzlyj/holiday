@@ -34,7 +34,7 @@ class Model_plan extends CI_Model
 	}
 	public function exportPlanData($id = null)
 	{
-		$sql = "SELECT * FROM plan";
+		$sql = "SELECT * FROM plan WHERE locate(?,department)";
 		return $this->db->query($sql);
 	}
 	public function exportmydeptPlanData($dept=null)

@@ -36,13 +36,15 @@ class Auth extends Admin_Controller
            	if($id_exists == TRUE) {
            		$login = $this->model_auth->login($this->input->post('user_id'), $this->input->post('password'));
            		if($login) {
+					#echo $login['username'];
            			$logged_in_sess = array(
+						'user_name' => $login['username'],
 						'user_id' => $login['user_id'],
 						'user_permission' => $login['permission'],
 				        'logged_in' => TRUE
 					);
-
 					$this->session->set_userdata($logged_in_sess);
+					$this->session->set_userdata('unnn', $login['username']);
 					switch($login['permission']){
 						case 0:
 							redirect('holiday/index', 'refresh');

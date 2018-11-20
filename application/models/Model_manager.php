@@ -32,10 +32,8 @@ class Model_manager extends CI_Model
 
 	public function create($data = '')
 	{
-
 		if($data) {
 			$create = $this->db->insert('manager', $data);
-			$user_id = $this->db->insert_id();
 			return ($create == true) ? true : false;
 		}
 	}

@@ -15,9 +15,15 @@ class Model_notice extends CI_Model
 		return $query->result_array();
 	}
 
-	public function getNoticeLatest($id = null)
+	public function getNoticeLatestHoliday($id = null)
 	{
-		$sql = "SELECT * FROM notice order by pubtime desc limit 1";
+		$sql = "SELECT * FROM notice where notice.type='holiday' order by pubtime desc limit 1";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	public function getNoticeLatestPlan($id = null)
+	{
+		$sql = "SELECT * FROM notice where notice.type='plan' order by pubtime desc limit 1";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}

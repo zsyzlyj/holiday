@@ -57,13 +57,9 @@
                       <tr>
                         <td><?php echo $v['username']; ?></td>
                         
-                        <?php if($v['permission']=='超级管理员'): ?>
-                        <td><?php echo '不需要部门' ?></td>
-                        <?php endif; ?>
-                        <!---->
-                        <?php if($v['permission']!='超级管理员'): ?>
+                        
                         <td><?php echo $v['dept']; ?></td>
-                        <?php endif; ?>
+                        
                         <form action="<?php echo base_url('users/update/') ?>" method="post">
                           
                         <td>
@@ -110,6 +106,6 @@
       $('#userTable').DataTable();
 
       $("#mainUserNav").addClass('active');
-      $("#manageUserNav").addClass('active');
+      $("#UserNav").addClass('active');
     });
   </script>

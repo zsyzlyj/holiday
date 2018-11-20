@@ -11,6 +11,7 @@ class Users extends Admin_Controller
 		$this->data['page_title'] = 'Users';
 		
 		$this->load->model('model_users');
+		$this->load->model('model_manager');
 		$this->load->model('model_holiday');
 	}
 
@@ -186,7 +187,30 @@ class Users extends Admin_Controller
 			'permission' => $_POST['permit']
 		);
 		$this->model_users->update($user_data,$id);
-		
+		$user=$this->model_holiday->getHolidayById($id);
+		if($_POST['permit']==0){
+			$role='超级管理员';
+		}
+		if($_POST['permit']==1){
+			$role='综管员';
+		}
+		if($_POST['permit']==2){
+			$role='部门负责人';
+		}
+		$manager_data=array(
+			'user_id' => $id,
+			'name' => $user['name'],
+			'dept' => $user['department'],
+			'role' => $role
+		);
+		//更新管理层角色，如果角色存在，那么直接update，如果不存在，那么新建新的角色
+		if($this->model_manager->getManagerById($id))
+		{
+			$this->model_manager->update($manager_data,$id);
+		}
+		else{
+			$this->model_manager->create($manager_data,$id);
+		}
 		$this->index();
 
 	}

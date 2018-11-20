@@ -15,7 +15,6 @@ class Model_users extends CI_Model
 	}
 	public function getUserById($userId = null) 
 	{
-		
 		if($userId) {
 			$sql = "SELECT * FROM users WHERE user_id = ?";	
 			$query = $this->db->query($sql, array($userId));
@@ -25,13 +24,8 @@ class Model_users extends CI_Model
 
 	public function create($data = '', $group_id = null)
 	{
-
 		if($data && $group_id) {
 			$create = $this->db->insert('users', $data);
-
-			$user_id = $this->db->insert_id();
-
-
 			return ($create == true) ? true : false;
 		}
 	}

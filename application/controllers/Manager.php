@@ -158,7 +158,7 @@ class Manager extends Admin_Controller
     }
 	public function import()
 	{
-		$this->data['user_permission'] = $this->session->userdata('user_permission');
+		$this->data['user_permission'] = $this->session->userdata('user_permission')
         if($_FILES){
         if($_FILES["file"])
             {
@@ -177,6 +177,7 @@ class Manager extends Admin_Controller
             $this->render_template('manager/import',$this->data);
 		}        
 		$this->data['user_permission']=$this->session->userdata('user_permission');
+		$this->data['user_name'] = $this->session->userdata('user_name');
 		$this->render_template('manager/import', $this->data);
 	}
 

@@ -47,7 +47,7 @@ class Model_holiday extends CI_Model
 	public function exportmydeptHolidayData($dept = null)
 	{
 		if($dept) {
-			$sql = "SELECT * FROM holiday where department = ?";
+			$sql = "SELECT * FROM holiday WHERE locate(?,department)";
 			return $this->db->query($sql, array($dept));	
 		}
 
