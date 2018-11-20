@@ -1221,26 +1221,67 @@ class Holiday extends Admin_Controller
     ==============================================================================
     */
     public function change_submit(){
+        if($_POST){
+            if($_POST['submit_auth']==1){
+                $data = array(
+                    'submit_tag' => 0
+                );
+                
+            }
+            if($_POST['submit_revolt']==1){
+                $data = array(
+                    'submit_tag' => 1
+                );
+            }
 
-        if($_POST['submit_auth']==1){
-            $data = array(
-                'submit_tag' => 0
-            );
+            $update = $this->model_plan->update($data,$_POST['user_id']);
             
+            if($update == true) {
+                $this->session->set_flashdata('success', 'Successfully created');
+                $this->plan_set();
+            }
         }
-        if($_POST['submit_revolt']==1){
-            $data = array(
-                'submit_tag' => 1
-            );
-        }
-
-        $update = $this->model_plan->update($data,$_POST['user_id']);
-        
-        if($update == true) {
-            $this->session->set_flashdata('success', 'Successfully created');
+        else{
             $this->plan_set();
         }
 
+    }
+    public function audit(){
+        $user_id=$this->session->userdata('user_id');
+        $result = array();
+        $submitted=0;
+        $this->data['current_dept']="";
+        if($_POST){
+            $select_dept=$_POST['selected_dept'];
+            $plan_data = $this->model_plan->getPlanByDept($select_dept);
+            
+            
+            foreach ($plan_data as $k => $v) {
+                $result[$k]=$v;
+                if($v['submit_tag']==1){
+                    $result[$k]['submit_tag'] = '已提交';
+                    $submitted++;
+                }
+                else{
+                    $result[$k]['submit_tag'] = '未提交';
+                }
+            }
+            $this->data['current_dept']=$select_dept;
+        }
+        $admin_data = $this->model_manager->getManagerById($user_id);
+
+        $admin_result=array();
+        $admin_result=explode('/',$admin_data['dept']);
+
+        $this->data['dept_options']=$admin_result;
+        $this->data['submitted'] = $submitted;
+        $this->data['plan_data'] = $result;
+        $this->data['user_permission'] = $this->session->userdata('user_permission');
+        $this->render_template('holiday/audit', $this->data);
+
+    }
+    public function audit_feedback(){
+        $this->render_template('holiday/audit', $this->data);
     }
 
 

@@ -18,8 +18,32 @@
           </a>
         </li>
         <?php endif ?>
-        <?php if($user_permission == 2 ): ?>
-
+        <?php if($user_permission == 2 or $user_permission == 0): ?>
+        <li class="treeview" id="AuditMainMenu">
+          <a href="#">
+            <i class="fa fa-check-square-o"></i>
+            <span>审核</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          <li id="AuditNav">
+            <a href="<?php echo base_url('holiday/audit') ?>">
+              <i class="fa fa-circle-o"></i>
+              审核
+            </a>
+          </li>
+          <li id="AuditGatherNav">
+            <a href="<?php echo base_url('holiday/audit_result') ?>">
+            <i class="fa fa-circle-o"></i>
+             审核结果
+            </a>
+          </li>
+          </ul>
+            
+        </li>
+        
         
         <?php endif ?>
         <?php if($user_permission == 0): ?>
