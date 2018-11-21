@@ -40,9 +40,15 @@
               <br/>
                 <form action='<?php echo base_url('holiday/mydeptplan' )?>' method="post" id="selected_dept_form">
                 <select id="selected_dept" name="selected_dept" onchange="submitForm();">
-                  <option value="">选择部门</option>
+                  <?php if($current_dept==""):?>
+                    <option value="">选择部门</option>
+                  <?php else:?>
+                    <option value="<?php $current_dept;?>"><?php echo $current_dept;?></option>
+                  <?php endif; ?>
                   <?php foreach($dept_options as $k => $v):?>
-                  <option value="<?php echo $v;?>"><?php echo $v;?></option>
+                  <?php if($current_dept!=$v):?>
+                    <option value="<?php echo $v;?>"><?php echo $v;?></option>
+                  <?php endif;?>
                   <?php endforeach;?>
                 </select>
                 </form>
@@ -52,8 +58,22 @@
                 <h3>
                 提交进度：<?php echo '<font color="green">'.$submitted.'</font> / '.count($plan_data)?>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <?php if($submitted!=count($plan_data)):?><button class="btn btn-success disabled">提交</button><?php endif; ?>
-                <?php if($submitted==count($plan_data)):?><button class="btn btn-success">提交</button><?php endif; ?>
+                <?php if($submit_status!='已提交'):?>
+                
+                <?php if($submitted==count($plan_data)):?>
+                <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/submit_to_audit') ?>' method='post'>
+                  <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
+                  <button class="btn btn-success">提交</button>
+                </form>
+                <?php endif; ?>
+                <?php if($submitted!=count($plan_data)):?>
+                <button class="btn btn-success disabled">提交</button>
+                <?php endif; ?>
+                <?php endif; ?>
+                <?php if($submit_status=='已提交'):?>
+                
+                <button class="btn btn-success disabled">提交</button>
+                <?php endif; ?>
                 
                 <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptplan') ?>' method='post'>
                   <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
@@ -110,14 +130,20 @@
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="1"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="0"/>
+                        <?php if($feedback_status=='已反馈'):?>
                         <button class='btn btn-info'>允许修改</button>
+                        <?php else:?>
+                        <button class='btn btn-info disabled'>允许修改</button>
+                        <?php endif; ?>
                         </form>
+                        <!--
                         <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
                         <button class='btn btn-danger'>撤回修改</button>
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="0"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="1"/>
                         </form>
+                        -->
                         </td>
                       </tr>
                     <?php endforeach; ?>

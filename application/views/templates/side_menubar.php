@@ -11,12 +11,31 @@
             <span>部门年假信息汇总</span>
           </a>
         </li>
-        <li id="myDeptPlanNav">
-          <a href="<?php echo base_url('holiday/mydeptplan') ?>">
+        <li class="treeview" id="mydeptPlanMainMenu">
+          <a href="#">
             <i class="fa fa-folder-o"></i>
             <span>部门年假计划汇总</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
           </a>
+          <ul class="treeview-menu">
+          <li id="myDeptPlanNav">
+            <a href="<?php echo base_url('holiday/mydeptplan') ?>">
+              <i class="fa fa-circle-o"></i>
+              <span>年假计划汇总</span>
+            </a>
+          </li>
+          <li id="SubmitStatusNav">
+            <a href="<?php echo base_url('holiday/mydeptplan_submit') ?>">
+            <i class="fa fa-circle-o"></i>
+             汇总提交情况
+            </a>
+          </li>
+          </ul>
+            
         </li>
+        
         <?php endif ?>
         <?php if($user_permission == 2 or $user_permission == 0): ?>
         <li class="treeview" id="AuditMainMenu">
@@ -62,6 +81,7 @@
             <i class="fa fa-edit"></i> <span>年假计划汇总</span>
           </a>
         </li>
+        
         <li id="myDeptHolidayMainMenu">
           <a href="<?php echo base_url('holiday/mydeptholiday') ?>">
             <i class="fa fa-file-archive-o"></i>
@@ -73,6 +93,30 @@
             <i class="fa fa-folder-o"></i>
             <span>部门年假计划汇总</span>
           </a>
+        </li>
+        <li class="treeview" id="mydeptPlanMainMenu">
+          <a href="#">
+            <i class="fa fa-folder-o"></i>
+            <span>部门年假计划汇总</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          <li id="myDeptPlanNav">
+            <a href="<?php echo base_url('holiday/mydeptplan') ?>">
+              <i class="fa fa-circle-o"></i>
+              <span>年假计划汇总</span>
+            </a>
+          </li>
+          <li id="SubmitStatusNav">
+            <a href="<?php echo base_url('holiday/mydeptplan_submit') ?>">
+            <i class="fa fa-circle-o"></i>
+             汇总提交情况
+            </a>
+          </li>
+          </ul>
+            
         </li>
         <li class="treeview" id="mainSyncNav">
           <a href="#">

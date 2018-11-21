@@ -34,6 +34,12 @@
 
 
           <div class="box">
+            
+            <?php if($feedback_status=='已审核'):?>
+            <div class="box-header">
+              本部门已审核
+            </div>
+            <?php else:?>
             <div class="box-header">
             
             
@@ -59,6 +65,7 @@
             <br />
             <br />
             </form>
+            <?php if($plan_data): ?>   
             <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptholiday') ?>' method='post'>
               <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
               <button class="btn btn-warning">导出</button>
@@ -85,7 +92,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <?php if($plan_data): ?>                  
+                                 
                     <?php foreach ($plan_data as $v): ?>
                       <tr>
                         <td><?php echo $v['name']; ?></td>
@@ -106,21 +113,34 @@
                 
               </div>
               <!-- /.overflow:scroll -->
+              <?php if($submit_status=='已提交'):?>
               <div>
-              <form action='<?php echo base_url('holiday/audit_feedback' )?>' method="post">
+              <form action='<?php echo base_url('holiday/audit' )?>' method="post">
+                <?php if($current_dept):?>
+                  <input type='hidden' name="selected_dept" value="<?php echo $current_dept;?>"/>
+                <?php endif; ?> 
                 <div class="form-group">
                     <label for="content"><h4 class="box-title">审核意见</h4></label>
-                    <textarea class="form-control" rows="10" name="content"></textarea>
+                    <textarea class="form-control" rows="10" name="feedback_content"></textarea>
                     
                 </div>
-                <button name='agree' class="btn btn-success">同&nbsp;&nbsp;意</button>
-                <button name='reject' class="btn btn-danger">不同意</button>
+                <label><input name="confirm" type="radio" value="accept" />&nbsp;同意 </label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input name="confirm" type="radio" value="reject" />&nbsp;不同意 </label>
+                <br />
+                <br />
+                <button type='submit' class="btn btn-success">提交</button>
+
               </form>
               </div>
+              <?php endif; ?>
             </div>
+            
             <!-- /.box-body -->
+          <?php endif; ?>
           </div>
           <!-- /.box -->
+          
         </div>
         <!-- col-md-12 -->
       </div>

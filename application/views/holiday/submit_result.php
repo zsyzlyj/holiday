@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        审核
+        计划提交情况
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -46,15 +46,28 @@
                 <thead>
                 <tr>
                   <th>部门</th>
+                  <th>提交状态</th>
                   <th>审核状态</th>
                 </tr>
                 </thead>
                 <tbody>
-                  <?php if($feedback_data): ?>                  
-                    <?php foreach ($feedback_data as $k => $v): ?>
+                  <?php if($submit_data): ?>                  
+                    <?php foreach ($submit_data as $k => $v): ?>
                       <tr>
                         <td><?php echo $v['department']; ?></td>
-                        <td><?php echo $v['status']; ?></td>
+                        <td>
+                        <?php if(strstr($v['status'],'已')):?>
+                        <font color='blue'><?php echo $v['status'];?></font>
+                        <?php else: ?>
+                        <font color='red'><?php echo $v['status'];?></font>
+                        <?php endif; ?>
+                        </td>
+                        <td>
+                        <?php if(strstr($feedback_status[$v['department']],'已')):?>
+                        <font color='blue'><?php echo $feedback_status[$v['department']];?></font>
+                        <?php else: ?>
+                        <font color='red'><?php echo $feedback_status[$v['department']];?></font>
+                        <?php endif; ?>
                       </tr>
                     <?php endforeach ?>
                     </tbody>
@@ -112,8 +125,8 @@
       }
     });
 
-    $("#AuditMainMenu").addClass('active');
-    $("#AuditGatherNav").addClass('active');
+    $("#mydeptPlanMainMenu").addClass('active');
+    $("#SubmitStatusNav").addClass('active');
     
       
     });

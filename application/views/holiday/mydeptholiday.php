@@ -59,6 +59,7 @@
             <br />
             <br />
             </form>
+            <?php if($holiday_data): ?>  
             <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptholiday') ?>' method='post'>
               <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
               <button class="btn btn-warning">导出</button>
@@ -100,7 +101,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <?php if($holiday_data): ?>                  
+                                  
                     <?php foreach ($holiday_data as $v): ?>
                       <tr>
                         <td><?php echo $v['name']; ?></td>

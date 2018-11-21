@@ -16,6 +16,8 @@ class Holiday extends Admin_Controller
         $this->load->model('model_plan');
         $this->load->model('model_notice');
         $this->load->model('model_manager');
+        $this->load->model('model_submit');
+        $this->load->model('model_feedback');
 	}
 
     /* 
@@ -1033,11 +1035,16 @@ class Holiday extends Admin_Controller
         $result = array();
         $submitted=0;
         $this->data['current_dept']="";
+        $this->data['submit_status'] ="";
+        $select_dept="";
         if($_POST){
-            $select_dept=$_POST['selected_dept'];
+            if(array_key_exists('selected_dept', $_POST)){
+                $select_dept=$_POST['selected_dept'];
+            }
+            if(array_key_exists('current_dept', $_POST)){
+                $select_dept=$_POST['current_dept'];
+            }
             $plan_data = $this->model_plan->getPlanByDept($select_dept);
-            
-            
             foreach ($plan_data as $k => $v) {
                 $result[$k]=$v;
                 if($v['submit_tag']==1){
@@ -1049,6 +1056,7 @@ class Holiday extends Admin_Controller
                 }
             }
             $this->data['current_dept']=$select_dept;
+            $this->data['submit_status'] = $this->model_submit->getSubmitByDept($select_dept)['status'];
         }
         $admin_data = $this->model_manager->getManagerById($user_id);
 
@@ -1060,7 +1068,31 @@ class Holiday extends Admin_Controller
         $this->data['plan_data'] = $result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
+        $this->data['feedback_status'] = $this->model_feedback->getFeedbackByDept($select_dept);
         $this->render_template('holiday/mydeptplan', $this->data);
+    }
+    public function mydeptplan_submit(){
+        $user_id = $this->session->userdata('user_id');
+        $my_data = $this->model_manager->getManagerById($user_id);
+
+        $dept_set=array();
+        $data=array();
+        $feedback_status=array();
+        if(strstr($my_data['dept'],'/')){
+            $dept_set=explode('/',$my_data['dept']);
+            foreach($dept_set as $a => $b){
+                if($this->model_submit->getSubmitByDept($b)){
+                    array_push($data,$this->model_submit->getSubmitByDept($b));
+                    $feedback_status[$b]=$this->model_feedback->getFeedbackByDept($b)['status'];
+                }
+            }
+        }
+        #$this->model_submit->getSubmitByDept($);
+        
+        $this->data['submit_data'] = $data;
+        $this->data['feedback_status'] = $feedback_status;
+        $this->data['user_name'] = $this->session->userdata('user_name');
+        $this->render_template('holiday/submit_result', $this->data);
     }
 
     /*
@@ -1091,18 +1123,6 @@ class Holiday extends Admin_Controller
 
 		$this->render_template('holiday/index', $this->data);
     }
-    
-
-
-
-
-
-
-
-
-
-
-
 
 
     /*
@@ -1243,27 +1263,80 @@ class Holiday extends Admin_Controller
         }
 
     }
+    public function submit_to_audit(){
+
+        
+        if($_POST['current_dept']){
+            $dept=$_POST['current_dept'];
+            $data=array(
+                'department' => $dept,
+                'status' => '已提交'
+            );
+            //如果部门存在，那就更新部门的提交状态
+            //如果部门不存在，那就创建新的部门状态
+            if($this->model_submit->getSubmitByDept($dept)){
+                $this->model_submit->update($data,$dept);
+            }
+            else{
+                $this->model_submit->create($data);
+            }
+            $data_feedback=array(
+                'department' => $dept,
+                'content' => '',
+                'confirm' => '',
+                'status' => '未审核'
+            );
+            //如果部门存在，那就更新反馈状态，未审核
+            //如果部门不存在，那就创建新的部门状态
+            if($this->model_feedback->getFeedbackByDept($dept)){
+                $this->model_feedback->update($data,$dept);
+            }
+            else{
+                $this->model_feedback->create($data);
+            }
+        }
+        
+        
+        $this->mydeptplan();
+
+    }
     public function audit(){
         $user_id=$this->session->userdata('user_id');
         $result = array();
-        $submitted=0;
+        
         $this->data['current_dept']="";
+        $this->data['submit_status'] ="";
+        $this->data['feedback_status'] = "";
         if($_POST){
             $select_dept=$_POST['selected_dept'];
-            $plan_data = $this->model_plan->getPlanByDept($select_dept);
-            
-            
-            foreach ($plan_data as $k => $v) {
-                $result[$k]=$v;
-                if($v['submit_tag']==1){
-                    $result[$k]['submit_tag'] = '已提交';
-                    $submitted++;
+            //如果有反馈内容的话，那么就检验是否选了同意和不同意
+            //如果没有反馈内容，那就是普通的查看，直接去显示提交过来的计划表
+            if(array_key_exists('feedback_content', $_POST)){
+                $this->form_validation->set_rules('confirm', 'confirm', 'trim|required');
+                if($this->form_validation->run() == TRUE) {
+                    $data=array(
+                        'content' => $_POST['feedback_content'],
+                        'confirm' => $_POST['confirm'],
+                        'status' => '已审核'
+                    );
+                    $this->model_feedback->update($data,$select_dept);
                 }
-                else{
-                    $result[$k]['submit_tag'] = '未提交';
+                $plan_data = $this->model_plan->getPlanByDept($select_dept);
+                foreach ($plan_data as $k => $v) {
+                    $result[$k]=$v;
+                }
+            }
+            else{
+                $plan_data = $this->model_plan->getPlanByDept($select_dept);
+                foreach ($plan_data as $k => $v) {
+                    $result[$k]=$v;
                 }
             }
             $this->data['current_dept']=$select_dept;
+
+            $this->data['submit_status'] = $this->model_submit->getSubmitByDept($select_dept)['status'];
+            $this->data['feedback_status'] = $this->model_feedback->getFeedbackByDept($select_dept)['status'];
+            echo $this->data['feedback_status'];
         }
         $admin_data = $this->model_manager->getManagerById($user_id);
 
@@ -1271,27 +1344,35 @@ class Holiday extends Admin_Controller
         $admin_result=explode('/',$admin_data['dept']);
 
         $this->data['dept_options']=$admin_result;
-        $this->data['submitted'] = $submitted;
         $this->data['plan_data'] = $result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
+        
         $this->render_template('holiday/audit', $this->data);
 
     }
-    public function audit_feedback(){
-        $this->render_template('holiday/audit', $this->data);
+
+    public function audit_result(){
+        $user_id=$this->session->userdata('user_id');
+        
+        $my_data = $this->model_manager->getManagerById($user_id);
+
+        $dept_set=array();
+        $data=array();
+        if(strstr($my_data['dept'],'/')){
+            $dept_set=explode('/',$my_data['dept']);
+            foreach($dept_set as $a => $b){
+                if($this->model_feedback->getFeedbackByDept($b)){
+                    array_push($data,$this->model_feedback->getFeedbackByDept($b));
+                }
+            }
+        }
+        else{
+            array_push($data,$this->model_feedback->getFeedbackByDept($b));
+        }  
+        $this->data['feedback_data']=$data;
+        $this->data['user_name'] = $this->session->userdata('user_name');
+        $this->render_template('holiday/audit_result', $this->data);
     }
-
-
-
-
-
-   
-
-
-
-
-
-
 
 }
