@@ -18,7 +18,7 @@
         <li><a href="javascript:void(0);">
         <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;<?php echo $user_name;?>
         </a></li>
-        <li><a href="#">
+        <li><a href="<?php echo base_url('users/setting') ?>">
         <i class="glyphicon glyphicon-edit "></i>&nbsp;修改密码
         </a></li>
         <li><a href="<?php echo base_url('auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;登出

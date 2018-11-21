@@ -92,5 +92,5 @@ INSERT INTO `users` (`user_id`, `username`, `password`,`permission`) VALUES
 INSERT INTO `users` (`user_id`, `username`, `password`,`permission`) VALUES
 ('222222','jingli',md5('hr'),2);
 
-UPDATE users SET permission=0
+UPDATE users SET permission=0,users.password=md5('hr'),username='冯雪香'
 where user_id='440603199101193847'

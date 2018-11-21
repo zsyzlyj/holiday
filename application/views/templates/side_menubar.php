@@ -237,7 +237,7 @@
         
         <!-- user permission info -->
         
-        
+        <li><a href="<?php echo base_url('users/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
         <li><a href="<?php echo base_url('auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>登出</span></a></li>
       </ul>
     </section>
