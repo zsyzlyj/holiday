@@ -84,7 +84,7 @@
                         <td>
                           
                           <!-- 打开弹窗按钮 -->
-                          <a href="javascript:void(0)" id="myBtn"><?php echo $v['Used']; ?></a>
+                          <a href="javascript:void(0)" id="myBtn"><font color='orange'><?php echo $v['Used']; ?></font></a>
                           
                           <!-- 弹窗 -->
                           <div id="myModal" class="modal">

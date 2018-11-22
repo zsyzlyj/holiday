@@ -63,10 +63,41 @@
                         <?php endif; ?>
                         </td>
                         <td>
-                        <?php if(strstr($feedback_status[$v['department']],'已')):?>
-                        <font color='blue'><?php echo $feedback_status[$v['department']];?></font>
+                        <?php if(strstr($feedback[$v['department']]['status'],'已')):?>
+                        
+                        <?php if($feedback[$v['department']]['confirm']==0):?>
+                        <font color='red'>不同意</font>
+                        /
+                        <!-- 打开弹窗按钮 -->
+                        <a href="javascript:void(0)" id="myBtn"><font color='orange'>反馈意见</font></a>
+                          <!-- 弹窗 -->
+                          <div id="myModal" class="modal">
+                            
+                            <!-- 弹窗内容 -->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <span class="close">&times;</span>
+                                  <h3>反馈意见</h3>
+                                </div>
+
+                                <div class="modal-body">
+                                <?php if($feedback[$v['department']]['content']==""):?>
+                                <h3>无</h3>
+                                <?php else: ?>
+                                <?php echo $feedback[$v['department']]['content'];?>
+                                <?php endif;?>
+                                </div>
+                              </div>
+                            
+                          </div>
+                        
                         <?php else: ?>
-                        <font color='red'><?php echo $feedback_status[$v['department']];?></font>
+                        <font color='blue'><?php echo $feedback[$v['department']]['status'];?></font>
+                        /
+                        <font color='blue'>同意</font>
+                        <?php endif; ?>
+                        <?php else: ?>
+                        <font color='red'><?php echo $feedback[$v['department']]['status'];?></font>                        
                         <?php endif; ?>
                       </tr>
                     <?php endforeach ?>

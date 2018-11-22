@@ -67,6 +67,7 @@ class Holiday extends Admin_Controller
                 );
     
                 $update = $this->model_holiday->update($data, $result[$k]['name']);
+               
             }
             
         }
@@ -830,6 +831,14 @@ class Holiday extends Admin_Controller
             
                     $update_user=$this->model_users->create($Update_user_data,$name);
                 }
+                $submit_data=array(
+                    'department' => $Update_data['department']
+                );
+                $this->model_submit->create($submit_data);
+                $feedback_data=array(
+                    'department' => $Update_data['department'],
+                );
+                $this->model_feedback->create($feedback_data);
             }
             
             if($update == true and $update_user == true) {
@@ -1083,14 +1092,14 @@ class Holiday extends Admin_Controller
             foreach($dept_set as $a => $b){
                 if($this->model_submit->getSubmitByDept($b)){
                     array_push($data,$this->model_submit->getSubmitByDept($b));
-                    $feedback_status[$b]=$this->model_feedback->getFeedbackByDept($b)['status'];
+                    $feedback[$b]=$this->model_feedback->getFeedbackByDept($b);
                 }
             }
         }
         #$this->model_submit->getSubmitByDept($);
         
         $this->data['submit_data'] = $data;
-        $this->data['feedback_status'] = $feedback_status;
+        $this->data['feedback'] = $feedback;
         $this->data['user_name'] = $this->session->userdata('user_name');
         $this->render_template('holiday/submit_result', $this->data);
     }
@@ -1172,7 +1181,7 @@ class Holiday extends Admin_Controller
     {
         /*============================================================*/
         /*
-            首页必须要的信息，包括用户名（后会改身份证），通知信息
+            首页必须要的信息，包括身份证，通知信息
         */
         /*============================================================*/
         $user_id=$this->session->userdata('user_id');
@@ -1197,7 +1206,7 @@ class Holiday extends Admin_Controller
         $this->form_validation->set_rules('fourthquater', 'fourthquater','is_natural|greater_than[-1]');
 
         if ($this->form_validation->run() == TRUE) {
-            if($_POST['firstquater']+$_POST['secondquater']+$_POST['thirdquater']+$_POST['fourthquater']<=$_POST['total'])
+            if($_POST['firstquater']+$_POST['secondquater']+$_POST['thirdquater']+$_POST['fourthquater']==$_POST['total'])
             {
                 $data = array(
                     'firstquater' => $_POST['firstquater'],
@@ -1210,25 +1219,26 @@ class Holiday extends Admin_Controller
                 $create = $this->model_plan->update($data,$user_id);
                 
                 if($create == true) {
-                    $this->session->set_flashdata('success', 'Successfully created');
+                    $this->session->set_flashdata('success', '提交成功');
                     $this->staff_plan();
                 }
                 else {
-                    $this->session->set_flashdata('error', 'Error occurred!!');
-                    $this->render_template('holiday/staff_plan', $this->data);
+                    $this->session->set_flashdata('error', '提交失败');
+                    $this->staff_plan();
                 }
             }
             else
             {
 
-                $this->session->set_flashdata('error', '数据错误');
-                $this->render_template('holiday/staff_plan', $this->data);
+                $this->session->set_flashdata('error', '提交失败，计划总数必须等于可休假总数');
+                $this->staff_plan();
+                #$this->render_template('holiday/staff_plan', $this->data);
                 
             }
             /**/
         }
         else {
-            $this->render_template('holiday/staff_plan', $this->data);
+            $this->staff_plan();
         }
     }
 
@@ -1263,9 +1273,33 @@ class Holiday extends Admin_Controller
         }
 
     }
-    public function submit_to_audit(){
+    public function change_submit_mydeptplan(){
+        if($_POST){
+            if($_POST['submit_auth']==1){
+                $data = array(
+                    'submit_tag' => 0
+                );
+                
+            }
+            if($_POST['submit_revolt']==1){
+                $data = array(
+                    'submit_tag' => 1
+                );
+            }
 
-        
+            $update = $this->model_plan->update($data,$_POST['user_id']);
+            
+            if($update == true) {
+                $this->session->set_flashdata('success', 'Successfully created');
+                $this->mydeptplan();
+            }
+        }
+        else{
+            $this->mydeptplan();
+        }
+
+    }
+    public function submit_to_audit(){
         if($_POST['current_dept']){
             $dept=$_POST['current_dept'];
             $data=array(
@@ -1295,10 +1329,7 @@ class Holiday extends Admin_Controller
                 $this->model_feedback->create($data);
             }
         }
-        
-        
         $this->mydeptplan();
-
     }
     public function audit(){
         $user_id=$this->session->userdata('user_id');
@@ -1320,6 +1351,15 @@ class Holiday extends Admin_Controller
                         'status' => '已审核'
                     );
                     $this->model_feedback->update($data,$select_dept);
+                    //如果反馈的结果是不同意，那么就把该部门的综管员的编辑和提交权限打开。
+                    //如果反馈同意就不用做任何事情
+                    if($_POST['confirm']==0){
+                        #$this->model_submit->getSubmitByDept($select_dept);
+                        $submit_data=array(
+                            'status' => '未提交'
+                        );
+                        $this->model_submit->update($submit_data,$select_dept);
+                    }
                 }
                 $plan_data = $this->model_plan->getPlanByDept($select_dept);
                 foreach ($plan_data as $k => $v) {

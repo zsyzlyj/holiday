@@ -54,7 +54,13 @@
                     <?php foreach ($feedback_data as $k => $v): ?>
                       <tr>
                         <td><?php echo $v['department']; ?></td>
-                        <td><?php echo $v['status']; ?></td>
+                        <td>
+                        <?php if($v['confirm']==0):?>
+                        <font color='red'>不同意</font>
+                        <?php else: ?>
+                        <font color='blue'>同意</font>
+                        <?php endif; ?>
+                        </td>
                       </tr>
                     <?php endforeach ?>
                     </tbody>

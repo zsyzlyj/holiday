@@ -126,14 +126,14 @@
                           <td><font color='red'><?php echo $v['submit_tag']; ?></font></td>
                         <?php endif; ?>
                         <td>
-                        <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
+                        <form action="<?php echo base_url('holiday/change_submit_mydeptplan')?>" method="post" style="float:left">
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="1"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="0"/>
-                        <?php if($feedback_status=='已反馈'):?>
-                        <button class='btn btn-info'>允许修改</button>
-                        <?php else:?>
+                        <?php if($submit_status=='已提交' or $v['submit_tag']=='未提交'):?>
                         <button class='btn btn-info disabled'>允许修改</button>
+                        <?php else:?>
+                        <button class='btn btn-info'>允许修改</button>
                         <?php endif; ?>
                         </form>
                         <!--
