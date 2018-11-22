@@ -757,8 +757,8 @@ class Holiday extends Admin_Controller
                 switch($a){
                     case 'A':$name=$b;break;
                     case 'B':$dept=$b;break;
-                    case 'C':$Initdate=$b;break;#gmdate('Y-m-d',intval((strtotime($b)-25569)*3600*24));break;
-                    case 'D':$Indate=$b;break;#=gmdate('Y-m-d',intval((strtotime($b)-25569)*3600*24));break;
+                    case 'C':$Initdate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
+                    case 'D':$Indate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
                     case 'E':$Totalage=$b;break;
                     case 'F':$Comage=$b;break;
                     case 'G':$Totalday=$b;break;
@@ -815,9 +815,9 @@ class Holiday extends Admin_Controller
             $update_user=true;
             if($this->model_holiday->getHolidaybyID($User_id))
             {
-                #if(!(serialize($Update_data) == serialize($this->model_holiday->getHolidaybyID($User_id)))){
+                if(!(serialize($Update_data) == serialize($this->model_holiday->getHolidaybyID($User_id)))){
                    $update=$this->model_holiday->update($Update_data,$User_id);
-                #}
+                }
             }
             else{
                 $update=$this->model_holiday->create($Update_data);
@@ -849,6 +849,7 @@ class Holiday extends Admin_Controller
                 $response['success'] = false;
                 $response['messages'] = 'Error in the database while updated the brand information';			
             }
+            
         }
     }
     public function import($filename=NULL)
