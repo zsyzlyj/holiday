@@ -1077,7 +1077,7 @@ class Holiday extends Admin_Controller
         $this->data['plan_data'] = $result;
         $this->data['user_permission'] = $this->session->userdata('user_permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
-        $this->data['feedback_status'] = $this->model_feedback->getFeedbackByDept($select_dept);
+        $this->data['feedback'] = $this->model_feedback->getFeedbackByDept($select_dept);
         $this->render_template('holiday/mydeptplan', $this->data);
     }
     public function mydeptplan_submit(){

@@ -58,7 +58,7 @@
                 <h3>
                 提交进度：<?php echo '<font color="green">'.$submitted.'</font> / '.count($plan_data)?>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <?php if($submit_status!='已提交'):?>
+                <?php if(!strstr($submit_status,'已')):?>
                 
                 <?php if($submitted==count($plan_data)):?>
                 <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/submit_to_audit') ?>' method='post'>
@@ -70,15 +70,22 @@
                 <button class="btn btn-success disabled">提交</button>
                 <?php endif; ?>
                 <?php endif; ?>
-                <?php if($submit_status=='已提交'):?>
+                <?php if(strstr($submit_status,'已')):?>
                 
                 <button class="btn btn-success disabled">提交</button>
                 <?php endif; ?>
+
                 
                 <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptplan') ?>' method='post'>
                   <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
+                  <?php if(strstr($feedback['status'],'已')):?>
                   <button class="btn btn-warning">导出</button>
+                  <?php else:?>
+                  <button class="btn btn-warning disabled">导出</button>
+                  <?php endif; ?>
                 </form>
+                
+                
                 
                 </h3>
             <?php endif;?>
@@ -119,10 +126,9 @@
                         <td><?php echo $v['thirdquater']; ?></td>
                         <td><?php echo $v['fourthquater']; ?></td>
                         
-                        <?php if($v['submit_tag']=='已提交'):?>
+                        <?php if(strstr($v['submit_tag'],'已')):?>
                           <td><font color='green'><?php echo $v['submit_tag']; ?></font></td>
-                        <?php endif; ?>
-                        <?php if($v['submit_tag']=='未提交'):?>
+                        <?php else:?>
                           <td><font color='red'><?php echo $v['submit_tag']; ?></font></td>
                         <?php endif; ?>
                         <td>
@@ -130,20 +136,12 @@
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="1"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="0"/>
-                        <?php if($submit_status=='已提交' or $v['submit_tag']=='未提交'):?>
+                        <?php if(strstr($submit_status,'已') or strstr($v['submit_tag'],'未')):?>
                         <button class='btn btn-info disabled'>允许修改</button>
                         <?php else:?>
                         <button class='btn btn-info'>允许修改</button>
                         <?php endif; ?>
                         </form>
-                        <!--
-                        <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
-                        <button class='btn btn-danger'>撤回修改</button>
-                        <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
-                        <input type="hidden" id='submit_auth' name='submit_auth' value="0"/>
-                        <input type="hidden" id='submit_revolt' name='submit_revolt' value="1"/>
-                        </form>
-                        -->
                         </td>
                       </tr>
                     <?php endforeach; ?>
