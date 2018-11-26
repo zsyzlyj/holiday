@@ -13,8 +13,9 @@ class Users extends Admin_Controller
 		$this->load->model('model_users');
 		$this->load->model('model_manager');
 		$this->load->model('model_holiday');
+		$this->data['permission']=$this->session->userdata('permission');
+		$this->data['user_name'] = $this->session->userdata('user_name');
 	}
-
 	
 	public function index()
 	{
@@ -46,18 +47,16 @@ class Users extends Admin_Controller
 			}
 		}
 		$permission_set=array(
-			0 => '超级管理员',
 			1 => '部门经理',
 			2 => '综合管理员',
 			3 => '普通员工'
-
 		);
 
 		
-		$this->data['user_permission']=$this->session->userdata('user_permission');
-
+		
 		$this->data['user_data'] = $result;
 		$this->data['permission_set']=$permission_set;
+		
 		$this->render_template('users/index', $this->data);
 	}
 
@@ -180,7 +179,6 @@ class Users extends Admin_Controller
 	}
 	public function update()
 	{
-
 		$id=$_POST['user_id'];
 
 		$user_data=array(
@@ -188,28 +186,32 @@ class Users extends Admin_Controller
 		);
 		$this->model_users->update($user_data,$id);
 		$user=$this->model_holiday->getHolidayById($id);
-		if($_POST['permit']==0){
-			$role='超级管理员';
-		}
+		$role='普通员工';
 		if($_POST['permit']==1){
 			$role='综管员';
 		}
 		if($_POST['permit']==2){
 			$role='部门负责人';
 		}
-		$manager_data=array(
-			'user_id' => $id,
-			'name' => $user['name'],
-			'dept' => $user['department'],
-			'role' => $role
-		);
-		//更新管理层角色，如果角色存在，那么直接update，如果不存在，那么新建新的角色
-		if($this->model_manager->getManagerById($id))
-		{
-			$this->model_manager->update($manager_data,$id);
+		if($_POST['permit']==3){
+			//如果这个角色被降级，那么就删除管理层角色表中的这个人
+			$this->model_manager->delete($id);
 		}
 		else{
-			$this->model_manager->create($manager_data,$id);
+			$manager_data=array(
+				'user_id' => $id,
+				'name' => $user['name'],
+				'dept' => $user['department'],
+				'role' => $role
+			);
+			//更新管理层角色，如果角色存在，那么直接update，如果不存在，那么新建新的角色
+			if($this->model_manager->getManagerById($id))
+			{
+				$this->model_manager->update($manager_data,$id);
+			}
+			else{
+				$this->model_manager->create($manager_data,$id);
+			}
 		}
 		$this->index();
 
@@ -249,8 +251,7 @@ class Users extends Admin_Controller
 	}
 
 	public function setting()
-	{	
-
+	{
 		$id = $this->session->userdata('user_id');
 		$this->data['user_name'] = $this->session->userdata('user_name');
 		if($id) {

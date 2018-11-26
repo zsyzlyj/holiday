@@ -17,7 +17,6 @@ class Model_feedback extends CI_Model
 	}
 	public function getFeedbackByDept($dept = null) 
 	{
-		
 		if($dept) {	
 			$sql = "SELECT * FROM feedback WHERE locate(?,department)";
 			$query = $this->db->query($sql, array($dept));

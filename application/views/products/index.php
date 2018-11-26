@@ -33,7 +33,7 @@
           </div>
         <?php endif; ?>
 
-        <?php if(in_array('createProduct', $user_permission)): ?>
+        <?php if(in_array('createProduct', $permission)): ?>
           <a href="<?php echo base_url('products/create') ?>" class="btn btn-primary">添加商品</a>
           <br /> <br />
         <?php endif; ?>
@@ -52,7 +52,7 @@
                 <th>商品名称</th>
                 <th>价格</th>
                 <th>质量</th>
-                <?php if(in_array('updateProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?>
+                <?php if(in_array('updateProduct', $permission) || in_array('deleteProduct', $permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>
               </tr>
@@ -74,7 +74,7 @@
 </div>
 <!-- /.content-wrapper -->
 
-<?php if(in_array('deleteProduct', $user_permission)): ?>
+<?php if(in_array('deleteProduct', $permission)): ?>
 <!-- remove brand modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="removeModal">
   <div class="modal-dialog" role="document">

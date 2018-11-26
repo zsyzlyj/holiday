@@ -14,7 +14,7 @@ class Auth extends Admin_Controller
 
 	/* 
 		查看登录的表格是否正确，主要是检查user_id和password是否和数据库的一致
-		根据数据库中的permission设置user_permission，根据user_permission确定不同用户登录后界面上的功能
+		根据数据库中的permission设置permission，根据permission确定不同用户登录后界面上的功能
 		permission的值不同分别跳转：
 		0——超级管理员,index
 		1——综管员,admin
@@ -26,7 +26,7 @@ class Auth extends Admin_Controller
 	{
 
 		$this->logged_in();
-
+		#echo $_SERVER['PHP_SELF']."<br>"; 
 		$this->form_validation->set_rules('user_id', 'user_id', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
@@ -40,15 +40,12 @@ class Auth extends Admin_Controller
            			$logged_in_sess = array(
 						'user_name' => $login['username'],
 						'user_id' => $login['user_id'],
-						'user_permission' => $login['permission'],
+						'permission' => $login['permission'],
 				        'logged_in' => TRUE
 					);
 					$this->session->set_userdata($logged_in_sess);
-					$this->session->set_userdata('unnn', $login['username']);
+					#$this->session->set_userdata('unnn', $login['username']);
 					switch($login['permission']){
-						case 0:
-							redirect('holiday/index', 'refresh');
-							break;
 						case 1:
 							redirect('holiday/admin', 'refresh');
 							break;

@@ -34,7 +34,7 @@
           </div>
         <?php endif; ?>
 
-        <?php if(in_array('createOrder', $user_permission)): ?>
+        <?php if(in_array('createOrder', $permission)): ?>
           <a href="<?php echo base_url('orders/create') ?>" class="btn btn-primary">Add Order</a>
           <br /> <br />
         <?php endif; ?>
@@ -55,7 +55,7 @@
                 <th>Total Products</th>
                 <th>Total Amount</th>
                 <th>Paid status</th>
-                <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
+                <?php if(in_array('updateOrder', $permission) || in_array('viewOrder', $permission) || in_array('deleteOrder', $permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>
               </tr>
@@ -77,7 +77,7 @@
 </div>
 <!-- /.content-wrapper -->
 
-<?php if(in_array('deleteOrder', $user_permission)): ?>
+<?php if(in_array('deleteOrder', $permission)): ?>
 <!-- remove brand modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="removeModal">
   <div class="modal-dialog" role="document">

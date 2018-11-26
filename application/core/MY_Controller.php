@@ -25,9 +25,18 @@ class Admin_Controller extends MY_Controller
 			$user_id = $this->session->userdata('user_id');
 			$this->load->model('model_users');
 			$user_data = $this->model_users->getUserById($user_id);
-			#echo $user_data['permission'];
-			$this->data['user_permission'] = $user_data['permission'];
+			$this->data['permission'] = $user_data['permission'];
 			$this->permission = $user_data['permission'];
+		}
+		if(empty($this->session->userdata('logged_in_super'))) {
+			$session_data = array('logged_in_super' => FALSE);
+			$this->session->set_userdata($session_data);
+		}
+		else {
+			$user_id = $this->session->userdata('user_id');
+			$this->load->model('model_super_user');
+			$user_data = $this->model_super_user->getUserById($user_id);
+			$this->data['permission'] = $user_data['permission'];
 		}
 	}
 
@@ -37,6 +46,7 @@ class Admin_Controller extends MY_Controller
 		if($session_data['logged_in'] == TRUE) {
 			redirect('dashboard', 'refresh');
 		}
+		#echo $_SERVER['PHP_SELF']."<br>"; 
 	}
 
 	public function not_logged_in()
@@ -45,6 +55,21 @@ class Admin_Controller extends MY_Controller
 		if($session_data['logged_in'] == FALSE) {
 			redirect('auth/login', 'refresh');
 		}
+	}
+	public function logged_in_super()
+	{
+		$session_data = $this->session->userdata();
+		if($session_data['logged_in_super'] == TRUE) {
+			redirect('super/wage', 'refresh');
+		}
+	}
+	public function not_logged_in_super()
+	{
+		$session_data = $this->session->userdata();
+		if($session_data['logged_in_super'] == FALSE) {
+			redirect('super_auth/login', 'refresh');
+		}
+
 	}
 
 	public function render_template($page = null, $data = array())
@@ -55,6 +80,15 @@ class Admin_Controller extends MY_Controller
 		$this->load->view('templates/side_menubar',$data);
 		$this->load->view($page, $data);
 		$this->load->view('templates/footer',$data);
+	}
+	public function render_super_template($page = null, $data = array())
+	{
+
+		$this->load->view('templates/super_header',$data);
+		$this->load->view('templates/super_header_menu',$data);
+		$this->load->view('templates/super_side_menubar',$data);
+		$this->load->view($page, $data);
+		$this->load->view('templates/super_footer',$data);
 	}
 
 	public function company_currency()

@@ -44,7 +44,7 @@
                 <?php endforeach;?>
                 <?php endif ?>
               </h4>
-              <?php if($user_permission == 3 or $user_permission == 2 or $user_permission == 1): ?>
+              <?php if($permission == 3 or $permission == 2 or $permission == 1): ?>
               <h4><font color="blue">点击已休假数可以查看每个月已休明细</font></h4>
               <?php endif ?>
             </div>
@@ -54,7 +54,7 @@
               <div style="overflow:scroll;">
               
               
-              <?php if($user_permission == 0): ?>
+              <?php if($permission == 0): ?>
               <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;" width="250%">
                 <thead>
                 <tr>

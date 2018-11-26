@@ -8,11 +8,13 @@ class Notification extends Admin_Controller
 	{
 		parent::__construct();
 
-		$this->not_logged_in();
+		$this->not_logged_in_super();
 
         $this->data['page_title'] = 'Notification';
         
-        $this->load->model('model_notice');
+		$this->load->model('model_notice');
+		permission=$this->session->userdata('permission');
+		$this->data['user_name']=$this->session->userdata('user_name');
     }
     public function index()
     {
@@ -23,11 +25,10 @@ class Notification extends Admin_Controller
 		foreach ($notice_data as $k => $v) {
 			$result[$k] = $v;
 		}
-		$this->data['user_permission']=$this->session->userdata('user_permission');
-		$this->data['user_name']=$this->session->userdata('user_name');
+		
 		$this->data['notice_data'] = $result;
 		
-        $this->render_template('notification/index', $this->data);
+        $this->render_super_template('notification/index', $this->data);
     }
     public function publish_holiday()
     {
@@ -44,7 +45,7 @@ class Notification extends Admin_Controller
 				'username' => $this->session->userdata('user_id'),
         		'title' => $this->input->post('title'),
 				'content' => $this->input->post('content'),
-				'type' => 'holiday'
+				'type' => '假期'
 			);
 			echo $data['pubtime'];
 			$create = $this->model_notice->create($data);
@@ -67,10 +68,8 @@ class Notification extends Admin_Controller
 			foreach ($notice_data as $k => $v) {
 				$result[$k] = $v;
 			}
-			$this->data['user_permission']=$this->session->userdata('user_permission');
-			$this->data['user_name']=$this->session->userdata('user_name');
 			$this->data['notice_data'] = $result;
-            $this->render_template('notification/publish_holiday', $this->data);
+            $this->render_super_template('notification/publish_holiday', $this->data);
         }	
 	}
 	public function publish_plan()
@@ -88,7 +87,7 @@ class Notification extends Admin_Controller
 				'username' => $this->session->userdata('user_id'),
         		'title' => $this->input->post('title'),
 				'content' => $this->input->post('content'),
-				'type' => 'plan'
+				'type' => '计划'
 			);
 			echo $data['pubtime'];
 			$create = $this->model_notice->create($data);
@@ -111,10 +110,8 @@ class Notification extends Admin_Controller
 			foreach ($notice_data as $k => $v) {
 				$result[$k] = $v;
 			}
-			$this->data['user_permission']=$this->session->userdata('user_permission');
-			$this->data['user_name']=$this->session->userdata('user_name');
 			$this->data['notice_data'] = $result;
-            $this->render_template('notification/publish_plan', $this->data);
+            $this->render_super_template('notification/publish_plan', $this->data);
         }
 	}
 }

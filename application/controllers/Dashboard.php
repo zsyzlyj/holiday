@@ -11,6 +11,8 @@ class Dashboard extends Admin_Controller
 		$this->data['page_title'] = 'Dashboard';
 
 		$this->load->model('model_holiday');
+		permission=$this->session->userdata('permission');;
+		$this->data['user_name'] = $this->session->userdata('user_name');
 
 	}
 
@@ -21,17 +23,9 @@ class Dashboard extends Admin_Controller
 	{
 
 		$user_id = $this->session->userdata('id');
-		$this->data['user_permission']=$this->session->userdata('user_permission');;
-		#$this->data['user_id']=$user_id;
-		#$holiday_data = $this->model_holiday->getHolidayData();
+
 		$result = array();
-
-		$this->data['user_permission']=$this->session->userdata('user_permission');;
-
-		#$this->data['holiday_data'] = $result;
-		$this->data['user_name'] = $this->session->userdata('user_name');
 		$this->render_template('dashboard', $this->data);
-		#$this->render_template('holiday/index', $this->data);
 
 	}
 }

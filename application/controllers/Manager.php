@@ -12,6 +12,8 @@ class Manager extends Admin_Controller
 		
 		$this->load->model('model_manager');
 		$this->load->model('model_users');
+		permission=$this->session->userdata('permission');
+		$this->data['user_name'] = $this->session->userdata('user_name');
 	}
 
 	
@@ -31,7 +33,7 @@ class Manager extends Admin_Controller
 		);
 
 		
-		$this->data['user_permission']=$this->session->userdata('user_permission');
+		
 
 		$this->data['manager_data'] = $result;
 		$this->data['permission_set']=$permission_set;
@@ -158,7 +160,7 @@ class Manager extends Admin_Controller
     }
 	public function import()
 	{
-		$this->data['user_permission'] = $this->session->userdata('user_permission')
+
         if($_FILES){
         if($_FILES["file"])
             {
@@ -176,8 +178,7 @@ class Manager extends Admin_Controller
         else{
             $this->render_template('manager/import',$this->data);
 		}        
-		$this->data['user_permission']=$this->session->userdata('user_permission');
-		$this->data['user_name'] = $this->session->userdata('user_name');
+		
 		$this->render_template('manager/import', $this->data);
 	}
 

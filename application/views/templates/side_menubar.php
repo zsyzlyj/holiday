@@ -1,9 +1,10 @@
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
+      
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <?php if($user_permission == 1 or $user_permission == 2 ): ?>
+        <?php if($permission == 1 or $permission == 2 ): ?>
         <li id="myDeptHolidayMainMenu">
           <a href="<?php echo base_url('holiday/mydeptholiday') ?>">
             <i class="fa fa-file-archive-o"></i>
@@ -19,28 +20,27 @@
             </span>
           </a>
           <ul class="treeview-menu">
-          <li id="myDeptPlanNav">
-            <a href="<?php echo base_url('holiday/mydeptplan') ?>">
+            <li id="myDeptPlanNav">
+              <a href="<?php echo base_url('holiday/mydeptplan') ?>">
+                <i class="fa fa-circle-o"></i>
+                <span>年假计划汇总</span>
+              </a>
+            </li>
+            <li id="SubmitStatusNav">
+              <a href="<?php echo base_url('holiday/mydeptplan_submit') ?>">
               <i class="fa fa-circle-o"></i>
-              <span>年假计划汇总</span>
-            </a>
-          </li>
-          <li id="SubmitStatusNav">
-            <a href="<?php echo base_url('holiday/mydeptplan_submit') ?>">
-            <i class="fa fa-circle-o"></i>
-             汇总提交情况
-            </a>
-          </li>
-          </ul>
-            
+              汇总提交情况
+              </a>
+            </li>
+          </ul>  
         </li>
         
         <?php endif ?>
-        <?php if($user_permission == 2 or $user_permission == 0): ?>
+        <?php if($permission == 2 or $permission == 0): ?>
         <li class="treeview" id="AuditMainMenu">
           <a href="#">
             <i class="fa fa-check-square-o"></i>
-            <span>审核</span>
+            <span>年假审核</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -49,13 +49,13 @@
           <li id="AuditNav">
             <a href="<?php echo base_url('holiday/audit') ?>">
               <i class="fa fa-circle-o"></i>
-              审核
+              年假审核
             </a>
           </li>
           <li id="AuditGatherNav">
             <a href="<?php echo base_url('holiday/audit_result') ?>">
             <i class="fa fa-circle-o"></i>
-             审核结果
+             年假审核结果
             </a>
           </li>
           </ul>
@@ -64,7 +64,7 @@
         
         
         <?php endif ?>
-        <?php if($user_permission == 0): ?>
+        <?php if($permission == 0): ?>
         <li id="dashboardMainMenu">
           <a href="<?php echo base_url('dashboard') ?>">
             <i class="fa fa-dashboard"></i> <span>总览</span>
@@ -102,20 +102,19 @@
             </span>
           </a>
           <ul class="treeview-menu">
-          <li id="myDeptPlanNav">
-            <a href="<?php echo base_url('holiday/mydeptplan') ?>">
+            <li id="myDeptPlanNav">
+              <a href="<?php echo base_url('holiday/mydeptplan') ?>">
+                <i class="fa fa-circle-o"></i>
+                <span>年假计划汇总</span>
+              </a>
+            </li>
+            <li id="SubmitStatusNav">
+              <a href="<?php echo base_url('holiday/mydeptplan_submit') ?>">
               <i class="fa fa-circle-o"></i>
-              <span>年假计划汇总</span>
-            </a>
-          </li>
-          <li id="SubmitStatusNav">
-            <a href="<?php echo base_url('holiday/mydeptplan_submit') ?>">
-            <i class="fa fa-circle-o"></i>
-             汇总提交情况
-            </a>
-          </li>
+              汇总提交情况
+              </a>
+            </li>
           </ul>
-            
         </li>
         <li class="treeview" id="mainSyncNav">
           <a href="#">
@@ -129,24 +128,24 @@
             <li id="uploadFileNav"><a href="<?php echo base_url('holiday/import') ?>"><i class="fa fa-circle-o"></i> 上传数据</a></li>
             <li id="downloadFileNav"><a href="<?php echo base_url('holiday/download_page') ?>"><i class="fa fa-circle-o"></i> 下载数据</a></li>
           </ul>
-            
         </li>
-  
-          <li class="treeview" id="mainUserNav">
-          <a href="#">
-            <i class="fa fa-users"></i>
-            <span>用户管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li id="UserNav"><a href="<?php echo base_url('users') ?>"><i class="fa fa-circle-o"></i> 用户管理</a></li>
-            <li id="manageUserNav"><a href="<?php echo base_url('manager') ?>"><i class="fa fa-circle-o"></i> 权限管理</a></li>
-          </ul>
-          </li>
-          
-          <li class="treeview" id="mainNoticeNav">
+        <li id="UserNav"><a href="<?php echo base_url('users') ?>"><i class="fa fa-users"></i> 用户管理</a></li>
+        <!--
+        <li class="treeview" id="mainUserNav">
+        <a href="#">
+          <i class="fa fa-users"></i>
+          <span>用户权限管理</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li id="UserNav"><a href="<?php echo base_url('users') ?>"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+          <li id="manageUserNav"><a href="<?php echo base_url('manager') ?>"><i class="fa fa-circle-o"></i> 权限管理</a></li>
+        </ul>
+        </li>
+        --> 
+        <li class="treeview" id="mainNoticeNav">
           <a href="#">
             <i class="fa fa-bullhorn"></i>
             <span>公告</span>
@@ -159,124 +158,127 @@
             <li id="publish_plan"><a href="<?php echo base_url('notification/publish_plan') ?>"><i class="fa fa-circle-o"></i> 发布年假计划公告</a></li>        
             <li id="manage_notice"><a href="<?php echo base_url('notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
           </ul>
-          </li>
-          
-          <?php endif; ?>
-          <li id="holidayMainMenu">
+        </li>
+        
+        <?php endif; ?>
+        
+        <li id="holidayMainMenu">
           <a href="<?php echo base_url('holiday/staff') ?>">
             <i class="fa fa-tasks"></i> <span>我的年假信息</span>
           </a>
-          </li>
-          <li id='planMainMenu'>
-            <a href="<?php echo base_url('holiday/staff_plan') ?>">
-              <i class="fa fa-edit"></i> <span>我的年假计划</span>
-            </a>
-          </li>
-          <!--
-            
-            
-            <li class="treeview" id="mainGroupNav">
-              <a href="#">
-                <i class="fa fa-files-o"></i>
-                <span>Groups</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                
-                  <li id="addGroupNav"><a href="<?php echo base_url('groups/create') ?>"><i class="fa fa-circle-o"></i> Add Group</a></li>
-                
-                
-                <li id="manageGroupNav"><a href="<?php echo base_url('groups') ?>"><i class="fa fa-circle-o"></i> Manage Groups</a></li>
-                
-              </ul>
-            </li>
-
-            <li id="brandNav">
-              <a href="<?php echo base_url('brands/') ?>">
-                <i class="glyphicon glyphicon-tags"></i> <span>Brands</span>
-              </a>
-            </li>
-
-
-            <li id="categoryNav">
-              <a href="<?php echo base_url('category/') ?>">
-                <i class="fa fa-files-o"></i> <span>Category</span>
-              </a>
-            </li>
-
-
-
-            <li id="storeNav">
-              <a href="<?php echo base_url('stores/') ?>">
-                <i class="fa fa-files-o"></i> <span>Stores</span>
-              </a>
-            </li>
-
+        </li>
+        <li id='planMainMenu'>
+          <a href="<?php echo base_url('holiday/staff_plan') ?>">
+            <i class="fa fa-edit"></i> <span>我的年假计划</span>
+          </a>
+        </li>
+        
+        
+        <!--
           
-          <li id="attributeNav">
-            <a href="<?php echo base_url('attributes/') ?>">
-              <i class="fa fa-files-o"></i> <span>Attributes</span>
+          
+          <li class="treeview" id="mainGroupNav">
+            <a href="#">
+              <i class="fa fa-files-o"></i>
+              <span>Groups</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              
+                <li id="addGroupNav"><a href="<?php echo base_url('groups/create') ?>"><i class="fa fa-circle-o"></i> Add Group</a></li>
+              
+              
+              <li id="manageGroupNav"><a href="<?php echo base_url('groups') ?>"><i class="fa fa-circle-o"></i> Manage Groups</a></li>
+              
+            </ul>
+          </li>
+
+          <li id="brandNav">
+            <a href="<?php echo base_url('brands/') ?>">
+              <i class="glyphicon glyphicon-tags"></i> <span>Brands</span>
             </a>
           </li>
 
-            <li class="treeview" id="mainOrdersNav">
-              <a href="#">
-                <i class="fa fa-dollar"></i>
-                <span>Orders</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">            
-                  <li id="addOrderNav"><a href="<?php echo base_url('orders/create') ?>"><i class="fa fa-circle-o"></i> Add Order</a></li>
 
-                <li id="manageOrdersNav"><a href="<?php echo base_url('orders') ?>"><i class="fa fa-circle-o"></i> Manage Orders</a></li>
-              </ul>
-            </li>
+          <li id="categoryNav">
+            <a href="<?php echo base_url('category/') ?>">
+              <i class="fa fa-files-o"></i> <span>Category</span>
+            </a>
+          </li>
 
 
 
-            <li id="reportNav">
-              <a href="<?php echo base_url('reports/') ?>">
-                <i class="glyphicon glyphicon-stats"></i> <span>Reports</span>
-              </a>
-            </li>
+          <li id="storeNav">
+            <a href="<?php echo base_url('stores/') ?>">
+              <i class="fa fa-files-o"></i> <span>Stores</span>
+            </a>
+          </li>
+
+        
+        <li id="attributeNav">
+          <a href="<?php echo base_url('attributes/') ?>">
+            <i class="fa fa-files-o"></i> <span>Attributes</span>
+          </a>
+        </li>
+
+        <li class="treeview" id="mainOrdersNav">
+          <a href="#">
+            <i class="fa fa-dollar"></i>
+            <span>Orders</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">            
+              <li id="addOrderNav"><a href="<?php echo base_url('orders/create') ?>"><i class="fa fa-circle-o"></i> Add Order</a></li>
+
+            <li id="manageOrdersNav"><a href="<?php echo base_url('orders') ?>"><i class="fa fa-circle-o"></i> Manage Orders</a></li>
+          </ul>
+        </li>
 
 
 
-            <li id="companyNav"><a href="<?php echo base_url('company/') ?>"><i class="fa fa-files-o"></i> <span>Company</span></a></li>
+        <li id="reportNav">
+          <a href="<?php echo base_url('reports/') ?>">
+            <i class="glyphicon glyphicon-stats"></i> <span>Reports</span>
+          </a>
+        </li>
 
 
 
-            <li class="treeview" id="mainProductNav">
-              <a href="#">
-                <i class="fa fa-envelope"></i>
-                <span>信箱</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                  <li id="addProductNav"><a href="<?php echo base_url('products/create') ?>"><i class="fa fa-circle-o"></i> Add Product</a></li>
-              
-                <li id="manageProductNav"><a href="<?php echo base_url('products') ?>"><i class="fa fa-circle-o"></i> Manage Products</a></li>
-              </ul>
-            </li>
+        <li id="companyNav"><a href="<?php echo base_url('company/') ?>"><i class="fa fa-files-o"></i> <span>Company</span></a></li>
+
+
+
+        <li class="treeview" id="mainProductNav">
+          <a href="#">
+            <i class="fa fa-envelope"></i>
+            <span>信箱</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+              <li id="addProductNav"><a href="<?php echo base_url('products/create') ?>"><i class="fa fa-circle-o"></i> Add Product</a></li>
+          
+            <li id="manageProductNav"><a href="<?php echo base_url('products') ?>"><i class="fa fa-circle-o"></i> Manage Products</a></li>
+          </ul>
+        </li>
 
 
 
 
         
 
-         <li class="header">Settings</li>
+        <li class="header">Settings</li>
 
-          <li><a href="<?php echo base_url('users/profile/') ?>"><i class="fa fa-user-o"></i> <span>个人信息</span></a></li>
+        <li><a href="<?php echo base_url('users/profile/') ?>"><i class="fa fa-user-o"></i> <span>个人信息</span></a></li>
 
-          <li><a href="<?php echo base_url('users/setting/') ?>"><i class="fa fa-wrench"></i> <span>设置</span></a></li>
-        
-          -->
+        <li><a href="<?php echo base_url('users/setting/') ?>"><i class="fa fa-wrench"></i> <span>设置</span></a></li>
+      
+        -->
         
         <!-- user permission info -->
         

@@ -94,3 +94,8 @@ INSERT INTO `users` (`user_id`, `username`, `password`,`permission`) VALUES
 
 UPDATE users SET permission=0,users.password=md5('hr'),username='冯雪香'
 where user_id='440603199101193847'
+
+INSERT INTO `super_user` (`user_id`, `password`,`permission`) VALUES
+('lyjh',md5('hr'),'休假');
+INSERT INTO `super_user` (`user_id`, `password`,`permission`) VALUES
+('lyja',md5('hr'),'休假');

@@ -14,6 +14,8 @@ class Wage extends Admin_Controller
 
         $this->load->model('model_wage');
         $this->load->model('model_super_user');
+        $this->data['permission'] = $this->session->userdata('permission');
+        $this->data['user_name'] = $this->session->userdata('user_name');
 	}
 
     /* 
@@ -24,9 +26,7 @@ class Wage extends Admin_Controller
         $file = iconv("utf-8", "gb2312", $file);   //转码  
     
         if(empty($file) OR !file_exists($file)) {  
-    
             die('file not exists!');  
-    
         }  
     
         include('PHPExcel.php');  //引入PHP EXCEL类  
@@ -89,8 +89,7 @@ class Wage extends Admin_Controller
 	public function index()
 	{
 
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
         
 		$this->render_template('wage/index', $this->data);
     }
@@ -415,7 +414,7 @@ class Wage extends Admin_Controller
 
     public function download_page()
     {
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
         $this->render_template('holiday/export',$this->data);
     }
 
@@ -854,8 +853,8 @@ class Wage extends Admin_Controller
     public function import($filename=NULL)
     {
         
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
+        
         if($_FILES){
         if($_FILES["file"])
             {
@@ -940,8 +939,8 @@ class Wage extends Admin_Controller
 
         $this->data['plan_data'] = $result;
         
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
+        
         
 
         $this->render_template('holiday/plan', $this->data);
@@ -971,8 +970,8 @@ class Wage extends Admin_Controller
 
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
+        
 		$this->render_template('holiday/staff', $this->data);
     }
     
@@ -1001,8 +1000,8 @@ class Wage extends Admin_Controller
 
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
+        
 
 		$this->render_template('holiday/index', $this->data);
     }
@@ -1034,8 +1033,8 @@ class Wage extends Admin_Controller
         $this->data['dept_options']=$admin_result;
 
         $this->data['holiday_data'] = $result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
+        
 		$this->render_template('holiday/mydeptholiday', $this->data);
     }
     public function mydeptplan()
@@ -1075,8 +1074,8 @@ class Wage extends Admin_Controller
         $this->data['dept_options']=$admin_result;
         $this->data['submitted'] = $submitted;
         $this->data['plan_data'] = $result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
+        
         $this->data['feedback'] = $this->model_feedback->getFeedbackByDept($select_dept);
         $this->render_template('holiday/mydeptplan', $this->data);
     }
@@ -1100,7 +1099,7 @@ class Wage extends Admin_Controller
         
         $this->data['submit_data'] = $data;
         $this->data['feedback'] = $feedback;
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
         $this->render_template('holiday/submit_result', $this->data);
     }
 
@@ -1126,8 +1125,8 @@ class Wage extends Admin_Controller
 
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
+        
         
 
 		$this->render_template('holiday/index', $this->data);
@@ -1167,8 +1166,8 @@ class Wage extends Admin_Controller
         }
         $this->data['plan_data'] = $plan_data;
         $this->data['notice_data'] = $notice_result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
+        
 
 		$this->render_template('holiday/staff_plan', $this->data);
     }
@@ -1194,8 +1193,8 @@ class Wage extends Admin_Controller
         }
         
         $this->data['plan_data'] = $result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
+        
         /**/
         /*============================================================*/
 
@@ -1385,8 +1384,8 @@ class Wage extends Admin_Controller
 
         $this->data['dept_options']=$admin_result;
         $this->data['plan_data'] = $result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
+        
         
         $this->render_template('holiday/audit', $this->data);
 
@@ -1411,7 +1410,7 @@ class Wage extends Admin_Controller
             array_push($data,$this->model_feedback->getFeedbackByDept($b));
         }  
         $this->data['feedback_data']=$data;
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        
         $this->render_template('holiday/audit_result', $this->data);
     }
 

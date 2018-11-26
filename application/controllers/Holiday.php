@@ -10,7 +10,9 @@ class Holiday extends Admin_Controller
 
 		$this->not_logged_in();
 
-		$this->data['page_title'] = 'Holiday';
+        $this->data['page_title'] = 'Holiday';
+        $this->data['permission'] = $this->session->userdata('permission');
+        $this->data['user_name'] = $this->session->userdata('user_name');
 
         $this->load->model('model_holiday');
         $this->load->model('model_plan');
@@ -25,6 +27,8 @@ class Holiday extends Admin_Controller
     */
 	public function index()
 	{
+        $this->render_template('dashboard', $this->data);
+        /*
         $holiday_data = $this->model_holiday->getHolidayData();
         $notice_data = $this->model_notice->getNoticeLatestHoliday();
 
@@ -74,9 +78,9 @@ class Holiday extends Admin_Controller
 
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
-		$this->render_template('holiday/index', $this->data);
+        
+        $this->render_template('holiday/index', $this->data);
+        */
     }
     /*
     * It Fetches the products data from the product table 
@@ -369,6 +373,7 @@ class Holiday extends Admin_Controller
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
                     $col++;
                 }
+                else{}
             }
             /*
             if($field != 'initflag' and $field != 'user_id')
@@ -385,6 +390,7 @@ class Holiday extends Admin_Controller
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
  
         $filename = date('YmdHis').".xlsx";
+
         // Sending headers to force the user to download the file
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'.$filename);
@@ -397,6 +403,7 @@ class Holiday extends Admin_Controller
 
     public function download_page()
     {
+        $this->data['user_name'] = $this->session->userdata('user_name');
         $this->render_template('holiday/export',$this->data);
     }
 
@@ -568,7 +575,6 @@ class Holiday extends Admin_Controller
     }
     public function export_plan()
     {
-
         $this->excel_plan();
     }
     public function excel_mydeptplan($dept){
@@ -855,8 +861,6 @@ class Holiday extends Admin_Controller
     public function import($filename=NULL)
     {
         
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
         if($_FILES){
         if($_FILES["file"])
             {
@@ -873,7 +877,7 @@ class Holiday extends Admin_Controller
         }
         else{
             $this->render_template('holiday/import',$this->data);
-        }        
+        } 
     }
     
 
@@ -941,9 +945,6 @@ class Holiday extends Admin_Controller
 
         $this->data['plan_data'] = $result;
         
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
-        
 
         $this->render_template('holiday/plan', $this->data);
     }
@@ -972,8 +973,6 @@ class Holiday extends Admin_Controller
 
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
 		$this->render_template('holiday/staff', $this->data);
     }
     
@@ -988,7 +987,7 @@ class Holiday extends Admin_Controller
 	{
         $user_id=$this->session->userdata('user_id');
         $holiday_data = $this->model_holiday->getHolidayById($user_id);
-        $notice_data = $this->model_notice->getNoticeLatest();
+        $notice_data = $this->model_notice->getNoticeLatestHoliday();
         $result = array();
         $notice_result=array();
         foreach ($notice_data as $k => $v) {
@@ -1002,10 +1001,8 @@ class Holiday extends Admin_Controller
 
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
 
-		$this->render_template('holiday/index', $this->data);
+		$this->render_template('dashboard', $this->data);
     }
 
     public function mydeptholiday()
@@ -1034,9 +1031,7 @@ class Holiday extends Admin_Controller
 
         $this->data['dept_options']=$admin_result;
 
-        $this->data['holiday_data'] = $result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
+        $this->data['holiday_data'] = $result; 
 		$this->render_template('holiday/mydeptholiday', $this->data);
     }
     public function mydeptplan()
@@ -1076,8 +1071,6 @@ class Holiday extends Admin_Controller
         $this->data['dept_options']=$admin_result;
         $this->data['submitted'] = $submitted;
         $this->data['plan_data'] = $result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
         $this->data['feedback'] = $this->model_feedback->getFeedbackByDept($select_dept);
         $this->render_template('holiday/mydeptplan', $this->data);
     }
@@ -1114,7 +1107,7 @@ class Holiday extends Admin_Controller
 	{
         $user_id=$this->session->userdata('user_id');
         $holiday_data = $this->model_holiday->getHolidayById($user_id);
-        $notice_data = $this->model_notice->getNoticeLatest();
+        $notice_data = $this->model_notice->getNoticeLatestHoliday();
         $result = array();
         $notice_result=array();
         foreach ($notice_data as $k => $v) {
@@ -1127,11 +1120,9 @@ class Holiday extends Admin_Controller
 
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
         
 
-		$this->render_template('holiday/index', $this->data);
+		$this->render_template('dashboard', $this->data);
     }
 
 
@@ -1168,8 +1159,6 @@ class Holiday extends Admin_Controller
         }
         $this->data['plan_data'] = $plan_data;
         $this->data['notice_data'] = $notice_result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
 
 		$this->render_template('holiday/staff_plan', $this->data);
     }
@@ -1195,8 +1184,6 @@ class Holiday extends Admin_Controller
         }
         
         $this->data['plan_data'] = $result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
         /**/
         /*============================================================*/
 
@@ -1386,8 +1373,6 @@ class Holiday extends Admin_Controller
 
         $this->data['dept_options']=$admin_result;
         $this->data['plan_data'] = $result;
-        $this->data['user_permission'] = $this->session->userdata('user_permission');
-        $this->data['user_name'] = $this->session->userdata('user_name');
         
         $this->render_template('holiday/audit', $this->data);
 
@@ -1400,6 +1385,7 @@ class Holiday extends Admin_Controller
 
         $dept_set=array();
         $data=array();
+        $dept='';
         if(strstr($my_data['dept'],'/')){
             $dept_set=explode('/',$my_data['dept']);
             foreach($dept_set as $a => $b){
@@ -1409,8 +1395,11 @@ class Holiday extends Admin_Controller
             }
         }
         else{
-            array_push($data,$this->model_feedback->getFeedbackByDept($b));
-        }  
+            array_push($data,$this->model_feedback->getFeedbackByDept($my_data['dept']));
+        }
+        #echo $my_data['dept'];
+        #echo var_dump($this->model_feedback->getFeedbackByDept($my_data['dept']));
+        $this->data['dept']=$my_data;
         $this->data['feedback_data']=$data;
         $this->data['user_name'] = $this->session->userdata('user_name');
         $this->render_template('holiday/audit_result', $this->data);

@@ -20,11 +20,11 @@
         <div class="row">
           <h3>年假汇总</h3>
           <br />
-          <a href="<?php echo base_url('holiday/export_holiday') ?>" class="btn btn-info">导出表格</a>
+          <a href="<?php echo base_url('super/export_holiday') ?>" class="btn btn-info">导出表格</a>
           <hr />
           <h3>年假计划汇总</h3>
           <br />
-          <a href="<?php echo base_url('holiday/export_plan') ?>" class="btn btn-info">导出表格</a>
+          <a href="<?php echo base_url('super/export_plan') ?>" class="btn btn-info">导出表格</a>
         </div>
       </div>
     </section>

@@ -5,14 +5,14 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        部门年假计划
+        年假计划
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">plan</li>
       </ol>
     </section>
-    
+
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
@@ -29,72 +29,19 @@
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <?php echo $this->session->flashdata('error'); ?>
             </div>
-          <?php endif; ?>
-
-
-
+          <?php endif; ?>         
+        
 
           <div class="box">
-            
             <div class="box-header">
-              <br/>
-                <form action='<?php echo base_url('holiday/mydeptplan' )?>' method="post" id="selected_dept_form">
-                <select id="selected_dept" name="selected_dept" onchange="submitForm();">
-                  <?php if($current_dept==""):?>
-                    <option value="">选择部门</option>
-                  <?php else:?>
-                    <option value="<?php $current_dept;?>"><?php echo $current_dept;?></option>
-                  <?php endif; ?>
-                  <?php foreach($dept_options as $k => $v):?>
-                  <?php if($current_dept!=$v):?>
-                    <option value="<?php echo $v;?>"><?php echo $v;?></option>
-                  <?php endif;?>
-                  <?php endforeach;?>
-                </select>
-                </form>
-            </div>
-            <div>
-            <?php if($plan_data): ?>  
-                <h3>
-                提交进度：<?php echo '<font color="green">'.$submitted.'</font> / '.count($plan_data)?>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <?php if(!strstr($submit_status,'已')):?>
-                
-                <?php if($submitted==count($plan_data)):?>
-                <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/submit_to_audit') ?>' method='post'>
-                  <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
-                  <button class="btn btn-success">提交</button>
-                </form>
-                <?php endif; ?>
-                <?php if($submitted!=count($plan_data)):?>
-                <button class="btn btn-success disabled">提交</button>
-                <?php endif; ?>
-                <?php endif; ?>
-                <?php if(strstr($submit_status,'已')):?>
-                
-                <button class="btn btn-success disabled">提交</button>
-                <?php endif; ?>
 
-                
-                <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptplan') ?>' method='post'>
-                  <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
-                  <?php if(strstr($feedback['status'],'已')):?>
-                  <button class="btn btn-warning">导出</button>
-                  <?php else:?>
-                  <button class="btn btn-warning disabled">导出</button>
-                  <?php endif; ?>
-                </form>
-                
-                
-                
-                </h3>
-            <?php endif;?>
             </div>
             
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              <?php if($plan_data):?>
+              
+              
               <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="120%">
                 <thead>
                 <tr>
@@ -103,7 +50,6 @@
                   <th>上年可休数</th>
                   <th>今年可休数</th>
                   <th>荣誉假期数</th>
-                  
                   <th>第一季度</th>
                   <th>第二季度</th>
                   <th>第三季度</th>
@@ -113,7 +59,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                
+                  <?php if($plan_data): ?>    
+              
                     <?php foreach($plan_data as $k => $v): ?>
                       <tr>
                       
@@ -126,30 +73,32 @@
                         <td><?php echo $v['secondquater']; ?></td>
                         <td><?php echo $v['thirdquater']; ?></td>
                         <td><?php echo $v['fourthquater']; ?></td>
-                        
-                        <?php if(strstr($v['submit_tag'],'已')):?>
+                        <?php if($v['submit_tag']=='已提交'):?>
                           <td><font color='green'><?php echo $v['submit_tag']; ?></font></td>
-                        <?php else:?>
+                        <?php endif; ?>
+                        <?php if($v['submit_tag']=='未提交'):?>
                           <td><font color='red'><?php echo $v['submit_tag']; ?></font></td>
                         <?php endif; ?>
                         <td>
-                        <form action="<?php echo base_url('holiday/change_submit_mydeptplan')?>" method="post" style="float:left">
+                        <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="1"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="0"/>
-                        <?php if(strstr($submit_status,'已') or strstr($v['submit_tag'],'未')):?>
-                        <button class='btn btn-info disabled'>允许修改</button>
-                        <?php else:?>
                         <button class='btn btn-info'>允许修改</button>
-                        <?php endif; ?>
+                        </form>
+                        <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
+                        <button class='btn btn-danger'>撤回修改</button>
+                        <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
+                        <input type="hidden" id='submit_auth' name='submit_auth' value="0"/>
+                        <input type="hidden" id='submit_revolt' name='submit_revolt' value="1"/>
+                        
                         </form>
                         </td>
                       </tr>
                     <?php endforeach; ?>
-                  
+                  <?php endif; ?>
                 </tbody>
                 </table>
-                <?php endif;?>
               </div>
               <!-- /.overflow:scroll -->
             </div>
@@ -172,7 +121,7 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#myDeptPlanNav').addClass('active');
+      $('#planGatherMainMenu').addClass('active');
       
       $('#planTable').DataTable({
         language: 
@@ -204,11 +153,6 @@
         }      
       });
     });
-    function submitForm(){
-    //获取form表单对象
-        var form = document.getElementById("selected_dept_form");
-        form.submit();//form表单提交
-    }
     
   </script>
  

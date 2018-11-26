@@ -14,7 +14,7 @@ class Super_Auth extends Admin_Controller
 
 	/* 
 		查看登录的表格是否正确，主要是检查user_id和password是否和数据库的一致
-		根据数据库中的permission设置user_permission，根据user_permission确定不同用户登录后界面上的功能
+		根据数据库中的permission设置permission，根据permission确定不同用户登录后界面上的功能
 		permission的值不同分别跳转：
 		0——超级管理员,index
 		1——综管员,admin

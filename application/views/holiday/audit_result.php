@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        审核
+        年假审核结果
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -55,6 +55,11 @@
                       <tr>
                         <td><?php echo $v['department']; ?></td>
                         <td>
+                        <?php if(strstr($v['status'],'未')):?>
+                        <font color='orange'><?php echo $v['status'];?></font>
+                        <?php else: ?>
+                        <font color='green'><?php echo $v['status'];?></font>
+                        <?php endif; ?>
                         <?php if($v['confirm']==0):?>
                         <font color='red'>不同意</font>
                         <?php else: ?>
