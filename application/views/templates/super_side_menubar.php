@@ -5,13 +5,13 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <?php if($permission=='工资'):?>
-        <li id="searchWageMainMenu">
-          <a href="<?php echo base_url('super/index') ?>">
-            <i class="fa fa-money"></i><span>工资查询</span>
+        <li id="wageGatherMainMenu">
+          <a href="<?php echo base_url('super/wage') ?>">
+            <i class="fa fa-money"></i><span>工资汇总</span>
           </a>
         </li>
         <li id="uploadWageFileNav">
-          <a href="<?php echo base_url('super/import') ?>">
+          <a href="<?php echo base_url('super/wage_import') ?>">
           <i class="fa fa-circle-o"></i><span>工资导入</span>
           </a>
         </li>
@@ -36,23 +36,23 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="uploadFileNav"><a href="<?php echo base_url('super/import') ?>"><i class="fa fa-circle-o"></i> 上传数据</a></li>
+            <li id="uploadFileNav"><a href="<?php echo base_url('super/holiday_import') ?>"><i class="fa fa-circle-o"></i> 上传数据</a></li>
             <li id="downloadFileNav"><a href="<?php echo base_url('super/download_page') ?>"><i class="fa fa-circle-o"></i> 下载数据</a></li>
           </ul>
         </li>
         
         <li class="treeview" id="mainUserNav">
-        <a href="#">
-          <i class="fa fa-users"></i>
-          <span>用户权限管理</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li id="UserNav"><a href="<?php echo base_url('super/users') ?>"><i class="fa fa-circle-o"></i> 用户管理</a></li>
-          <li id="manageUserNav"><a href="<?php echo base_url('super/manager') ?>"><i class="fa fa-circle-o"></i> 权限管理</a></li>
-        </ul>
+          <a href="#">
+            <i class="fa fa-users"></i>
+            <span>用户权限管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="UserNav"><a href="<?php echo base_url('super/users') ?>"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+            <li id="manageUserNav"><a href="<?php echo base_url('super/manager') ?>"><i class="fa fa-circle-o"></i> 权限管理</a></li>
+          </ul>
         </li>
         <li class="treeview" id="mainNoticeNav">
           <a href="#">

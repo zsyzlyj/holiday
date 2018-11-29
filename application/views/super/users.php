@@ -12,7 +12,7 @@
         <li class="active">Users</li>
       </ol>
     </section>
-
+    <br /><br />
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
@@ -30,12 +30,6 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
-          
-          
-            <a href="<?php echo base_url('super/users/create') ?>" class="btn btn-primary">Add User</a>
-            <br /> <br />
-          
-
 
           <div class="box">
             <div class="box-header">

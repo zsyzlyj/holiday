@@ -18,7 +18,7 @@ class Auth extends Admin_Controller
 		permission的值不同分别跳转：
 		0——超级管理员,index
 		1——综管员,admin
-		2——部门负责人，manager
+		2——部门负责人，managere
 		3——普通员工,staff
 	*/
 

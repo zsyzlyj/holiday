@@ -85,9 +85,10 @@
                         <td><?php echo $v['Companyage']; ?></td>
                         
                         <td><?php echo $v['Totalday']; ?></td>
+                        <td><?php echo $v['Bonus']; ?></td>
                         <td><?php echo $v['Lastyear']; ?></td>
                         <td><?php echo $v['Thisyear']; ?></td>
-                        <td><?php echo $v['Bonus']; ?></td>
+                        
                         <td><?php echo $v['Jan']; ?></td>
                         <td><?php echo $v['Feb']; ?></td>
                         <td><?php echo $v['Mar']; ?></td>

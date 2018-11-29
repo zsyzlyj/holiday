@@ -8,22 +8,206 @@ class Super extends Admin_Controller
 	public function __construct()
 	{
         parent::__construct();
+        $this->data['page_title'] = 'Super';
         $this->load->model('model_holiday');
         $this->load->model('model_plan');
         $this->load->model('model_notice');
         $this->load->model('model_manager');
         $this->load->model('model_submit');
         $this->load->model('model_users');
+        $this->load->model('model_feedback');
+        $this->load->model('model_wage_attr');
+        $this->load->model('model_wage');
         $this->data['permission']=$this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_id');
     }
-
+    /*
+    ============================================================
+    工资管理
+    包括：
+    1、主页
+    ============================================================
+    */ 
     public function wage(){
-        $this->data['permission']=$this->session->userdata('permission');
-        $this->data['user_name'] = $this->session->userdata('user_id');
+        $attr_data=array();
+
+        /*
+        foreach($this->model_wage_attr->getWageFirstData() as $k => $v){
+            foreach($v as $a => $b){
+                if($b!=''){
+                    echo $b.'<br />';
+                }
+                
+            }
+            #array_push($temp,$v);
+        }
+        */
+        $this->data['wage_data']=$this->model_wage->getWageData();
+        $this->data['wage_data']='';
+        $this->data['total_column']=$this->model_wage_attr->getWageTotalData()['total'];
+ 
+        #$this->data['first']=$temp;
+        #$this->data['second']=$this->model_wage_attr->getWageSecondData();
+        #$this->data['third']=$this->model_wage_attr->getWageThirdData();
+        #$this->data['fourth']=$this->model_wage_attr->getWageFourthData();
+        
         $this->render_super_template('super/wage',$this->data);
     }
+    public function wage_excel_put(){
+        
+        $this->load->library("phpexcel");//ci框架中引入excel类
+        $this->load->library('PHPExcel/IOFactory');
+        //先做一个文件上传，保存文件
+        $path=$_FILES['file'];
+        $filePath = "uploads/".$path["name"];
+        move_uploaded_file($path["tmp_name"],$filePath);
+        //根据上传类型做不同处理
+        
+        if (strstr($_FILES['file']['name'],'xlsx')) {
+            $reader = new PHPExcel_Reader_Excel2007();
+        }
+        else{
+            if (strstr($_FILES['file']['name'], 'xls')) {
+                $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
+            }
+        }
+        /*
+        $objExcel = new \PHPExcel();
+        $objWriteHTML = new \PHPExcel_Writer_HTML($reader->load($filePath)); //输出网页格式的对象。注：writer是读写
+        $objWriteHTML->save("php://output");
+*/
+
+        $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
+        $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
+        $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+        $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+        $columnCnt = array_search($highestColumm, $cellName); 
+
+        $data = array();
+        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++) {        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++) {
+                $cellId = $cellName[$colIndex].$rowIndex;  
+                $cell = $sheet->getCell($cellId)->getValue();
+                $cell = $sheet->getCell($cellId)->getCalculatedValue();
+                if ($cell instanceof PHPExcel_RichText) { //富文本转换字符串
+                    $cell = $cell->__toString();
+                }
+                $data[$rowIndex][$colIndex] = $cell;
+            }
+        }
+
+        $column=array();
+        $column_name=array();
+        $attribute_data=array();
+        $first=array();
+        $second=array();
+        $third=array();
+        $fourth=array();
+        $flag=false;
+        $counter=0;        
+        $attribute=array();
+        $content=array();
+        $total_row=0;
+        $attr=array();
+        foreach($data as $k => $v){
+            $row_data=array();
+            if($counter>=2 and $counter<=5){
+                foreach($v as $a=>$b)
+                {
+                    array_push($row_data,$b);
+                }
+                if($total_row==0){
+                    $total_row=count($row_data);
+                }                
+                array_push($attr,$row_data);
+                unset($row_data);
+            }
+            if($counter>5)
+            {
+                foreach($v as $a=>$b)
+                {
+                    array_push($row_data,$b);
+                }
+                array_push($content,$row_data);
+                unset($row_data);
+            }
+            $counter++;
+        }
+
+        $row_counter=1;
+        for($i=0;$i<$total_row;$i++){
+            if(($attr[0][$i]!='' and $attr[1][$i]=='' and $attr[2][$i]=='' and $attr[3][$i]=='')
+            or ($attr[0][$i]!='' and $attr[1][$i]!='' and $attr[2][$i]=='' and $attr[3][$i]=='')
+            or ($attr[0][$i]!='' and $attr[1][$i]=='' and $attr[2][$i]!='' and $attr[3][$i]!='')
+            or ($attr[0][$i]!='' and $attr[1][$i]!='' and $attr[2][$i]!='' and $attr[3][$i]!='')
+            or ($attr[0][$i]=='' and $attr[1][$i]!='' and $attr[2][$i]=='' and $attr[3][$i]=='')
+            or ($attr[0][$i]=='' and $attr[1][$i]=='' and $attr[2][$i]=='' and $attr[3][$i]!='')){
+                $first['attr_name'.$row_counter]=$attr[0][$i];
+                $second['attr_name'.$row_counter]=$attr[1][$i];
+                $third['attr_name'.$row_counter]=$attr[2][$i];
+                $fourth['attr_name'.$row_counter]=$attr[3][$i];
+                $row_counter++;
+            }
+        }
+        $total_data=array(
+            'total' => count($first)
+        );
+        $this->model_wage_attr->delete_total($total_data);
+        $this->model_wage_attr->create_total($total_data);
+
+
+        
+        $this->model_wage_attr->deleteAll();
+        $this->model_wage_attr->create_first($first);
+        $this->model_wage_attr->create_second($second);
+        $this->model_wage_attr->create_third($third);
+        $this->model_wage_attr->create_fourth($fourth);
+        
+        //把数据打包，写入数据库
+        $this->model_wage->deleteAll();
+        
+        foreach($content as $k => $v){
+            $content_data=array();    
+            foreach($v as $a => $b){
+                $content_data['content'.($a+1)]=$b;
+            }
+            echo $this->model_wage->create($content_data);
+            unset($content_data);
+        }
+    /**/
+    }
     
+    public function wage_import($filename=NULL)
+    {
+        if($_FILES){
+        if($_FILES["file"])
+            {
+                if ($_FILES["file"]["error"] > 0)
+                {
+                    echo "Error: " . $_FILES["file"]["error"] . "<br />";
+                }
+                else
+                {
+                    $this->wage_excel_put();
+                    $this->wage();
+                }
+            }
+        }
+        else{
+            $this->render_super_template('super/wage_import',$this->data);
+        } 
+    }
+
+    
+    /*
+    ============================================================
+    休假管理
+    包括：
+    1、主页，休假汇总
+    2、
+    ============================================================
+    */ 
     public function holiday(){
         $holiday_data = $this->model_holiday->getHolidayData();
 
@@ -60,7 +244,7 @@ class Super extends Admin_Controller
                     'Used' => $result[$k]['Used'],
                 );
     
-                $update = $this->model_holiday->update($data, $result[$k]['name']);
+                $update = $this->model_holiday->update($data, $result[$k]['user_id']);
                
             }
             
@@ -252,7 +436,7 @@ class Super extends Admin_Controller
         $this->render_super_template('super/export',$this->data);
     }
     
-    public function excel_put(){
+    public function holiday_excel_put(){
         
         $this->load->library("phpexcel");//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
@@ -430,11 +614,10 @@ class Super extends Admin_Controller
             else {
                 $response['success'] = false;
                 $response['messages'] = 'Error in the database while updated the brand information';			
-            }
-            
+            }  
         }
     }
-    public function import($filename=NULL)
+    public function holiday_import($filename=NULL)
     {
         
         if($_FILES){
@@ -446,13 +629,13 @@ class Super extends Admin_Controller
                 }
                 else
                 {
-                    $this->excel_put();
+                    $this->holiday_excel_put();
                     $this->holiday();
                 }
             }
         }
         else{
-            $this->render_super_template('super/import',$this->data);
+            $this->render_super_template('super/holiday_import',$this->data);
         } 
     }
 
@@ -658,7 +841,16 @@ class Super extends Admin_Controller
 				$permission=1;
 			}
 			if($Update_data['role']=='部门负责人'){
-				$permission=2;
+                $permission=2;
+                $feedback_data=array(
+                    'department' => $dept,
+                    'content' => '',
+                    'confirm' => 0,
+                    'status' => '未审核'
+                );
+                if($this->model_feedback->getFeedbackByDept()==NULL){
+                    $this->model_feedback->create($feedback_data);
+                }
 			}
 			$Update_user=array(
 				'permission' => $permission
@@ -691,18 +883,23 @@ class Super extends Admin_Controller
                     foreach($this->model_manager->getManagerData() as $k => $v){
                         $this->model_manager->delete($v['user_id']);
                     }
+
                     $this->manager_excel_put();
                     $this->manager();
                 }
             }
         }
         else{
-            $this->render_template('super/manager_import',$this->data);
+            $this->render_super_template('super/manager_import',$this->data);
 		}        
 		
-		$this->render_template('super/manager_import', $this->data);
+		$this->render_super_template('super/manager_import', $this->data);
     }
-    
+    /*
+    ============================================================
+    查看部门综管员和负责人主页
+    ============================================================
+    */ 
     public function manager(){
         $manager_data = $this->model_manager->getManagerData();
 		$result = array();
@@ -718,12 +915,24 @@ class Super extends Admin_Controller
 
 		$this->data['manager_data'] = $result;
 		$this->data['permission_set']=$permission_set;
-		$this->render_template('super/manager', $this->data);
+		$this->render_super_template('super/manager', $this->data);
     }
+    /*
+    ============================================================
+    绩效管理
+    包括：
+    1、
+    2、
+    ============================================================
+    */ 
     public function achievement (){
         $this->render_super_template('super/achievement',$this->data);
     }
-
+    /*
+    ============================================================
+    用户密码修改
+    ============================================================
+    */ 
     public function setting()
 	{
 		$id = $this->session->userdata('user_id');

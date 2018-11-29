@@ -10,7 +10,6 @@ class Model_wage extends CI_Model
 	/* get the brand data */
 	public function getWageData()
 	{
-
 		$sql = "SELECT * FROM wage";
 		$query = $this->db->query($sql);
 		return $query->result_array();
@@ -25,7 +24,6 @@ class Model_wage extends CI_Model
 	}
 	public function getWageByDept($dept = null) 
 	{
-		
 		if($dept) {	
 			$sql = "SELECT * FROM wage WHERE locate(?,department)";
 			$query = $this->db->query($sql, array($dept));
@@ -54,30 +52,12 @@ class Model_wage extends CI_Model
 			return ($insert == true) ? true : false;
 		}
 	}
-
-	public function update($data, $id)
+	
+	public function deleteAll()
 	{
-		if($data && $id) {
-			$this->db->where('user_id', $id);
-			$update = $this->db->update('wage', $data);
-			return ($update == true) ? true : false;
-		}
-	}
-
-	public function remove($id)
-	{
-		if($id) {
-			$this->db->where('user_id', $id);
-			$delete = $this->db->delete('wage');
-			return ($delete == true) ? true : false;
-		}
-	}
-
-	public function countTotalwage()
-	{
-		$sql = "SELECT * FROM wage";
-		$query = $this->db->query($sql);
-		return $query->num_rows();
+		$sql='delete from wage';
+		$delete = $this->db->query($sql);
+		return ($delete == true) ? true : false;
 	}
 
 }

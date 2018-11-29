@@ -13,7 +13,7 @@ class Notification extends Admin_Controller
         $this->data['page_title'] = 'Notification';
         
 		$this->load->model('model_notice');
-		permission=$this->session->userdata('permission');
+		$this->data['permission']=$this->session->userdata('permission');
 		$this->data['user_name']=$this->session->userdata('user_name');
     }
     public function index()

@@ -16,7 +16,7 @@
     <!-- Small boxes (Stat box) -->
     <div class="row">
       <div class="col-md-12 col-xs-12">
-        <form action="<?php echo base_url('holiday/import') ?>" method="post"
+        <form action="<?php echo base_url('super/wage_import') ?>" method="post"
             name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
             <div>
                 <label><h4>选择上传文件</h4></label> 
@@ -36,9 +36,8 @@
 </div>
 <!-- /.content-wrapper -->
 <script type="text/javascript">
-    $(document).ready(function() {
-      $("#mainSyncNav").addClass('active');
-      $("#uploadFileNav").addClass('active');
+    $(document).ready(function() { 
+      $("#uploadWageFileNav").addClass('active');
       
     });
     
