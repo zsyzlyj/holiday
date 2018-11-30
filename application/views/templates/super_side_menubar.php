@@ -15,6 +15,19 @@
           <i class="fa fa-circle-o"></i><span>工资导入</span>
           </a>
         </li>
+        <li class="treeview" id="uploadWageDoc">
+          <a href="#">
+            <i class="fa fa-cloud"></i>
+            <span>薪酬文件导入</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="uploadWageDocNav"><a href="<?php echo base_url('super/wage_doc_import') ?>"><i class="fa fa-circle-o"></i> 文件导入</a></li>
+            <li id="showWageDocNav"><a href="<?php echo base_url('super/wage_doc_show') ?>"><i class="fa fa-circle-o"></i> 薪酬文件汇总</a></li>
+          </ul>
+        </li>
         <?php endif; ?>
         <?php if($permission == '休假'): ?>
         <li id="holidayGatherMainMenu">

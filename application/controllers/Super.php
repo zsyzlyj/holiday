@@ -18,6 +18,7 @@ class Super extends Admin_Controller
         $this->load->model('model_feedback');
         $this->load->model('model_wage_attr');
         $this->load->model('model_wage');
+        $this->load->model('model_wage_doc');
         $this->data['permission']=$this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_id');
     }
@@ -135,9 +136,7 @@ class Super extends Admin_Controller
                 else $attr_str=$attr_str.'<th>'.$b.'</th>';
             }
             $attr_str=$attr_str.'</tr>';
-        }
-
-        
+        } 
         $attr_data=array(
             'attr' => $attr_str
         );
@@ -168,10 +167,6 @@ class Super extends Admin_Controller
             $this->model_wage->create($content_data);
             unset($content_data);
         }
-  
-
-
-        
     
     }
     
@@ -195,7 +190,44 @@ class Super extends Admin_Controller
             $this->render_super_template('super/wage_import',$this->data);
         } 
     }
+    public function wage_doc_put(){
+        //先做一个文件上传，保存文件
+        $path=$_FILES['file'];
+        $filePath = "uploads/".$path["name"];
+        move_uploaded_file($path["tmp_name"],$filePath);
+        $doc_data=array(
+            'doc_name' => $path["name"],
+            'doc_path' => $filePath,
+        );
+        $this->model_wage_doc->create($doc_data);
 
+    }
+    public function wage_doc_import($filename=NULL)
+    {
+        if($_FILES){
+        if($_FILES["file"])
+            {
+                if ($_FILES["file"]["error"] > 0)
+                {
+                    echo "Error: " . $_FILES["file"]["error"] . "<br />";
+                }
+                else
+                {
+                    $this->wage_doc_put();
+                    $this->wage_doc_show();
+                }
+            }
+        }
+        else{
+            $this->render_super_template('super/wage_doc_import',$this->data);
+        } 
+    }
+
+    public function wage_doc_show(){
+        $wage_doc=$this->model_wage_doc->getWageDocData();
+        $this->data['wage_doc']=$wage_doc;
+        $this->render_super_template('super/wage_doc_show',$this->data);
+    }
     
     /*
     ============================================================

@@ -652,3 +652,9 @@ create table wage_fourth(
   `attr_name119` varchar(50) default NULL,
   `attr_name120` varchar(50) default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `wage_doc` (
+  `number` varchar(12),
+  `doc_name` varchar(50),
+  `doc_path` varchar(100)
+)
