@@ -5,6 +5,10 @@
 --
 
 CREATE TABLE `wage` (
+  `number` varchar(4),
+  `user_id` varchar(18),
+  `department` varchar(100),
+  `name` varchar(18),
   `content1` varchar(12) default NULL,
   `content2` varchar(12) default NULL,
   `content3` varchar(18) default NULL,

@@ -55,7 +55,7 @@
                       <tr>
                       <?php foreach($v as $a => $b): ?>
                       <?php if($counter<$total_column):?>
-                        <td style="border:2px"><?php echo $b;$counter++;?></td>
+                        <td><?php echo $b;$counter++;?></td>
                       <?php else: break;?>
                       <?php endif; ?>
                       <?php endforeach; ?>

@@ -37,7 +37,7 @@
             <div class="box-header">
             
             
-            <form action='<?php echo base_url('holiday/mydeptholiday' )?>' method="post" id="selected_dept_form">
+            <form action='<?php echo base_url('wage/mydeptwage' )?>' method="post" id="selected_dept_form">
             <select id="selected_dept" name="selected_dept" onchange="submitForm();">
               <option value="">
                 <?php if($current_dept):?>
@@ -71,81 +71,34 @@
             <div class="box-body">
               <div style="overflow:scroll;">
               
-              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;" width="250%">
+              <table id="wageTable" class="table table-bordered table-striped" style="white-space: nowrap;word-break:  keep-all;text-align: center;">
                 <thead>
+                <?php foreach ($wage_data as $v): ?>
                 <tr>
-                  <th>姓名</th>
-                  <th>部门</th>                
-                  <th>社会工龄</th>
-                  <th>公司工龄</th>
-                  <th>可休假总数</th>
-                  <th>荣誉假期</th>
-                  <th>上年可休数</th>
-                  <th>今年可休数</th>
-                  <th>一月</th>
-                  <th>二月</th>
-                  <th>三月</th>
-                  <th>四月</th>
-                  <th>五月</th>
-                  <th>六月</th>
-                  <th>七月</th>
-                  <th>八月</th>
-                  <th>九月</th>
-                  <th>十月</th>
-                  <th>十一月</th>
-                  <th>十二月</th>
-                  
-                  <th>已休假数</th>
-                  <th>剩下休假数</th>
-                  <th>操作</th>
+                  <?php foreach($v as $a =>$b):?>
+                    <?php if(!strstr($a,'num')):?>
+                    <th><?php echo $b; ?></th>
+                    <?php endif; ?>
+                  <?php endforeach;break; ?>
+                  <?php endforeach;?>
                 </tr>
                 </thead>
-                <tbody>
-                                  
+                <tbody>      
                     <?php foreach ($wage_data as $v): ?>
-                      <tr>
-                        <td><?php echo $v['name']; ?></td>
-                        <td><?php echo $v['department']; ?></td>
-                        <td><?php echo $v['Totalage']; ?></td>
-                        <td><?php echo $v['Companyage']; ?></td>
-                        
-                        <td><?php echo $v['Totalday']; ?></td>
-                        <td><?php echo $v['Lastyear']; ?></td>
-                        <td><?php echo $v['Thisyear']; ?></td>
-                        <td><?php echo $v['Bonus']; ?></td>
-                        <td><?php echo $v['Jan']; ?></td>
-                        <td><?php echo $v['Feb']; ?></td>
-                        <td><?php echo $v['Mar']; ?></td>
-                        <td><?php echo $v['Apr']; ?></td>
-                        <td><?php echo $v['May']; ?></td>
-                        <td><?php echo $v['Jun']; ?></td>
-                        <td><?php echo $v['Jul']; ?></td>
-                        <td><?php echo $v['Aug']; ?></td>
-                        <td><?php echo $v['Sep']; ?></td>
-                        <td><?php echo $v['Oct']; ?></td>
-                        <td><?php echo $v['Nov']; ?></td>
-                        <td><?php echo $v['Dece']; ?></td>
-                        
-                        <td><?php echo $v['Used']; ?></td>
-                        
-                        <td><?php echo $v['Rest']; ?></td>
-
-
-                        <td>
-                            <a href="<?php echo base_url('holiday/edit/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
-
-                            <a href="<?php echo base_url('holiday/delete/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-trash"></i></a>
-                        </td>
-
-                      </tr>
-                    <?php endforeach ?>
+                    <tr>
+                      <?php foreach($v as $a =>$b):?>
+                        <?php if(!strstr($a,'num')):?>
+                        <td><?php echo $b; ?></td>
+                        <?php endif; ?>
+                      <?php endforeach;?>
+                    <?php endforeach;?>
+                    </tr>
                     </tbody>
-                  <?php endif; ?>
                   </table>
-                
               </div>
               <!-- /.overflow:scroll -->
             </div>
+            <?php endif; ?>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
@@ -194,7 +147,7 @@
     });
 
 
-      $("#myDeptHolidayMainMenu").addClass('active');
+      $("#myDeptWageMainMenu").addClass('active');
     
       
     });

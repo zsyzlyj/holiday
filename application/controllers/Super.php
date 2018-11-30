@@ -29,26 +29,9 @@ class Super extends Admin_Controller
     ============================================================
     */ 
     public function wage(){
-        #$attr_data=array();
-
-        /*
-        foreach($this->model_wage_attr->getWageFirstData() as $k => $v){
-            foreach($v as $a => $b){
-                if($b!=''){
-                    echo $b.'<br />';
-                }
-                
-            }
-            #array_push($temp,$v);
-        }
-        */
         $this->data['wage_data']=$this->model_wage->getWageData();
-        #$this->data['wage_data']='';
         $this->data['total_column']=$this->model_wage_attr->getWageTotalData()['total'];
         $this->data['wage_attr']=$this->model_wage_attr->getWageAttrData()['attr'];
- 
-        
-        
         $this->render_super_template('super/wage',$this->data);
     }
     public function wage_excel_put(){
@@ -69,11 +52,6 @@ class Super extends Admin_Controller
                 $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
             }
         }
-        /*
-        $objExcel = new \PHPExcel();
-        $objWriteHTML = new \PHPExcel_Writer_HTML($reader->load($filePath)); //输出网页格式的对象。注：writer是读写
-        $objWriteHTML->save("php://output");
-*/
 
         $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
         $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
@@ -153,8 +131,8 @@ class Super extends Admin_Controller
             $attr_str=$attr_str.'<tr>';
             foreach($v as $a => $b){
                 if($b=='space')
-                    $attr_str=$attr_str.'<td></td>';
-                else $attr_str=$attr_str.'<td>'.$b.'</td>';
+                    $attr_str=$attr_str.'<th></th>';
+                else $attr_str=$attr_str.'<th>'.$b.'</th>';
             }
             $attr_str=$attr_str.'</tr>';
         }
@@ -177,7 +155,15 @@ class Super extends Admin_Controller
         foreach($content as $k => $v){
             $content_data=array();    
             foreach($v as $a => $b){
-                $content_data['content'.($a+1)]=$b;
+                switch($a){
+                    case 0:$content_data['number']=$b;break;
+                    case 1:$content_data['department']=$b;break;
+                    case 2:$content_data['user_id']=$b;break;
+                    case 3:$content_data['name']=$b;break;
+                    default:
+                        $content_data['content'.($a-3)]=$b;
+                        break;
+                }
             }
             $this->model_wage->create($content_data);
             unset($content_data);
