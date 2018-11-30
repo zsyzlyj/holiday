@@ -52,7 +52,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-                <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;" width="100%">
+                <table id="holidayTable" class="table table-bordered table-striped mytdstyle" style="overflow:scroll;">
                 <thead>
                 <tr>
                   <th>姓名</th>
@@ -97,7 +97,7 @@
                                 </div>
 
                                 <div class="modal-body">
-                                <table id="MonthTable" class="table table-bordered table-striped" width="100%">
+                                <table id="MonthTable" class="table table-bordered table-striped mytdstyle">
                                   <thead>
                                     <tr>
                                       <th>一月</th>

@@ -38,6 +38,8 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/iCheck/all.css') ?>">
   <!-- Popup  -->
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showmonth.css') ?>">
+  <!-- wage_td_css for large data  -->
+  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/wage_table.css') ?>">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>

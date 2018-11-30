@@ -36,7 +36,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="userTable" class="table table-bordered table-striped">
+              <table id="userTable" class="table table-bordered table-striped mytdstyle">
                 <thead>
                 <tr>
                   <th>用户名</th>

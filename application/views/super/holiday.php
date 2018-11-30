@@ -46,7 +46,7 @@
               <div style="overflow:scroll;">
               
               
-              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;" width="250%">
+              <table id="holidayTable" class="table table-bordered table-striped mytdstyle" style="overflow:scroll;">
                 <thead>
                 <tr>
                   <th>姓名</th>

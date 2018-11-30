@@ -40,7 +40,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="120%">
+              <table id="planTable" class="table table-bordered table-striped mytdstyle" style="overflow:scroll;">
                 <thead>
                 <tr>
                   <th>姓名</th>

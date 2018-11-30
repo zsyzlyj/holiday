@@ -1,0 +1,6 @@
+/* 自适应行宽 */
+.mytdstyle {
+    white-space: nowrap;
+    word-break:  keep-all;
+    text-align: center;
+}

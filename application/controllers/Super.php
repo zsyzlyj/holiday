@@ -29,7 +29,7 @@ class Super extends Admin_Controller
     ============================================================
     */ 
     public function wage(){
-        $attr_data=array();
+        #$attr_data=array();
 
         /*
         foreach($this->model_wage_attr->getWageFirstData() as $k => $v){
@@ -43,13 +43,11 @@ class Super extends Admin_Controller
         }
         */
         $this->data['wage_data']=$this->model_wage->getWageData();
-        $this->data['wage_data']='';
+        #$this->data['wage_data']='';
         $this->data['total_column']=$this->model_wage_attr->getWageTotalData()['total'];
+        $this->data['wage_attr']=$this->model_wage_attr->getWageAttrData()['attr'];
  
-        #$this->data['first']=$temp;
-        #$this->data['second']=$this->model_wage_attr->getWageSecondData();
-        #$this->data['third']=$this->model_wage_attr->getWageThirdData();
-        #$this->data['fourth']=$this->model_wage_attr->getWageFourthData();
+        
         
         $this->render_super_template('super/wage',$this->data);
     }
@@ -108,17 +106,21 @@ class Super extends Admin_Controller
         $counter=0;        
         $attribute=array();
         $content=array();
-        $total_row=0;
+        $total_col=0;
         $attr=array();
         foreach($data as $k => $v){
             $row_data=array();
+            
             if($counter>=2 and $counter<=5){
                 foreach($v as $a=>$b)
                 {
-                    array_push($row_data,$b);
+                    if($b=='')
+                        array_push($row_data,'space');
+                    else array_push($row_data,$b);
+                    
                 }
-                if($total_row==0){
-                    $total_row=count($row_data);
+                if($total_col==0){
+                    $total_col=count($row_data);
                 }                
                 array_push($attr,$row_data);
                 unset($row_data);
@@ -134,36 +136,41 @@ class Super extends Admin_Controller
             }
             $counter++;
         }
-
-        $row_counter=1;
-        for($i=0;$i<$total_row;$i++){
-            if(($attr[0][$i]!='' and $attr[1][$i]=='' and $attr[2][$i]=='' and $attr[3][$i]=='')
-            or ($attr[0][$i]!='' and $attr[1][$i]!='' and $attr[2][$i]=='' and $attr[3][$i]=='')
-            or ($attr[0][$i]!='' and $attr[1][$i]=='' and $attr[2][$i]!='' and $attr[3][$i]!='')
-            or ($attr[0][$i]!='' and $attr[1][$i]!='' and $attr[2][$i]!='' and $attr[3][$i]!='')
-            or ($attr[0][$i]=='' and $attr[1][$i]!='' and $attr[2][$i]=='' and $attr[3][$i]=='')
-            or ($attr[0][$i]=='' and $attr[1][$i]=='' and $attr[2][$i]=='' and $attr[3][$i]!='')){
-                $first['attr_name'.$row_counter]=$attr[0][$i];
-                $second['attr_name'.$row_counter]=$attr[1][$i];
-                $third['attr_name'.$row_counter]=$attr[2][$i];
-                $fourth['attr_name'.$row_counter]=$attr[3][$i];
-                $row_counter++;
+        //清除所有全空的行
+        for($i=0;$i<$total_col;$i++){
+            if($attr[0][$i]=='space' and $attr[1][$i]=='space' and $attr[2][$i]=='space' and $attr[3][$i]=='space'){
+                for($j=0;$j<4;$j++){
+                    unset($attr[$j][$i]);
+                }
             }
         }
+        
+        $total_col=count($attr[0]);
+        echo $total_col;
+        
+        $attr_str='';
+        foreach($attr as $k => $v){
+            $attr_str=$attr_str.'<tr>';
+            foreach($v as $a => $b){
+                if($b=='space')
+                    $attr_str=$attr_str.'<td></td>';
+                else $attr_str=$attr_str.'<td>'.$b.'</td>';
+            }
+            $attr_str=$attr_str.'</tr>';
+        }
+
+        
+        $attr_data=array(
+            'attr' => $attr_str
+        );
+        $this->model_wage_attr->delete_attr();
+        $this->model_wage_attr->create_attr($attr_data);
         $total_data=array(
-            'total' => count($first)
+            'total' => $total_col
         );
         $this->model_wage_attr->delete_total($total_data);
         $this->model_wage_attr->create_total($total_data);
 
-
-        
-        $this->model_wage_attr->deleteAll();
-        $this->model_wage_attr->create_first($first);
-        $this->model_wage_attr->create_second($second);
-        $this->model_wage_attr->create_third($third);
-        $this->model_wage_attr->create_fourth($fourth);
-        
         //把数据打包，写入数据库
         $this->model_wage->deleteAll();
         
@@ -172,10 +179,14 @@ class Super extends Admin_Controller
             foreach($v as $a => $b){
                 $content_data['content'.($a+1)]=$b;
             }
-            echo $this->model_wage->create($content_data);
+            $this->model_wage->create($content_data);
             unset($content_data);
         }
-    /**/
+  
+
+
+        
+    
     }
     
     public function wage_import($filename=NULL)

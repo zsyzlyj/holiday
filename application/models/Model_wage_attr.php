@@ -12,7 +12,7 @@ class Model_wage_attr extends CI_Model
 	{
 		$sql = "SELECT * FROM wage_attr";
 		$query = $this->db->query($sql);
-		return $query->result_array();
+		return $query->row_array();
 	}
 
 	public function getWageFirstData()
@@ -55,6 +55,13 @@ class Model_wage_attr extends CI_Model
 		}
 	}
 
+	public function create_attr($data)
+	{
+		if($data) {
+			$insert = $this->db->insert('wage_attr', $data);
+			return ($insert == true) ? true : false;
+		}
+	}
 	public function create_first($data)
 	{
 		if($data) {
@@ -99,6 +106,11 @@ class Model_wage_attr extends CI_Model
 	public function delete_total()
 	{
 		$sql='delete from wage_total';
+		$delete = $this->db->query($sql);
+	}
+	public function delete_attr()
+	{
+		$sql='delete from wage_attr';
 		$delete = $this->db->query($sql);
 	}
 

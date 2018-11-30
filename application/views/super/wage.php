@@ -37,34 +37,36 @@
 
             <div class="box-body">
               <div style="overflow:scroll;">
-              <table id="wageTable" class="table table-bordered table-striped" style="overflow:scroll;">
-                <thead>
-                <td colspan='4'>a</td>
-                
-                <tr>
-                  <?php for($i=0;$i<$total_column;$i++): ?>
-                  <th>&nbsp;</th>
-                  <?php endfor; ?>
-                </tr>
-                </thead>
-                <tbody> 
-                <?php if($wage_data): ?>
-                <?php foreach($wage_data as $k => $v): ?>
-                  <?php $counter=0; ?>
-                    <tr>
-                    <?php foreach($v as $a => $b): ?>
-                    <?php if($counter<$total_column):?>
-                      <td style='white-space: nowrap; word-break:  keep-all;'><?php echo $b;$counter++;?></td>
-                    <?php else: break;?>
-                    <?php endif; ?>
-                    <?php endforeach; ?>
-                    </tr>
-                  
-                  <?php $counter=0; ?>
-                <?php endforeach; ?>
-                <?php endif;?>
-                </tbody>
-              </table>
+                <table id="wageTable" class="table table-striped table-bordered table-hover" style="overflow:scroll;white-space: nowrap;word-break:  keep-all;text-align: center;">
+                  <thead>
+                  <?php if($wage_attr):?>
+                    <?php echo $wage_attr;?>
+                  <?php endif; ?>
+                  <tr>
+                    <?php for($i=0;$i<$total_column;$i++):?>
+                    <th>&nbsp;</th>
+                    <?php endfor; ?>
+                  </tr>
+                  </thead>
+                  <tbody> 
+                  <?php if($wage_data): ?>
+                  <?php foreach($wage_data as $k => $v): ?>
+                    <?php $counter=0; ?>
+                      <tr>
+                      <?php foreach($v as $a => $b): ?>
+                      <?php if($counter<$total_column):?>
+                        <td style="border:2px"><?php echo $b;$counter++;?></td>
+                      <?php else: break;?>
+                      <?php endif; ?>
+                      <?php endforeach; ?>
+                      </tr>
+                    
+                    <?php $counter=0; ?>
+                  <?php endforeach; ?>
+                  <?php endif;?>
+                  </tbody>
+                </table>
+
               </div>
               <!-- /.overflow:scroll -->
             </div>
