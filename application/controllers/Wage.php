@@ -13,7 +13,6 @@ class Wage extends Admin_Controller
 		$this->data['page_title'] = 'Wage';
 
         $this->load->model('model_wage');
-        $this->load->model('model_wage_doc');
         $this->load->model('model_users');
         $this->load->model('model_manager');
         $this->data['permission'] = $this->session->userdata('permission');
@@ -64,7 +63,6 @@ class Wage extends Admin_Controller
 	{
         $user_id=$this->session->userdata('user_id');        
         $this->data['wage_data'] = $this->model_wage->getWageById($user_id);
-        $this->data['wage_doc'] = $this->model_wage_doc->getWageDocData();
 		$this->render_template('wage/staff', $this->data);
     }
 

@@ -20,14 +20,13 @@
         <div class="col-md-12 col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"><font color="red">薪酬文件：</font></h3>
+              <h3 class="box-title"><font color="red">公告说明：</font></h3>
                 </br>              </br>
                 <h4>
-                  <?php foreach($wage_doc as $k => $v):?>
-                    <a href='<?php echo base_url($v['doc_path']);?>' target="_blank"><?php echo $v['doc_name']?></a>
-                    <br />
-                  <?php endforeach; ?>
                 </h4>
+                <?php if($permission == 3 or $permission == 2 or $permission == 1): ?>
+                <h4><font color="blue">点击已休假数可以查看每个月已休明细</font></h4>
+                <?php endif ?>
             </div>
               <!-- /.box-header -->
 
