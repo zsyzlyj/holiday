@@ -72,6 +72,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $("#wageMainMenu").addClass('active');
+    });
       
     
   </script>
