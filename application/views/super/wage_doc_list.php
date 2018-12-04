@@ -55,7 +55,7 @@
                   <form action='<?php echo base_url('super/wage_doc_delete')?>' method='POST'>
                   <td><?php echo $v['number'];?></td>
                   <td><?php echo $v['doc_name'];?></td>
-                  <td><a href='<?php echo base_url($v['doc_path'])?>' target="_blank">浏览</a></td>  
+                  <td><a href='<?php echo base_url($v['doc_path']);?>' target="_blank">浏览</a></td>  
                   <input type='hidden' value="<?php echo $v['number']; ?>" name='time'/>
                   <td><button class="btn btn-danger"><i class="fa fa-trash"> 删除</i></a></td>
                   </form>
