@@ -54,7 +54,7 @@ class Users extends Admin_Controller
 		);
 
 		
-		permission=$this->session->userdata('permission');
+		$permission=$this->session->userdata('permission');
 
 		$this->data['user_data'] = $result;
 		$this->data['permission_set']=$permission_set;

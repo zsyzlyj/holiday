@@ -196,11 +196,11 @@ class Super extends Admin_Controller
         $filePath = "uploads/".$path["name"];
         move_uploaded_file($path["tmp_name"],$filePath);
         $doc_data=array(
-            'doc_name' => $path["name"],
+            'number' => date('Y-m-d h:i:s'),
+            'doc_name' => basename($filePath,".pdf"),
             'doc_path' => $filePath,
         );
         $this->model_wage_doc->create($doc_data);
-
     }
     public function wage_doc_import($filename=NULL)
     {
@@ -226,9 +226,27 @@ class Super extends Admin_Controller
     public function wage_doc_show(){
         $wage_doc=$this->model_wage_doc->getWageDocData();
         $this->data['wage_doc']=$wage_doc;
-        $this->render_super_template('super/wage_doc_show',$this->data);
+        $this->render_super_template('super/wage_doc_list',$this->data);
+        
     }
     
+    
+    public function wage_doc_delete(){
+        $date = $_POST['time'];
+        
+        if($date){
+			$delete = $this->model_wage_doc->delete($date);
+            if($delete == true) {
+                $this->session->set_flashdata('success', 'Successfully removed');
+                redirect('super/wage_doc_show', 'refresh');
+            }
+            else {
+                $this->session->set_flashdata('error', 'Error occurred!!');
+                redirect('super/wage_doc_show', 'refresh');
+            }	
+		}
+        $this->render_super_template('super/wage_doc_show',$this->data);
+    }
     /*
     ============================================================
     休假管理

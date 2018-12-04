@@ -20,12 +20,51 @@
     <!-- Small boxes (Stat box) -->
     <div class="row">
       <div class="col-md-12 col-xs-12">
+      <div id="messages"></div>
+
+      <?php if($this->session->flashdata('success')): ?>
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <?php echo $this->session->flashdata('success'); ?>
+        </div>
+      <?php elseif($this->session->flashdata('error')): ?>
+        <div class="alert alert-error alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <?php echo $this->session->flashdata('error'); ?>
+        </div>
+      <?php endif; ?>
+
       <div class="box">
         <div class="box-header">
         </div>
         <div class="box-body">
-          <iframe src="<?php echo base_url('<?php echo $wage_doc?>')?>" width='100%' height='100%' frameborder='1'>
-			    </iframe>
+          <div style="overflow:scroll;">
+            <table id="wageDocTable" class="table table-striped" >
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>文件名</th>
+                  <th>文件内容</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                <?php foreach($wage_doc as $k => $v):?>
+                <tr>
+                  <form action='<?php echo base_url('super/wage_doc_delete')?>' method='POST'>
+                  <td><?php echo $v['number'];?></td>
+                  <td><?php echo $v['doc_name'];?></td>
+                  <td><a href='<?php echo base_url($v['doc_path'])?>' target="_blank">浏览</a></td>  
+                  <input type='hidden' value="<?php echo $v['number']; ?>" name='time'/>
+                  <td><button class="btn btn-danger"><i class="fa fa-trash"> 删除</i></a></td>
+                  </form>
+                </tr>
+                
+                <?php endforeach;?>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       </div>

@@ -23,11 +23,13 @@ class Model_wage_doc extends CI_Model
 		}
 	}
 	
-	public function deleteAll()
+	public function delete($date)
 	{
-		$sql='delete from wage_doc';
-		$delete = $this->db->query($sql);
-		return ($delete == true) ? true : false;
+		if($date) {
+			$this->db->where('number', $date);
+			$delete = $this->db->delete('wage_doc');
+			return ($delete == true) ? true : false;
+		}
 	}
 
 }
