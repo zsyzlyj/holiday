@@ -11,7 +11,7 @@ class Dashboard extends Admin_Controller
 		$this->data['page_title'] = 'Dashboard';
 
 		$this->load->model('model_holiday');
-		permission=$this->session->userdata('permission');;
+		$permission=$this->session->userdata('permission');;
 		$this->data['user_name'] = $this->session->userdata('user_name');
 
 	}

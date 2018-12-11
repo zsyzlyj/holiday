@@ -28,6 +28,11 @@
             <li id="showWageDocNav"><a href="<?php echo base_url('super/wage_doc_show') ?>"><i class="fa fa-circle-o"></i> 薪酬文件汇总</a></li>
           </ul>
         </li>
+        <li id="wageProofMainMenu">
+          <a href="<?php echo base_url('super/wage_proof') ?>">
+            <i class="fa fa-money"></i><span>收入证明</span>
+          </a>
+        </li>
         <?php endif; ?>
         <?php if($permission == '休假'): ?>
         <li id="holidayGatherMainMenu">

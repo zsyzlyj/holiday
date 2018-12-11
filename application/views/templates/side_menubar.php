@@ -86,8 +86,7 @@
           <a href="<?php echo base_url('holiday/staff_plan') ?>">
             <i class="fa fa-edit"></i> <span>我的年假计划</span>
           </a>
-        </li> 
-        
+        </li>
         <li><a href="<?php echo base_url('users/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
         <li><a href="<?php echo base_url('auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>登出</span></a></li>
       </ul>

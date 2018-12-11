@@ -13,11 +13,13 @@ class Wage extends Admin_Controller
 		$this->data['page_title'] = 'Wage';
 
         $this->load->model('model_wage');
+        $this->load->model('model_holiday');
         $this->load->model('model_wage_doc');
         $this->load->model('model_users');
         $this->load->model('model_manager');
         $this->data['permission'] = $this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
+        $this->data['user_id'] = $this->session->userdata('user_id');
 	}
     
 	public function index()
@@ -98,6 +100,10 @@ class Wage extends Admin_Controller
         
         
 		$this->render_template('wage/mydeptwage', $this->data);
+    }
+    
+    public function export_wage_proof(){
+        
     }
 
 }
