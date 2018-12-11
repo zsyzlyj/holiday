@@ -1,5 +1,7 @@
 
 
+
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -87,11 +89,11 @@
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
+  
   <script type="text/javascript">
     $(document).ready(function() {
-      $("#changePassword").addClass('active');  
+      $("#applyProofMainMenu").addClass('active');
+      $("#applyOnPostProof").addClass('active');
     });
     
   </script>
- 

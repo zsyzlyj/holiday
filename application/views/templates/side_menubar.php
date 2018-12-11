@@ -87,7 +87,30 @@
             <i class="fa fa-edit"></i> <span>我的年假计划</span>
           </a>
         </li>
-        <li><a href="<?php echo base_url('users/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
+        <li class="treeview" id="applyProofMainMenu">
+          <a href="#">
+            <i class="fa fa-folder-o"></i>
+            <span>开具证明申请</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="applyWageProof">
+              <a href="<?php echo base_url('wage/apply_wage_proof') ?>">
+              <i class="fa fa-circle-o"></i>
+              <span>开具收入证明申请</span>
+              </a>
+            </li>
+            <li id="applyOnPostProof">
+              <a href="<?php echo base_url('onpost/apply_on_post_proof') ?>">
+              <i class="fa fa-circle-o"></i>
+              <span>开具在职证明申请</span>
+              </a>
+            </li>
+          </ul>  
+        </li>
+        <li id="changePassword"><a href="<?php echo base_url('users/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
         <li><a href="<?php echo base_url('auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>登出</span></a></li>
       </ul>
     </section>
