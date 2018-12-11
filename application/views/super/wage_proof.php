@@ -18,25 +18,11 @@
     <section class="content">
       <div class="col-md-12 col-xs-12">
         <div class="row">
-          <h3>收入证明导出</h3>
+          <h3>收入证明</h3>
           <br />
-          <a href="<?php echo base_url('super/show_wage_proof') ?>" target="_blank" class="btn btn-warning">收入证明</a> 
-          
+          <a href="<?php echo base_url('super/show_wage_proof') ?>" target="_blank" class="btn btn-warning">收入证明（通用）</a> 
           <a href="<?php echo base_url('super/show_bank_wage_proof') ?>" target="_blank" class="btn btn-warning">收入证明（工商银行）</a> 
-          
-          <a href="<?php echo base_url('super/show_fund_proof') ?>" target="_blank" class="btn btn-warning">公积金证明</a> 
-          
-          <a href="<?php echo base_url('super/show_wage_proof') ?>" target="_blank" class="btn btn-warning">在线查看</a> 
-          
-          <a href="<?php echo base_url('super/show_wage_proof') ?>" target="_blank" class="btn btn-warning">在线查看</a> 
-          
-          <a href="<?php echo base_url('super/show_wage_proof') ?>" target="_blank" class="btn btn-warning">在线查看</a> 
-          
-          <a href="<?php echo base_url('super/show_wage_proof') ?>" target="_blank" class="btn btn-warning">在线查看</a> 
-          
-          <a href="<?php echo base_url('super/show_wage_proof') ?>" target="_blank" class="btn btn-warning">在线查看</a> 
-          
-          
+          <a href="<?php echo base_url('super/show_fund_proof') ?>" target="_blank" class="btn btn-warning">收入证明（公积金）</a> 
         </div>
       </div>
     </section>

@@ -36,91 +36,8 @@ class Super extends Admin_Controller
         $this->render_super_template('super/wage',$this->data);
     }
     
-    public function wage_template($pdf){
-        
-        $user_data=$this->model_wage->getWageById($this->session->userdata('user_id'));
-        $holiday_data=$this->model_holiday->getHolidayById($this->session->userdata('user_id'));
-        $date=$holiday_data['indate'];
-
-        $user_id=$user_data['user_id'];
-        $username=$user_data['name'];
-        $pdf->SetFont('kozminproregular', 'B', 24);
-        $str="收 入 证 明";
-        $pdf->Write(0,$str,'', 0, 'C', true, 0, false, false, 0);  
-        $str="\r\n            兹证明 ".$username."（身份证号码： ".$user_id."）为中国联合网络通信有限公司中山市分公司正式员工，自".date('Y年m月d日',strtotime($date))."起为我司工作，现于我单位任职综合部、综合文秘室综合秘书，其月收入（税前）包括工资、奖金、津贴约xxx元（大写：壹萬贰仟圆整），以上情况属实。此证明仅限于申请贷款之用。\r\n            特此证明！\r\n\r\n\r\n";
-        $pdf->SetFont('kozminproregular', '', 14);
-        $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false, 0);  
     
-        $str="\r\n经办人：\t\t\t\t\t\r\n中山联通人力资源与企业发展部\r\n单位（盖章）\r\n".date("Y年m月d日")."\r\n\r\n\r\n";
-        $pdf->setCellHeightRatio(1.7); 
-        $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
-        $pdf->setCellHeightRatio(1.5); 
-        $pdf->SetFont('kozminproregular', '', 9);
-        $str="\r\n\r\n联系地址：中山市长江北路6号联通大厦\r\n联系人：甘先生\r\n联系电话：0760-23692312";
-        $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false);
-        $pdf->Output('t.pdf', 'I');
-    }
     
-    public function fund_template($pdf){
-        $user_data=$this->model_wage->getWageById($this->session->userdata('user_id'));
-        $holiday_data=$this->model_holiday->getHolidayById($this->session->userdata('user_id'));
-
-        $cage=$holiday_data['Companyage'];
-        $user_id=$user_data['user_id'];
-        $username=$user_data['name'];
-        $pdf->SetFont('kozminproregular');
-        $html='<p align="center"><font size="24">收 入 证 明</font></p><br />
-        <div style="line-height:40px;">
-        <font size="13">中山市住房公积金管理中心:</font>
-        <br />
-        <font size="13">为申请住房公积金贷款事宜，兹证明 '.$username.'，性别：无 ，身份证号：'.$user_id.'是我单位职工，已在我单位工作满'.$cage.'年，该职工上一年度在我单位总收入约为元（大写：拾壹萬伍仟圆整）。
-        </font>
-        </div>';
-        
-        $pdf->WriteHTML($html);
-
-        /*
-        $pdf->SetFont('kozminproregular', 'B', 24);
-        $str="收 入 证 明\r\n";
-        $pdf->Write(0,$str,'', 0, 'C', true, 0, false, false, 0);  
-        $pdf->SetFont('kozminproregular', '', 14);
-        $str="\r\n中山市住房公积金管理中心：\r\n";
-        $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false, 0);  
-        $str="为申请住房公积金贷款事宜，兹证明";#.$username."，性别：无，身份证号码：";
-        $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false, 0);  
-        $str=$username;
-        $pdf->SetFont('', 'U');
-        $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false, 0);  
-        $str="，性别：无，身份证号码：".$user_id;
-        $pdf->SetFont('kozminproregular', '', 14);
-        $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false, 0);  
-        $str="，是我单位 干部□、职工□，（请在□内打√），已在我单位工作满";
-        $pdf->SetFont('kozminproregular', '', 14);
-        $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false, 0);  
-        $pdf->SetFont('kozminproregular', 'U', 14);
-        $pdf->Write(0,$cage,'', 0, 'L', false, 0, false, false, 0);  
-        $str="年，该职工上一年度在我单位总收入约为 ";
-        $pdf->SetFont('kozminproregular', '', 14);
-        $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false, 0);  
-        $str="xxxx元（大写：拾壹萬伍仟圆整）。";
-        $pdf->SetFont('kozminproregular', 'U', 14);
-        $pdf->Write(0,$str,'', 0, '', false, 0, false, false, 0);  
-        
-        $pdf->SetFont('kozminproregular', '', 14);
-        $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
-        $str="\r\n经办人：\t\t\t\t\t\r\n中山联通人力资源与企业发展部\r\n单位（盖章）\r\n".date("Y年m月d日")."\r\n\r\n\r\n";
-        $pdf->setCellHeightRatio(1.7); 
-        $pdf->SetFont('kozminproregular', '', 14);
-        $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
-        $pdf->setCellHeightRatio(1.5); 
-        $pdf->SetFont('kozminproregular', '', 9);
-        $str="\r\n\r\n联系地址：中山市长江北路6号联通大厦\r\n联系人：甘先生\r\n联系电话：0760-23692312";
-        $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false);  
-        //输出PDF 
-        
-        */
-        $pdf->Output('收入证明（住房公积金）.pdf', 'I');
-    }
     public function proof_Creator($type){
         $this->load->library('tcpdf.php');
         //实例化 
@@ -164,19 +81,101 @@ class Super extends Admin_Controller
         //设置背景图片
         $img_file = 'assets/images/Unicom.jpg';
         $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
+        $user_data=$this->model_wage->getWageById($this->session->userdata('user_id'));
+        $holiday_data=$this->model_holiday->getHolidayById($this->session->userdata('user_id'));
+
+        $cage=$holiday_data['Companyage'];
+        $user_id=$user_data['user_id'];
+        $username=$user_data['name'];
+        $date=date('Y年m月d日',strtotime($holiday_data['indate']));
+        
+        $str="收 入 证 明\r\n";
+        $pdf->SetFont('kozminproregular','B',24);
+        $pdf->Write(0,$str,'', 0, 'C', false, 0, false, false, 0);
+
         switch($type){
-            case 'wage':$this->wage_template($pdf);break;
-            case 'bank_wage':$this->bank_wage_template($pdf);break;
-            case 'fund':$this->fund_template($pdf);break;
-            #case 'wage':$this->wage_template();break;
+            case 'wage':
+                $str="\r\n          兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任职综合部 综合文秘室 综合秘书，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟圆整），以上情况属实。此证明仅限于申请贷款之用。\r\n         特此证明！\r\n";
+                break;
+            case 'bank_wage':
+                $str="\r\n中山农村商业银行股份有限公司：\r\n            兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任职 网络建设部 无线网建设室 室主任，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟伍佰圆整），以上情况属实。此证明仅用于申请贷款之用。\r\n          特此证明！";
+                break;
+            case 'fund':
+                $str="\r\n中山市住房公积金管理中心：\r\n            为申请住房公积金贷款事宜，兹证明 ".$username."，性别：，身份证号 ".$user_id."，是我单位职工，已在我单位工作满".$cage."年，该职工上一年度在我单位总收入约为 XXXX元（大写：拾壹萬伍仟圆整 ）。\r\n\r\n";
+                break;
+            case 'royal':
+                $str="          ".$username."（男，身份证号：".$user_id."） 同志自".$date."进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n          特此证明!\r\n";
+                break;
+            case 'on_post_1':
+                $str="\r\n          兹有我单位员工".$username."，身份证号：".$user_id."，该员工于".$date."起至今在我公司工作。\r\n            特此证明。\r\n";
+                $pdf->SetFont('kozminproregular','',14);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
+                break;
+            case 'on_post_2':
+                $str="\r\n          兹有".$username."（女，身份证号：".$user_id."），为中国联合网络通信有限公司中山市分公司中层管理干部，现任中国联合网络通信有限公司中山市分公司综合部部门经理。\r\n            特此证明。\r\n\r\n";
+                $pdf->SetFont('kozminproregular','',14);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
+                break;
+            case 'on_post_3':
+                $str="\r\n          兹有刘颖（女，身份证号：110108196709174243），为中国联合网络通信有限公司中山市分公司中层管理干部，现任中国联合网络通信有限公司中山市分公司综合部部门经理。\r\n            特此证明。\r\n";
+                $pdf->SetFont('kozminproregular','',14);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
+                $pdf->setCellHeightRatio(1.5); 
+                $pdf->SetFont('kozminproregular', '', 9);
+                $str="单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356";
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+
+                break;
+            case 'on_post_4':
+                $str="\r\n          兹有我单位".$username."同志，性别：男，身份证号码：".$user_id."，于".$date."至今在我单位从事 南部固网销售公司总经理 （职位）工作。\r\n单位名称：中国联合网络通信有限公司中山市分公司\r\n          联系地址：中山市东区长江北路6号联通大厦\r\n          联系人：徐小姐        联系电话：0760-23771356\r\n          特此证明。\r\n       （此证明仅用于办理流动人员积分制管理使用）\r\n";
+                $pdf->SetFont('kozminproregular','',14);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
+                break;
+            case 'on_post_5':
+                $str="\r\n          兹有".$username."（女，身份证号：".$user_id."），自".$date."进入我公司工作，现任中国联合网络通信有限公司中山市分公司员工 （职位）。\r\n          特此证明。\r\n       （此证明仅用于办理居住证使用）";
+                $pdf->SetFont('kozminproregular','',14);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
+                $pdf->setCellHeightRatio(1.5); 
+                $pdf->SetFont('kozminproregular', '', 9);
+                $str="单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356";
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                
+                break;
+            case 'one_child':
+                $str="";
+                break;
+
             default:break;
         }
         
-        //输出PDF 
         
+        if(!(strstr($type,'post'))){
+            $pdf->SetFont('kozminproregular','',14);
+            $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+            $str="\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n单位（盖章）\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n\r\n";
+            $pdf->setCellHeightRatio(1.7); 
+            $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
+            $pdf->setCellHeightRatio(1.5); 
+            $pdf->SetFont('kozminproregular', '', 9);
+            $str="\r\n\r\n联系地址：中山市长江北路6号联通大厦\r\n联系人：甘先生\r\n联系电话：0760-23692312";
+            $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false);
+        }
+
+        $pdf->Output('证明.pdf', 'I');
+        //输出PDF         
     }
     public function wage_proof(){
-        $this->render_template('super/wage_proof',$this->data);
+        $this->render_super_template('super/wage_proof',$this->data);
     }
     //收入证明
     public function show_wage_proof(){
@@ -189,42 +188,33 @@ class Super extends Admin_Controller
 
     //农商银行收入证明
     public function show_bank_wage_proof(){
-        $this->PDF_Creator("bank_wage");
+        $this->proof_Creator("bank_wage");
     }
-    /*
+    
     //收入证明
-    public function show_fund_proof(){
-        $this->PDF_Creator();
+    public function show_royal_proof(){
+        $this->proof_Creator("royal");
     }
-    //收入证明
-    public function show_fund_proof(){
-        $this->PDF_Creator();
+    
+    public function show_on_post_1_proof(){
+        $this->proof_Creator("on_post_1");
     }
-    //收入证明
-    public function show_fund_proof(){
-        $this->PDF_Creator();
+    public function show_on_post_2_proof(){
+        $this->proof_Creator("on_post_2");
     }
-    //收入证明
-    public function show_fund_proof(){
-        $this->PDF_Creator();
+    public function show_on_post_3_proof(){
+        $this->proof_Creator("on_post_3");
     }
-    //收入证明
-    public function show_fund_proof(){
-        $this->PDF_Creator();
+    public function show_on_post_4_proof(){
+        $this->proof_Creator("on_post_4");
     }
-    //收入证明
-    public function show_fund_proof(){
-        $this->PDF_Creator();
+    public function show_on_post_5_proof(){
+        $this->proof_Creator("on_post_5");
     }
     //收入证明
-    public function show_fund_proof(){
-        $this->PDF_Creator();
+    public function show_one_child_proof(){
+        $this->proof_Creator("one_child");
     }
-    //收入证明
-    public function show_fund_proof(){
-        $this->PDF_Creator();
-    }
-    */
 
     public function wage_excel_put(){
         
