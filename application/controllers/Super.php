@@ -81,6 +81,7 @@ class Super extends Admin_Controller
         //设置背景图片
         $img_file = 'assets/images/Unicom.jpg';
         $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
+
         $user_data=$this->model_wage->getWageById($this->session->userdata('user_id'));
         $holiday_data=$this->model_holiday->getHolidayById($this->session->userdata('user_id'));
 
@@ -157,8 +158,7 @@ class Super extends Admin_Controller
 
             default:break;
         }
-        
-        
+
         if(!(strstr($type,'post'))){
             $pdf->SetFont('kozminproregular','',14);
             $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
