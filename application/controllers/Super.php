@@ -30,13 +30,12 @@ class Super extends Admin_Controller
     ============================================================
     */ 
     public function wage(){
+        $this->data['wage_total']=$this->model_wage_attr->getWageTotalData()['total'];
         $this->data['wage_data']=$this->model_wage->getWageData();
-        $this->data['total_column']=$this->model_wage_attr->getWageTotalData()['total'];
-        $this->data['wage_attr']=$this->model_wage_attr->getWageAttrData()['attr'];
+        $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
         $this->render_super_template('super/wage',$this->data);
+
     }
-    
-    
     
     public function proof_Creator($type){
         $this->load->library('tcpdf.php');
@@ -258,76 +257,44 @@ class Super extends Admin_Controller
         $column=array();
         $column_name=array();
         $attribute_data=array();
-        $first=array();
-        $second=array();
-        $third=array();
-        $fourth=array();
         $flag=false;
         $counter=0;        
         $attribute=array();
         $content=array();
         $total_col=0;
         $attr=array();
+        $attr_str='';
+        $attr_counter=1;
         foreach($data as $k => $v){
             $row_data=array();
-            
-            if($counter>=2 and $counter<=5){
+            if($counter==2){
                 foreach($v as $a=>$b)
                 {
-                    if($b=='')
-                        array_push($row_data,'space');
-                    else array_push($row_data,$b);
-                    
+                    if($b!=""){
+                        $attribute['attr_name'.$attr_counter]=$b;
+                        $attr_counter++;
+                    }
                 }
-                if($total_col==0){
-                    $total_col=count($row_data);
-                }                
-                array_push($attr,$row_data);
-                unset($row_data);
             }
-            if($counter>5)
-            {
+            if($counter>2){
                 foreach($v as $a=>$b)
                 {
-                    array_push($row_data,$b);
+                    if($b!="" or $b=="0"){
+                       array_push($row_data,$b);
+                       
+                    }
                 }
                 array_push($content,$row_data);
-                unset($row_data);
             }
+            
+            unset($row_data);
             $counter++;
         }
-        //清除所有全空的行
-        for($i=0;$i<$total_col;$i++){
-            if($attr[0][$i]=='space' and $attr[1][$i]=='space' and $attr[2][$i]=='space' and $attr[3][$i]=='space'){
-                for($j=0;$j<4;$j++){
-                    unset($attr[$j][$i]);
-                }
-            }
-        }
-        
-        $total_col=count($attr[0]);
-        echo $total_col;
-        
-        $attr_str='';
-        foreach($attr as $k => $v){
-            $attr_str=$attr_str.'<tr>';
-            foreach($v as $a => $b){
-                if($b=='space')
-                    $attr_str=$attr_str.'<th></th>';
-                else $attr_str=$attr_str.'<th>'.$b.'</th>';
-            }
-            $attr_str=$attr_str.'</tr>';
-        } 
-        $attr_data=array(
-            'attr' => $attr_str
-        );
+
+        $this->model_wage_attr->delete_total();
+        $this->model_wage_attr->create_total(array('total' => $attr_counter));
         $this->model_wage_attr->delete_attr();
-        $this->model_wage_attr->create_attr($attr_data);
-        $total_data=array(
-            'total' => $total_col
-        );
-        $this->model_wage_attr->delete_total($total_data);
-        $this->model_wage_attr->create_total($total_data);
+        $this->model_wage_attr->create_attr($attribute);
 
         //把数据打包，写入数据库
         $this->model_wage->deleteAll();
@@ -348,7 +315,7 @@ class Super extends Admin_Controller
             $this->model_wage->create($content_data);
             unset($content_data);
         }
-    
+       /* */
     }
     
     public function wage_import($filename=NULL)

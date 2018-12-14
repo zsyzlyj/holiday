@@ -33,22 +33,321 @@
 
             <div class="box-body">
               <div style="overflow:scroll;">
-                <table id="wageTable"class="table table-striped" style="white-space: nowrap;word-break:  keep-all;text-align: center;">
+                <table id="wageTable"class="table table-striped table-bordered table-responsive" style="white-space: nowrap;word-break:  keep-all;text-align: center;">
                   <thead>
-                  <?php if($wage_data): ?>
-                    <?php foreach($wage_data as $k =>$v):?>
-                      <th><?php echo $v;?></th>
+                  <?php if($wage_attr): ?>
+                    <?php foreach($wage_attr as $k =>$v):?>
+                      <th style="text-align:center;"><?php echo $v;?></th>
                     <?php endforeach; ?>
                     <?php endif; ?>
                   </thead>
                   <tbody>
-                    <tr>
+                    
                     <?php if($wage_data): ?>
+                    <tr>
                     <?php foreach($wage_data as $k =>$v):?>
-                      <td><?php echo $v;?></td>
+                      <?php if($wage_attr[$k]=='月度绩效工资小计'):?>
+                      <td>
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal1"><font color='red'><?php echo $v['content'];?></font></a>
+                      <!-- 模态框（Modal） -->
+                      <div class="modal fade" id="myModal1" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel"><?php echo $v['type'];?></h4>
+                            </div>
+                            <div class="modal-body" style="overflow:scroll;">
+                            <table class="table table-bordered table-responsive">
+                              <thead>
+                              <tr>
+                              <?php foreach($fold_attr as $a => $b):?>
+                              <?php if($b['type']==$v['type']):?>
+                                <th style="text-align:center;"><?php echo $b['content'];?></th>
+                              <?php endif; ?>
+                              <?php endforeach; ?>
+                              </tr>
+                              </thead>
+                              
+                              <tbody>
+                                <tr>
+                                  <?php foreach($fold_data as $a => $b):?>
+                                  <?php if($b['type']==$v['type']):?>
+                                    <td><?php echo $b['content'];?></td>
+                                  <?php endif; ?>
+                                  
+                                  <?php endforeach; ?>
+                                </tr>
+                              </tbody>
+                            </table>
+                            </div>
+                          </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                      </div>
+                      </td>
+                      
+                      <?php elseif($wage_attr[$k]=='省核专项奖励小计'):?>
+                      <td>
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal2"><font color='red'><?php echo $v['content'];?></font></a>
+                      <!-- 模态框（Modal） -->
+                      <div class="modal fade" id="myModal2" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel"><?php echo $v['type'];?></h4>
+                            </div>
+                            <div class="modal-body" style="overflow:scroll;">
+                            <table class="table table-bordered table-responsive">
+                              <thead>
+                              <tr>
+                              <?php foreach($fold_attr as $a => $b):?>
+                              <?php if($b['type']==$v['type']):?>
+                                <th style="text-align:center;"><?php echo $b['content'];?></th>
+                              <?php endif; ?>
+                              <?php endforeach; ?>
+                              </tr>
+                              </thead>
+                              
+                              <tbody>
+                                <tr>
+                                  <?php foreach($fold_data as $a => $b):?>
+                                  <?php if($b['type']==$v['type']):?>
+                                    <td><?php echo $b['content'];?></td>
+                                  <?php endif; ?>
+                                  
+                                  <?php endforeach; ?>
+                                </tr>
+                              </tbody>
+                            </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary">提交更改</button>
+                            </div>
+                          </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                      </div>
+                      </td>
+                      <?php elseif($wage_attr[$k]=='分公司专项奖励小计'):?>
+                      <td>
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal3"><font color='red'><?php echo $v['content'];?></font></a>
+                      <!-- 模态框（Modal） -->
+                      <div class="modal fade" id="myModal3" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel"><?php echo $v['type'];?></h4>
+                            </div>
+                            <div class="modal-body" style="overflow:scroll;">
+                            <table class="table table-bordered table-responsive">
+                              <thead>
+                              <tr>
+                              <?php foreach($fold_attr as $a => $b):?>
+                              <?php if($b['type']==$v['type']):?>
+                                <th style="text-align:center;"><?php echo $b['content'];?></th>
+                              <?php endif; ?>
+                              <?php endforeach; ?>
+                              </tr>
+                              </thead>
+                              
+                              <tbody>
+                                <tr>
+                                  <?php foreach($fold_data as $a => $b):?>
+                                  <?php if($b['type']==$v['type']):?>
+                                    <td><?php echo $b['content'];?></td>
+                                  <?php endif; ?>
+                                  
+                                  <?php endforeach; ?>
+                                </tr>
+                              </tbody>
+                            </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary">提交更改</button>
+                            </div>
+                          </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                      </div>
+                      </td>
+                      <?php elseif($wage_attr[$k]=='其他小计'):?>
+                      <td>
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal4"><font color='red'><?php echo $v['content'];?></font></a>
+                      <!-- 模态框（Modal） -->
+                      <div class="modal" id="myModal4" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel"><?php echo $v['type'];?></h4>
+                            </div>
+                            <div class="modal-body" style="overflow:scroll;">
+                              <table class="table table-bordered table-responsive">
+                                <thead>
+                                <tr>
+                                <?php foreach($fold_attr as $a => $b):?>
+                                <?php if($b['type']==$v['type']):?>
+                                  <th style="text-align:center;"><?php echo $b['content'];?></th>
+                                <?php endif; ?>
+                                <?php endforeach; ?>
+                                </tr>
+                                </thead>
+                                
+                                <tbody>
+                                  <tr>
+                                    <?php foreach($fold_data as $a => $b):?>
+                                    <?php if($b['type']==$v['type']):?>
+                                      <td><?php echo $b['content'];?></td>
+                                    <?php endif; ?>
+                                    
+                                    <?php endforeach; ?>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                          </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                      </div>
+                      </td>
+                      <?php elseif($wage_attr[$k]=='教育经费小计'):?>
+                      <td>
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal5"><font color='red'><?php echo $v['content'];?></font></a>
+                      <!-- 模态框（Modal） -->
+                      <div class="modal fade" id="myModal5" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel"><?php echo $v['type'];?></h4>
+                            </div>
+                            <div class="modal-body" style="overflow:scroll;">
+                            <table class="table table-bordered table-responsive" >
+                              <thead>
+                              <tr>
+                              <?php foreach($fold_attr as $a => $b):?>
+                              <?php if($b['type']==$v['type']):?>
+                                <th style="text-align:center;"><?php echo $b['content'];?></th>
+                              <?php endif; ?>
+                              <?php endforeach; ?>
+                              </tr>
+                              </thead>
+                              
+                              <tbody>
+                                <tr>
+                                  <?php foreach($fold_data as $a => $b):?>
+                                  <?php if($b['type']==$v['type']):?>
+                                    <td><?php echo $b['content'];?></td>
+                                  <?php endif; ?>
+                                  
+                                  <?php endforeach; ?>
+                                </tr>
+                              </tbody>
+                            </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary">提交更改</button>
+                            </div>
+                          </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                      </div>
+                      </td>
+                      <?php elseif($wage_attr[$k]=='福利费小计'):?>
+                      <td>
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal6"><font color='red'><?php echo $v['content'];?></font></a>
+                      <!-- 模态框（Modal） -->
+                      <div class="modal fade" id="myModal6" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel"><?php echo $v['type'];?></h4>
+                            </div>
+                            <div class="modal-body" style="overflow:scroll;">
+                            <table class="table table-bordered table-responsive">
+                                <thead>
+                                <tr>
+                                <?php foreach($fold_attr as $a => $b):?>
+                                <?php if($b['type']==$v['type']):?>
+                                  <th style="text-align:center;"><?php echo $b['content'];?></th>
+                                <?php endif; ?>
+                                <?php endforeach; ?>
+                                </tr>
+                                </thead>
+                                
+                                <tbody>
+                                  <tr>
+                                    <?php foreach($fold_data as $a => $b):?>
+                                    <?php if($b['type']==$v['type']):?>
+                                      <td><?php echo $b['content'];?></td>
+                                    <?php endif; ?>
+                                    
+                                    <?php endforeach; ?>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary">提交更改</button>
+                            </div>
+                          </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                      </div>
+                      </td>
+                      <?php elseif($wage_attr[$k]=='扣款小计'):?>
+                      <td>
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal7"><font color='red'><?php echo $v['content'];?></font></a>
+                      <!-- 模态框（Modal） -->
+                      <div class="modal fade" id="myModal7" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel"><?php echo $v['type'];?></h4>
+                            </div>
+                            <div class="modal-body" style="overflow:scroll;">
+                            <table class="table table-bordered table-responsive">
+                                <thead>
+                                <tr>
+                                <?php foreach($fold_attr as $a => $b):?>
+                                <?php if($b['type']==$v['type']):?>
+                                  <th style="text-align:center;"><?php echo $b['content'];?></th>
+                                <?php endif; ?>
+                                <?php endforeach; ?>
+                                </tr>
+                                </thead>
+                                
+                                <tbody>
+                                  <tr>
+                                    <?php foreach($fold_data as $a => $b):?>
+                                    <?php if($b['type']==$v['type']):?>
+                                      <td><?php echo $b['content'];?></td>
+                                    <?php endif; ?>
+                                    
+                                    <?php endforeach; ?>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary">提交更改</button>
+                            </div>
+                          </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                      </div>
+                      </td>
+                      <?php else: ?>
+                      <td><?php echo $v['content'];?></td>
+                      <?php endif; ?>
+
                     <?php endforeach; ?>
-                    <?php endif; ?>
                     </tr>
+                    <?php endif; ?>
                   </tbody>
                 </table>
               </div>

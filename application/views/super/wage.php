@@ -33,37 +33,41 @@
           <div class="box">
             <div class="box-header">
             </div>
-            <!-- /.box-header -->
 
             <div class="box-body">
               <div style="overflow:scroll;">
                 <table id="wageTable" class="table table-striped table-bordered table-hover" style="overflow:scroll;white-space: nowrap;word-break:  keep-all;text-align: center;">
                   <thead>
-                  <?php if($wage_attr):?>
-                    <?php echo $wage_attr;?>
+                    
+                  <?php $counter=0;?>
+                  <?php if($attr_data):?>
+                    <?php foreach($attr_data as $k => $v): ?>
+                    <?php if($counter<$wage_total):?>
+                      <th style="text-align:center;"><?php echo $v;$counter++;?></th>
+                    <?php endif;?>
+                    <?php endforeach; ?>
                   <?php endif; ?>
-                  <tr>
-                    <?php for($i=0;$i<$total_column;$i++):?>
-                    <th>&nbsp;</th>
-                    <?php endfor; ?>
-                  </tr>
+
                   </thead>
+
                   <tbody> 
+                      
+                  
                   <?php if($wage_data): ?>
                   <?php foreach($wage_data as $k => $v): ?>
-                    <?php $counter=0; ?>
-                      <tr>
-                      <?php foreach($v as $a => $b): ?>
-                      <?php if($counter<$total_column):?>
-                        <td><?php echo $b;$counter++;?></td>
-                      <?php else: break;?>
+                    <tr>
+                      <?php $counter=0;?>
+                      <?php foreach($v as $a => $b):?>
+                      <?php if($counter<$wage_total):?>
+                      <td>
+                        <?php echo $b;$counter++;?>
+                      </td>
                       <?php endif; ?>
                       <?php endforeach; ?>
-                      </tr>
-                    
-                    <?php $counter=0; ?>
+                    </tr>
                   <?php endforeach; ?>
                   <?php endif;?>
+
                   </tbody>
                 </table>
 
@@ -87,7 +91,6 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $('#wageGatherMainMenu').addClass('active');
-      
       $('#wageTable').DataTable({
         language: 
         {

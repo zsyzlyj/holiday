@@ -17,6 +17,7 @@ class Wage extends Admin_Controller
         $this->load->model('model_wage_doc');
         $this->load->model('model_users');
         $this->load->model('model_manager');
+        $this->load->model('model_wage_attr');
         $this->data['permission'] = $this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
         $this->data['user_id'] = $this->session->userdata('user_id');
@@ -67,6 +68,175 @@ class Wage extends Admin_Controller
         $user_id=$this->session->userdata('user_id');        
         $this->data['wage_data'] = $this->model_wage->getWageById($user_id);
         $this->data['wage_doc'] = $this->model_wage_doc->getWageDocData();
+        /**/
+        $fold_attr=array();
+        $fold_data=array();
+        $unfold_attr=array();
+        $unfold_data=array();
+        $wage_attr=array();
+        $wage_data=array();
+        $fold_total=0;
+        $unfold_total=0;
+        
+        $attr=$this->model_wage_attr->getWageAttrData();
+        $wage=$this->model_wage->getWageById($user_id);
+        //先把工资信息加上折叠标签，折叠标签为true就折叠，false就是不折叠
+        foreach($attr as $k => $v){
+            if($v!=""){
+                array_push($wage_attr,array('fold_tag' => false,'content' => $v,'type' => '','fold_start' => false));
+            }
+        }
+        $total=count($wage_attr);
+        unset($attr);
+        
+        foreach($wage as $a => $b){
+            if($b!=""){
+                array_push($wage_data,$b);
+            }
+        }
+        
+        if(count($wage_data)<$total){
+            array_push($wage_data,'无');
+        };
+        #foreach($wage as $k => $v){
+        #    echo $v;
+        #}
+
+        unset($wage);
+        
+        foreach($wage_attr as $k => $v){
+            if(strstr($v['content'],'月度绩效工资小计')){
+                $wage_attr[$k]['fold_start']=true;
+                $wage_attr[$k]['type']='月度绩效工资小计';
+                for($i=$k;$i<$total;$i++){
+                    if(strstr($wage_attr[$i]['content'],'省核专项奖励小计')){
+                        for($j=$k+1;$j<$i;$j++){
+                            array_push($fold_attr,array('type' => '月度绩效工资小计','content' => $wage_attr[$j]['content']));
+                            $wage_attr[$j]['type']='月度绩效工资小计';
+                            $wage_attr[$j]['fold_tag']=true;
+                        }
+                        break;
+                    }
+                } 
+            }
+            else if(strstr($v['content'],'省核专项奖励小计')){
+                $wage_attr[$k]['fold_start']=true;
+                $wage_attr[$k]['type']='省核专项奖励小计';
+                for($i=$k;$i<$total;$i++){
+                    if(strstr($wage_attr[$i]['content'],'分公司专项奖励小计')){
+                        for($j=$k+1;$j<$i;$j++){
+                            array_push($fold_attr,array('type' => '省核专项奖励小计','content' => $wage_attr[$j]['content']));
+                            $wage_attr[$j]['type']='省核专项奖励小计';
+                            $wage_attr[$j]['fold_tag']=true;
+                        }
+                        break;
+                    }
+                    
+                }
+                
+            }
+            else if(strstr($v['content'],'分公司专项奖励小计')){
+                $wage_attr[$k]['fold_start']=true;
+                $wage_attr[$k]['type']='分公司专项奖励小计';
+                for($i=$k;$i<$total;$i++){
+                    if(strstr($wage_attr[$i]['content'],'其他小计')){
+                        for($j=$k+1;$j<$i;$j++){
+                            array_push($fold_attr,array('type' => '分公司专项奖励小计','content' => $wage_attr[$j]['content']));
+                            $wage_attr[$j]['type']='分公司专项奖励小计';
+                            $wage_attr[$j]['fold_tag']=true;
+                        }
+                        break;
+                    }
+                    
+                }
+            }
+            else if(strstr($v['content'],'其他小计')){
+                $wage_attr[$k]['fold_start']=true;
+                $wage_attr[$k]['type']='其他小计';
+                for($i=$k;$i<$total;$i++){
+                    if(strstr($wage_attr[$i]['content'],'教育经费小计')){
+                        for($j=$k+1;$j<$i;$j++){
+                            array_push($fold_attr,array('type' => '其他小计','content' => $wage_attr[$j]['content']));
+                            $wage_attr[$j]['type']='其他小计';
+                            $wage_attr[$j]['fold_tag']=true;
+                        }
+                        break;
+                    }
+                    
+                }
+            }
+            else if(strstr($v['content'],'教育经费小计')){
+                $wage_attr[$k]['fold_start']=true;
+                $wage_attr[$k]['type']='教育经费小计';
+                for($i=$k;$i<$total;$i++){
+                    if(strstr($wage_attr[$i]['content'],'福利费小计')){
+                        for($j=$k+1;$j<$i;$j++){
+                            array_push($fold_attr,array('type' => '教育经费小计','content' => $wage_attr[$j]['content']));
+                            $wage_attr[$j]['type']='教育经费小计';
+                            $wage_attr[$j]['fold_tag']=true;
+                            
+                        }
+                        break;
+                    }
+                    
+                }
+            }
+            else if(strstr($v['content'],'福利费小计')){
+                $wage_attr[$k]['fold_start']=true;
+                $wage_attr[$k]['type']='福利费小计';
+                for($i=$k;$i<$total;$i++){
+                    if(strstr($wage_attr[$i]['content'],'当月月应收合计')){
+                        for($j=$k+1;$j<$i;$j++){
+                            array_push($fold_attr,array('type' => '福利费小计','content' => $wage_attr[$j]['content']));
+                            $wage_attr[$j]['type']='福利费小计';
+                            $wage_attr[$j]['fold_tag']=true;
+                            
+                        }
+                        break;
+                    }
+                    
+                }
+            }
+            else if(strstr($v['content'],'当月月应收合计')){
+                for($i=$k;$i<$total;$i++){
+                    if(strstr($wage_attr[$i]['content'],'扣款小计')){
+                        $wage_attr[$i]['fold_start']=true;
+                        $wage_attr[$i]['type']='扣款小计';
+                        for($j=$k+1;$j<$i;$j++){
+                            array_push($fold_attr,array('type' => '扣款小计','content' => $wage_attr[$j]['content']));
+                            $wage_attr[$j]['type']='扣款小计';
+                            $wage_attr[$j]['fold_tag']=true;
+                        }
+                        break;
+                    }
+                }
+            }
+            
+            if(!$wage_attr[$k]['fold_tag']){
+                array_push($unfold_attr,$wage_attr[$k]['content']);
+            }
+        }
+        
+        foreach($wage_data as $k => $v){
+
+            if($wage_attr[$k]['fold_tag']){
+                array_push($fold_data,array('type' => $wage_attr[$k]['type'],'content' => $v,'fold_tag' => $wage_attr[$k]['fold_tag'],'fold_start' => $wage_attr[$k]['fold_start']));    
+            }
+            else{
+                array_push($unfold_data,array('type' => $wage_attr[$k]['type'],'content' => $v,'fold_tag' => $wage_attr[$k]['fold_tag'],'fold_start' => $wage_attr[$k]['fold_start']));    
+            }
+        }
+        
+        unset($wage_attr);
+        unset($wage_data);
+        foreach($unfold_data as $k=>$v){
+            
+        }
+
+        $this->data['wage_data']=$unfold_data;
+        $this->data['wage_attr']=$unfold_attr;
+        $this->data['fold_data']=$fold_data;
+        $this->data['fold_attr']=$fold_attr;
 		$this->render_template('wage/staff', $this->data);
     }
 

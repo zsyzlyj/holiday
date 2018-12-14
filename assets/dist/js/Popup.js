@@ -7,7 +7,7 @@ var btn = document.getElementById("myBtn");
  
 // 获取 <span> 元素，用于关闭弹窗
 var span = document.querySelector('.close');
- 
+
 // 点击按钮打开弹窗
 btn.onclick = function() {
     modal.style.display = "block";
@@ -24,4 +24,3 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-    
