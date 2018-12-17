@@ -32,7 +32,7 @@
           <?php endif; ?>
           
           
-            <a href="<?php echo base_url('super/manager_import') ?>" class="btn btn-primary">Add User</a>
+            <a href="<?php echo base_url('super/manager_import') ?>" class="btn btn-primary">上传管理员角色</a>
             <br /> <br />
           
 

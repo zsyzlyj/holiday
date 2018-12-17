@@ -53,6 +53,11 @@ class Model_users extends CI_Model
 		return ($delete == true) ? true : false;
 	}
 
+	public function deleteAll()
+	{
+		$sql='delete from users';
+		$delete = $this->db->query($sql);
+	}
 	public function countTotalUsers()
 	{
 		$sql = "SELECT * FROM users";

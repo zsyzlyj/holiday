@@ -10,6 +10,7 @@ class Super extends Admin_Controller
         parent::__construct();
         $this->data['page_title'] = 'Super';
         $this->load->model('model_holiday');
+        $this->load->model('model_holiday_doc');
         $this->load->model('model_plan');
         $this->load->model('model_notice');
         $this->load->model('model_manager');
@@ -344,7 +345,7 @@ class Super extends Admin_Controller
         $filePath = "uploads/".$path["name"];
         move_uploaded_file($path["tmp_name"],$filePath);
         $doc_data=array(
-            'number' => date('Y-m-d h:i:s'),
+            'number' => date('Y-m-d H:i:s'),
             'doc_name' => basename($filePath,".pdf"),
             'doc_path' => $filePath,
         );
@@ -450,6 +451,64 @@ class Super extends Admin_Controller
         $this->data['permission']=$this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_id');
         $this->render_super_template('super/holiday',$this->data);
+    }
+    public function holiday_doc_put(){
+        //先做一个文件上传，保存文件
+        $path=$_FILES['file'];
+        $filePath = "uploads/".$path["name"];
+        move_uploaded_file($path["tmp_name"],$filePath);
+        $doc_data=array(
+            'number' => date('Y-m-d H:i:s'),
+            'doc_name' => basename($filePath,".pdf"),
+            'doc_path' => $filePath,
+        );
+        $this->model_holiday_doc->create($doc_data);
+        
+    }
+    public function holiday_doc_import($filename=NULL)
+    {
+        if($_FILES){
+        if($_FILES["file"])
+            {
+                if ($_FILES["file"]["error"] > 0)
+                {
+                    echo "Error: " . $_FILES["file"]["error"] . "<br />";
+                }
+                else
+                {
+                    $this->holiday_doc_put();
+                    $this->holiday_doc_show();
+                }
+            }
+        }
+        else{
+            $this->render_super_template('super/holiday_doc_import',$this->data);
+        } 
+    }
+
+    public function holiday_doc_show(){
+        $holiday_doc=$this->model_holiday_doc->getHolidayDocData();
+        $this->data['holiday_doc']=$holiday_doc;
+        $this->render_super_template('super/holiday_doc_list',$this->data);
+        
+    }
+    
+    
+    public function holiday_doc_delete(){
+        $doc_name = $_POST['doc_name'];
+         
+        if($doc_name){
+			$delete = $this->model_holiday_doc->delete($doc_name);
+            if($delete == true) {
+                $this->session->set_flashdata('success', '删除成功');
+                redirect('super/holiday_doc_show', 'refresh');
+            }
+            else {
+                $this->session->set_flashdata('error', '数据库中不存在该记录');
+                redirect('super/holiday_doc_show', 'refresh');
+            }	
+		}
+        $this->render_super_template('super/holiday_doc_show',$this->data);
     }
     public function excel(){
         $this->load->library('PHPExcel');
@@ -709,12 +768,23 @@ class Super extends Admin_Controller
                 array_push($column,$v);
             }
         }
+        //删除所有人的年假计划反馈、假期信息，计划，计划提交，用户
+        //删除综管员和部门经理
+        $this->model_feedback->deleteAll();
+        $this->model_holiday->deleteAll();
+        $this->model_plan->deleteAll();
+        $this->model_submit->deleteAll();
+        $this->model_users->deleteAll();
+        $this->model_manager->deleteAll();
         /* excel导入时间的方法！ */
         $initflag=0;
         foreach($column as $k => $v)
         {
             foreach($v as $a => $b)
             {
+                if($b==NULL){
+                    $b=0;
+                }
                 switch($a){
                     case 'A':$name=$b;break;
                     case 'B':$dept=$b;break;
@@ -772,45 +842,95 @@ class Super extends Admin_Controller
                 'initflag' => $initflag,
                 'User_id' => $User_id
             );
-
-            $update_user=true;
-            if($this->model_holiday->getHolidaybyID($User_id))
-            {
-                if(!(serialize($Update_data) == serialize($this->model_holiday->getHolidaybyID($User_id)))){
-                   $update=$this->model_holiday->update($Update_data,$User_id);
-                }
-            }
-            else{
-                $update=$this->model_holiday->create($Update_data);
-                if($this->model_users->getUserById($User_id)==1){
-                    $Update_user_data=array(
-                        'user_id' => $User_id,
-                        'username' => $name,
-                        'password' => md5('hr'),
-                        'permission' => '3'
-                    );
             
-                    $update_user=$this->model_users->create($Update_user_data,$name);
-                }
-                $submit_data=array(
-                    'department' => $Update_data['department']
-                );
-                $this->model_submit->create($submit_data);
+            $update_user=true;
+            
+
+            //如果假期表中没有这个人，那么就年假计划反馈初始化，假期信息初始化，计划初始化，计划提交初始化，用户初始化，
+            //feedback,holiday,plan,submit,user
+
+            //初始化年假计划反馈，每个部门新建一个反馈记录，部门为主键
+            
+            if($this->model_feedback->getFeedbackByDept($Update_data['department'])==NULL)
+            {
                 $feedback_data=array(
                     'department' => $Update_data['department'],
                 );
                 $this->model_feedback->create($feedback_data);
             }
-            
-            if($update == true and $update_user == true) {
-                $response['success'] = true;
-                $response['messages'] = 'Succesfully updated';
+            //初始化假期信息，每个人新建一条假期的记录
+            //如果初始化過就不進行初始化 initflag记录是否被初始化过 0未初始化，1初始化完成
+        
+            $Update_data['Companyage']=floor((strtotime(date("Y-m-d"))-strtotime($Update_data['indate']))/86400/365);
+            $Update_data['Totalage']=floor((strtotime(date("Y-m-d"))-strtotime($Update_data['initdate']))/86400/365);
+
+            if($Update_data['Companyage']>=1 and $Update_data['Companyage']<10){
+                $Update_data['Thisyear']=5;
             }
-            else {
-                $response['success'] = false;
-                $response['messages'] = 'Error in the database while updated the brand information';			
-            }  
+            else if($Update_data['Companyage']>=10 and $Update_data['Companyage']<20){
+                $Update_data['Thisyear']=10;
+            }
+            else if($Update_data['Companyage']>=20){
+                $Update_data['Thisyear']=15;
+            }
+            $Update_data['Totalday']=$Update_data['Thisyear']+$Update_data['Lastyear']+$Update_data['Bonus'];
+            $Update_data['Rest']=$Update_data['Totalday'];
+            $Update_data['initflag']=1;
+            $Update_data['Used']=$Update_data['Jan']+$Update_data['Feb']+$Update_data['Mar']+$Update_data['Apr']+$Update_data['May']+$Update_data['Jun']+$Update_data['Jul']+$Update_data['Aug']+$Update_data['Sep']+$Update_data['Oct']+$Update_data['Nov']+$Update_data['Dece'];
+    
+            $update=$this->model_holiday->create($Update_data);
+
+            //初始化假期计划信息，每个人新建一条假期的记录
+            
+            $plan_data=array(
+                'user_id' => $Update_data['User_id'],
+                'name' => $Update_data['name'],
+                'department' => $Update_data['department'],
+                'Thisyear' => $Update_data['Thisyear'],
+                'Lastyear' => $Update_data['Lastyear'],
+                'Bonus' => $Update_data['Bonus'],
+                'Totalday' => $Update_data['Totalday'],
+                'firstquater' => 0,
+                'secondquater' => 0,
+                'thirdquater' => 0,
+                'fourthquater' => 0,
+                'submit_tag' => 0
+            );
+            $update=$this->model_plan->create($plan_data);
+
+            //初始化计划提交
+            
+            if($this->model_submit->getSubmitByDept($Update_data['department'])==NULL)
+            {
+                $submit_data=array(
+                    'department' => $Update_data['department']
+                );
+                $this->model_submit->create($submit_data);
+            }
+
+            
+
+            //初始化用户信息，每个人新建一条用户记录，用于登陆，密码为身份证后六位
+            $Update_user_data=array(
+                'user_id' => $User_id,
+                'username' => $name,
+                'password' => md5(substr($User_id,-6)),
+                'permission' => '3'
+            );
+            $update_user=$this->model_users->create($Update_user_data,$name);   
+            /**/
+
         }
+        /*
+        if($update == true and $update_user == true) {
+            $response['success'] = true;
+            $response['messages'] = 'Succesfully updated';
+        }
+        else {
+            $response['success'] = false;
+            $response['messages'] = 'Error in the database while updated the brand information';			
+        }
+        */
     }
     public function holiday_import($filename=NULL)
     {
@@ -1037,15 +1157,6 @@ class Super extends Admin_Controller
 			}
 			if($Update_data['role']=='部门负责人'){
                 $permission=2;
-                $feedback_data=array(
-                    'department' => $dept,
-                    'content' => '',
-                    'confirm' => 0,
-                    'status' => '未审核'
-                );
-                if($this->model_feedback->getFeedbackByDept()==NULL){
-                    $this->model_feedback->create($feedback_data);
-                }
 			}
 			$Update_user=array(
 				'permission' => $permission

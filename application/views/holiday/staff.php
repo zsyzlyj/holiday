@@ -35,16 +35,27 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"><font color="red">公告说明：</font></h3>
+              <h3 class="box-title" col><font color="red">公告说明：</font></h3>
               </br>              </br>
+
               <h4>
                 <?php if( $notice_data): ?> 
                 <?php foreach ($notice_data as $notice): ?>
                 <?php echo $notice['content'];?>
                 <?php endforeach;?>
                 <?php endif ?>
-              </h4>              
+              </h4>
               <h4><font color="blue">点击已休假数可以查看每个月已休明细</font></h4>
+              </br>
+
+              <h3 class="box-title"><font color="red">年假文件：</font></h3>
+              <h4>
+                <?php foreach($holiday_doc as $k => $v):?>
+                  <a href='<?php echo base_url($v['doc_path']);?>' target="_blank"><?php echo $v['doc_name']?></a>
+                  <br />
+                  <br />
+                <?php endforeach; ?>
+              </h4>
             </div>
             <br />
             <!-- /.box-header -->
@@ -82,55 +93,55 @@
                         <td>
                           
                           <!-- 打开弹窗按钮 -->
-                          <a href="javascript:void(0)" id="myBtn"><font color='orange'><?php echo $v['Used']; ?></font></a>
+                          <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><font color='red'><?php echo $v['Used']; ?></font></a>
                           
                           <!-- 弹窗 -->
-                          <div id="myModal" class="modal">
+                          <div id="myModal" class="modal fade" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             
                             <!-- 弹窗内容 -->
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <span class="close">&times;</span>
-                                  <h3>每月已休假明细</h3>
-                                </div>
-
-                                <div class="modal-body">
-                                <table id="MonthTable" class="table table-bordered table-striped mytdstyle">
-                                  <thead>
-                                    <tr>
-                                      <th>一月</th>
-                                      <th>二月</th>
-                                      <th>三月</th>
-                                      <th>四月</th>
-                                      <th>五月</th>
-                                      <th>六月</th>
-                                      <th>七月</th>
-                                      <th>八月</th>
-                                      <th>九月</th>
-                                      <th>十月</th>
-                                      <th>十一月</th>
-                                      <th>十二月</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                          <td><?php echo $v['Jan']; ?></td>
-                                          <td><?php echo $v['Feb']; ?></td>
-                                          <td><?php echo $v['Mar']; ?></td>
-                                          <td><?php echo $v['Apr']; ?></td>
-                                          <td><?php echo $v['May']; ?></td>
-                                          <td><?php echo $v['Jun']; ?></td>
-                                          <td><?php echo $v['Jul']; ?></td>
-                                          <td><?php echo $v['Aug']; ?></td>
-                                          <td><?php echo $v['Sep']; ?></td>
-                                          <td><?php echo $v['Oct']; ?></td>
-                                          <td><?php echo $v['Nov']; ?></td>
-                                          <td><?php echo $v['Dece']; ?></td>
-                                        </tr>
-                                        </tbody>
-                                </table>
-                                </div>
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h3>每月已休假明细</h3>
                               </div>
+
+                              <div class="modal-body">
+                              <table id="MonthTable" class="table table-bordered table-striped">
+                                <thead>
+                                  <tr>
+                                    <th style="text-align:center;">一月</th>
+                                    <th style="text-align:center;">二月</th>
+                                    <th style="text-align:center;">三月</th>
+                                    <th style="text-align:center;">四月</th>
+                                    <th style="text-align:center;">五月</th>
+                                    <th style="text-align:center;">六月</th>
+                                    <th style="text-align:center;">七月</th>
+                                    <th style="text-align:center;">八月</th>
+                                    <th style="text-align:center;">九月</th>
+                                    <th style="text-align:center;">十月</th>
+                                    <th style="text-align:center;">十一月</th>
+                                    <th style="text-align:center;">十二月</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                        <td><?php echo $v['Jan']; ?></td>
+                                        <td><?php echo $v['Feb']; ?></td>
+                                        <td><?php echo $v['Mar']; ?></td>
+                                        <td><?php echo $v['Apr']; ?></td>
+                                        <td><?php echo $v['May']; ?></td>
+                                        <td><?php echo $v['Jun']; ?></td>
+                                        <td><?php echo $v['Jul']; ?></td>
+                                        <td><?php echo $v['Aug']; ?></td>
+                                        <td><?php echo $v['Sep']; ?></td>
+                                        <td><?php echo $v['Oct']; ?></td>
+                                        <td><?php echo $v['Nov']; ?></td>
+                                        <td><?php echo $v['Dece']; ?></td>
+                                      </tr>
+                                      </tbody>
+                              </table>
+                              </div>
+                            </div>
                             
                           </div>
  
@@ -151,6 +162,9 @@
                   <?php endif; ?>
                 </tbody>
               </table>
+              <br />
+              <br />
+              <br />
               </div>
               <!-- /.overflow:scroll -->
             </div>

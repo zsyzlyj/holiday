@@ -73,6 +73,12 @@ class Model_plan extends CI_Model
 		}
 	}
 
+	public function deleteAll()
+	{
+		$sql='delete from plan';
+		$delete = $this->db->query($sql);
+	}
+
 	public function countTotalplan()
 	{
 		$sql = "SELECT * FROM plan";

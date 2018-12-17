@@ -35,8 +35,8 @@
   
   <script type="text/javascript">
     $(document).ready(function() {
-      $("#mainSyncNav").addClass('active');
-      $("#downloadFileNav").addClass('active');
+      $("#holidaySyncNav").addClass('active');
+      $("#downloadHolidayNav").addClass('active');
       
     });
     

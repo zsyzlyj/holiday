@@ -657,4 +657,4 @@ CREATE TABLE `wage_doc` (
   `number` varchar(12),
   `doc_name` varchar(50),
   `doc_path` varchar(100)
-)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

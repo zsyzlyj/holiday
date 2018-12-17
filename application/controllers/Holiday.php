@@ -15,6 +15,7 @@ class Holiday extends Admin_Controller
         $this->data['user_name'] = $this->session->userdata('user_name');
 
         $this->load->model('model_holiday');
+        $this->load->model('model_holiday_doc');
         $this->load->model('model_plan');
         $this->load->model('model_notice');
         $this->load->model('model_manager');
@@ -28,59 +29,6 @@ class Holiday extends Admin_Controller
 	public function index()
 	{
         $this->render_template('dashboard', $this->data);
-        /*
-        $holiday_data = $this->model_holiday->getHolidayData();
-        $notice_data = $this->model_notice->getNoticeLatestHoliday();
-
-        $notice_result=array();
-        foreach ($notice_data as $k => $v) {
-            $notice_result[$k] = $v;
-        }
-        
-        $result = array();
-        foreach ($holiday_data as $k => $v) {
-            $result[$k] = $v;
-            
-            //如果初始化過就不進行初始化 initflag记录是否被初始化过 0未初始化，1初始化完成
-            if($result[$k]['initflag']==0){
-                $result[$k]['Companyage']=floor((strtotime(date("Y-m-d"))-strtotime($result[$k]['indate']))/86400/365);
-                $result[$k]['Totalage']=floor((strtotime(date("Y-m-d"))-strtotime($result[$k]['initdate']))/86400/365);
-
-                if($result[$k]['Companyage']>=1 and $result[$k]['Companyage']<10){
-                    $result[$k]['Thisyear']=5;
-                }
-                else if($result[$k]['Companyage']>=10 and $result[$k]['Companyage']<20){
-                    $result[$k]['Thisyear']=10;
-                }
-                else if($result[$k]['Companyage']>=20){
-                    $result[$k]['Thisyear']=15;
-                }
-                $result[$k]['Totalday']=$result[$k]['Thisyear']+$result[$k]['Lastyear']+$result[$k]['Bonus'];
-                $result[$k]['Rest']=$result[$k]['Totalday'];
-                $result[$k]['initflag']=1;
-                $result[$k]['Used']=$result[$k]['Jan']+$result[$k]['Feb']+$result[$k]['Mar']+$result[$k]['Apr']+$result[$k]['May']+$result[$k]['Jun']+$result[$k]['Jul']+$result[$k]['Aug']+$result[$k]['Sep']+$result[$k]['Oct']+$result[$k]['Nov']+$result[$k]['Dece'];
-                //更新数据
-                $data = array(
-                    'Companyage' => $result[$k]['Companyage'],
-                    'Totalage' => $result[$k]['Totalage'],
-                    'Thisyear' => $result[$k]['Thisyear'],
-                    'Totalday' => $result[$k]['Totalday'],
-                    'Rest' => $result[$k]['Rest'],
-                    'initflag' => $result[$k]['initflag'],
-                    'Used' => $result[$k]['Used'],
-                );
-    
-                $update = $this->model_holiday->update($data, $result[$k]['name']);
-               
-            }
-            
-        }
-
-        $this->data['holiday_data'] = $result;
-        $this->data['notice_data'] = $notice_result;
-        
-        $this->render_template('holiday/index', $this->data);
-        */
     }
     /*
     * It Fetches the products data from the product table 
@@ -113,153 +61,7 @@ class Holiday extends Admin_Controller
        /* */
 	}	
 
-    /*
-    * If the validation is not valid, then it redirects to the create page.
-    * If the validation for each input field is valid then it inserts the data into the database 
-    * and it stores the operation message into the session flashdata and display on the manage product page
-    */
-	public function create()
-	{
-		$this->form_validation->set_rules('product_name', 'Product name', 'trim|required');
-		$this->form_validation->set_rules('sku', 'SKU', 'trim|required');
-		$this->form_validation->set_rules('price', 'Price', 'trim|required');
-		$this->form_validation->set_rules('qty', 'Qty', 'trim|required');
-        #$this->form_validation->set_rules('store', 'Store', 'trim|required');
-		#$this->form_validation->set_rules('availability', 'Availability', 'trim|required');
-		
-	
-        if ($this->form_validation->run() == TRUE) {
-            // true case
-        	$upload_image = $this->upload_image();
-
-        	$data = array(
-        		'name' => $this->input->post('product_name'),
-        		'sku' => $this->input->post('sku'),
-        		'price' => $this->input->post('price'),
-        		'qty' => $this->input->post('qty'),
-        		'image' => $upload_image,
-        		'description' => $this->input->post('description'),
-        		#'attribute_value_id' => json_encode($this->input->post('attributes_value_id')),
-        		#'brand_id' => json_encode($this->input->post('brands')),
-        		#'category_id' => json_encode($this->input->post('category')),
-                #'store_id' => $this->input->post('store'),
-        		#'availability' => $this->input->post('availability'),
-        	);
-
-        	$create = $this->model_products->create($data);
-        	if($create == true) {
-        		$this->session->set_flashdata('success', 'Successfully created');
-        		redirect('products/', 'refresh');
-        	}
-        	else {
-        		$this->session->set_flashdata('errors', 'Error occurred!!');
-        		redirect('products/create', 'refresh');
-        	}
-        }
-        else {
-            // false case
-
-        	// attributes 
-        	$attribute_data = $this->model_attributes->getActiveAttributeData();
-
-        	$attributes_final_data = array();
-        	foreach ($attribute_data as $k => $v) {
-        		$attributes_final_data[$k]['attribute_data'] = $v;
-
-        		$value = $this->model_attributes->getAttributeValueData($v['id']);
-
-        		$attributes_final_data[$k]['attribute_value'] = $value;
-        	}
-
-        	$this->data['attributes'] = $attributes_final_data;
-			$this->data['brands'] = $this->model_brands->getActiveBrands();        	
-			$this->data['category'] = $this->model_category->getActiveCategroy();        	
-			#$this->data['stores'] = $this->model_stores->getActiveStore();        	
-
-            $this->render_template('products/create', $this->data);
-        }	
-	}
-
-    /*
-    * If the validation is not valid, then it redirects to the edit product page 
-    * If the validation is successfully then it updates the data into the database 
-    * and it stores the operation message into the session flashdata and display on the manage product page
-    */
-	public function update($product_id)
-	{      
-        if(!in_array('updateProduct', $this->permission)) {
-            redirect('dashboard', 'refresh');
-        }
-
-        if(!$product_id) {
-            redirect('dashboard', 'refresh');
-        }
-
-        $this->form_validation->set_rules('product_name', 'Product name', 'trim|required');
-        $this->form_validation->set_rules('sku', 'SKU', 'trim|required');
-        $this->form_validation->set_rules('price', 'Price', 'trim|required');
-        $this->form_validation->set_rules('qty', 'Qty', 'trim|required');
-        $this->form_validation->set_rules('store', 'Store', 'trim|required');
-        $this->form_validation->set_rules('availability', 'Availability', 'trim|required');
-
-        if ($this->form_validation->run() == TRUE) {
-            // true case
-            
-            $data = array(
-                'name' => $this->input->post('product_name'),
-                'sku' => $this->input->post('sku'),
-                'price' => $this->input->post('price'),
-                'qty' => $this->input->post('qty'),
-                'description' => $this->input->post('description'),
-                #'attribute_value_id' => json_encode($this->input->post('attributes_value_id')),
-                #'brand_id' => json_encode($this->input->post('brands')),
-                #'category_id' => json_encode($this->input->post('category')),
-                #'store_id' => $this->input->post('store'),
-                #'availability' => $this->input->post('availability'),
-            );
-
-            
-            if($_FILES['product_image']['size'] > 0) {
-                $upload_image = $this->upload_image();
-                $upload_image = array('image' => $upload_image);
-                
-                $this->model_products->update($upload_image, $product_id);
-            }
-
-            $update = $this->model_products->update($data, $product_id);
-            if($update == true) {
-                $this->session->set_flashdata('success', 'Successfully updated');
-                redirect('products/', 'refresh');
-            }
-            else {
-                $this->session->set_flashdata('errors', 'Error occurred!!');
-                redirect('products/update/'.$product_id, 'refresh');
-            }
-        }
-        else {
-            // attributes 
-            $attribute_data = $this->model_attributes->getActiveAttributeData();
-
-            $attributes_final_data = array();
-            foreach ($attribute_data as $k => $v) {
-                $attributes_final_data[$k]['attribute_data'] = $v;
-
-                $value = $this->model_attributes->getAttributeValueData($v['id']);
-
-                $attributes_final_data[$k]['attribute_value'] = $value;
-            }
-            
-            // false case
-            $this->data['attributes'] = $attributes_final_data;
-            $this->data['brands'] = $this->model_brands->getActiveBrands();         
-            $this->data['category'] = $this->model_category->getActiveCategroy();           
-            $this->data['stores'] = $this->model_stores->getActiveStore();          
-
-            $product_data = $this->model_products->getProductData($product_id);
-            $this->data['product_data'] = $product_data;
-            $this->render_template('products/edit', $this->data); 
-        }   
-	}
+    
     public function delete($id)
 	{
 		if($id) {
@@ -669,12 +471,6 @@ class Holiday extends Admin_Controller
 
         $this->excel_mydeptholiday($_POST['current_dept']);
     }
-    
-
-
-
-
-
 
     public function excel_put(){
         
@@ -819,43 +615,68 @@ class Holiday extends Admin_Controller
             );
 
             $update_user=true;
+            //上传数据后，如果假期表中有这个人，那么就更新同名人的信息
             if($this->model_holiday->getHolidaybyID($User_id))
             {
                 if(!(serialize($Update_data) == serialize($this->model_holiday->getHolidaybyID($User_id)))){
                    $update=$this->model_holiday->update($Update_data,$User_id);
                 }
             }
+            //如果假期表中没有这个人，那么就年假计划反馈初始化，假期信息初始化，计划初始化，计划提交初始化，用户初始化，
+            //feedback,holiday,plan,submit,user
             else{
-                $update=$this->model_holiday->create($Update_data);
-                if($this->model_users->getUserById($User_id)==1){
-                    $Update_user_data=array(
-                        'user_id' => $User_id,
-                        'username' => $name,
-                        'password' => md5('hr'),
-                        'permission' => '3'
-                    );
-            
-                    $update_user=$this->model_users->create($Update_user_data,$name);
-                }
-                $submit_data=array(
-                    'department' => $Update_data['department']
-                );
-                $this->model_submit->create($submit_data);
+                //初始化年假计划反馈，每个部门新建一个反馈记录，部门为主键
                 $feedback_data=array(
                     'department' => $Update_data['department'],
                 );
                 $this->model_feedback->create($feedback_data);
+                //初始化假期信息，每个人新建一条假期的记录
+                $update=$this->model_holiday->create($Update_data);
+
+                //初始化假期计划信息，每个人新建一条假期的记录
+                $holiday_data=$this->model_holiday->getHolidayData();
+                
+                $plan_data=array(
+                    'user_id' => $Update_data['user_id'],
+                    'name' => $$Update_data['name'],
+                    'department' => $Update_data['department'],
+                    'Thisyear' => $Update_data['Thisyear'],
+                    'Lastyear' => $Update_data['Lastyear'],
+                    'Bonus' => $Update_data['Bonus'],
+                    'Totalday' => $Update_data['Totalday'],
+                    'firstquater' => 0,
+                    'secondquater' => 0,
+                    'thirdquater' => 0,
+                    'fourthquater' => 0,
+                    'submit_tag' => 0
+                );
+                $update=$this->model_plan->create($plan_data);
+
+                //初始化计划提交
+                $submit_data=array(
+                    'department' => $Update_data['department']
+                );
+                $this->model_submit->create($submit_data);
+
+                //初始化用户信息，每个人新建一条用户记录，用于登陆，密码为身份证后六位
+                $Update_user_data=array(
+                    'user_id' => $User_id,
+                    'username' => $name,
+                    'password' => md5(substr($User_id,-6)),
+                    'permission' => '3'
+                );
+                $update_user=$this->model_users->create($Update_user_data,$name);
+                
+                
             }
-            
-            if($update == true and $update_user == true) {
-                $response['success'] = true;
-                $response['messages'] = 'Succesfully updated';
-            }
-            else {
-                $response['success'] = false;
-                $response['messages'] = 'Error in the database while updated the brand information';			
-            }
-            
+        }
+        if($update == true and $update_user == true) {
+            $response['success'] = true;
+            $response['messages'] = 'Succesfully updated';
+        }
+        else {
+            $response['success'] = false;
+            $response['messages'] = 'Error in the database while updated the brand information';			
         }
     }
     public function import($filename=NULL)
@@ -895,57 +716,19 @@ class Holiday extends Admin_Controller
         
         $result = array();
         
-        if($plan_data)
+        foreach($plan_data as $k => $v)
         {
-            foreach($plan_data as $k => $v)
-            {
-                if($v['submit_tag']==1){
-                    $v['submit_tag']='已提交';
-                }
-                else if($v['submit_tag']==0){
-                    $v['submit_tag']='未提交';
-                }
-                $result[$k]=$v;
-            }  
-        }
-        else
-        {
-            $holiday_data=$this->model_holiday->getHolidayData();
-            foreach($holiday_data as $k =>$v)
-            {
-                $plan_data=array(
-                    'user_id' => $v['user_id'],
-                    'name' => $v['name'],
-                    'department' => $v['department'],
-                    'Thisyear' => $v['Thisyear'],
-                    'Lastyear' => $v['Lastyear'],
-                    'Bonus' => $v['Bonus'],
-                    'Totalday' => $v['Totalday'],
-                    'firstquater' => 0,
-                    'secondquater' => 0,
-                    'thirdquater' => 0,
-                    'fourthquater' => 0,
-                    'submit_tag' => 0
-                );
-                $this->model_plan->create($plan_data);
+            if($v['submit_tag']==1){
+                $v['submit_tag']='已提交';
             }
-            $plan_data = $this->model_plan->getPlanData();
-            foreach($plan_data as $k => $v)
-            {
-                if($v['submit_tag']==1){
-                    $v['submit_tag']='已提交';
-                }
-                else if($v['submit_tag']==0){
-                    $v['submit_tag']='未提交';
-                }
-                $result[$k]=$v;
+            else if($v['submit_tag']==0){
+                $v['submit_tag']='未提交';
             }
-            
-        }
+            $result[$k]=$v;
+        }  
 
         $this->data['plan_data'] = $result;
         
-
         $this->render_template('holiday/plan', $this->data);
     }
 
@@ -960,6 +743,7 @@ class Holiday extends Admin_Controller
         $user_id=$this->session->userdata('user_id');
         $holiday_data = $this->model_holiday->getHolidayById($user_id);
         $notice_data = $this->model_notice->getNoticeLatestHoliday();
+        $holiday_doc = $this->model_holiday_doc->getHolidayDocData();
         $result = array();
         $notice_result=array();
         foreach ($notice_data as $k => $v) {
@@ -973,6 +757,7 @@ class Holiday extends Admin_Controller
 
         $this->data['holiday_data'] = $result;
         $this->data['notice_data'] = $notice_result;
+        $this->data['holiday_doc'] = $holiday_doc;
 		$this->render_template('holiday/staff', $this->data);
     }
     

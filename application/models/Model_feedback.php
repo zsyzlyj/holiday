@@ -75,4 +75,9 @@ class Model_feedback extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}
+	public function deleteAll()
+	{
+		$sql='delete from holiday';
+		$delete = $this->db->query($sql);
+	}
 }

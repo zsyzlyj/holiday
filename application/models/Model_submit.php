@@ -76,4 +76,9 @@ class Model_submit extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}
+	public function deleteAll()
+	{
+		$sql='delete from submit';
+		$delete = $this->db->query($sql);
+	}
 }

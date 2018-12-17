@@ -72,15 +72,12 @@ class Model_holiday extends CI_Model
 		}
 	}
 
-	public function remove($id)
+	public function deleteAll()
 	{
-		if($id) {
-			$this->db->where('user_id', $id);
-			$delete = $this->db->delete('holiday');
-			return ($delete == true) ? true : false;
-		}
+		$sql='delete from holiday';
+		$delete = $this->db->query($sql);
 	}
-
+	
 	public function countTotalholiday()
 	{
 		$sql = "SELECT * FROM holiday";

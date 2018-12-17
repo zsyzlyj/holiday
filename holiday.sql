@@ -99,3 +99,9 @@ INSERT INTO `super_user` (`user_id`, `password`,`permission`) VALUES
 ('lyjh',md5('hr'),'休假');
 INSERT INTO `super_user` (`user_id`, `password`,`permission`) VALUES
 ('lyja',md5('hr'),'休假');
+
+CREATE TABLE `holiday_doc` (
+  `number` varchar(12),
+  `doc_name` varchar(50),
+  `doc_path` varchar(100)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

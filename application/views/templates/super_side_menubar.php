@@ -4,36 +4,6 @@
       
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <?php if($permission=='工资'):?>
-        <li id="wageGatherMainMenu">
-          <a href="<?php echo base_url('super/wage') ?>">
-            <i class="fa fa-money"></i><span>工资汇总</span>
-          </a>
-        </li>
-        <li id="uploadWageFileNav">
-          <a href="<?php echo base_url('super/wage_import') ?>">
-          <i class="fa fa-circle-o"></i><span>工资导入</span>
-          </a>
-        </li>
-        <li class="treeview" id="uploadWageDoc">
-          <a href="#">
-            <i class="fa fa-cloud"></i>
-            <span>薪酬文件导入</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li id="uploadWageDocNav"><a href="<?php echo base_url('super/wage_doc_import') ?>"><i class="fa fa-circle-o"></i> 文件导入</a></li>
-            <li id="showWageDocNav"><a href="<?php echo base_url('super/wage_doc_show') ?>"><i class="fa fa-circle-o"></i> 薪酬文件汇总</a></li>
-          </ul>
-        </li>
-        <li id="wageProofMainMenu">
-          <a href="<?php echo base_url('super/wage_proof') ?>">
-            <i class="fa fa-money"></i><span>收入证明</span>
-          </a>
-        </li>
-        <?php endif; ?>
         <?php if($permission == '休假'): ?>
         <li id="holidayGatherMainMenu">
           <a href="<?php echo base_url('super/holiday') ?>">
@@ -45,31 +15,44 @@
             <i class="fa fa-edit"></i> <span>年假计划汇总</span>
           </a>
         </li>
-        <li class="treeview" id="mainSyncNav">
+        <li class="treeview" id="uploadHolidayDoc">
           <a href="#">
             <i class="fa fa-cloud"></i>
-            <span>数据同步</span>
+            <span>年假文件导入</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="uploadFileNav"><a href="<?php echo base_url('super/holiday_import') ?>"><i class="fa fa-circle-o"></i> 上传数据</a></li>
-            <li id="downloadFileNav"><a href="<?php echo base_url('super/download_page') ?>"><i class="fa fa-circle-o"></i> 下载数据</a></li>
+            <li id="uploadHolidayDocNav"><a href="<?php echo base_url('super/holiday_doc_import') ?>"><i class="fa fa-circle-o"></i> 文件导入</a></li>
+            <li id="showHolidayDocNav"><a href="<?php echo base_url('super/holiday_doc_show') ?>"><i class="fa fa-circle-o"></i> 年假文件汇总</a></li>
+          </ul>
+        </li>
+        <li class="treeview" id="holidaySyncNav">
+          <a href="#">
+            <i class="fa fa-cloud"></i>
+            <span>年假信息同步</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="uploadHolidayNav"><a href="<?php echo base_url('super/holiday_import') ?>"><i class="fa fa-circle-o"></i> 上传年假</a></li>
+            <li id="downloadHolidayNav"><a href="<?php echo base_url('super/download_page') ?>"><i class="fa fa-circle-o"></i> 下载年假</a></li>
           </ul>
         </li>
         
         <li class="treeview" id="mainUserNav">
           <a href="#">
             <i class="fa fa-users"></i>
-            <span>用户权限管理</span>
+            <span>用户角色管理</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li id="UserNav"><a href="<?php echo base_url('super/users') ?>"><i class="fa fa-circle-o"></i> 用户管理</a></li>
-            <li id="manageUserNav"><a href="<?php echo base_url('super/manager') ?>"><i class="fa fa-circle-o"></i> 权限管理</a></li>
+            <li id="manageUserNav"><a href="<?php echo base_url('super/manager') ?>"><i class="fa fa-circle-o"></i> 综管、部门负责人管理</a></li>
           </ul>
         </li>
         <li class="treeview" id="mainNoticeNav">
@@ -87,24 +70,6 @@
           </ul>
         </li>
         
-        <?php endif; ?>
-        
-        <?php if($permission == '绩效'): ?>
-        <li class="treeview" id="mainNoticeNav">
-          <a href="#">
-            <i class="fa fa-bullhorn"></i>
-            <span>绩效</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li id="publish_holiday"><a href="<?php echo base_url('notification/publish_holiday') ?>"><i class="fa fa-circle-o"></i> 发布假期公告</a></li>        
-            <li id="publish_plan"><a href="<?php echo base_url('notification/publish_plan') ?>"><i class="fa fa-circle-o"></i> 发布年假计划公告</a></li>        
-            <li id="manage_notice"><a href="<?php echo base_url('notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
-          </ul>
-        </li>
-
         <?php endif; ?>
         
         <!-- user permission info -->
