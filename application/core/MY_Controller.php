@@ -16,15 +16,14 @@ class Admin_Controller extends MY_Controller
 	{
 		parent::__construct();
 
-		$group_data = array();
-		if(empty($this->session->userdata('logged_in'))) {
-			$session_data = array('logged_in' => FALSE);
+		if(empty($this->session->userdata('logged_in_holiday'))) {
+			$session_data = array('logged_in_holiday' => FALSE);
 			$this->session->set_userdata($session_data);
 		}
 		else {
 			$user_id = $this->session->userdata('user_id');
-			$this->load->model('model_users');
-			$user_data = $this->model_users->getUserById($user_id);
+			$this->load->model('model_holiday_users');
+			$user_data = $this->model_holiday_users->getUserById($user_id);
 			$this->data['permission'] = $user_data['permission'];
 			$this->permission = $user_data['permission'];
 		}
@@ -38,29 +37,56 @@ class Admin_Controller extends MY_Controller
 			$user_data = $this->model_super_user->getUserById($user_id);
 			$this->data['permission'] = $user_data['permission'];
 		}
+		if(empty($this->session->userdata('logged_in_wage'))) {
+			$session_data = array('logged_in_wage' => FALSE);
+			$this->session->set_userdata($session_data);
+		}
+		else {
+			$user_id = $this->session->userdata('user_id');
+			$this->load->model('model_wage_users');
+			$user_data = $this->model_wage_users->getUserById($user_id);
+			$this->data['permission'] = $user_data['permission'];
+		}
+		
 	}
 
-	public function logged_in()
+	public function holiday_logged_in()
 	{
 		$session_data = $this->session->userdata();
-		if($session_data['logged_in'] == TRUE) {
-			redirect('dashboard', 'refresh');
+		if($session_data['logged_in_holiday'] == TRUE) {
+			redirect('holiday/index', 'refresh');
 		}
 		#echo $_SERVER['PHP_SELF']."<br>"; 
 	}
 
-	public function not_logged_in()
+	public function holiday_not_logged_in()
 	{
 		$session_data = $this->session->userdata();
-		if($session_data['logged_in'] == FALSE) {
-			redirect('auth/login', 'refresh');
+		if($session_data['logged_in_holiday'] == FALSE) {
+			redirect('auth/holiady_login', 'refresh');
+		}
+	}
+	public function wage_logged_in()
+	{
+		$session_data = $this->session->userdata();
+		if($session_data['logged_in_wage'] == TRUE) {
+			redirect('wage/index', 'refresh');
+		}
+		#echo $_SERVER['PHP_SELF']."<br>"; 
+	}
+
+	public function wage_not_logged_in()
+	{
+		$session_data = $this->session->userdata();
+		if($session_data['logged_in_wage'] == FALSE) {
+			redirect('auth/wage_login', 'refresh');
 		}
 	}
 	public function logged_in_super()
 	{
 		$session_data = $this->session->userdata();
 		if($session_data['logged_in_super'] == TRUE) {
-			redirect('super/wage', 'refresh');
+			redirect('super/index', 'refresh');
 		}
 	}
 	public function not_logged_in_super()
@@ -69,7 +95,6 @@ class Admin_Controller extends MY_Controller
 		if($session_data['logged_in_super'] == FALSE) {
 			redirect('super_auth/login', 'refresh');
 		}
-
 	}
 
 	public function render_template($page = null, $data = array())

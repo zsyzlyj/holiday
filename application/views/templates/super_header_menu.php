@@ -18,9 +18,13 @@
         <li><a href="javascript:void(0);">
         <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;<?php echo $user_name;?>
         </a></li>
-        <li><a href="<?php echo base_url('super/setting') ?>">
-        <i class="glyphicon glyphicon-edit "></i>&nbsp;修改密码
-        </a></li>
+        <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
+        <li><a href="<?php echo base_url('super_holiday/holiday_setting') ?>"><i class="glyphicon glyphicon-edit "></i>&nbsp;修改密码</a></li>
+        <?php endif; ?>
+        <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
+        <li><a href="<?php echo base_url('super_auth/wage_setting') ?>"><i class="glyphicon glyphicon-edit "></i>&nbsp;修改密码</a></li>
+        <?php endif; ?>
+        
         <li><a href="<?php echo base_url('super_auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;登出
         </a></li>
         <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>

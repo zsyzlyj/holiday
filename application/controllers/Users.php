@@ -6,11 +6,12 @@ class Users extends Admin_Controller
 	{
 		parent::__construct();
 
-		$this->not_logged_in();
+		$this->holiday_not_logged_in();
 		
 		$this->data['page_title'] = 'Users';
 		
-		$this->load->model('model_users');
+		$this->load->model('model_holiday_users');
+		$this->load->model('model_wage_users');
 		$this->load->model('model_manager');
 		$this->load->model('model_holiday');
 		$this->data['permission']=$this->session->userdata('permission');
@@ -19,7 +20,7 @@ class Users extends Admin_Controller
 	
 	public function index()
 	{
-		$user_data = $this->model_users->getUserData();
+		$user_data = $this->model_holiday_users->getUserData();
 
 		$holiday = $this->model_holiday->getHolidayData();
 
@@ -76,7 +77,7 @@ class Users extends Admin_Controller
         		'password' => $password,
         	);
 
-        	$create = $this->model_users->create($data, $this->input->post('groups'));
+        	$create = $this->model_holiday_users->create($data, $this->input->post('groups'));
         	if($create == true) {
         		$this->session->set_flashdata('success', 'Successfully created');
         		redirect('users/', 'refresh');
@@ -105,7 +106,6 @@ class Users extends Admin_Controller
 
 	public function edit($id = null)
 	{
-
 		if ($this->form_validation->run() == TRUE) {
 			// true case
 			if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))) {
@@ -114,7 +114,7 @@ class Users extends Admin_Controller
 					#此处有修改
 				);
 
-				$update = $this->model_users->edit($data, $id, $this->input->post('groups'));
+				$update = $this->model_holiday_users->edit($data, $id, $this->input->post('groups'));
 				if($update == true) {
 					$this->session->set_flashdata('success', 'Successfully created');
 					redirect('users/', 'refresh');
@@ -142,7 +142,7 @@ class Users extends Admin_Controller
 						'gender' => $this->input->post('gender'),
 					);
 
-					$update = $this->model_users->edit($data, $id, $this->input->post('groups'));
+					$update = $this->model_holiday_users->edit($data, $id, $this->input->post('groups'));
 					if($update == true) {
 						$this->session->set_flashdata('success', 'Successfully updated');
 						redirect('users/', 'refresh');
@@ -154,8 +154,8 @@ class Users extends Admin_Controller
 				}
 				else {
 					// false case
-					$user_data = $this->model_users->getUserData($id);
-					$groups = $this->model_users->getUserGroup($id);
+					$user_data = $this->model_holiday_users->getUserData($id);
+					$groups = $this->model_holiday_users->getUserGroup($id);
 
 					$this->data['user_data'] = $user_data;
 					$this->data['user_group'] = $groups;
@@ -170,7 +170,7 @@ class Users extends Admin_Controller
 		}
 		else {
 			// false case
-			$user_data = $this->model_users->getUserData($id);
+			$user_data = $this->model_holiday_users->getUserData($id);
 
 			$this->data['user_data'] = $user_data;
 
@@ -184,7 +184,7 @@ class Users extends Admin_Controller
 		$user_data=array(
 			'permission' => $_POST['permit']
 		);
-		$this->model_users->update($user_data,$id);
+		$this->model_holiday_users->update($user_data,$id);
 		$user=$this->model_holiday->getHolidayById($id);
 		$role='普通员工';
 		if($_POST['permit']==1){
@@ -222,7 +222,7 @@ class Users extends Admin_Controller
 		if($id) {
 			if($this->input->post('confirm')) {
 
-					$delete = $this->model_users->delete($id);
+					$delete = $this->model_holiday_users->delete($id);
 					
 					if($delete == true) {
 		        		$this->session->set_flashdata('success', 'Successfully removed');
@@ -245,12 +245,18 @@ class Users extends Admin_Controller
 	{
 		$user_id = $this->session->userdata('user_id');
 		
-		$user_data = $this->model_users->getUserData($user_id);
+		$user_data = $this->model_holiday_users->getUserData($user_id);
 		$this->data['user_data'] = $user_data;
         $this->render_template('users/profile', $this->data);
 	}
 
-	public function setting()
+	public function holiday_setting(){
+		$this->setting('holiday');
+	}
+	public function wage_setting(){
+		$this->setting('wage');
+	}
+	public function setting($type)
 	{
 		$id = $this->session->userdata('user_id');
 		$this->data['user_name'] = $this->session->userdata('user_name');
@@ -260,23 +266,13 @@ class Users extends Admin_Controller
 			if ($this->form_validation->run() == TRUE) {
 	            // true case
 		        if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))) {
-		        	$data = array(
-		        		'username' => $this->input->post('username'),
-		        	);
-
-		        	$update = $this->model_users->edit($data, $id);
-		        	if($update == true) {
-		        		$this->session->set_flashdata('success', 'Successfully updated');
-		        		redirect('users/setting/', 'refresh');
-		        	}
-		        	else {
-		        		$this->session->set_flashdata('errors', 'Error occurred!!');
-		        		redirect('users/setting/', 'refresh');
-		        	}
+					$this->session->set_flashdata('errors', '修改失败，新密码不能为空');
+					if($type=='holiday')
+						redirect('users/holiday_setting', 'refresh');
+					if($type=='wage')
+						redirect('users/wage_setting', 'refresh');
 		        }
 		        else {
-		        	#$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
-					#$this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|required|matches[password]');
 					$this->form_validation->set_rules('password', 'Password', 'trim|required');
 					$this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|required|matches[password]');
 
@@ -288,8 +284,10 @@ class Users extends Admin_Controller
 			        		'username' => $this->input->post('username'),
 			        		'password' => $password,
 			        	);
-
-						$update = $this->model_users->edit($data, $id);
+						if($type=='holiday')
+							$update = $this->model_holiday_users->edit($data, $id);
+						if($type=='wage')
+							$update = $this->model_wage_users->edit($data, $id);
 						
 			        	if($update == true) {
 			        		$this->session->set_flashdata('success', 'Successfully updated');
@@ -301,21 +299,24 @@ class Users extends Admin_Controller
 			        	}
 					}
 			        else {
-			            // false case
-			        	$user_data = $this->model_users->getUserData($id);
-
-			        	$this->data['user_data'] = $user_data;
-
-						$this->render_template('users/setting', $this->data);	
-			        }	
+						// false case
+						if($type=='holiday')
+							redirect('users/holiday_setting', 'refresh');
+						if($type=='wage')
+							$user_data = $this->model_wage_users->getUserData($id);
+							redirect('users/wage_setting', 'refresh');
+			        }
 
 		        }
 	        }
 	        else {
-	            // false case
-	        	$user_data = $this->model_users->getUserData($id);
-
-	        	$this->data['user_data'] = $user_data;
+				// false case
+				if($type=='holiday')
+	        		$user_data = $this->model_holiday_users->getUserData($id);
+				if($type=='wage')
+					$user_data = $this->model_wage_users->getUserData($id);
+				$this->data['user_data'] = $user_data;
+	        	
 
 				$this->render_template('users/setting', $this->data);	
 	        }	

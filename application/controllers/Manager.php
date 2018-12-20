@@ -6,13 +6,14 @@ class Manager extends Admin_Controller
 	{
 		parent::__construct();
 
-		$this->not_logged_in();
+		$this->holiday_not_logged_in();
 		
 		$this->data['page_title'] = 'Managers';
 		
 		$this->load->model('model_manager');
-		$this->load->model('model_users');
-		permission=$this->session->userdata('permission');
+        $this->load->model('model_holiday_users');
+        $this->load->model('model_wage_users');
+		$permission=$this->session->userdata('permission');
 		$this->data['user_name'] = $this->session->userdata('user_name');
 	}
 
@@ -117,9 +118,9 @@ class Manager extends Admin_Controller
 				$User_default=array(
 					'permission' => 3
 				);
-				$user=$this->model_users->getUserData();
+				$user=$this->model_holiday_users->getUserData();
 				foreach ($user as $c => $d){
-					$this->model_users->update($User_default,$user_id);
+					$this->model_holiday_users->update($User_default,$user_id);
 				}
 				$reset=true;
 			}
@@ -143,7 +144,7 @@ class Manager extends Admin_Controller
 			$Update_user=array(
 				'permission' => $permission
 			);
-			$update_user=$this->model_users->update($Update_user,$user_id);
+			$update_user=$this->model_holiday_users->update($Update_user,$user_id);
             if($update == true and $update_user== true) {
                 $response['success'] = true;
                 $response['messages'] = 'Succesfully updated';

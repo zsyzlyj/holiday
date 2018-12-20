@@ -6,7 +6,7 @@ class Dashboard extends Admin_Controller
 	{
 		parent::__construct();
 
-		$this->not_logged_in();
+		$this->holiday_not_logged_in();
 
 		$this->data['page_title'] = 'Dashboard';
 

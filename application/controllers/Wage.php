@@ -8,24 +8,25 @@ class Wage extends Admin_Controller
 	{
 		parent::__construct();
 
-		$this->not_logged_in();
+		$this->wage_not_logged_in();
 
 		$this->data['page_title'] = 'Wage';
 
         $this->load->model('model_wage');
         $this->load->model('model_holiday');
         $this->load->model('model_wage_doc');
-        $this->load->model('model_users');
+        $this->load->model('model_wage_users');
         $this->load->model('model_manager');
         $this->load->model('model_wage_attr');
         $this->data['permission'] = $this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
         $this->data['user_id'] = $this->session->userdata('user_id');
+        $this->data['wage_doc'] = $this->model_wage_doc->getWageDocData();
 	}
     
 	public function index()
 	{        
-		$this->render_template('wage/', $this->data);
+		$this->staff();
     }
     /*
     * It Fetches the products data from the product table 
@@ -56,7 +57,20 @@ class Wage extends Admin_Controller
 
         echo json_encode($result);
        /* */
-	}
+    }
+    /*
+    ==============================================================================
+    部门经理
+    ==============================================================================
+    */
+    public function manager()
+	{
+        $user_id=$this->session->userdata('user_id');
+
+        $this->data['holiday_data'] = $this->model_wage->getHolidayById($user_id);
+        
+		$this->render_template('holiday/staff', $this->data);
+    }
     /*
     ==============================================================================
     普通员工
@@ -67,8 +81,51 @@ class Wage extends Admin_Controller
 	{
         $user_id=$this->session->userdata('user_id');        
         $this->data['wage_data'] = $this->model_wage->getWageById($user_id);
-        $this->data['wage_doc'] = $this->model_wage_doc->getWageDocData();
-        /**/
+        
+        $counter=0;
+        $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
+        $wage=$this->model_wage->getWageById($user_id);
+        $total=$this->model_wage_attr->getWageTotalData()['total'];
+        foreach($this->data['attr_data'] as $k => $v){
+            #echo $v;
+            if($v=='月度绩效工资小计'){
+                $this->data['yuedustart']=$counter;
+            }
+            if($v=='省核专项奖励小计'){
+                $this->data['yueduend']=$counter-1;
+                $this->data['shengzhuanstart']=$counter;
+            }
+            if($v=='分公司专项奖励小计'){
+                $this->data['shengzhuanend']=$counter-1;
+                $this->data['fengongsistart']=$counter;
+            }
+            if($v=='其他小计'){
+                $this->data['fengongsiend']=$counter-1;
+                $this->data['qitastart']=$counter;
+            }
+            if($v=='教育经费小计'){
+                $this->data['qitaend']=$counter-1;
+                $this->data['jiaoyustart']=$counter;
+            }
+            if($v=='福利费小计'){
+                $this->data['jiaoyuend']=$counter-1;
+                $this->data['fulistart']=$counter;
+            }
+            if($v=='当月月应收合计'){
+                $this->data['fuliend']=$counter-1;
+                $this->data['koufeistart']=$counter+1;
+            }
+            if($v=='扣款小计'){
+                $this->data['koufeiend']=$counter;
+            }
+            if($v=='本月工资差异说明'){
+                $this->data['trueend']=$counter+1;
+                break;
+            }
+            $counter++;
+        }
+
+        /*
         $fold_attr=array();
         $fold_data=array();
         $unfold_attr=array();
@@ -80,6 +137,7 @@ class Wage extends Admin_Controller
         
         $attr=$this->model_wage_attr->getWageAttrData();
         $wage=$this->model_wage->getWageById($user_id);
+
         //先把工资信息加上折叠标签，折叠标签为true就折叠，false就是不折叠
         foreach($attr as $k => $v){
             if($v!=""){
@@ -237,6 +295,7 @@ class Wage extends Admin_Controller
         $this->data['wage_attr']=$unfold_attr;
         $this->data['fold_data']=$fold_data;
         $this->data['fold_attr']=$fold_attr;
+        */
 		$this->render_template('wage/staff', $this->data);
     }
 

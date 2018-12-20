@@ -6,12 +6,12 @@
       <ul class="sidebar-menu" data-widget="tree">
         <?php if($permission == '休假'): ?>
         <li id="holidayGatherMainMenu">
-          <a href="<?php echo base_url('super/holiday') ?>">
+          <a href="<?php echo base_url('super_holiday/holiday') ?>">
             <i class="fa fa-leaf"></i> <span>年假汇总</span>
           </a>
         </li>
         <li id='planGatherMainMenu'>
-          <a href="<?php echo base_url('super/plan') ?>">
+          <a href="<?php echo base_url('super_holiday/plan') ?>">
             <i class="fa fa-edit"></i> <span>年假计划汇总</span>
           </a>
         </li>
@@ -24,8 +24,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="uploadHolidayDocNav"><a href="<?php echo base_url('super/holiday_doc_import') ?>"><i class="fa fa-circle-o"></i> 文件导入</a></li>
-            <li id="showHolidayDocNav"><a href="<?php echo base_url('super/holiday_doc_show') ?>"><i class="fa fa-circle-o"></i> 年假文件汇总</a></li>
+            <li id="uploadHolidayDocNav"><a href="<?php echo base_url('super_holiday/holiday_doc_import') ?>"><i class="fa fa-circle-o"></i> 文件导入</a></li>
+            <li id="showHolidayDocNav"><a href="<?php echo base_url('super_holiday/holiday_doc_show') ?>"><i class="fa fa-circle-o"></i> 年假文件汇总</a></li>
           </ul>
         </li>
         <li class="treeview" id="holidaySyncNav">
@@ -37,8 +37,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="uploadHolidayNav"><a href="<?php echo base_url('super/holiday_import') ?>"><i class="fa fa-circle-o"></i> 上传年假</a></li>
-            <li id="downloadHolidayNav"><a href="<?php echo base_url('super/download_page') ?>"><i class="fa fa-circle-o"></i> 下载年假</a></li>
+            <li id="uploadHolidayNav"><a href="<?php echo base_url('super_holiday/holiday_import') ?>"><i class="fa fa-circle-o"></i> 上传年假</a></li>
+            <li id="downloadHolidayNav"><a href="<?php echo base_url('super_holiday/download_page') ?>"><i class="fa fa-circle-o"></i> 下载年假</a></li>
           </ul>
         </li>
         
@@ -51,8 +51,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="UserNav"><a href="<?php echo base_url('super/users') ?>"><i class="fa fa-circle-o"></i> 用户管理</a></li>
-            <li id="manageUserNav"><a href="<?php echo base_url('super/manager') ?>"><i class="fa fa-circle-o"></i> 综管、部门负责人管理</a></li>
+            <li id="UserNav"><a href="<?php echo base_url('super_holiday/users') ?>"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+            <li id="manageUserNav"><a href="<?php echo base_url('super_holiday/manager') ?>"><i class="fa fa-circle-o"></i> 综管、部门负责人管理</a></li>
           </ul>
         </li>
         <li class="treeview" id="mainNoticeNav">
@@ -71,10 +71,52 @@
         </li>
         
         <?php endif; ?>
+        <?php if($permission=='工资'):?>
+        <li id="wageGatherMainMenu">
+          <a href="<?php echo base_url('super_wage/index') ?>">
+            <i class="fa fa-money"></i><span>工资汇总</span>
+          </a>
+        </li>
+        <li id="uploadWageFileNav">
+          <a href="<?php echo base_url('super_wage/wage_import') ?>">
+          <i class="fa fa-circle-o"></i><span>工资导入</span>
+          </a>
+        </li>
+        <li id="uploadTagFileNav">
+          <a href="<?php echo base_url('super_wage/wage_tag_import') ?>">
+          <i class="fa fa-circle-o"></i><span>人员角色导入</span>
+          </a>
+        </li>
+
+        <li class="treeview" id="uploadWageDoc">
+          <a href="#">
+            <i class="fa fa-cloud"></i>
+            <span>薪酬文件导入</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="uploadWageDocNav"><a href="<?php echo base_url('super_wage/wage_doc_import') ?>"><i class="fa fa-circle-o"></i> 文件导入</a></li>
+            <li id="showWageDocNav"><a href="<?php echo base_url('super_wage/wage_doc_show') ?>"><i class="fa fa-circle-o"></i> 薪酬文件汇总</a></li>
+          </ul>
+        </li>
+        <li id="wageProofMainMenu">
+          <a href="<?php echo base_url('super_wage/wage_proof') ?>">
+            <i class="fa fa-money"></i><span>收入证明</span>
+          </a>
+        </li>
+        <?php endif; ?>
         
         <!-- user permission info -->
         
-        <li><a href="<?php echo base_url('super/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
+        <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
+        <li id="settingMenu"><a href="<?php echo base_url('super_auth/holiday_setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
+        <?php endif; ?>
+        <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
+        <li id="settingMenu"><a href="<?php echo base_url('super_auth/wage_setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
+        <?php endif; ?>
+        
         <li><a href="<?php echo base_url('super_auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>登出</span></a></li>
       </ul>
     </section>

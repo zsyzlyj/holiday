@@ -4,14 +4,48 @@
       
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <?php if($permission == 2 ): ?>
-        <li id="myDeptWageMainMenu">
-          <a href="<?php echo base_url('wage/mydeptwage') ?>">
-            <i class="fa fa-file-archive-o"></i>
-            <span>部门工资信息汇总</span>
-          </a>
-        </li>
-        <?php endif; ?>
+        <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
+          <?php if($permission == 2 ): ?>
+          <li id="myDeptWageMainMenu">
+            <a href="<?php echo base_url('wage/mydeptwage') ?>">
+              <i class="fa fa-file-archive-o"></i>
+              <span>部门工资信息汇总</span>
+            </a>
+          </li>
+          <?php endif; ?>
+          <li id="wageMainMenu">
+            <a href="<?php echo base_url('wage/staff') ?>">
+              <i class="fa fa-money"></i> <span>我的工资信息</span>
+            </a>
+          </li>
+          <li class="treeview" id="applyProofMainMenu">
+            <a href="#">
+              <i class="fa fa-folder-o"></i>
+              <span>开具证明申请</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li id="applyWageProof">
+                <a href="<?php echo base_url('wage/apply_wage_proof') ?>">
+                <i class="fa fa-circle-o"></i>
+                <span>开具收入证明申请</span>
+                </a>
+              </li>
+              <li id="applyOnPostProof">
+                <a href="<?php echo base_url('onpost/apply_on_post_proof') ?>">
+                <i class="fa fa-circle-o"></i>
+                <span>开具在职证明申请</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        <li id="changePassword"><a href="<?php echo base_url('users/wage_setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
+        <li><a href="<?php echo base_url('auth/wage_logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>登出</span></a></li>
+        <?php endif ?>
+        <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
+
         <?php if($permission == 1 or $permission == 2 ): ?>
         <li id="myDeptHolidayMainMenu">
           <a href="<?php echo base_url('holiday/mydeptholiday') ?>">
@@ -67,16 +101,8 @@
             </a>
           </li>
           </ul>
-            
         </li>
-
         <?php endif ?>
-        
-        <li id="wageMainMenu">
-          <a href="<?php echo base_url('wage/staff') ?>">
-            <i class="fa fa-money"></i> <span>我的工资信息</span>
-          </a>
-        </li>
         <li id="holidayMainMenu">
           <a href="<?php echo base_url('holiday/staff') ?>">
             <i class="fa fa-tasks"></i> <span>我的年假信息</span>
@@ -87,31 +113,10 @@
             <i class="fa fa-edit"></i> <span>我的年假计划</span>
           </a>
         </li>
-        <li class="treeview" id="applyProofMainMenu">
-          <a href="#">
-            <i class="fa fa-folder-o"></i>
-            <span>开具证明申请</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li id="applyWageProof">
-              <a href="<?php echo base_url('wage/apply_wage_proof') ?>">
-              <i class="fa fa-circle-o"></i>
-              <span>开具收入证明申请</span>
-              </a>
-            </li>
-            <li id="applyOnPostProof">
-              <a href="<?php echo base_url('onpost/apply_on_post_proof') ?>">
-              <i class="fa fa-circle-o"></i>
-              <span>开具在职证明申请</span>
-              </a>
-            </li>
-          </ul>  
-        </li>
-        <li id="changePassword"><a href="<?php echo base_url('users/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
-        <li><a href="<?php echo base_url('auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>登出</span></a></li>
+        <li id="changePassword"><a href="<?php echo base_url('users/holiday_setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
+        
+        <li><a href="<?php echo base_url('auth/holiday_logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>登出</span></a></li>
+        <?php endif; ?>
       </ul>
     </section>
     <!-- /.sidebar -->

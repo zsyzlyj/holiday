@@ -63,54 +63,48 @@
                 </h3>
                 <br />
                 <br />
-                <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="120%">
+                <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;text-align:center;border-color:black;" width="120%">
                 <thead>
-                <tr>
-                  <th>姓名</th>
-                  <!-- 
-                  <th>部门</th>     
-                            
-                  <th>社会工龄</th>
-                  <th>公司工龄</th>
-                  -->
-                  <th>上年可休数</th>
-                  <th>今年可休数</th>
-                  <th>荣誉假期数</th>
-                  <th>可休假总数</th>
-                  <th>第一季度</th>
-                  <th>第二季度</th>
-                  <th>第三季度</th>
-                  <th>第四季度</th>
-                  <th>操作</th>
+                <tr style="text-align:center;border-color:black;">
+                  <th style="text-align:center;border-color:black;">姓名</th>
+                  <th style="text-align:center;border-color:black;">上年可休数</th>
+                  <th style="text-align:center;border-color:black;">今年可休数</th>
+                  <th style="text-align:center;border-color:black;">荣誉假期数</th>
+                  <th style="text-align:center;border-color:black;">可休假总数</th>
+                  <th style="text-align:center;border-color:black;">第一季度</th>
+                  <th style="text-align:center;border-color:black;">第二季度</th>
+                  <th style="text-align:center;border-color:black;">第三季度</th>
+                  <th style="text-align:center;border-color:black;">第四季度</th>
+                  <th style="text-align:center;border-color:black;">操作</th>
                 </tr>
                 </thead>
                 <tbody>
                                   
                     <?php $v=$plan_data ?>
-                      <tr>
+                      <tr style="text-align:center;border-color:black;">
                       
-                        <td><?php echo $v['name']; ?></td>
-                        <td><?php echo $v['Lastyear']; ?></td>
-                        <td><?php echo $v['Thisyear']; ?></td>
-                        <td><?php echo $v['Bonus']; ?></td>
-                        <td><?php echo $v['Totalday']; ?></td>
+                        <td style="text-align:center;border-color:black;"><?php echo $v['name']; ?></td>
+                        <td style="text-align:center;border-color:black;"><?php echo $v['Lastyear']; ?></td>
+                        <td style="text-align:center;border-color:black;"><?php echo $v['Thisyear']; ?></td>
+                        <td style="text-align:center;border-color:black;"><?php echo $v['Bonus']; ?></td>
+                        <td style="text-align:center;border-color:black;"><?php echo $v['Totalday']; ?></td>
                         <?php if($v['submit_tag']==1):?>
-                        <td><?php echo $v['firstquater']; ?></td>
-                        <td><?php echo $v['secondquater']; ?></td>
-                        <td><?php echo $v['thirdquater']; ?></td>
-                        <td><?php echo $v['fourthquater']; ?></td>
-                        <td>
+                        <td style="text-align:center;border-color:black;"><?php echo $v['firstquater']; ?></td>
+                        <td style="text-align:center;border-color:black;"><?php echo $v['secondquater']; ?></td>
+                        <td style="text-align:center;border-color:black;"><?php echo $v['thirdquater']; ?></td>
+                        <td style="text-align:center;border-color:black;"><?php echo $v['fourthquater']; ?></td>
+                        <td style="text-align:center;border-color:black;">
                               <button class="btn btn-success disabled" type="submit"><i class="fa fa-check-circle"></i></button>
                           </td>
                         <?php endif; ?>
                         <?php if($v['submit_tag']==0):?>
                         <form role="form" action="<?php echo base_url('holiday/update_plan')?>" method="post" id="updateForm">
                           <input type="hidden" id="total" name="total" value="<?php echo $v['Totalday']; ?>"/>
-                          <td><input type="text" style="width:100px;" id='firstquater' name='firstquater' value="<?php echo $v['firstquater']; ?>"></td>
-                          <td><input type="text" style="width:100px;" id='secondquater' name='secondquater' value="<?php echo $v['secondquater']; ?>"></td>
-                          <td><input type="text" style="width:100px;" id='thirdquater' name='thirdquater' value="<?php echo $v['thirdquater']; ?>"></td>
-                          <td><input type="text" style="width:100px;" id='fourthquater' name='fourthquater' value="<?php echo $v['fourthquater']; ?>"></td>
-                          <td>
+                          <td style="text-align:center;border-color:black;"><input type="text" style="width:100px;" id='firstquater' name='firstquater' value="<?php echo $v['firstquater']; ?>"></td>
+                          <td style="text-align:center;border-color:black;"><input type="text" style="width:100px;" id='secondquater' name='secondquater' value="<?php echo $v['secondquater']; ?>"></td>
+                          <td style="text-align:center;border-color:black;"><input type="text" style="width:100px;" id='thirdquater' name='thirdquater' value="<?php echo $v['thirdquater']; ?>"></td>
+                          <td style="text-align:center;border-color:black;"><input type="text" style="width:100px;" id='fourthquater' name='fourthquater' value="<?php echo $v['fourthquater']; ?>"></td>
+                          <td style="text-align:center;border-color:black;">
                               <button class="btn btn-success" type="submit"><i class="fa fa-check-circle"></i></button>
                           </td>
                         </form>

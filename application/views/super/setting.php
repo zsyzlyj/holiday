@@ -35,10 +35,15 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Update Information</h3>
+              <h3 class="box-title">更改用户信息</h3>
             </div>
             <!-- /.box-header -->
-            <form role="form" action="<?php base_url('super/setting') ?>" method="post">
+            <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
+            <form role="form" action="<?php base_url('super_wage/setting') ?>" method="post">
+            <?php endif; ?>
+            <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
+            <form role="form" action="<?php base_url('super_holiday/setting') ?>" method="post">
+            <?php endif; ?>
               <div class="box-body">
 
                 <?php echo validation_errors(); ?>
@@ -72,8 +77,13 @@
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-                <a href="<?php echo base_url('super/users') ?>" class="btn btn-warning">Back</a>
+                <button type="submit" class="btn btn-primary">保存修改</button>
+                <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
+                <a href="<?php echo base_url('super_wage/') ?>" class="btn btn-warning">返回</a>
+                <?php endif; ?>
+                <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
+                <a href="<?php echo base_url('super_holiday/') ?>" class="btn btn-warning">返回</a>
+                <?php endif; ?>
               </div>
             </form>
           </div>
@@ -88,5 +98,12 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#userTable').DataTable();
+
+      $("#settingMenu").addClass('active');
+    });
+  </script>
 
  

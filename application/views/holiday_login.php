@@ -33,7 +33,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?php echo base_url('auth'); ?>"><b>年假系统</b></a>
+    <a href="<?php echo base_url('auth/holiday_login'); ?>"><b>年假系统</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body"> 
@@ -43,7 +43,7 @@
       echo $errors;
     } ?>
 
-    <form action="<?php echo base_url('auth/login') ?>" method="post">
+    <form action="<?php echo base_url('auth/holiday_login') ?>" method="post">
       <div class="form-group has-feedback">
         <input class="form-control" name="user_id" id="user_id" placeholder="身份证号码" autocomplete="off">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -63,6 +63,12 @@
         <!-- /.col -->
         <div class="col-xs-4">
           <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
+        </div>
+        
+        <div class="col-xs-8">
+          <label>
+              <a href="<?php echo base_url('auth/wage_login') ?>"> 工资系统</a>
+          </label>
         </div>
         <!-- /.col -->
       </div>

@@ -658,3 +658,16 @@ CREATE TABLE `wage_doc` (
   `doc_name` varchar(50),
   `doc_path` varchar(100)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `wage_tag` (
+  `name` varchar(12),
+  `user_id` varchar(18),
+  `gender` varchar(50),
+  `dept` varchar(50),
+  `position` varchar(50),
+  `indate` DATE,
+  `role` varchar(50),
+  `proof_tag` varchar(50)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+

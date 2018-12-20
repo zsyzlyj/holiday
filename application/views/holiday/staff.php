@@ -52,8 +52,7 @@
               <h4>
                 <?php foreach($holiday_doc as $k => $v):?>
                   <a href='<?php echo base_url($v['doc_path']);?>' target="_blank"><?php echo $v['doc_name']?></a>
-                  <br />
-                  <br />
+                  <br /><br />
                 <?php endforeach; ?>
               </h4>
             </div>
@@ -61,37 +60,35 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-                <table id="holidayTable" class="table table-bordered table-striped mytdstyle" style="overflow:scroll;">
+                <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;text-align: center;border-color:black;">
                 <thead>
-                <tr>
-                  <th>姓名</th>
-                  <th>部门</th>                
-                  <th>社会工龄</th>
-                  <th>公司工龄</th>
-                  <th>休假总数</th>
-                  <th>上年可休数</th>
-                  <th>今年可休数</th>
-                  <th>荣誉假期</th>
-                  <th>已休假数</th>
-                  <th>剩下休假数</th>
-                  <!--<th>操作</th>-->
+                <tr style="text-align: center;border-color:black;">
+                  <th style="text-align: center;border-color:black;">姓名</th>
+                  <th style="text-align: center;border-color:black;">部门</th>                
+                  <th style="text-align: center;border-color:black;">社会工龄</th>
+                  <th style="text-align: center;border-color:black;">公司工龄</th>
+                  <th style="text-align: center;border-color:black;">休假总数</th>
+                  <th style="text-align: center;border-color:black;">上年可休数</th>
+                  <th style="text-align: center;border-color:black;">今年可休数</th>
+                  <th style="text-align: center;border-color:black;">荣誉假期</th>
+                  <th style="text-align: center;border-color:black;">已休假数</th>
+                  <th style="text-align: center;border-color:black;">剩下休假数</th>
+                  <!--<th style="text-align: center;border-color:black;">操作</th>-->
                 </tr>
                 </thead>
                 <tbody>
                   <?php if($holiday_data): ?>                  
                     <?php $v=$holiday_data ?>
-                      <tr>
-                        <td><?php echo $v['name']; ?></td>
-                        <td><?php echo $v['department']; ?></td>
-                        <td><?php echo $v['Totalage']; ?></td>
-                        <td><?php echo $v['Companyage']; ?></td>
-                        
-                        <td><?php echo $v['Totalday']; ?></td>
-                        <td><?php echo $v['Lastyear']; ?></td>
-                        <td><?php echo $v['Thisyear']; ?></td>
-                        <td><?php echo $v['Bonus']; ?></td>
-                        <td>
-                          
+                      <tr style="text-align: center;border-color:black;">
+                        <td style="text-align: center;border-color:black;"><?php echo $v['name']; ?></td>
+                        <td style="text-align: center;border-color:black;"><?php echo $v['department']; ?></td>
+                        <td style="text-align: center;border-color:black;"><?php echo $v['Totalage']; ?></td>
+                        <td style="text-align: center;border-color:black;"><?php echo $v['Companyage']; ?></td>
+                        <td style="text-align: center;border-color:black;"><?php echo $v['Totalday']; ?></td>
+                        <td style="text-align: center;border-color:black;"><?php echo $v['Lastyear']; ?></td>
+                        <td style="text-align: center;border-color:black;"><?php echo $v['Thisyear']; ?></td>
+                        <td style="text-align: center;border-color:black;"><?php echo $v['Bonus']; ?></td>
+                        <td style="text-align: center;border-color:black;">    
                           <!-- 打开弹窗按钮 -->
                           <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><font color='red'><?php echo $v['Used']; ?></font></a>
                           
@@ -106,58 +103,46 @@
                               </div>
 
                               <div class="modal-body">
-                              <table id="MonthTable" class="table table-bordered table-striped">
+                              <table id="MonthTable" class="table table-bordered table-striped" style="text-align: center;border-color:black;">
                                 <thead>
-                                  <tr>
-                                    <th style="text-align:center;">一月</th>
-                                    <th style="text-align:center;">二月</th>
-                                    <th style="text-align:center;">三月</th>
-                                    <th style="text-align:center;">四月</th>
-                                    <th style="text-align:center;">五月</th>
-                                    <th style="text-align:center;">六月</th>
-                                    <th style="text-align:center;">七月</th>
-                                    <th style="text-align:center;">八月</th>
-                                    <th style="text-align:center;">九月</th>
-                                    <th style="text-align:center;">十月</th>
-                                    <th style="text-align:center;">十一月</th>
-                                    <th style="text-align:center;">十二月</th>
+                                  <tr style="text-align:center;border-color:black;">
+                                    <th style="text-align:center;border-color:black;">一月</th>
+                                    <th style="text-align:center;border-color:black;">二月</th>
+                                    <th style="text-align:center;border-color:black;">三月</th>
+                                    <th style="text-align:center;border-color:black;">四月</th>
+                                    <th style="text-align:center;border-color:black;">五月</th>
+                                    <th style="text-align:center;border-color:black;">六月</th>
+                                    <th style="text-align:center;border-color:black;">七月</th>
+                                    <th style="text-align:center;border-color:black;">八月</th>
+                                    <th style="text-align:center;border-color:black;">九月</th>
+                                    <th style="text-align:center;border-color:black;">十月</th>
+                                    <th style="text-align:center;border-color:black;">十一月</th>
+                                    <th style="text-align:center;border-color:black;">十二月</th>
                                   </tr>
                                   </thead>
                                   <tbody>
-                                      <tr>
-                                        <td><?php echo $v['Jan']; ?></td>
-                                        <td><?php echo $v['Feb']; ?></td>
-                                        <td><?php echo $v['Mar']; ?></td>
-                                        <td><?php echo $v['Apr']; ?></td>
-                                        <td><?php echo $v['May']; ?></td>
-                                        <td><?php echo $v['Jun']; ?></td>
-                                        <td><?php echo $v['Jul']; ?></td>
-                                        <td><?php echo $v['Aug']; ?></td>
-                                        <td><?php echo $v['Sep']; ?></td>
-                                        <td><?php echo $v['Oct']; ?></td>
-                                        <td><?php echo $v['Nov']; ?></td>
-                                        <td><?php echo $v['Dece']; ?></td>
+                                      <tr style="text-align: center;border-color:black;">
+                                        <td style="text-align: center;border-color:black;"><?php echo $v['Jan']; ?></td>
+                                        <td style="text-align: center;border-color:black;"><?php echo $v['Feb']; ?></td>
+                                        <td style="text-align: center;border-color:black;"><?php echo $v['Mar']; ?></td>
+                                        <td style="text-align: center;border-color:black;"><?php echo $v['Apr']; ?></td>
+                                        <td style="text-align: center;border-color:black;"><?php echo $v['May']; ?></td>
+                                        <td style="text-align: center;border-color:black;"><?php echo $v['Jun']; ?></td>
+                                        <td style="text-align: center;border-color:black;"><?php echo $v['Jul']; ?></td>
+                                        <td style="text-align: center;border-color:black;"><?php echo $v['Aug']; ?></td>
+                                        <td style="text-align: center;border-color:black;"><?php echo $v['Sep']; ?></td>
+                                        <td style="text-align: center;border-color:black;"><?php echo $v['Oct']; ?></td>
+                                        <td style="text-align: center;border-color:black;"><?php echo $v['Nov']; ?></td>
+                                        <td style="text-align: center;border-color:black;"><?php echo $v['Dece']; ?></td>
                                       </tr>
-                                      </tbody>
+                                  </tbody>
                               </table>
                               </div>
                             </div>
-                            
                           </div>
- 
-                          
- 
                         </td>
+                        <td style="text-align: center;border-color:black;"><?php echo $v['Rest']; ?></td>
 
-                        <td><?php echo $v['Rest']; ?></td>
-
-                        <!--
-                        <td>
-                            <a href="<?php echo base_url('holiday/edit/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
-
-                            <a href="<?php echo base_url('holiday/delete/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-trash"></i></a>
-                        </td>
-                        -->
                       </tr>
                   <?php endif; ?>
                 </tbody>

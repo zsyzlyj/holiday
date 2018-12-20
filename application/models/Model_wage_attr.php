@@ -62,35 +62,7 @@ class Model_wage_attr extends CI_Model
 			return ($insert == true) ? true : false;
 		}
 	}
-	public function create_first($data)
-	{
-		if($data) {
-			$insert = $this->db->insert('wage_first', $data);
-			return ($insert == true) ? true : false;
-		}
-	}
 
-	public function create_second($data)
-	{
-		if($data) {
-			$insert = $this->db->insert('wage_second', $data);
-			return ($insert == true) ? true : false;
-		}
-	}
-	public function create_third($data)
-	{
-		if($data) {
-			$insert = $this->db->insert('wage_third', $data);
-			return ($insert == true) ? true : false;
-		}
-	}
-	public function create_fourth($data)
-	{
-		if($data) {
-			$insert = $this->db->insert('wage_fourth', $data);
-			return ($insert == true) ? true : false;
-		}
-	}
 	public function deleteAll()
 	{
 		$sql='delete from wage_first';

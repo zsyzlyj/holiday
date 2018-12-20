@@ -1,6 +1,6 @@
 <?php 
 
-class Model_users extends CI_Model
+class Model_wage_users extends CI_Model
 {
 	public function __construct()
 	{
@@ -9,23 +9,23 @@ class Model_users extends CI_Model
 
 	public function getUserData() 
 	{
-		$sql = "SELECT * FROM users WHERE user_id != ?";
+		$sql = "SELECT * FROM wage_users WHERE user_id != ?";
 		$query = $this->db->query($sql, array(1));
 		return $query->result_array();
 	}
 	public function getUserById($userId = null) 
 	{
 		if($userId) {
-			$sql = "SELECT * FROM users WHERE user_id = ?";	
+			$sql = "SELECT * FROM wage_users WHERE user_id = ?";	
 			$query = $this->db->query($sql, array($userId));
 			return $query->row_array();
 		}
 	}
 
-	public function create($data = '', $group_id = null)
+	public function create($data = '')
 	{
-		if($data && $group_id) {
-			$create = $this->db->insert('users', $data);
+		if($data) {
+			$create = $this->db->insert('wage_users', $data);
 			return ($create == true) ? true : false;
 		}
 	}
@@ -35,7 +35,7 @@ class Model_users extends CI_Model
 	public function update($data=array(),$id)
 	{
 		$this->db->where('user_id',$id);
-		$update = $this->db->update('users', $data);
+		$update = $this->db->update('wage_users', $data);
 		return ($update == true) ? true : false;	
 	}
 	public function edit($data = array(), $id = null)

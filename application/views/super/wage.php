@@ -36,18 +36,65 @@
 
             <div class="box-body">
               <div style="overflow:scroll;">
-                <table id="wageTable" class="table table-striped table-bordered table-hover" style="overflow:scroll;white-space: nowrap;word-break:  keep-all;text-align: center;">
+                <table id="wageTable" class="table table-striped table-bordered table-hover mytable" style="border-color:black;overflow:scroll;white-space: nowrap;word-break:  keep-all;text-align: center;">
                   <thead>
-                    
-                  <?php $counter=0;?>
                   <?php if($attr_data):?>
-                    <?php foreach($attr_data as $k => $v): ?>
-                    <?php if($counter<$wage_total):?>
-                      <th style="text-align:center;"><?php echo $v;$counter++;?></th>
+                  <tr style="border-color:black;">
+                  <?php $counter=0;?>
+                  <?php foreach($attr_data as $k => $v): ?>
+                  <?php if($counter<$wage_total):?>
+                    <?php if($counter<5 or $counter>$koufeiend):?>
+                      <th style="text-align:center;border-color:black;" rowspan="3"><?php echo $v?></th>
+                    <?php elseif($counter==5):?>
+                      <th style="text-align:center;border-color:black;" colspan="<?php echo $jiaoyuend-4;?>">应发</th>
+                    <?php elseif($counter==$fulistart): ?>
+                      <th style="text-align:center;border-color:black;" colspan="<?php echo $fuliend-$fulistart+1;?>">福利费</th>
+                    <?php elseif($counter==$koufeistart-1): ?>
+                    <th rowspan="3" style="text-align:center;border-color:black;">当月月应收合计</th>
+                    <?php elseif($counter==$koufeistart): ?>
+                    <th style="text-align:center;border-color:black;" colspan="<?php echo $koufeiend-$koufeistart+1;?>">各项扣款</th>
                     <?php endif;?>
-                    <?php endforeach; ?>
-                  <?php endif; ?>
+                  <?php endif;$counter++;?>
+                  <?php endforeach; ?>
+                  </tr>
 
+                  <tr style="border-color:black;">
+                  <?php $counter=0;?>
+                  <?php foreach($attr_data as $k => $v): ?>
+                  <?php if($counter<$wage_total):?>
+                    <?php if($counter>=5 and $counter<$yuedustart):?>
+                      <th rowspan="2" style="text-align:center;border-color:black;"><?php echo $v?></th>
+                    <?php elseif($counter==$yuedustart):?>
+                      <th style="text-align:center;border-color:black;" colspan="<?php echo $yueduend-$yuedustart+1;?>">月度绩效</th>
+                    <?php elseif($counter==$shengzhuanstart): ?>
+                      <th style="text-align:center;border-color:black;" colspan="<?php echo $shengzhuanend-$shengzhuanstart+1;?>">省核专项奖励</th>
+                    <?php elseif($counter==$fengongsistart): ?>
+                      <th style="text-align:center;border-color:black;" colspan="<?php echo $fengongsiend-$fengongsistart+1;?>">分公司专项奖励</th>
+                    <?php elseif($counter==$qitastart): ?>
+                      <th style="text-align:center;border-color:black;" colspan="<?php echo $qitaend-$qitastart+1;?>">其他</th>
+                    <?php elseif($counter==$jiaoyustart): ?>
+                      <th style="text-align:center;border-color:black;" colspan="<?php echo $jiaoyuend-$jiaoyustart+1;?>">教育经费</th>
+                    <?php elseif($counter>=$fulistart and $counter<=$fuliend): ?>
+                      <th style="text-align:center;border-color:black;" rowspan="2"><?php echo $v?></th>
+                    <?php elseif($counter>=$koufeistart and $counter<=$koufeiend): ?>
+                      <th style="text-align:center;border-color:black;" rowspan="2"><?php echo $v?></th>
+                    <?php endif;?>    
+
+                  <?php endif;$counter++;?>
+                  <?php endforeach; ?>
+                  </tr>
+                  <tr style="border-color:black;">
+                  <?php $counter=0;?>
+                  <?php foreach($attr_data as $k => $v): ?>
+                  <?php if($counter<$wage_total):?>
+                    <?php if($counter>=$yuedustart and $counter<=$jiaoyuend):?>
+                    <th style="text-align:center;border-color:black;"><?php echo $v;?></th>
+                    <?php endif; ?>
+                  <?php endif;$counter++;?>
+                  <?php endforeach; ?>
+                  </tr>
+                  
+                  <?php endif; ?>
                   </thead>
 
                   <tbody> 
@@ -59,15 +106,14 @@
                       <?php $counter=0;?>
                       <?php foreach($v as $a => $b):?>
                       <?php if($counter<$wage_total):?>
-                      <td>
-                        <?php echo $b;$counter++;?>
+                      <td style="border-color:black;">
+                        <?php echo $b;?>
                       </td>
-                      <?php endif; ?>
+                      <?php endif;$counter++;?>
                       <?php endforeach; ?>
                     </tr>
                   <?php endforeach; ?>
                   <?php endif;?>
-
                   </tbody>
                 </table>
 

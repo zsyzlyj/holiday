@@ -105,3 +105,10 @@ CREATE TABLE `holiday_doc` (
   `doc_name` varchar(50),
   `doc_path` varchar(100)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `wage_users` (
+  `user_id` varchar(20) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `permission` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

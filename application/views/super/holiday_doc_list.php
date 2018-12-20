@@ -52,7 +52,7 @@
                 
                 <?php foreach($holiday_doc as $k => $v):?>
                 <tr>
-                  <form action='<?php echo base_url('super/holiday_doc_delete')?>' method='POST'>
+                  <form action='<?php echo base_url('super_holiday/holiday_doc_delete')?>' method='POST'>
                   <td><?php echo $v['number'];?></td>
                   <td><?php echo $v['doc_name'];?></td>
                   <td><a href='<?php echo base_url($v['doc_path']);?>' target="_blank">浏览</a></td>  
