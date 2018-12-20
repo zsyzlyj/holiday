@@ -12,7 +12,8 @@ class Super_Auth extends Admin_Controller
 		$this->load->model('model_super_auth');
 		$this->load->model('model_super_user');
 		$this->data['permission']=$this->session->userdata('permission');
-        $this->data['user_name'] = $this->session->userdata('user_id');
+		$this->data['user_id'] = $this->session->userdata('user_id');
+		$this->data['user_name'] = $this->session->userdata('user_id');
 	}
 
 	/* 
@@ -41,6 +42,14 @@ class Super_Auth extends Admin_Controller
            	if($id_exists == TRUE) {
            		$login = $this->model_super_auth->login($this->input->post('user_id'), $this->input->post('password'));
            		if($login) {
+					$log=array(
+						'user_id' => $login['user_id'],
+						'username' => $login['user_id'],
+						'login_ip' => $_SERVER["REMOTE_ADDR"],
+						'staff_action' => 'holiday_log_in',
+						'action_time' => date('Y-m-d H:i:s')
+					);
+					$this->model_log_action->create($log);
            			$logged_in_sess = array(
 						'user_id' => $login['user_id'],
 						'permission' => $login['permission'],
@@ -82,6 +91,14 @@ class Super_Auth extends Admin_Controller
 	*/
 	public function logout()
 	{
+		$log=array(
+			'user_id' => $this->data['user_id'],
+			'username' => $this->data['user_name'],
+			'login_ip' => $_SERVER["REMOTE_ADDR"],
+			'staff_action' => 'super_log_out',
+			'action_time' => date('Y-m-d H:i:s')
+		);
+		$this->model_log_action->create($log);
 		$this->session->sess_destroy();
 		redirect('super_auth/login', 'refresh');
 	}

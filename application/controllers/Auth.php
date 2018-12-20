@@ -10,6 +10,8 @@ class Auth extends Admin_Controller
 		parent::__construct();
 
 		$this->load->model('model_auth');
+		$this->data['user_name'] = $this->session->userdata('user_name');
+        $this->data['user_id'] = $this->session->userdata('user_id');
 	}
 
 	/* 
@@ -18,7 +20,7 @@ class Auth extends Admin_Controller
 		permission的值不同分别跳转：
 		0——超级管理员,index
 		1——综管员,admin
-		2——部门负责人，managere
+		2——部门负责人，manager
 		3——普通员工,staff
 	*/
 
@@ -35,7 +37,14 @@ class Auth extends Admin_Controller
            	if($id_exists == TRUE) {
            		$login = $this->model_auth->holiday_login($this->input->post('user_id'), $this->input->post('password'));
            		if($login) {
-					#echo $login['username'];
+					$log=array(
+						'user_id' => $login['user_id'],
+						'username' => $login['username'],
+						'login_ip' => $_SERVER["REMOTE_ADDR"],
+						'staff_action' => 'holiday_log_in',
+						'action_time' => date('Y-m-d H:i:s')
+					);
+					$this->model_log_action->create($log);
            			$logged_in_sess = array(
 						'user_name' => $login['username'],
 						'user_id' => $login['user_id'],
@@ -43,7 +52,6 @@ class Auth extends Admin_Controller
 				        'logged_in_holiday' => TRUE
 					);
 					$this->session->set_userdata($logged_in_sess);
-					#$this->session->set_userdata('unnn', $login['username']);
 					switch($login['permission']){
 						case 1:
 							redirect('holiday/admin', 'refresh');
@@ -85,7 +93,14 @@ class Auth extends Admin_Controller
            	if($id_exists == TRUE) {
            		$login = $this->model_auth->wage_login($this->input->post('user_id'), $this->input->post('password'));
            		if($login) {
-					#echo $login['username'];
+					$log=array(
+						'user_id' => $login['user_id'],
+						'username' => $login['username'],
+						'login_ip' => $_SERVER["REMOTE_ADDR"],
+						'staff_action' => 'wage_log_in',
+						'action_time' => date('Y-m-d H:i:s')
+					);
+					$this->model_log_action->create($log);
            			$logged_in_sess = array(
 						'user_name' => $login['username'],
 						'user_id' => $login['user_id'],
@@ -127,12 +142,40 @@ class Auth extends Admin_Controller
 		
 	*/
 	public function holiday_logout()
-	{
+	{	
+		/*	
+		$log=array(
+			'user_id' => $this->data['user_id'],
+			'username' => $this->data['user_name'],
+			'login_ip' => $_SERVER["REMOTE_ADDR"],
+			'staff_action' => 'log_out',
+			'action_time' => date('Y-m-d H:i:s')
+		);
+		$this->model_log_action->create($log);
+		*/
+		$log=array(
+			'user_id' => $this->data['user_id'],
+			'username' => $this->data['user_name'],
+			'login_ip' => $_SERVER["REMOTE_ADDR"],
+			'staff_action' => 'holiday_log_out',
+			'action_time' => date('Y-m-d H:i:s')
+		);
+		$this->model_log_action->create($log);
+		unset($log);
 		$this->session->sess_destroy();
 		redirect('auth/holiday_login', 'refresh');
 	}
 	public function wage_logout()
 	{
+		$log=array(
+			'user_id' => $this->data['user_id'],
+			'username' => $this->data['user_name'],
+			'login_ip' => $_SERVER["REMOTE_ADDR"],
+			'staff_action' => 'wage_log_out',
+			'action_time' => date('Y-m-d H:i:s')
+		);
+		$this->model_log_action->create($log);
+		unset($log);
 		$this->session->sess_destroy();
 		redirect('auth/wage_login', 'refresh');
 	}

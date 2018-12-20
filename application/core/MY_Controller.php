@@ -47,6 +47,7 @@ class Admin_Controller extends MY_Controller
 			$user_data = $this->model_wage_users->getUserById($user_id);
 			$this->data['permission'] = $user_data['permission'];
 		}
+		$this->load->model('model_log_action');
 		
 	}
 

@@ -741,18 +741,16 @@ class Holiday extends Admin_Controller
 
     public function staff()
 	{
+        $log=array(
+            'user_id' => $this->data['user_id'],
+            'username' => $this->data['user_name'],
+            'login_ip' => $_SERVER["REMOTE_ADDR"],
+            'staff_action' => 'holiday_staff_get',
+            'action_time' => date('Y-m-d H:i:s')
+        );
+        $this->model_log_action->create($log);
         $user_id=$this->session->userdata('user_id');
-        $holiday_data = $this->model_holiday->getHolidayById($user_id);
-        
-        $result = array();
-
-        foreach ($holiday_data as $k => $v) {
-            $result[$k] = $v;
-        }
-        $this->data['holiday_data'] = $result;
-        unset($result);
-        
-        
+        $this->data['holiday_data'] = $this->model_holiday->getHolidayById($user_id);        
 		$this->render_template('holiday/staff', $this->data);
     }
 

@@ -79,13 +79,18 @@ class Wage extends Admin_Controller
 
     public function staff()
 	{
-        $user_id=$this->session->userdata('user_id');        
+        $log=array(
+            'user_id' => $this->data['user_id'],
+            'username' => $this->data['user_name'],
+            'login_ip' => $_SERVER["REMOTE_ADDR"],
+            'staff_action' => 'wage_staff_get',
+            'action_time' => date('Y-m-d H:i:s')
+        );
+        $this->model_log_action->create($log);
+        $user_id=$this->session->userdata('user_id');
         $this->data['wage_data'] = $this->model_wage->getWageById($user_id);
-        
-        $counter=0;
         $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
-        $wage=$this->model_wage->getWageById($user_id);
-        $total=$this->model_wage_attr->getWageTotalData()['total'];
+        $counter=0;
         foreach($this->data['attr_data'] as $k => $v){
             #echo $v;
             if($v=='月度绩效工资小计'){
