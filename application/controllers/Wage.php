@@ -79,6 +79,10 @@ class Wage extends Admin_Controller
 
     public function staff()
 	{
+        $user_id=$this->session->userdata('user_id');
+        if($user_id==NULL){
+            redirect('auth/wage_logout');
+        }
         $log=array(
             'user_id' => $this->data['user_id'],
             'username' => $this->data['user_name'],
@@ -301,6 +305,7 @@ class Wage extends Admin_Controller
         $this->data['fold_data']=$fold_data;
         $this->data['fold_attr']=$fold_attr;
         */
+
 		$this->render_template('wage/staff', $this->data);
     }
 

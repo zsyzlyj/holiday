@@ -33,7 +33,7 @@
 
             <div class="box-body">
               <div style="overflow:scroll;">
-                <table id="wageTable"class="table table-striped table-bordered table-responsive" style="white-space: nowrap;word-break:  keep-all;text-align: center;border-color:black;">
+                <table id="wageTable"class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;border-color:black;">
                   <thead>
                   <?php $counter=0;?>
                   <?php if($attr_data): ?>

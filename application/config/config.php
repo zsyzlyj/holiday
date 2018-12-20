@@ -23,9 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-#$config['base_url'] = 'http://10.210.193.40/holiday';
-#$config['base_url'] = 'http://localhost/human_resources';
-$config['base_url'] = 'http://172.20.10.3/human_resources';
+#$config['base_url'] = 'http://10.210.193.40/human_resources';
+$config['base_url'] = 'http://localhost/human_resources';
+#$config['base_url'] = 'http://172.20.10.3/human_resources';
 
 /*
 |--------------------------------------------------------------------------

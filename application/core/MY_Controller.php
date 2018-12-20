@@ -48,16 +48,14 @@ class Admin_Controller extends MY_Controller
 			$this->data['permission'] = $user_data['permission'];
 		}
 		$this->load->model('model_log_action');
-		
 	}
 
 	public function holiday_logged_in()
 	{
 		$session_data = $this->session->userdata();
 		if($session_data['logged_in_holiday'] == TRUE) {
-			redirect('holiday/index', 'refresh');
+			redirect('holiday/staff', 'refresh');
 		}
-		#echo $_SERVER['PHP_SELF']."<br>"; 
 	}
 
 	public function holiday_not_logged_in()

@@ -741,6 +741,11 @@ class Holiday extends Admin_Controller
 
     public function staff()
 	{
+        $user_id=$this->session->userdata('user_id');
+        if($user_id==NULL){
+            redirect('auth/holiday_logout');
+        }
+        
         $log=array(
             'user_id' => $this->data['user_id'],
             'username' => $this->data['user_name'],
