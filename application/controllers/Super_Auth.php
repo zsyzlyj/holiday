@@ -91,6 +91,16 @@ class Super_Auth extends Admin_Controller
 	*/
 	public function logout()
 	{
+		if(array_key_exists('user_id', $this->data)){
+			if($this->data['user_id']==NULL){
+				$this->session->sess_destroy();
+				redirect('super_auth/login', 'refresh');
+			}
+		}
+		else{
+			$this->session->sess_destroy();
+			redirect('super_auth/login', 'refresh');
+		}
 		$log=array(
 			'user_id' => $this->data['user_id'],
 			'username' => $this->data['user_name'],

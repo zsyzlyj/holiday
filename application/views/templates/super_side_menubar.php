@@ -64,9 +64,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="publish_holiday"><a href="<?php echo base_url('notification/publish_holiday') ?>"><i class="fa fa-circle-o"></i> 发布假期公告</a></li>        
-            <li id="publish_plan"><a href="<?php echo base_url('notification/publish_plan') ?>"><i class="fa fa-circle-o"></i> 发布年假计划公告</a></li>        
-            <li id="manage_notice"><a href="<?php echo base_url('notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
+            <li id="publish_holiday"><a href="<?php echo base_url('super_holiday/publish_holiday') ?>"><i class="fa fa-circle-o"></i> 发布假期公告</a></li>        
+            <li id="publish_plan"><a href="<?php echo base_url('super_holiday/publish_plan') ?>"><i class="fa fa-circle-o"></i> 发布年假计划公告</a></li>        
+            <li id="manage_notice"><a href="<?php echo base_url('super_holiday/notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
           </ul>
         </li>
         

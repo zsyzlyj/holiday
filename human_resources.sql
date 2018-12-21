@@ -460,13 +460,6 @@ CREATE TABLE `wage_attr` (
   `attr_name120` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `wage_attr`
---
-
-INSERT INTO `wage_attr` (`attr_name1`, `attr_name2`, `attr_name3`, `attr_name4`, `attr_name5`, `attr_name6`, `attr_name7`, `attr_name8`, `attr_name9`, `attr_name10`, `attr_name11`, `attr_name12`, `attr_name13`, `attr_name14`, `attr_name15`, `attr_name16`, `attr_name17`, `attr_name18`, `attr_name19`, `attr_name20`, `attr_name21`, `attr_name22`, `attr_name23`, `attr_name24`, `attr_name25`, `attr_name26`, `attr_name27`, `attr_name28`, `attr_name29`, `attr_name30`, `attr_name31`, `attr_name32`, `attr_name33`, `attr_name34`, `attr_name35`, `attr_name36`, `attr_name37`, `attr_name38`, `attr_name39`, `attr_name40`, `attr_name41`, `attr_name42`, `attr_name43`, `attr_name44`, `attr_name45`, `attr_name46`, `attr_name47`, `attr_name48`, `attr_name49`, `attr_name50`, `attr_name51`, `attr_name52`, `attr_name53`, `attr_name54`, `attr_name55`, `attr_name56`, `attr_name57`, `attr_name58`, `attr_name59`, `attr_name60`, `attr_name61`, `attr_name62`, `attr_name63`, `attr_name64`, `attr_name65`, `attr_name66`, `attr_name67`, `attr_name68`, `attr_name69`, `attr_name70`, `attr_name71`, `attr_name72`, `attr_name73`, `attr_name74`, `attr_name75`, `attr_name76`, `attr_name77`, `attr_name78`, `attr_name79`, `attr_name80`, `attr_name81`, `attr_name82`, `attr_name83`, `attr_name84`, `attr_name85`, `attr_name86`, `attr_name87`, `attr_name88`, `attr_name89`, `attr_name90`, `attr_name91`, `attr_name92`, `attr_name93`, `attr_name94`, `attr_name95`, `attr_name96`, `attr_name97`, `attr_name98`, `attr_name99`, `attr_name100`, `attr_name101`, `attr_name102`, `attr_name103`, `attr_name104`, `attr_name105`, `attr_name106`, `attr_name107`, `attr_name108`, `attr_name109`, `attr_name110`, `attr_name111`, `attr_name112`, `attr_name113`, `attr_name114`, `attr_name115`, `attr_name116`, `attr_name117`, `attr_name118`, `attr_name119`, `attr_name120`) VALUES
-('序号', '区分公司/部门', '身份证', '姓名', '参考绩效奖金结算率', '工资小计', '岗位工资', '综合补贴', '骨干/后备人才津贴', '信访津贴/压力津贴', '生活补贴\n(内退退休)', '午餐补贴/油费补贴', '住房消费/大学生租房津贴', '加班工资\n(含夜班补贴、岗位工资考勤清算）', '过节费', '补发工资或奖金', '考勤扣款', '专业津贴', '岗位津贴（地方）/10%底薪', '年终双薪', '新春慰问金', '儿童节费', '月度绩效工资小计', '职级补贴/业务津贴', '上月绩效工资结算（含考勤结算）', '提成', '月度绩效工资标准', '省核专项奖励小计', '品牌运营创新工作坊奖励', '分公司专项奖励小计', '020奖励', '百日奋战奖励', '完美项目奖励', '复用人员上门交付奖励', '岗位空缺奖励', '红九月迎新奖励', '红九月专项奖励', '提成奖励', '沃之声广播站补贴', '省公司通报实名违规扣罚', '担保违约扣罚', '其他小计', '教育经费小计', '内部培训师津贴', '福利费小计', '独生子女费', '子女托儿补助费', '女工保健', '降温费', '当月月应收合计', '基本养老保险个人缴费', '医疗保险个人缴费', '失业保险个人缴费', '住房公积个人缴费', '年金个人缴费', '补缴年金个人缴费', '个人所得税', '工会费', '过节费前期单独预发', '其他代缴补扣\n(补缴保险、公积金等)', '扣款小计', '职级薪档', '实发', '本月工资差异说明', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -478,14 +471,6 @@ CREATE TABLE `wage_doc` (
   `doc_name` varchar(300) DEFAULT NULL,
   `doc_path` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- 转存表中的数据 `wage_doc`
---
-
-INSERT INTO `wage_doc` (`number`, `doc_name`, `doc_path`) VALUES
-('2018-12-20 09:47:11', '关于印发《公众营服公司家庭互联网团队薪酬正文》', 'uploads/关于印发《公众营服公司家庭互联网团队薪酬正文》.pdf'),
-('2018-12-20 09:47:19', '关于印发《公众营服公司传统社会渠道团队及正文》', 'uploads/关于印发《公众营服公司传统社会渠道团队及正文》.pdf');
 
 -- --------------------------------------------------------
 
@@ -513,13 +498,6 @@ CREATE TABLE `wage_tag` (
 CREATE TABLE `wage_total` (
   `total` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- 转存表中的数据 `wage_total`
---
-
-INSERT INTO `wage_total` (`total`) VALUES
-(64);
 
 -- --------------------------------------------------------
 

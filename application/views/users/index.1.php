@@ -9,7 +9,7 @@
         <small>Users</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><i class="fa fa-dashboard"></i> Home</li>
         <li class="active">Users</li>
       </ol>
     </section>

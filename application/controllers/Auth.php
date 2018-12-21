@@ -143,16 +143,16 @@ class Auth extends Admin_Controller
 	*/
 	public function holiday_logout()
 	{	
-		/*	
-		$log=array(
-			'user_id' => $this->data['user_id'],
-			'username' => $this->data['user_name'],
-			'login_ip' => $_SERVER["REMOTE_ADDR"],
-			'staff_action' => 'log_out',
-			'action_time' => date('Y-m-d H:i:s')
-		);
-		$this->model_log_action->create($log);
-		*/
+		if(array_key_exists('user_id', $this->data)){
+			if($this->data['user_id']==NULL){
+				$this->session->sess_destroy();
+				redirect('auth/holiday_login', 'refresh');
+			}
+		}
+		else{
+			$this->session->sess_destroy();
+			redirect('auth/holiday_login', 'refresh');
+		}
 		$log=array(
 			'user_id' => $this->data['user_id'],
 			'username' => $this->data['user_name'],
@@ -167,6 +167,16 @@ class Auth extends Admin_Controller
 	}
 	public function wage_logout()
 	{
+		if(array_key_exists('user_id', $this->data)){
+			if($this->data['user_id']==NULL){
+				$this->session->sess_destroy();
+				redirect('auth/wage_login', 'refresh');
+			}
+		}
+		else{
+			$this->session->sess_destroy();
+			redirect('auth/wage_login', 'refresh');
+		}
 		$log=array(
 			'user_id' => $this->data['user_id'],
 			'username' => $this->data['user_name'],

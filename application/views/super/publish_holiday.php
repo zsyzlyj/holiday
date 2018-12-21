@@ -8,7 +8,7 @@
         公告编辑（年假）
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><i class="fa fa-dashboard"></i> Home</li>
         <li class="active">Notification</li>
       </ol>
     </section>
@@ -53,7 +53,7 @@
 
               <div class="box-footer">
                 <button type="submit" class="btn btn-success">发布</button>
-                <a href="<?php echo base_url('holiday/') ?>" class="btn btn-warning">返回</a>
+                <a href="<?php echo base_url('super_holiday/notification') ?>" class="btn btn-warning">返回</a>
               </div>
             </form>
           </div>
