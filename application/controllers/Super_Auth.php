@@ -133,19 +133,8 @@ class Super_Auth extends Admin_Controller
 			if ($this->form_validation->run() == TRUE) {
 	            // true case
 		        if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))) {
-		        	$data = array(
-		        		'username' => $this->input->post('username'),
-					);
-					$update = $this->model_super_user->edit($data, $id);
-		        	
-		        	if($update == true) {
-		        		$this->session->set_flashdata('success', 'Successfully updated');
-		        		redirect('super_auth/setting/', 'refresh');
-		        	}
-		        	else {
-		        		$this->session->set_flashdata('errors', 'Error occurred!!');
-		        		redirect('super_auth/setting/', 'refresh');
-		        	}
+					$this->session->set_flashdata('errors', '新密码为空，请填写新密码');
+		        	redirect('super_auth/'.$type.'_setting/', 'refresh');
 		        }
 		        else {
 					$this->form_validation->set_rules('password', 'Password', 'trim|required');
@@ -156,7 +145,6 @@ class Super_Auth extends Admin_Controller
 						$password = md5($this->input->post('password'));
 
 						$data = array(
-			        		'username' => $this->input->post('username'),
 			        		'password' => $password,
 			        	);
 
@@ -164,11 +152,11 @@ class Super_Auth extends Admin_Controller
 						
 			        	if($update == true) {
 			        		$this->session->set_flashdata('success', 'Successfully updated');
-			        		redirect('super_auth/setting/', 'refresh');
+			        		redirect('super_auth/'.$type.'_setting/', 'refresh');
 			        	}
 			        	else {
 			        		$this->session->set_flashdata('errors', 'Error occurred!!');
-			        		redirect('super_auth/setting/', 'refresh');
+			        		redirect('super_auth/'.$type.'_setting/', 'refresh');
 			        	}
 					}
 			        else {

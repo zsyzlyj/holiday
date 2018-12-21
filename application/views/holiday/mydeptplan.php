@@ -173,7 +173,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $('#myDeptPlanNav').addClass('active');
-      
+      $('#mydeptPlanMainMenu').addClass('active');
       $('#planTable').DataTable({
         language: 
         {
@@ -204,6 +204,7 @@
         }      
       });
     });
+    
     function submitForm(){
     //获取form表单对象
         var form = document.getElementById("selected_dept_form");

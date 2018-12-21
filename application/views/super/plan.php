@@ -78,13 +78,13 @@
                           <td><font color='red'><?php echo $v['submit_tag']; ?></font></td>
                         <?php endif; ?>
                         <td>
-                        <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
+                        <form action="<?php echo base_url('super_holiday/plan_change_submit')?>" method="post" style="float:left">
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="1"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="0"/>
                         <button class='btn btn-info'>允许修改</button>
                         </form>
-                        <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
+                        <form action="<?php echo base_url('super_holiday/plan_change_submit')?>" method="post" style="float:left">
                         <button class='btn btn-danger'>撤回修改</button>
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="0"/>

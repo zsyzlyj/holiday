@@ -73,12 +73,4 @@ class Model_manager extends CI_Model
 		$sql='delete from manager';
 		$delete = $this->db->query($sql);
 	}
-	public function countTotalmanager()
-	{
-		$sql = "SELECT * FROM manager";
-		
-		$query = $this->db->query($sql);
-		echo $query->num_rows();
-		return $query->num_rows();
-	}
 }

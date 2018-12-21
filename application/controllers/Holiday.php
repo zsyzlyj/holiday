@@ -25,93 +25,37 @@ class Holiday extends Admin_Controller
         $this->data['holiday_doc'] = $this->model_holiday_doc->getHolidayDocData();
 	}
 
-    /* 
-    * It only redirects to the manage product page
-    */
 	public function index()
 	{
     }
+
     /*
-    * It Fetches the products data from the product table 
-    * this function is called from the datatable ajax function
+    ==============================================================================
+    普通员工
+    ==============================================================================
     */
-	public function fetchHolidayData()
+
+    public function staff()
 	{
-		$result = array('data' => array());
-
-        $data = $this->model_holiday->getHolidayData();
-        echo $data;
-        
-		foreach ($data as $key => $value) {
-			$result['data'][$key] = array(
-				$value['name'],
-				$value['indate'],
-                $value['companyage'],
-                $value['sumage'],
-                $value['sumday'],
-                $value['lastyear'],
-                $value['thisyear'],
-                $value['bonus'],
-                $value['used'],
-                $value['rest'],
-            );
-            console($result['data']['name']);
-		} // /foreach
-
-        echo json_encode($result);
-       /* */
-	}	
-
-    
-    public function delete($id)
-	{
-		if($id) {
-			if($this->input->post('confirm')) {
-				$delete = $this->model_holiday->remove($id);
-				if($delete == true) {
-                    $this->session->set_flashdata('success', 'Successfully removed');
-                    #redirect('holiday/', 'refresh');
-                    $this->index();
-                }
-                else {
-                    $this->session->set_flashdata('error', 'Error occurred!!');
-                    redirect('holiday/delete/'.$id, 'refresh');
-                }
-			}	
-			else {
-				$this->data['user_id'] = $id;
-				$this->render_template('holiday/delete', $this->data);
-			}	
-		}
-	}
-    /*
-    * It removes the data from the database
-    * and it returns the response into the json format
-    */
-	public function remove()
-	{
-        
-
-        $product_id = $this->input->post('product_id');
-
-        $response = array();
-        if($product_id) {
-            $delete = $this->model_products->remove($product_id);
-            if($delete == true) {
-                $response['success'] = true;
-                $response['messages'] = "Successfully removed"; 
-            }
-            else {
-                $response['success'] = false;
-                $response['messages'] = "Error in the database while removing the product information";
-            }
+        $user_id=$this->session->userdata('user_id');
+        if($user_id==NULL){
+            redirect('auth/holiday_logout');
         }
-        else {
-            $response['success'] = false;
-            $response['messages'] = "Refersh the page again!!";
+        $this->data['holiday_data'] = $this->model_holiday->getHolidayById($user_id);
+        if($this->data['holiday_data']==NULL){
+            redirect('auth/holiday_logout');
         }
-
-        echo json_encode($response);
+        $log=array(
+            'user_id' => $this->data['holiday_data']['user_id'],
+            'username' => $this->data['holiday_data']['name'],
+            'login_ip' => $_SERVER["REMOTE_ADDR"],
+            'staff_action' => 'holiday_staff_get',
+            'action_time' => date('Y-m-d H:i:s')
+        );
+        $this->model_log_action->create($log);
+        $user_id=$this->session->userdata('user_id');
+        
+		$this->render_template('holiday/staff', $this->data);
     }
 
     public function excel(){
@@ -473,292 +417,6 @@ class Holiday extends Admin_Controller
         $this->excel_mydeptholiday($_POST['current_dept']);
     }
 
-    public function excel_put(){
-        
-        $this->load->library("phpexcel");//ci框架中引入excel类
-        $this->load->library('PHPExcel/IOFactory');
-        //先做一个文件上传，保存文件
-        $path=$_FILES['file'];
-        $filePath = "uploads/".$path["name"];
-        move_uploaded_file($path["tmp_name"],$filePath);
-        //根据上传类型做不同处理
-        
-        if (strstr($_FILES['file']['name'],'xlsx')) {
-            $reader = new PHPExcel_Reader_Excel2007();
-        }
-        else{
-            if (strstr($_FILES['file']['name'], 'xls')) {
-                $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
-            }
-        }
-
-        $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
-        $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
-        $highestRow = $sheet->getHighestRow(); // 取得总行数
-        $highestColumm = $sheet->getHighestColumn(); // 取得总列数
-
-        $data = array();
-        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++) {        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-            for ($colIndex = 'A'; $colIndex <= $highestColumm; $colIndex++) {
-                $addr = $colIndex . $rowIndex;
-                $cell = $sheet->getCell($addr)->getValue();
-                if ($cell instanceof PHPExcel_RichText) { //富文本转换字符串
-                    $cell = $cell->__toString();
-                }
-                $data[$rowIndex][$colIndex] = $cell;
-            }
-        }
-
-        $column=array();
-        $column_name=array();
-        $attribute_data=array();
-        $first=true;
-        $flag=false;
-        $counter=0;
-        $name="";
-        $dept="";
-        $Initdate=gmdate("Y-m-d") ;
-        $Indate=gmdate("Y-m-d");
-        $Totalage=0;
-        $Comage=0;
-        $Totalday=0;
-        $Lastyear=0;
-        $Thisyear=0;
-        $Bonus=0;
-        $Used=0;
-        $Rest=0;
-        $Jan=0;
-        $Feb=0;
-        $Mar=0;
-        $Apr=0;
-        $May=0;
-        $Jun=0;
-        $Jul=0;
-        $Aug=0;
-        $Sep=0;
-        $Oct=0;
-        $Nov=0;
-        $Dece=0;
-        $User_id="";
-        foreach($data as $k => $v){
-            if($first){
-                $first=false;
-                foreach($v as $a =>$b){
-                    array_push($column_name,$b);
-                }
-            }
-            else{
-                array_push($column,$v);
-            }
-        }
-        /* excel导入时间的方法！ */
-        $initflag=0;
-        foreach($column as $k => $v)
-        {
-            foreach($v as $a => $b)
-            {
-                switch($a){
-                    case 'A':$name=$b;break;
-                    case 'B':$dept=$b;break;
-                    case 'C':$Initdate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
-                    case 'D':$Indate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
-                    case 'E':$Totalage=$b;break;
-                    case 'F':$Comage=$b;break;
-                    case 'G':$Totalday=$b;break;
-                    case 'H':$Lastyear=$b;break;
-                    case 'I':$Thisyear=$b;break;
-                    case 'J':$Bonus=$b;break;
-                    case 'K':$Used=$b;break;
-                    case 'L':$Rest=$b;break;
-                    case 'M':$Jan=$b;break;
-                    case 'N':$Feb=$b;break;
-                    case 'O':$Mar=$b;break;
-                    case 'P':$Apr=$b;break;
-                    case 'Q':$May=$b;break;
-                    case 'R':$Jun=$b;break;
-                    case 'S':$Jul=$b;break;
-                    case 'T':$Aug=$b;break;
-                    case 'U':$Sep=$b;break;
-                    case 'V':$Oct=$b;break;
-                    case 'W':$Nov=$b;break;
-                    case 'X':$Dece=$b;break;
-                    case 'Y':$User_id=$b;break;
-                }
-            }
-            
-            $Update_data=array(
-                'name' => $name,
-                'department' => $dept,
-                'initdate' => $Initdate,
-                'indate' => $Indate,
-                'Companyage' => $Comage,
-                'Totalage' => $Totalage,
-                'Totalday' => $Totalday,
-                'Lastyear' => $Lastyear,
-                'Thisyear' => $Thisyear,
-                'Bonus' => $Bonus,
-                'Used' => $Used,
-                'Rest' => $Rest,
-                'Jan' => $Jan,
-                'Feb' => $Feb,
-                'Mar' => $Mar,
-                'Apr' => $Apr,
-                'May' => $May,
-                'Jun' => $Jun,
-                'Jul' => $Jul,
-                'Aug' => $Aug,
-                'Sep' => $Sep,
-                'Oct' => $Oct,
-                'Nov' => $Nov,
-                'Dece' => $Dece,
-                'initflag' => $initflag,
-                'User_id' => $User_id
-            );
-
-            $update_user=true;
-            //上传数据后，如果假期表中有这个人，那么就更新同名人的信息
-            if($this->model_holiday->getHolidaybyID($User_id))
-            {
-                if(!(serialize($Update_data) == serialize($this->model_holiday->getHolidaybyID($User_id)))){
-                   $update=$this->model_holiday->update($Update_data,$User_id);
-                }
-            }
-            //如果假期表中没有这个人，那么就年假计划反馈初始化，假期信息初始化，计划初始化，计划提交初始化，用户初始化，
-            //feedback,holiday,plan,submit,user
-            else{
-                //初始化年假计划反馈，每个部门新建一个反馈记录，部门为主键
-                $feedback_data=array(
-                    'department' => $Update_data['department'],
-                );
-                $this->model_feedback->create($feedback_data);
-                //初始化假期信息，每个人新建一条假期的记录
-                $update=$this->model_holiday->create($Update_data);
-
-                //初始化假期计划信息，每个人新建一条假期的记录
-                $holiday_data=$this->model_holiday->getHolidayData();
-                
-                $plan_data=array(
-                    'user_id' => $Update_data['user_id'],
-                    'name' => $$Update_data['name'],
-                    'department' => $Update_data['department'],
-                    'Thisyear' => $Update_data['Thisyear'],
-                    'Lastyear' => $Update_data['Lastyear'],
-                    'Bonus' => $Update_data['Bonus'],
-                    'Totalday' => $Update_data['Totalday'],
-                    'firstquater' => 0,
-                    'secondquater' => 0,
-                    'thirdquater' => 0,
-                    'fourthquater' => 0,
-                    'submit_tag' => 0
-                );
-                $update=$this->model_plan->create($plan_data);
-
-                //初始化计划提交
-                $submit_data=array(
-                    'department' => $Update_data['department']
-                );
-                $this->model_submit->create($submit_data);
-
-                //初始化用户信息，每个人新建一条用户记录，用于登陆，密码为身份证后六位
-                $Update_user_data=array(
-                    'user_id' => $User_id,
-                    'username' => $name,
-                    'password' => md5(substr($User_id,-6)),
-                    'permission' => '3'
-                );
-                $update_user=$this->model_holiday_users->create($Update_user_data,$name);
-                
-                
-            }
-        }
-        if($update == true and $update_user == true) {
-            $response['success'] = true;
-            $response['messages'] = 'Succesfully updated';
-        }
-        else {
-            $response['success'] = false;
-            $response['messages'] = 'Error in the database while updated the brand information';			
-        }
-    }
-    public function import($filename=NULL)
-    {
-        
-        if($_FILES){
-        if($_FILES["file"])
-            {
-                if ($_FILES["file"]["error"] > 0)
-                {
-                    echo "Error: " . $_FILES["file"]["error"] . "<br />";
-                }
-                else
-                {
-                    $this->excel_put();
-                    $this->index();
-                }
-            }
-        }
-        else{
-            $this->render_template('holiday/import',$this->data);
-        } 
-    }
-    
-
-
-    /*
-        获取所有的计划，超管可以查看
-     */
-
-    public function plan_set()
-    {
-        $user_id=$this->session->userdata('user_id');
-
-        $user_data=$this->model_holiday_users->getUserById($user_id);
-        $plan_data = $this->model_plan->getPlanData();
-        
-        $result = array();
-        
-        foreach($plan_data as $k => $v)
-        {
-            if($v['submit_tag']==1){
-                $v['submit_tag']='已提交';
-            }
-            else if($v['submit_tag']==0){
-                $v['submit_tag']='未提交';
-            }
-            $result[$k]=$v;
-        }  
-
-        $this->data['plan_data'] = $result;
-        
-        $this->render_template('holiday/plan', $this->data);
-    }
-
-    /*
-    ==============================================================================
-    普通员工
-    ==============================================================================
-    */
-
-    public function staff()
-	{
-        $user_id=$this->session->userdata('user_id');
-        if($user_id==NULL){
-            redirect('auth/holiday_logout');
-        }
-        
-        $log=array(
-            'user_id' => $this->data['user_id'],
-            'username' => $this->data['user_name'],
-            'login_ip' => $_SERVER["REMOTE_ADDR"],
-            'staff_action' => 'holiday_staff_get',
-            'action_time' => date('Y-m-d H:i:s')
-        );
-        $this->model_log_action->create($log);
-        $user_id=$this->session->userdata('user_id');
-        $this->data['holiday_data'] = $this->model_holiday->getHolidayById($user_id);        
-		$this->render_template('holiday/staff', $this->data);
-    }
-
     /*
     ==============================================================================
     综合管理员
@@ -766,23 +424,9 @@ class Holiday extends Admin_Controller
     */
     public function admin()
 	{
-        $user_id=$this->session->userdata('user_id');
-        $holiday_data = $this->model_holiday->getHolidayById($user_id);
-        $notice_data = $this->model_notice->getNoticeLatestHoliday();
-        $result = array();
-        $notice_result=array();
-        foreach ($notice_data as $k => $v) {
-            $notice_result[$k] = $v;
-        }
-
-        foreach ($holiday_data as $k => $v) {
-            $result[$k] = $v;
-        }
-        
-
-        $this->data['holiday_data'] = $result;
-        $this->data['notice_data'] = $notice_result;
-
+        $user_id=$this->session->userdata('user_id'); 
+        $this->data['holiday_data'] = $this->model_holiday->getHolidayById($user_id);        
+        $this->data['notice_data'] = $this->model_notice->getNoticeLatestHoliday();
 		$this->render_template('holiday/staff', $this->data);
     }
 
@@ -858,10 +502,9 @@ class Holiday extends Admin_Controller
     public function mydeptplan_submit(){
         $user_id = $this->session->userdata('user_id');
         $my_data = $this->model_manager->getManagerById($user_id);
-
         $dept_set=array();
         $data=array();
-        $feedback_status=array();
+        $feedback=array();
         if(strstr($my_data['dept'],'/')){
             $dept_set=explode('/',$my_data['dept']);
             foreach($dept_set as $a => $b){
@@ -871,7 +514,10 @@ class Holiday extends Admin_Controller
                 }
             }
         }
-        #$this->model_submit->getSubmitByDept($);
+        else{
+            array_push($data,$this->model_submit->getSubmitByDept($my_data['dept']));
+            $feedback[$my_data['dept']]=$this->model_feedback->getFeedbackByDept($my_data['dept']);
+        }
         
         $this->data['submit_data'] = $data;
         $this->data['feedback'] = $feedback;
@@ -1145,7 +791,6 @@ class Holiday extends Admin_Controller
 
             $this->data['submit_status'] = $this->model_submit->getSubmitByDept($select_dept)['status'];
             $this->data['feedback_status'] = $this->model_feedback->getFeedbackByDept($select_dept)['status'];
-            echo $this->data['feedback_status'];
         }
         $admin_data = $this->model_manager->getManagerById($user_id);
 
@@ -1178,8 +823,6 @@ class Holiday extends Admin_Controller
         else{
             array_push($data,$this->model_feedback->getFeedbackByDept($my_data['dept']));
         }
-        #echo $my_data['dept'];
-        #echo var_dump($this->model_feedback->getFeedbackByDept($my_data['dept']));
         $this->data['dept']=$my_data;
         $this->data['feedback_data']=$data;
         $this->data['user_name'] = $this->session->userdata('user_name');

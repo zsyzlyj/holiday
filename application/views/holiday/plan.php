@@ -40,8 +40,6 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              
-              
               <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="120%">
                 <thead>
                 <tr>
@@ -63,7 +61,6 @@
               
                     <?php foreach($plan_data as $k => $v): ?>
                       <tr>
-                      
                         <td><?php echo $v['name']; ?></td>
                         <td><?php echo $v['Totalday']; ?></td>
                         <td><?php echo $v['Lastyear']; ?></td>
@@ -91,7 +88,6 @@
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="0"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="1"/>
-                        
                         </form>
                         </td>
                       </tr>

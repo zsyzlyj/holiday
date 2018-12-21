@@ -291,20 +291,16 @@ class Users extends Admin_Controller
 						
 			        	if($update == true) {
 			        		$this->session->set_flashdata('success', 'Successfully updated');
-			        		redirect('users/setting/', 'refresh');
+			        		redirect('users/'.$type.'_setting/', 'refresh');
 			        	}
 			        	else {
 			        		$this->session->set_flashdata('errors', 'Error occurred!!');
-			        		redirect('users/setting/', 'refresh');
+			        		redirect('users/'.$type.'_setting/', 'refresh');
 			        	}
 					}
 			        else {
 						// false case
-						if($type=='holiday')
-							redirect('users/holiday_setting', 'refresh');
-						if($type=='wage')
-							$user_data = $this->model_wage_users->getUserData($id);
-							redirect('users/wage_setting', 'refresh');
+						redirect('users/'.$type.'_setting', 'refresh');
 			        }
 
 		        }

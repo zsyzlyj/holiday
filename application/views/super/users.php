@@ -72,7 +72,9 @@
                         <td>
                             <button class="btn btn-success" type="submit"><i class="fa fa-edit"> 提交</i></button>
                         </form>
-                            <a href="<?php echo base_url('users/delete/'.$v['user_id']) ?>" class="btn btn-danger"><i class="fa fa-trash"> 删除</i></a>
+                        <form action="<?php echo base_url('super_holiday/user_delete/') ?>" style="margin:0px;display:inline;" method="post">
+                        <input type="hidden" name="user_id1" value="<?php echo $v['user_id'];?>"/><button type="submit" class="btn btn-danger"><i class="fa fa-trash"> 删除</i></button>
+                      </form>
                         </td>
 
                       </tr>

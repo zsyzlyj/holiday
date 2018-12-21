@@ -60,24 +60,9 @@ class Model_feedback extends CI_Model
 		}
 	}
 
-	public function remove($dept)
-	{
-		if($dept) {
-			$this->db->where('user_id', $dept);
-			$delete = $this->db->delete('feedback');
-			return ($delete == true) ? true : false;
-		}
-	}
-
-	public function countTotalfeedback()
-	{
-		$sql = "SELECT * FROM feedback";
-		$query = $this->db->query($sql);
-		return $query->num_rows();
-	}
 	public function deleteAll()
 	{
-		$sql='delete from holiday';
+		$sql='delete from feedback';
 		$delete = $this->db->query($sql);
 	}
 }

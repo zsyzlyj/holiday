@@ -33,8 +33,7 @@ class Super_holiday extends Admin_Controller
     }
     public function holiday(){
         $this->data['holiday_data'] = $this->model_holiday->getHolidayData();
-        
-        $this->data['permission']=$this->session->userdata('permission');
+        $this->data['permission'] = $this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_id');
         $this->render_super_template('super/holiday',$this->data);
     }
@@ -82,17 +81,15 @@ class Super_holiday extends Admin_Controller
     
     public function holiday_doc_delete(){
         $doc_name = $_POST['doc_name'];
-         
         if($doc_name){
 			$delete = $this->model_holiday_doc->delete($doc_name);
             if($delete == true) {
                 $this->session->set_flashdata('success', '删除成功');
-                redirect('super/holiday_doc_show', 'refresh');
             }
-            else {
+            else{
                 $this->session->set_flashdata('error', '数据库中不存在该记录');
-                redirect('super/holiday_doc_show', 'refresh');
-            }	
+            }
+            redirect('super_holiday/holiday_doc_show', 'refresh');
 		}
         $this->render_super_template('super/holiday_doc_show',$this->data);
     }
@@ -356,7 +353,7 @@ class Super_holiday extends Admin_Controller
         }
         //删除所有人的年假计划反馈、假期信息，计划，计划提交，用户
         //删除综管员和部门经理
-        $this->model_feedback->deleteAll();
+        
         $this->model_holiday->deleteAll();
         $this->model_plan->deleteAll();
         $this->model_submit->deleteAll();
@@ -435,15 +432,6 @@ class Super_holiday extends Admin_Controller
             //如果假期表中没有这个人，那么就年假计划反馈初始化，假期信息初始化，计划初始化，计划提交初始化，用户初始化，
             //feedback,holiday,plan,submit,user
 
-            //初始化年假计划反馈，每个部门新建一个反馈记录，部门为主键
-            
-            if($this->model_feedback->getFeedbackByDept($Update_data['department'])==NULL)
-            {
-                $feedback_data=array(
-                    'department' => $Update_data['department'],
-                );
-                $this->model_feedback->create($feedback_data);
-            }
             //初始化假期信息，每个人新建一条假期的记录
             //如果初始化過就不進行初始化 initflag记录是否被初始化过 0未初始化，1初始化完成
         
@@ -503,20 +491,8 @@ class Super_holiday extends Admin_Controller
                 'password' => md5(substr($User_id,-6)),
                 'permission' => '3'
             );
-            $update_user=$this->model_holiday__users->create($Update_user_data,$name);   
-            /**/
-
+            $update_user=$this->model_holiday_users->create($Update_user_data,$name);   
         }
-        /*
-        if($update == true and $update_user == true) {
-            $response['success'] = true;
-            $response['messages'] = 'Succesfully updated';
-        }
-        else {
-            $response['success'] = false;
-            $response['messages'] = 'Error in the database while updated the brand information';			
-        }
-        */
     }
     public function holiday_import($filename=NULL)
     {
@@ -539,7 +515,6 @@ class Super_holiday extends Admin_Controller
             $this->render_super_template('super/holiday_import',$this->data);
         } 
     }
-
 
     public function plan()
     {
@@ -601,11 +576,41 @@ class Super_holiday extends Admin_Controller
         $this->data['plan_data'] = $result;
         $this->render_super_template('super/plan', $this->data);
     }
+
+    /*
+    ==============================================================================
+    超级管理员，综合管理员修改年假计划编辑权限
+    ==============================================================================
+    */
+    public function plan_change_submit(){
+        if($_POST){
+            if($_POST['submit_auth']==1){
+                $data = array(
+                    'submit_tag' => 0
+                );
+                
+            }
+            if($_POST['submit_revolt']==1){
+                $data = array(
+                    'submit_tag' => 1
+                );
+            }
+
+            $update = $this->model_plan->update($data,$_POST['user_id']);
+            
+            if($update == true) {
+                $this->session->set_flashdata('success', 'Successfully created');
+                $this->plan();
+            }
+        }
+        else{
+            $this->plan();
+        }
+
+    }
     public function users(){
         $user_data = $this->model_holiday_users->getUserData();
-
 		$holiday = $this->model_holiday->getHolidayData();
-
 		$result = array();
 		
 		foreach ($user_data as $k => $v) {
@@ -641,8 +646,41 @@ class Super_holiday extends Admin_Controller
 		
         $this->render_super_template('super/users',$this->data);
     }
+    public function user_delete(){
+        if(array_key_exists('user_id1', $_POST)){
+			if($_POST['user_id1']!=NULL){
+                $id=$_POST['user_id1'];
+
+			}
+        }
+        if(array_key_exists('user_id2', $_POST)){
+            echo array_key_exists('user_id2', $_POST);
+			if($_POST['user_id2']!=NULL){
+                $id=$_POST['user_id2'];
+			}
+		}
+
+		if($id) {
+			if($this->input->post('confirm')) {
+					$delete = $this->model_holiday_users->delete($id);
+					if($delete == true) {
+		        		$this->session->set_flashdata('success', 'Successfully removed');
+		        	}
+		        	else {
+		        		$this->session->set_flashdata('error', '删除失败');
+                    }
+                    redirect('super_holiday/users', 'refresh');
+
+			}	
+			else {
+				$this->data['user_id'] = $id;
+				$this->render_super_template('super/user_delete', $this->data);
+			}	
+		}
+	}        
+
+
     public function manager_excel_put(){
-        
         $this->load->library("phpexcel");//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
         //先做一个文件上传，保存文件
@@ -702,7 +740,7 @@ class Super_holiday extends Admin_Controller
 		$initflag=0;
         $reset=false;
         $manager_data=$this->model_manager->getManagerData();
-
+        $this->model_feedback->deleteAll();
         foreach($column as $k => $v)
         {
             foreach($v as $a => $b)
@@ -719,7 +757,8 @@ class Super_holiday extends Admin_Controller
 				'name' => $name,
 				'dept' => $dept,
 				'role' => $role
-			);
+            );
+            //重制所有用户的权限
 			if(!$reset){
 				$User_default=array(
 					'permission' => 3
@@ -730,7 +769,10 @@ class Super_holiday extends Admin_Controller
 				}
 				$reset=true;
 			}
-			$update_user=false;
+            
+            //创建管理人员
+            $update_user=false;
+            
             if($this->model_manager->getManagerbyID($user_id))
             {
 				$update=$this->model_manager->update($Update_data,$user_id);
@@ -749,6 +791,17 @@ class Super_holiday extends Admin_Controller
 			);
             $update_user=$this->model_holiday_users->update($Update_user,$user_id);
             
+            //初始化年假计划反馈，每个部门新建一个反馈记录，部门为主键
+            
+            if($this->model_feedback->getFeedbackByDept($dept)==NULL)
+            {
+                echo $dept;
+                $feedback_data=array(
+                    'department' => $dept,
+                );
+                $this->model_feedback->create($feedback_data);
+            }
+
             if($update == true and $update_user== true) {
                 $response['success'] = true;
                 $response['messages'] = 'Succesfully updated';
@@ -891,7 +944,12 @@ class Super_holiday extends Admin_Controller
 		$result = array();
 		
 		foreach ($notice_data as $k => $v) {
-			$result[$k] = $v;
+            if($v['type']=='holiday')
+                $v['type']='假期';
+            if($v['type']=='plan')
+                $v['type']='计划';
+            $result[$k] = $v;
+            
 		}
 		
 		$this->data['notice_data'] = $result;
@@ -913,9 +971,8 @@ class Super_holiday extends Admin_Controller
 				'username' => $this->session->userdata('user_id'),
         		'title' => $this->input->post('title'),
 				'content' => $this->input->post('content'),
-				'type' => '假期'
+				'type' => 'holiday'
 			);
-			echo $data['pubtime'];
 			$create = $this->model_notice->create($data);
         	if($create == true) {
         		$this->session->set_flashdata('success', 'Successfully created');
@@ -955,9 +1012,8 @@ class Super_holiday extends Admin_Controller
 				'username' => $this->session->userdata('user_id'),
         		'title' => $this->input->post('title'),
 				'content' => $this->input->post('content'),
-				'type' => '计划'
+				'type' => 'plan'
 			);
-			echo $data['pubtime'];
 			$create = $this->model_notice->create($data);
         	if($create == true) {
         		$this->session->set_flashdata('success', 'Successfully created');

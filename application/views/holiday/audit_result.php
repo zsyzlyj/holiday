@@ -46,6 +46,7 @@
                 <thead>
                 <tr>
                   <th>部门</th>
+                  <th>提交状态</th>
                   <th>审核状态</th>
                 </tr>
                 </thead>
@@ -60,6 +61,9 @@
                         <?php else: ?>
                         <font color='green'><?php echo $v['status'];?></font>
                         <?php endif; ?>
+                        
+                        </td>
+                        <td>
                         <?php if($v['confirm']==0):?>
                         <font color='red'>不同意</font>
                         <?php else: ?>

@@ -10,7 +10,6 @@ class Model_holiday extends CI_Model
 	/* get the brand data */
 	public function getHolidayData()
 	{
-
 		$sql = "SELECT * FROM holiday";
 		$query = $this->db->query($sql);
 		return $query->result_array();

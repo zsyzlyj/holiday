@@ -25,7 +25,7 @@ class Model_holiday_users extends CI_Model
 	public function create($data = '')
 	{
 		if($data) {
-			$create = $this->db->insert('users', $data);
+			$create = $this->db->insert('holiday_users', $data);
 			return ($create == true) ? true : false;
 		}
 	}
@@ -35,13 +35,13 @@ class Model_holiday_users extends CI_Model
 	public function update($data=array(),$id)
 	{
 		$this->db->where('user_id',$id);
-		$update = $this->db->update('users', $data);
+		$update = $this->db->update('holiday_users', $data);
 		return ($update == true) ? true : false;	
 	}
 	public function edit($data = array(), $id = null)
 	{
 		$this->db->where('user_id', $id);
-		$update = $this->db->update('users', $data);
+		$update = $this->db->update('holiday_users', $data);
 			
 		return ($update == true) ? true : false;	
 	}
@@ -49,21 +49,13 @@ class Model_holiday_users extends CI_Model
 	public function delete($id)
 	{
 		$this->db->where('user_id', $id);
-		$delete = $this->db->delete('users');
+		$delete = $this->db->delete('holiday_users');
 		return ($delete == true) ? true : false;
 	}
 
 	public function deleteAll()
 	{
-		$sql='delete from users';
+		$sql='delete from holiday_users';
 		$delete = $this->db->query($sql);
-	}
-	public function countTotalUsers()
-	{
-		$sql = "SELECT * FROM users";
-		
-		$query = $this->db->query($sql);
-		echo $query->num_rows();
-		return $query->num_rows();
 	}
 }

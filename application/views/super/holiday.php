@@ -35,10 +35,6 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"><font color="red">公告说明：</font></h3>
-              </br>              </br>
-              <h4>
-              </h4>
             </div>
             
             <!-- /.box-header -->

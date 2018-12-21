@@ -53,6 +53,10 @@
             <span>部门年假信息汇总</span>
           </a>
         </li>
+        
+        
+        <?php endif ?>
+        <?php if($permission == 1): ?>
         <li class="treeview" id="mydeptPlanMainMenu">
           <a href="#">
             <i class="fa fa-folder-o"></i>
