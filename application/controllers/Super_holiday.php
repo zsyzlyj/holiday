@@ -14,7 +14,6 @@ class Super_holiday extends Admin_Controller
         $this->load->model('model_plan');
         $this->load->model('model_notice');
         $this->load->model('model_manager');
-        $this->load->model('model_submit');
         $this->load->model('model_holiday_users');
         $this->load->model('model_feedback'); 
         $this->data['permission']=$this->session->userdata('permission');
@@ -356,7 +355,6 @@ class Super_holiday extends Admin_Controller
         
         $this->model_holiday->deleteAll();
         $this->model_plan->deleteAll();
-        $this->model_submit->deleteAll();
         $this->model_holiday_users->deleteAll();        
         $this->model_manager->deleteAll();
         /* excel导入时间的方法！ */
@@ -471,16 +469,6 @@ class Super_holiday extends Admin_Controller
                 'submit_tag' => 0
             );
             $update=$this->model_plan->create($plan_data);
-
-            //初始化计划提交
-            
-            if($this->model_submit->getSubmitByDept($Update_data['department'])==NULL)
-            {
-                $submit_data=array(
-                    'department' => $Update_data['department']
-                );
-                $this->model_submit->create($submit_data);
-            }
 
             
 

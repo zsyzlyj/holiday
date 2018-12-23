@@ -119,7 +119,7 @@
                 
               </div>
               <!-- /.overflow:scroll -->
-              <?php if($submit_status=='已提交'):?>
+              <?php if($feedback_status=='已审核' and $submit_status=='已提交'):?>
               <div>
               <form action='<?php echo base_url('holiday/audit')?>' method="post">
                 <?php if($current_dept):?>

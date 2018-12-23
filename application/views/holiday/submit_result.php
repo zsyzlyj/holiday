@@ -47,32 +47,28 @@
                 <tr>
                   <th>部门</th>
                   <th>提交状态</th>
-                  <th>审核状态</th>
+                  <th>审核结果</th>
                 </tr>
                 </thead>
                 <tbody>
-                  <?php if($submit_data): ?>                  
-                    <?php foreach ($submit_data as $k => $v): ?>
+                  <?php if($feedback): ?>                  
+                    <?php foreach ($feedback as $k => $v): ?>
                       <tr>
-                        <td><?php echo $v['department']; ?></td>
+                        <td><?php echo $k; ?></td>
                         <td>
-                        <?php if(strstr($v['status'],'已')):?>
-                        <font color='blue'><?php echo $v['status'];?></font>
+                        <?php if(strstr($v['submit_status'],'已')):?>
+                        <font color='blue'><?php echo $v['submit_status'];?></font>
                         <?php else: ?>
-                        <font color='red'><?php echo $v['status'];?></font>
+                        <font color='red'><?php echo $v['submit_status'];?></font>
                         <?php endif; ?>
                         </td>
                         <td>
-                        <?php if(strstr($feedback[$v['department']]['status'],'已')):?>
-                        
-                        <?php if($feedback[$v['department']]['confirm']==0):?>
-                        <font color='red'>不同意</font>
-                        /
+                        <?php if(strstr($v['feedback_status'],'已')):?>
+                        <font color='green'><?php echo $v['feedback_status'];?></font>
                         <!-- 打开弹窗按钮 -->
                         <a href="javascript:void(0)" id="myBtn"><font color='orange'>反馈意见</font></a>
                           <!-- 弹窗 -->
                           <div id="myModal" class="modal">
-                            
                             <!-- 弹窗内容 -->
                               <div class="modal-content">
                                 <div class="modal-header">
@@ -88,16 +84,9 @@
                                 <?php endif;?>
                                 </div>
                               </div>
-                            
                           </div>
-                        
                         <?php else: ?>
-                        <font color='blue'><?php echo $feedback[$v['department']]['status'];?></font>
-                        /
-                        <font color='blue'>同意</font>
-                        <?php endif; ?>
-                        <?php else: ?>
-                        <font color='red'><?php echo $feedback[$v['department']]['status'];?></font>                        
+                        <font color='red'><?php echo $v['feedback_status'];?></font>
                         <?php endif; ?>
                       </tr>
                     <?php endforeach ?>

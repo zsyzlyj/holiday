@@ -56,18 +56,27 @@
                       <tr>
                         <td><?php echo $v['department']; ?></td>
                         <td>
-                        <?php if(strstr($v['status'],'未')):?>
-                        <font color='orange'><?php echo $v['status'];?></font>
+                        <?php if(strstr($v['submit_status'],'未')):?>
+                        <font color='red'><?php echo $v['submit_status'];?></font>
                         <?php else: ?>
-                        <font color='green'><?php echo $v['status'];?></font>
+                        <font color='green'><?php echo $v['submit_status'];?></font>
                         <?php endif; ?>
-                        
                         </td>
                         <td>
-                        <?php if($v['confirm']==0):?>
-                        <font color='red'>不同意</font>
+                        <?php if(strstr($v['submit_status'],'未')):?>
+                        无
                         <?php else: ?>
-                        <font color='blue'>同意</font>
+                        <?php if(strstr($v['feedback_status'],'未')):?>
+                        <font color='orange'><?php echo $v['feedback_status'];?></font>
+                        <?php else: ?>
+                        <?php if(strstr($v['confirm_status'],'不')):?>
+                        <font color='blue'><?php echo $v['feedback_status']?></font>
+                        <font color='red'><?php echo '/'.$v['confirm_status']?></font>
+                        <?php else: ?>
+                        <font color='blue'><?php echo $v['feedback_status']?></font>
+                        <font color='green'><?php echo '/'.$v['confirm_status']?></font>
+                        <?php endif; ?>
+                        <?php endif; ?>
                         <?php endif; ?>
                         </td>
                       </tr>
