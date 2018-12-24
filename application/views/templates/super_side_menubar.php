@@ -106,6 +106,19 @@
             <i class="fa fa-money"></i><span>收入证明</span>
           </a>
         </li>
+        <li class="treeview" id="taxCounterMenu">
+          <a href="#">
+            <i class="fa fa-cloud"></i>
+            <span>个税计算</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="taxCounterNav"><a href="<?php echo base_url('super_wage/tax_counter') ?>"><i class="fa fa-circle-o"></i> 个税计算器</a></li>
+            <li id="showWageDocNav"><a href="#"><i class="fa fa-circle-o"></i> 人员名单导入</a></li>
+          </ul>
+        </li>
         <?php endif; ?>
         
         <!-- user permission info -->

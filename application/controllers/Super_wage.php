@@ -560,5 +560,13 @@ class Super_wage extends Admin_Controller
 		}
         $this->render_super_template('super/wage_doc_list',$this->data);
     }
+
+    public function tax_counter(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $this->data['result']=10;
+            $this->render_super_template('super/tax_result',$this->data);    
+        }
+        $this->render_super_template('super/tax',$this->data);
+    }
     
 }
