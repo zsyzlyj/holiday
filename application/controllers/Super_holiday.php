@@ -28,12 +28,13 @@ class Super_holiday extends Admin_Controller
     ============================================================
     */ 
     public function index(){
+        if($this->data['user_name']==NULL){
+            redirect('super_auth/login','refresh');
+        }
         $this->holiday();
     }
     public function holiday(){
         $this->data['holiday_data'] = $this->model_holiday->getHolidayData();
-        $this->data['permission'] = $this->session->userdata('permission');
-        $this->data['user_name'] = $this->session->userdata('user_id');
         $this->render_super_template('super/holiday',$this->data);
     }
     public function holiday_doc_put(){
@@ -61,7 +62,7 @@ class Super_holiday extends Admin_Controller
                 else
                 {
                     $this->holiday_doc_put();
-                    $this->holiday_doc_show();
+                    $this->holiday_doc_list();
                 }
             }
         }
@@ -70,7 +71,7 @@ class Super_holiday extends Admin_Controller
         } 
     }
 
-    public function holiday_doc_show(){
+    public function holiday_doc_list(){
         $holiday_doc=$this->model_holiday_doc->getHolidayDocData();
         $this->data['holiday_doc']=$holiday_doc;
         $this->render_super_template('super/holiday_doc_list',$this->data);
@@ -88,9 +89,9 @@ class Super_holiday extends Admin_Controller
             else{
                 $this->session->set_flashdata('error', '数据库中不存在该记录');
             }
-            redirect('super_holiday/holiday_doc_show', 'refresh');
+            redirect('super_holiday/holiday_doc_list', 'refresh');
 		}
-        $this->render_super_template('super/holiday_doc_show',$this->data);
+        $this->render_super_template('super/holiday_doc_list',$this->data);
     }
     public function excel(){
         $this->load->library('PHPExcel');

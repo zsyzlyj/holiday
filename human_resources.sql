@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: 2018-12-20 15:42:18
+-- Generation Time: 2018-12-24 16:11:12
 -- 服务器版本： 5.7.21
 -- PHP Version: 7.2.7
 
@@ -23,9 +23,11 @@ SET time_zone = "+00:00";
 CREATE TABLE `feedback` (
   `department` varchar(255) NOT NULL,
   `content` varchar(1000) NOT NULL,
-  `confirm` tinyint(1) NOT NULL DEFAULT '0',
-  `status` varchar(255) NOT NULL DEFAULT '未审核'
+  `feedback_status` varchar(255) NOT NULL DEFAULT '未审核',
+  `submit_status` varchar(255) NOT NULL DEFAULT '未提交',
+  `confirm_status` varchar(255) NOT NULL DEFAULT '不同意'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- --------------------------------------------------------
 
 --
@@ -61,7 +63,6 @@ CREATE TABLE `holiday` (
   `user_id` varchar(18) NOT NULL COMMENT '身份证号'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 -- --------------------------------------------------------
 
 --
@@ -84,8 +85,9 @@ CREATE TABLE `holiday_users` (
   `user_id` varchar(20) NOT NULL COMMENT '身份证号',
   `username` varchar(6) NOT NULL COMMENT '姓名',
   `password` varchar(255) NOT NULL COMMENT '初始值为身份证后六位',
-  `permission` int(11) NOT NULL COMMENT '1是部门负责人，2是综合管理，3是员工'
+  `permission` int(11) NOT NULL COMMENT '1是综管，2是部门负责人，3是员工'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 --
 -- 表的结构 `log_action`
@@ -99,7 +101,18 @@ CREATE TABLE `log_action` (
   `staff_action` varchar(50) NOT NULL,
   `action_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- --------------------------------------------------------
 
+--
+-- 表的结构 `manager`
+--
+
+CREATE TABLE `manager` (
+  `user_id` varchar(18) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `dept` varchar(255) NOT NULL,
+  `role` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -114,7 +127,6 @@ CREATE TABLE `notice` (
   `content` varchar(2550) NOT NULL COMMENT '公告内容',
   `type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 -- --------------------------------------------------------
 
@@ -140,17 +152,6 @@ CREATE TABLE `plan` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `submit`
---
-
-CREATE TABLE `submit` (
-  `department` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL DEFAULT '未提交'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `super_user`
 --
 
@@ -165,8 +166,8 @@ CREATE TABLE `super_user` (
 --
 
 INSERT INTO `super_user` (`user_id`, `password`, `permission`) VALUES
-('lyjw', '71b7b337e2987e91fec8e799fe2841ef', '工资'),
-('lyjh', 'adab7b701f23bb82014c8506d3dc784e', '休假');
+('lyjw', 'c21d405c2dcbc32c12de40616ca99528', '工资'),
+('lyjh', '5f58d4ae95272fab5b802711157041ce', '休假');
 
 -- --------------------------------------------------------
 
@@ -547,12 +548,6 @@ ALTER TABLE `plan`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexes for table `submit`
---
-ALTER TABLE `submit`
-  ADD PRIMARY KEY (`department`);
-
---
 -- Indexes for table `super_user`
 --
 ALTER TABLE `super_user`
@@ -578,4 +573,4 @@ ALTER TABLE `wage_tag`
 -- 使用表AUTO_INCREMENT `log_action`
 --
 ALTER TABLE `log_action`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;

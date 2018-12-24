@@ -85,7 +85,7 @@ class Admin_Controller extends MY_Controller
 	{
 		$session_data = $this->session->userdata();
 		if($session_data['logged_in_super'] == TRUE) {
-			redirect('super/index', 'refresh');
+			redirect('super_auth/index', 'refresh');
 		}
 	}
 	public function not_logged_in_super()

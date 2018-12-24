@@ -527,7 +527,7 @@ class Super_wage extends Admin_Controller
                 else
                 {
                     $this->wage_doc_put();
-                    $this->wage_doc_show();
+                    $this->wage_doc_list();
                 }
             }
         }
@@ -536,7 +536,7 @@ class Super_wage extends Admin_Controller
         } 
     }
 
-    public function wage_doc_show(){
+    public function wage_doc_list(){
         $wage_doc=$this->model_wage_doc->getWageDocData();
         $this->data['wage_doc']=$wage_doc;
         $this->render_super_template('super/wage_doc_list',$this->data);
@@ -551,14 +551,14 @@ class Super_wage extends Admin_Controller
 			$delete = $this->model_wage_doc->delete($date);
             if($delete == true) {
                 $this->session->set_flashdata('success', 'Successfully removed');
-                redirect('super_wage/wage_doc_show', 'refresh');
+                redirect('super_wage/wage_doc_list', 'refresh');
             }
             else {
                 $this->session->set_flashdata('error', 'Error occurred!!');
-                redirect('super_wage/wage_doc_show', 'refresh');
+                redirect('super_wage/wage_doc_list', 'refresh');
             }	
 		}
-        $this->render_super_template('super/wage_doc_show',$this->data);
+        $this->render_super_template('super/wage_doc_list',$this->data);
     }
     
 }
