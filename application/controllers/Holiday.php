@@ -777,8 +777,6 @@ class Holiday extends Admin_Controller
             $this->data['submit_status'] =$feedback['submit_status'];
             $this->data['feedback_status'] =$feedback['submit_status'];
         }
-        
-        
 
         $admin_data = $this->model_manager->getManagerById($user_id);
 
