@@ -133,7 +133,8 @@ class Super_holiday extends Admin_Controller
                 case 'Sep':$v="九月\t";break;
                 case 'Oct':$v="十月\t";break;
                 case 'Nov':$v="十一月\t";break;
-                case 'Dece':$v="十二月\t";break;    	
+                case 'Dece':$v="十二月\t";break;
+                case 'user_id':$v="身份证号\t";break; 	
                 default:break;
             }
             if($v != ""){
@@ -141,7 +142,7 @@ class Super_holiday extends Admin_Controller
                 $col++;
             }
         }
- 
+ /*
         // Fetching the table data
         $row = 2;
         
@@ -159,7 +160,7 @@ class Super_holiday extends Admin_Controller
             }
             $row++;
         }
- 
+ */
         $objPHPExcel->setActiveSheetIndex(0);
  
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');

@@ -86,7 +86,7 @@
         <li class="treeview" id="AuditMainMenu">
           <a href="#">
             <i class="fa fa-check-square-o"></i>
-            <span>年假审核</span>
+            <span>年假计划审核</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -95,13 +95,13 @@
           <li id="AuditNav">
             <a href="<?php echo base_url('holiday/audit') ?>">
               <i class="fa fa-circle-o"></i>
-              年假审核
+              年假计划审核
             </a>
           </li>
           <li id="AuditGatherNav">
             <a href="<?php echo base_url('holiday/audit_result') ?>">
             <i class="fa fa-circle-o"></i>
-             年假审核结果
+             年假计划审核结果
             </a>
           </li>
           </ul>

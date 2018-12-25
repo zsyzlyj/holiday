@@ -31,14 +31,14 @@
         <li class="treeview" id="holidaySyncNav">
           <a href="#">
             <i class="fa fa-cloud"></i>
-            <span>年假信息同步</span>
+            <span>年假信息</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="uploadHolidayNav"><a href="<?php echo base_url('super_holiday/holiday_import') ?>"><i class="fa fa-circle-o"></i> 上传年假</a></li>
-            <li id="downloadHolidayNav"><a href="<?php echo base_url('super_holiday/download_page') ?>"><i class="fa fa-circle-o"></i> 下载年假</a></li>
+            <li id="uploadHolidayNav"><a href="<?php echo base_url('super_holiday/holiday_import') ?>"><i class="fa fa-circle-o"></i> 上传年假信息</a></li>
+            <li id="downloadHolidayNav"><a href="<?php echo base_url('super_holiday/download_page') ?>"><i class="fa fa-circle-o"></i> 下载年假模板</a></li>
           </ul>
         </li>
         

@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        年假审核
+        年假计划审核
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Home</li>
@@ -119,7 +119,7 @@
                 
               </div>
               <!-- /.overflow:scroll -->
-              <?php if($feedback_status=='已审核' and $submit_status=='已提交'):?>
+              <?php if($feedback_status=='未审核' and $submit_status=='已提交'):?>
               <div>
               <form action='<?php echo base_url('holiday/audit')?>' method="post">
                 <?php if($current_dept):?>
@@ -128,7 +128,6 @@
                 <div class="form-group">
                     <label for="content"><h4 class="box-title">审核意见</h4></label>
                     <textarea class="form-control" rows="10" name="feedback_content"></textarea>
-                    
                 </div>
                 <label><input name="confirm" type="radio" value="1" />&nbsp;同意 </label>
                 &nbsp;&nbsp;&nbsp;&nbsp;

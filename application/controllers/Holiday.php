@@ -775,7 +775,7 @@ class Holiday extends Admin_Controller
             $feedback=$this->model_feedback->getFeedbackByDept($select_dept);
             $this->data['current_dept']=$select_dept;
             $this->data['submit_status'] =$feedback['submit_status'];
-            $this->data['feedback_status'] =$feedback['submit_status'];
+            $this->data['feedback_status'] =$feedback['feedback_status'];
         }
 
         $admin_data = $this->model_manager->getManagerById($user_id);
