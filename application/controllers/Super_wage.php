@@ -32,44 +32,97 @@ class Super_wage extends Admin_Controller
         $this->data['wage_data']=$this->model_wage->getWageData();
         $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
         $counter=0;
-        foreach($this->data['attr_data'] as $k => $v){
-            
-            if($v=='月度绩效工资小计'){
-                $this->data['yuedustart']=$counter;
-            }
-            if($v=='省核专项奖励小计'){
-                $this->data['yueduend']=$counter-1;
-                $this->data['shengzhuanstart']=$counter;
-            }
-            if($v=='分公司专项奖励小计'){
-                $this->data['shengzhuanend']=$counter-1;
-                $this->data['fengongsistart']=$counter;
-            }
-            if($v=='其他小计'){
-                $this->data['fengongsiend']=$counter-1;
-                $this->data['qitastart']=$counter;
-            }
-            if($v=='教育经费小计'){
-                $this->data['qitaend']=$counter-1;
-                $this->data['jiaoyustart']=$counter;
-            }
-            if($v=='福利费小计'){
-                $this->data['jiaoyuend']=$counter-1;
-                $this->data['fulistart']=$counter;
-            }
-            if($v=='当月月应收合计'){
-                $this->data['fuliend']=$counter-1;
-                $this->data['koufeistart']=$counter+1;
+        if($this->data['attr_data']){
+            foreach($this->data['attr_data'] as $k => $v){
                 
+                if($v=='月度绩效工资小计'){
+                    $this->data['yuedustart']=$counter;
+                }
+                if($v=='省核专项奖励小计'){
+                    $this->data['yueduend']=$counter-1;
+                    $this->data['shengzhuanstart']=$counter;
+                }
+                if($v=='分公司专项奖励小计'){
+                    $this->data['shengzhuanend']=$counter-1;
+                    $this->data['fengongsistart']=$counter;
+                }
+                if($v=='其他小计'){
+                    $this->data['fengongsiend']=$counter-1;
+                    $this->data['qitastart']=$counter;
+                }
+                if($v=='教育经费小计'){
+                    $this->data['qitaend']=$counter-1;
+                    $this->data['jiaoyustart']=$counter;
+                }
+                if($v=='福利费小计'){
+                    $this->data['jiaoyuend']=$counter-1;
+                    $this->data['fulistart']=$counter;
+                }
+                if($v=='当月月应收合计'){
+                    $this->data['fuliend']=$counter-1;
+                    $this->data['koufeistart']=$counter+1;
+                    
+                }
+                if($v=='扣款小计'){
+                    $this->data['koufeiend']=$counter;
+                    break;
+                }
+                $counter++;
             }
-            if($v=='扣款小计'){
-                $this->data['koufeiend']=$counter;
-                break;
-            }
-            $counter++;
         }
 
         $this->render_super_template('super/wage',$this->data);
+    }
+    public function this_month(){
+        $this->data['wage_total']=$this->model_wage_attr->getWageTotalData()['total'];
+        $this->data['wage_data']=$this->model_wage->getWageData();
+        $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
+        $counter=0;
+        if($this->data['attr_data']){
+            foreach($this->data['attr_data'] as $k => $v){
+                
+                if($v=='月度绩效工资小计'){
+                    $this->data['yuedustart']=$counter;
+                }
+                if($v=='省核专项奖励小计'){
+                    $this->data['yueduend']=$counter-1;
+                    $this->data['shengzhuanstart']=$counter;
+                }
+                if($v=='分公司专项奖励小计'){
+                    $this->data['shengzhuanend']=$counter-1;
+                    $this->data['fengongsistart']=$counter;
+                }
+                if($v=='其他小计'){
+                    $this->data['fengongsiend']=$counter-1;
+                    $this->data['qitastart']=$counter;
+                }
+                if($v=='教育经费小计'){
+                    $this->data['qitaend']=$counter-1;
+                    $this->data['jiaoyustart']=$counter;
+                }
+                if($v=='福利费小计'){
+                    $this->data['jiaoyuend']=$counter-1;
+                    $this->data['fulistart']=$counter;
+                }
+                if($v=='当月月应收合计'){
+                    $this->data['fuliend']=$counter-1;
+                    $this->data['koufeistart']=$counter+1;
+                    
+                }
+                if($v=='扣款小计'){
+                    $this->data['koufeiend']=$counter;
+                    break;
+                }
+                $counter++;
+            }
+        }
+
+        $this->render_super_template('super/wage',$this->data);
+    }
+    public function search(){
+
+        
+        $this->render_super_template('super/wage_search',$this->data);
     }
     
     public function proof_Creator($type){
@@ -254,7 +307,7 @@ class Super_wage extends Admin_Controller
         $this->load->library('PHPExcel/IOFactory');
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
-        $filePath = "uploads/".$path["name"];
+        $filePath = "uploads/wage_user/".$path["name"];
         move_uploaded_file($path["tmp_name"],$filePath);
         //根据上传类型做不同处理
         
@@ -387,7 +440,7 @@ class Super_wage extends Admin_Controller
         $this->load->library('PHPExcel/IOFactory');
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
-        $filePath = "uploads/".$path["name"];
+        $filePath = "uploads/wage/".$path["name"];
         move_uploaded_file($path["tmp_name"],$filePath);
         //根据上传类型做不同处理
         
@@ -506,7 +559,7 @@ class Super_wage extends Admin_Controller
     public function wage_doc_put(){
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
-        $filePath = "uploads/".$path["name"];
+        $filePath = "uploads/wage_doc/".$path["name"];
         move_uploaded_file($path["tmp_name"],$filePath);
         $doc_data=array(
             'number' => date('Y-m-d H:i:s'),
@@ -568,5 +621,4 @@ class Super_wage extends Admin_Controller
         }
         $this->render_super_template('super/tax',$this->data);
     }
-    
 }

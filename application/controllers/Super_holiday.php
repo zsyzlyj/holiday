@@ -40,7 +40,7 @@ class Super_holiday extends Admin_Controller
     public function holiday_doc_put(){
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
-        $filePath = "uploads/".$path["name"];
+        $filePath = "uploads/holiday_doc/".$path["name"];
         move_uploaded_file($path["tmp_name"],$filePath);
         $doc_data=array(
             'number' => date('Y-m-d H:i:s'),
@@ -157,13 +157,6 @@ class Super_holiday extends Admin_Controller
                 }
                 else{}
             }
-            /*
-            if($field != 'initflag' and $field != 'user_id')
-            {
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
-            }
- 
-            */
             $row++;
         }
  
@@ -233,12 +226,6 @@ class Super_holiday extends Admin_Controller
                     $col++;
                 }
             }
-            /*
-            if($field != 'user_id' and $field != 'submit_tag')
-            {
-               $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
-            }
-            */
             $row++;
         }
  
@@ -247,7 +234,6 @@ class Super_holiday extends Admin_Controller
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
  
         $filename = date('YmdHis').".xlsx";
-        
         // Sending headers to force the user to download the file
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'.$filename);
@@ -279,7 +265,7 @@ class Super_holiday extends Admin_Controller
         $this->load->library('PHPExcel/IOFactory');
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
-        $filePath = "uploads/".$path["name"];
+        $filePath = "uploads/holiday/".$path["name"];
         move_uploaded_file($path["tmp_name"],$filePath);
         //根据上传类型做不同处理
         
@@ -426,8 +412,6 @@ class Super_holiday extends Admin_Controller
             );
             
             $update_user=true;
-            
-
             //如果假期表中没有这个人，那么就年假计划反馈初始化，假期信息初始化，计划初始化，计划提交初始化，用户初始化，
             //feedback,holiday,plan,submit,user
 
@@ -470,8 +454,6 @@ class Super_holiday extends Admin_Controller
                 'submit_tag' => 0
             );
             $update=$this->model_plan->create($plan_data);
-
-            
 
             //初始化用户信息，每个人新建一条用户记录，用于登陆，密码为身份证后六位
             $Update_user_data=array(
@@ -668,13 +650,12 @@ class Super_holiday extends Admin_Controller
 		}
 	}        
 
-
     public function manager_excel_put(){
         $this->load->library("phpexcel");//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
-        $filePath = "uploads/".$path["name"];
+        $filePath = "uploads/holiday_user/".$path["name"];
 
         move_uploaded_file($path["tmp_name"],$filePath);
         //根据上传类型做不同处理
@@ -784,7 +765,6 @@ class Super_holiday extends Admin_Controller
             
             if($this->model_feedback->getFeedbackByDept($dept)==NULL)
             {
-                echo $dept;
                 $feedback_data=array(
                     'department' => $dept,
                 );
@@ -850,81 +830,6 @@ class Super_holiday extends Admin_Controller
 		$this->data['manager_data'] = $result;
 		$this->data['permission_set']=$permission_set;
 		$this->render_super_template('super/manager', $this->data);
-    }
-    /*
-    ============================================================
-    用户密码修改
-    ============================================================
-    */ 
-    public function setting()
-	{
-		$id = $this->session->userdata('user_id');
-		if($id) {
-			$this->form_validation->set_rules('username', 'username', 'trim|max_length[12]');
-
-			if ($this->form_validation->run() == TRUE) {
-	            // true case
-		        if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))) {
-		        	$data = array(
-		        		'username' => $this->input->post('username'),
-		        	);
-
-		        	$update = $this->model_holiday_users->edit($data, $id);
-		        	if($update == true) {
-		        		$this->session->set_flashdata('success', 'Successfully updated');
-		        		redirect('super/setting/', 'refresh');
-		        	}
-		        	else {
-		        		$this->session->set_flashdata('errors', 'Error occurred!!');
-		        		redirect('super/setting/', 'refresh');
-		        	}
-		        }
-		        else {
-		        	#$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
-					#$this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|required|matches[password]');
-					$this->form_validation->set_rules('password', 'Password', 'trim|required');
-					$this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|required|matches[password]');
-
-					if($this->form_validation->run() == TRUE) {
-
-						$password = md5($this->input->post('password'));
-
-						$data = array(
-			        		'username' => $this->input->post('username'),
-			        		'password' => $password,
-			        	);
-
-						$update = $this->model_holiday_users->edit($data, $id);
-						
-			        	if($update == true) {
-			        		$this->session->set_flashdata('success', 'Successfully updated');
-			        		redirect('super/setting/', 'refresh');
-			        	}
-			        	else {
-			        		$this->session->set_flashdata('errors', 'Error occurred!!');
-			        		redirect('super/setting/', 'refresh');
-			        	}
-					}
-			        else {
-			            // false case
-			        	$user_data = $this->model_holiday_users->getUserData($id);
-
-			        	$this->data['user_data'] = $user_data;
-
-						$this->render_super_template('super/setting', $this->data);	
-			        }	
-
-		        }
-	        }
-	        else {
-	            // false case
-	        	$user_data = $this->model_holiday_users->getUserData($id);
-
-	        	$this->data['user_data'] = $user_data;
-
-				$this->render_super_template('super/setting', $this->data);	
-	        }	
-		}
     }
     public function notification()
     {
