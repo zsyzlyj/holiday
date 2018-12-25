@@ -166,8 +166,8 @@ CREATE TABLE `super_user` (
 --
 
 INSERT INTO `super_user` (`user_id`, `password`, `permission`) VALUES
-('lyjw', 'c21d405c2dcbc32c12de40616ca99528', '工资'),
-('lyjh', '5f58d4ae95272fab5b802711157041ce', '休假');
+('lyjw', md5('hr'), '工资'),
+('lyjh', md5('hr'), '休假');
 
 -- --------------------------------------------------------
 
