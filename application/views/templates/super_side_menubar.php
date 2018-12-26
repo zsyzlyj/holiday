@@ -24,7 +24,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="uploadHolidayDocNav"><a href="<?php echo base_url('super_holiday/holiday_doc_import') ?>"><i class="fa fa-circle-o"></i> 文件导入</a></li>
+            <li id="uploadHolidayDocNav"><a href="<?php echo base_url('super_holiday/holiday_doc_import') ?>"><i class="fa fa-circle-o"></i> 年假文件导入</a></li>
             <li id="showHolidayDocNav"><a href="<?php echo base_url('super_holiday/holiday_doc_list') ?>"><i class="fa fa-circle-o"></i> 年假文件汇总</a></li>
           </ul>
         </li>
@@ -102,7 +102,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="uploadWageDocNav"><a href="<?php echo base_url('super_wage/wage_doc_import') ?>"><i class="fa fa-circle-o"></i> 文件导入</a></li>
+            <li id="uploadWageDocNav"><a href="<?php echo base_url('super_wage/wage_doc_import') ?>"><i class="fa fa-circle-o"></i> 薪酬文件导入</a></li>
             <li id="showWageDocNav"><a href="<?php echo base_url('super_wage/wage_doc_list') ?>"><i class="fa fa-circle-o"></i> 薪酬文件汇总</a></li>
           </ul>
         </li>

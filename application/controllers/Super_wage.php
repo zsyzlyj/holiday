@@ -520,7 +520,7 @@ class Super_wage extends Admin_Controller
 
         //把数据打包，写入数据库
         $this->model_wage->deleteAll();
-        
+        $wage_set=array();
         foreach($content as $k => $v){
             $content_data=array();    
             foreach($v as $a => $b){
@@ -531,12 +531,20 @@ class Super_wage extends Admin_Controller
                     case 3:$content_data['name']=$b;break;
                     default:
                         $content_data['content'.($a-3)]=$b;
+                        #echo ($a-3).'<br />';
                         break;
                 }
             }
-            $this->model_wage->create($content_data);
+            if($a!=$attr_counter-1){
+                #echo ($attr_counter-4).'<br />';
+                $content_data['content'.($attr_counter-4)]="";
+            }
+
+            array_push($wage_set,$content_data);
             unset($content_data);
         }
+        $this->model_wage->createbatch($wage_set);
+        unset($wage_set);
     }
     
     public function wage_import($filename=NULL)

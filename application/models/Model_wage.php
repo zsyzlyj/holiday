@@ -52,7 +52,13 @@ class Model_wage extends CI_Model
 			return ($insert == true) ? true : false;
 		}
 	}
-	
+	public function createbatch($data)
+	{
+		if($data) {
+			$insert = $this->db->insert_batch('wage', $data);
+			return ($insert == true) ? true : false;
+		}
+	}
 	public function deleteAll()
 	{
 		$sql='delete from wage';
