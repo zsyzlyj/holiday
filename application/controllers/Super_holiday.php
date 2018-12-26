@@ -18,6 +18,9 @@ class Super_holiday extends Admin_Controller
         $this->load->model('model_feedback'); 
         $this->data['permission']=$this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_id');
+        if($this->data['user_name']==NULL){
+            redirect('super_auth/login','refresh');
+        }
     }
     /*
     ============================================================
@@ -28,9 +31,7 @@ class Super_holiday extends Admin_Controller
     ============================================================
     */ 
     public function index(){
-        if($this->data['user_name']==NULL){
-            redirect('super_auth/login','refresh');
-        }
+        
         $this->holiday();
     }
     public function holiday(){
@@ -347,6 +348,9 @@ class Super_holiday extends Admin_Controller
         $this->model_manager->deleteAll();
         /* excel导入时间的方法！ */
         $initflag=0;
+        $holiday_set=array();
+        $plan_set=array();
+        $user_set=array();
         foreach($column as $k => $v)
         {
             foreach($v as $a => $b)
@@ -436,8 +440,8 @@ class Super_holiday extends Admin_Controller
             $Update_data['initflag']=1;
             $Update_data['Used']=$Update_data['Jan']+$Update_data['Feb']+$Update_data['Mar']+$Update_data['Apr']+$Update_data['May']+$Update_data['Jun']+$Update_data['Jul']+$Update_data['Aug']+$Update_data['Sep']+$Update_data['Oct']+$Update_data['Nov']+$Update_data['Dece'];
     
-            $update=$this->model_holiday->create($Update_data);
-
+            #$update=$this->model_holiday->create($Update_data);
+            array_push($holiday_set,$Update_data);
             //初始化假期计划信息，每个人新建一条假期的记录
             
             $plan_data=array(
@@ -454,8 +458,8 @@ class Super_holiday extends Admin_Controller
                 'fourthquater' => 0,
                 'submit_tag' => 0
             );
-            $update=$this->model_plan->create($plan_data);
-
+            #$update=$this->model_plan->create($plan_data);
+            array_push($plan_set,$plan_data);
             //初始化用户信息，每个人新建一条用户记录，用于登陆，密码为身份证后六位
             $Update_user_data=array(
                 'user_id' => $User_id,
@@ -463,8 +467,12 @@ class Super_holiday extends Admin_Controller
                 'password' => md5(substr($User_id,-6)),
                 'permission' => '3'
             );
-            $update_user=$this->model_holiday_users->create($Update_user_data,$name);   
+            #$update_user=$this->model_holiday_users->create($Update_user_data,$name);   
+            array_push($user_set,$Update_user_data);
         }
+        $this->model_holiday->createbatch($holiday_set);
+        $this->model_plan->createbatch($plan_set);
+        $this->model_holiday_users->createbatch($user_set);
     }
     public function holiday_import($filename=NULL)
     {
@@ -542,7 +550,6 @@ class Super_holiday extends Admin_Controller
                 }
                 $result[$k]=$v;
             }
-            
         }
 
         $this->data['plan_data'] = $result;
@@ -711,7 +718,18 @@ class Super_holiday extends Admin_Controller
 		$initflag=0;
         $reset=false;
         $manager_data=$this->model_manager->getManagerData();
+        $manager_set=array();
+        $feedback_set=array();
         $this->model_feedback->deleteAll();
+        //重制所有用户的权限
+        
+        $User_default=array(
+            'permission' => 3
+        );
+        $user=$this->model_holiday_users->getUserData();
+        foreach ($user as $c => $d){
+            $this->model_holiday_users->update($User_default,$user_id);
+        }
         foreach($column as $k => $v)
         {
             foreach($v as $a => $b)
@@ -729,28 +747,9 @@ class Super_holiday extends Admin_Controller
 				'dept' => $dept,
 				'role' => $role
             );
-            //重制所有用户的权限
-			if(!$reset){
-				$User_default=array(
-					'permission' => 3
-				);
-				$user=$this->model_holiday_users->getUserData();
-				foreach ($user as $c => $d){
-					$this->model_holiday_users->update($User_default,$user_id);
-				}
-				$reset=true;
-			}
             
-            //创建管理人员
-            $update_user=false;
-            
-            if($this->model_manager->getManagerbyID($user_id))
-            {
-				$update=$this->model_manager->update($Update_data,$user_id);
-            }
-            else{
-				$update=$this->model_manager->create($Update_data);
-            }
+            array_push($manager_set,$Update_data);
+            //创建管理人员			
 			if($Update_data['role']=='综管员'){
 				$permission=1;
 			}
@@ -760,28 +759,20 @@ class Super_holiday extends Admin_Controller
 			$Update_user=array(
 				'permission' => $permission
 			);
-            $update_user=$this->model_holiday_users->update($Update_user,$user_id);
-            
-            //初始化年假计划反馈，每个部门新建一个反馈记录，部门为主键
-            
-            if($this->model_feedback->getFeedbackByDept($dept)==NULL)
+            $update_user=$this->model_holiday_users->update($Update_user,$user_id);        
+            //初始化年假计划反馈，每个部门新建一个反馈记录，部门为主键            
+            if(in_array($dept,$feedback_set))
             {
                 $feedback_data=array(
                     'department' => $dept,
                 );
-                $this->model_feedback->create($feedback_data);
+                array_push($feedback_set,$feedback_data);
+                unset($feedback_data);
             }
-
-            if($update == true and $update_user== true) {
-                $response['success'] = true;
-                $response['messages'] = 'Succesfully updated';
-            }
-            else {
-                $response['success'] = false;
-                $response['messages'] = 'Error in the database while updated the brand information';			
-            }
-            
+            unset($Update_data);
         }
+        $this->model_manager->createbatch($manager_set);
+        $this->model_feedback->createbatch($feedback_set);
     }
 
     public function manager_import()
@@ -844,7 +835,6 @@ class Super_holiday extends Admin_Controller
             if($v['type']=='plan')
                 $v['type']='计划';
             $result[$k] = $v;
-            
 		}
 		
 		$this->data['notice_data'] = $result;

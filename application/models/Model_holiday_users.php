@@ -29,6 +29,14 @@ class Model_holiday_users extends CI_Model
 			return ($create == true) ? true : false;
 		}
 	}
+	
+	public function createbatch($data)
+	{
+		if($data) {
+			$insert = $this->db->insert_batch('holiday_users', $data);
+			return ($insert == true) ? true : false;
+		}
+	}
 	/*
 		更新用户的权限
 	*/

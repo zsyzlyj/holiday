@@ -32,7 +32,7 @@
 
           <div class="box">
             <!-- /.box-header -->
-            <form role="form" action="<?php base_url('notification/publish') ?>" method="post">
+            <form role="form" action="<?php base_url('super_holiday/publish_plan') ?>" method="post">
               <div class="box-body">
 
                 <?php echo validation_errors(); ?>

@@ -31,7 +31,7 @@
         <li class="treeview" id="holidaySyncNav">
           <a href="#">
             <i class="fa fa-cloud"></i>
-            <span>年假信息</span>
+            <span>年假信息更新</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

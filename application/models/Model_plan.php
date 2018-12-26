@@ -54,6 +54,14 @@ class Model_plan extends CI_Model
 			return ($insert == true) ? true : false;
 		}
 	}
+	
+	public function createbatch($data)
+	{
+		if($data) {
+			$insert = $this->db->insert_batch('plan', $data);
+			return ($insert == true) ? true : false;
+		}
+	}
 
 	public function update($data, $id)
 	{

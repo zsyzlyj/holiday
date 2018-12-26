@@ -22,6 +22,9 @@ class Holiday extends Admin_Controller
         $this->load->model('model_feedback');
         $this->data['notice_data'] = $this->model_notice->getNoticeLatestHoliday();
         $this->data['holiday_doc'] = $this->model_holiday_doc->getHolidayDocData();
+        if($this->data['user_name']==NULL){
+            redirect('super_auth/login','refresh');
+        }
 	}
 
 	public function index()

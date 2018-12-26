@@ -50,7 +50,13 @@ class Model_feedback extends CI_Model
 			return ($insert == true) ? true : false;
 		}
 	}
-
+	public function createbatch($data)
+	{
+		if($data) {
+			$insert = $this->db->insert_batch('feedback', $data);
+			return ($insert == true) ? true : false;
+		}
+	}
 	public function update($data, $dept)
 	{
 		if($data && $dept) {

@@ -62,6 +62,14 @@ class Model_holiday extends CI_Model
 		}
 	}
 
+	public function createbatch($data)
+	{
+		if($data) {
+			$insert = $this->db->insert_batch('holiday', $data);
+			return ($insert == true) ? true : false;
+		}
+	}
+
 	public function update($data, $id)
 	{
 		if($data && $id) {

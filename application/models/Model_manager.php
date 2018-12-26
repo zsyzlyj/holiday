@@ -37,6 +37,14 @@ class Model_manager extends CI_Model
 			return ($create == true) ? true : false;
 		}
 	}
+	
+	public function createbatch($data)
+	{
+		if($data) {
+			$insert = $this->db->insert_batch('manager', $data);
+			return ($insert == true) ? true : false;
+		}
+	}
 	/*
 		更新用户的权限
 	*/
