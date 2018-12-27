@@ -38,7 +38,13 @@
               <h3 class="box-title">修改密码</h3>
             </div>
             <!-- /.box-header -->
-            <form role="form" action="<?php base_url('users/setting') ?>" method="post">
+            <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
+            <form role="form" action="<?php base_url('auth/wage_setting') ?>" method="post">
+            <?php endif; ?>
+            <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
+            <form role="form" action="<?php base_url('auth/holiday_setting') ?>" method="post">
+            <?php endif; ?>
+            
               <div class="box-body">
 
                 <?php echo validation_errors(); ?>

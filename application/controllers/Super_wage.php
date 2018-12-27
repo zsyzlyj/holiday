@@ -14,6 +14,7 @@ class Super_wage extends Admin_Controller
         $this->load->model('model_wage_users');
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
+        $this->load->model('model_wage_record');
         $this->load->model('model_wage');
         $this->load->model('model_wage_doc');
         $this->data['permission']=$this->session->userdata('permission');
@@ -357,6 +358,7 @@ class Super_wage extends Admin_Controller
         $counter=0;
 
         $this->model_wage_tag->deleteAll();
+        $this->model_wage_users->deleteAll();
         $wage_set=array();
         $user_set=array();
         foreach($data as $k => $v){
@@ -432,21 +434,34 @@ class Super_wage extends Admin_Controller
     public function wage_excel_put(){
         $this->load->library("phpexcel");//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
-        //先做一个文件上传，保存文件
-        $path=$_FILES['file'];
-        $filePath = "uploads/wage/".$path["name"];
-        move_uploaded_file($path["tmp_name"],$filePath);
+ 
         //根据上传类型做不同处理
         
         if (strstr($_FILES['file']['name'],'xlsx')) {
             $reader = new PHPExcel_Reader_Excel2007();
+            //保存文件
+            $path=$_FILES['file'];
+            $filePath = "uploads/wage/".date('Ym').".xlsx";
+            move_uploaded_file($path["tmp_name"],$filePath);
         }
         else{
             if (strstr($_FILES['file']['name'], 'xls')) {
                 $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
+                //保存文件
+                $path=$_FILES['file'];
+                $filePath = "uploads/wage/".date('Ym').".xls";
+                move_uploaded_file($path["tmp_name"],$filePath);
             }
         }
-
+        //薪酬文件记录写入
+        //如果有相同时期的文件，直接覆盖记录，如果没有的话，那就创建新文件记录
+        if($this->model_wage_record->getRecordByDate(date('Ym'))===null){
+            $this->model_wage_record->create(array('upload_date' => date('Ym'),'path' => $filePath));    
+        }
+        else{
+            $this->model_wage_record->update(array('path' => $filePath),date('Ym'));
+        }
+        
         $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
         $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
         $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表

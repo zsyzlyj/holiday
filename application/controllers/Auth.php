@@ -208,9 +208,9 @@ class Auth extends Admin_Controller
 		        if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))) {
 					$this->session->set_flashdata('errors', '修改失败，新密码不能为空');
 					if($type=='holiday')
-						redirect('users/holiday_setting', 'refresh');
+						redirect('auth/holiday_setting', 'refresh');
 					if($type=='wage')
-						redirect('users/wage_setting', 'refresh');
+						redirect('auth/wage_setting', 'refresh');
 		        }
 		        else {
 					$this->form_validation->set_rules('password', 'Password', 'trim|required');
@@ -230,17 +230,17 @@ class Auth extends Admin_Controller
 							$update = $this->model_wage_users->edit($data, $id);
 						
 			        	if($update == true) {
-			        		$this->session->set_flashdata('success', 'Successfully updated');
-			        		redirect('users/'.$type.'_setting/', 'refresh');
+			        		$this->session->set_flashdata('success', '修改成功！');
+			        		redirect('auth/'.$type.'_setting/', 'refresh');
 			        	}
 			        	else {
-			        		$this->session->set_flashdata('errors', 'Error occurred!!');
-			        		redirect('users/'.$type.'_setting/', 'refresh');
+			        		$this->session->set_flashdata('errors', '遇到未知错误!!');
+			        		redirect('auth/'.$type.'_setting/', 'refresh');
 			        	}
 					}
 			        else {
 						// false case
-						redirect('users/'.$type.'_setting', 'refresh');
+						redirect('auth/'.$type.'_setting', 'refresh');
 			        }
 
 		        }

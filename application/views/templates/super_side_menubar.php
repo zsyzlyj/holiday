@@ -92,7 +92,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="uploadWageFileNav"><a href="<?php echo base_url('super_wage/wage_import') ?>"><i class="fa fa-circle-o"></i><span>薪酬导入</span></a></li>
+            <li id="uploadWageFileNav"><a href="<?php echo base_url('super_wage/wage_import') ?>"><i class="fa fa-circle-o"></i><span>薪酬信息导入</span></a></li>
             <li id="downloadWageNav"><a href="<?php echo base_url('super_wage/download_page') ?>"><i class="fa fa-circle-o"></i> 下载薪酬模板</a></li>
           </ul>
         </li>

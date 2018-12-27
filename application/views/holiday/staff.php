@@ -90,7 +90,7 @@
                         <td style="text-align: center;border-color:black;"><?php echo $v['Bonus']; ?></td>
                         <td style="text-align: center;border-color:black;">    
                           <!-- 打开弹窗按钮 -->
-                          <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><font color='red'><?php echo $v['Used']; ?></font></a>
+                          <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><font color='red'><u><?php echo $v['Used']; ?></u></font></a>
                           
                           <!-- 弹窗 -->
                           <div id="myModal" class="modal fade" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -99,7 +99,7 @@
                             <div class="modal-content">
                               <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h3>每月已休假明细</h3>
+                                <h3>已休假明细</h3>
                               </div>
 
                               <div class="modal-body">

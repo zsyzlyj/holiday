@@ -54,17 +54,14 @@
       </div>
       <div class="row">
         <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> 记住我
-            </label>
-          </div>
+
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
           <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
         </div>
         <!-- /.col -->
+        <hr />
         <div class="col-xs-8">
           <label>
               <a href="<?php echo base_url('auth/holiday_login') ?>"> 年假系统</a>

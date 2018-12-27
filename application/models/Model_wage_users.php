@@ -62,7 +62,7 @@ class Model_wage_users extends CI_Model
 
 	public function deleteAll()
 	{
-		$sql='delete from users';
+		$sql='delete from wage_users';
 		$delete = $this->db->query($sql);
 	}
 }

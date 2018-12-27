@@ -55,7 +55,7 @@ class Holiday extends Admin_Controller
             'action_time' => date('Y-m-d H:i:s')
         );
         $this->model_log_action->create($log);
-        $user_id=$this->session->userdata('user_id');
+
         
 		$this->render_template('holiday/staff', $this->data);
     }
@@ -425,10 +425,7 @@ class Holiday extends Admin_Controller
     */
     public function admin()
 	{
-        $user_id=$this->session->userdata('user_id'); 
-        $this->data['holiday_data'] = $this->model_holiday->getHolidayById($user_id);        
-        $this->data['notice_data'] = $this->model_notice->getNoticeLatestHoliday();
-		$this->render_template('holiday/staff', $this->data);
+        $this->staff();
     }
 
     public function mydeptholiday()
@@ -528,26 +525,8 @@ class Holiday extends Admin_Controller
     */
     public function manager()
 	{
-        $user_id=$this->session->userdata('user_id');
-        $holiday_data = $this->model_holiday->getHolidayById($user_id);
-        $notice_data = $this->model_notice->getNoticeLatestHoliday();
-        $result = array();
-        $notice_result=array();
-        foreach ($notice_data as $k => $v) {
-            $notice_result[$k] = $v;
-        }
-        
-        foreach ($holiday_data as $k => $v) {
-            $result[$k] = $v;
-        }
-
-        $this->data['holiday_data'] = $result;
-        $this->data['notice_data'] = $notice_result;
-        
-
-		$this->render_template('holiday/staff', $this->data);
+        $this->staff();
     }
-
 
     /*
     ==============================================================================
@@ -581,8 +560,6 @@ class Holiday extends Admin_Controller
             $update = $this->model_plan->update($data, $plan_data['name']);
         }
         $this->data['plan_data'] = $plan_data;
-        $this->data['notice_data'] = $notice_result;
-
 		$this->render_template('holiday/staff_plan', $this->data);
     }
     /*

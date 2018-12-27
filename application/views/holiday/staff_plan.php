@@ -83,11 +83,11 @@
                     <?php $v=$plan_data ?>
                       <tr style="text-align:center;border-color:black;">
                       
-                        <td style="text-align:center;border-color:black;"><?php echo $v['name']; ?></td>
-                        <td style="text-align:center;border-color:black;"><?php echo $v['Lastyear']; ?></td>
-                        <td style="text-align:center;border-color:black;"><?php echo $v['Thisyear']; ?></td>
-                        <td style="text-align:center;border-color:black;"><?php echo $v['Bonus']; ?></td>
-                        <td style="text-align:center;border-color:black;"><?php echo $v['Totalday']; ?></td>
+                        <td style="text-align:center;border-color:black;"><font size="3"><?php echo $v['name']; ?></font></td>
+                        <td style="text-align:center;border-color:black;"><font size="4"><?php echo $v['Lastyear']; ?></font></td>
+                        <td style="text-align:center;border-color:black;"><font size="4"><?php echo $v['Thisyear']; ?></font></td>
+                        <td style="text-align:center;border-color:black;"><font size="4"><?php echo $v['Bonus']; ?></font></td>
+                        <td style="text-align:center;border-color:black;"><font size="4"><?php echo $v['Totalday']; ?></font></td>
                         <?php if($v['submit_tag']==1):?>
                         <td style="text-align:center;border-color:black;"><?php echo $v['firstquater']; ?></td>
                         <td style="text-align:center;border-color:black;"><?php echo $v['secondquater']; ?></td>
@@ -115,6 +115,10 @@
                 </tbody>
                 
               </table>
+              <hr />
+              <div>
+              <h5><font color="red">（温馨提示：年假计划只能填写一次，提交后不可修改）</font></h5>
+              </div>
               </div>
               <!-- /.overflow:scroll -->
             </div>

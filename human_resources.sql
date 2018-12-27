@@ -513,6 +513,16 @@ CREATE TABLE `wage_users` (
   `permission` int(11) NOT NULL COMMENT '1是部门负责人，3是员工 '
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `wage_users`
+--
+
+CREATE TABLE `wage_record` (
+  `upload_date` varchar(20) NOT NULL,
+  `path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 --
 -- Indexes for dumped tables
 --

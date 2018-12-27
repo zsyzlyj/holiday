@@ -62,11 +62,7 @@ class Wage extends Admin_Controller
     */
     public function manager()
 	{
-        $user_id=$this->session->userdata('user_id');
-
-        $this->data['holiday_data'] = $this->model_wage->getHolidayById($user_id);
-        
-		$this->render_template('holiday/staff', $this->data);
+        $this->staff();
     }
     /*
     ==============================================================================
@@ -352,4 +348,7 @@ class Wage extends Admin_Controller
         $this->proof_Creator("one_child");
     }
 
+    public function search(){
+        $this->render_template('wage/search', $this->data);
+    }
 }
