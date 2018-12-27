@@ -356,6 +356,9 @@ class Super_wage extends Admin_Controller
         $proof_tag='';
         $counter=0;
 
+        $this->model_wage_tag->deleteAll();
+        $wage_set=array();
+        $user_set=array();
         foreach($data as $k => $v){
             #$row_data=array();
             if($counter>1){
@@ -372,9 +375,6 @@ class Super_wage extends Admin_Controller
                         case '收入证明标识':$proof_tag=$b;break;
                     }
                 }
-                #$row_data();
-                #unset($row_data);
-                
                 //新建用户标识
                 $row_data=array(
                     'name' => $name,
@@ -385,13 +385,7 @@ class Super_wage extends Admin_Controller
                     'role' => $role,
                     'proof_tag' => $proof_tag
                 );
-                if($this->model_wage_tag->getTagById($user_id)==NULL){
-                    $this->model_wage_tag->create($row_data);
-                }
-                else{
-                    $this->model_wage_tag->update($row_data,$user_id);
-                }
-                
+                array_push($wage_set,$row_data);
                 unset($row_data);
                 //新建登陆用户
                 switch($role){
@@ -405,17 +399,15 @@ class Super_wage extends Admin_Controller
                     'password' => md5(substr($user_id,-6)),
                     'permission' => $permission,
                 );
-                if($this->model_wage_users->getUserById($user_id)==NULL){
-                    $this->model_wage_users->create($user_data);
-                }
-                else{
-                    $this->model_wage_users->update($user_data,$user_id);
-                }
+                array_push($user_set,$user_data);
                 unset($user_data);
             }
-            
-            $counter++;   
+            $counter++;
         }
+        $this->model_wage_tag->createbatch($wage_set);
+        $this->model_wage_users->createbatch($user_set);
+        unset($wage_set);
+        unset($user_set);
     }
     public function wage_tag_import($filename=NULL)
     {
@@ -429,7 +421,7 @@ class Super_wage extends Admin_Controller
                 else
                 {
                     $this->wage_tag_excel_put();
-                    $this->index();
+                    $this->tag();
                 }
             }
         }
@@ -649,7 +641,6 @@ class Super_wage extends Admin_Controller
         $wage_doc=$this->model_wage_doc->getWageDocData();
         $this->data['wage_doc']=$wage_doc;
         $this->render_super_template('super/wage_doc_list',$this->data);
-        
     }
     
     
@@ -690,6 +681,61 @@ class Super_wage extends Admin_Controller
 		$this->data['manager_data'] = $result;
 		$this->data['permission_set']=$permission_set;
 		$this->render_super_template('super/wage_tag', $this->data);
+    }
+    public function notification(){
+        $notice_data = $this->model_notice->getNoticeData();
+
+		$result = array();
+		
+		foreach ($notice_data as $k => $v) {
+            if($v['type']=='wage'){
+                $v['type']='假期';
+                $result[$k] = $v;
+            }
+		}
+		
+		$this->data['notice_data'] = $result;
+		unset($result);
+        $this->render_super_template('super/wage_notification', $this->data);
+    }
+    public function publish_wage(){
+        $this->form_validation->set_rules('title', 'title', 'required');
+		$this->form_validation->set_rules('content', 'content', 'required');
+		
+        if ($this->form_validation->run() == TRUE) {
+            // true case
+			$title=$this->input->post('title');
+			$content=$this->input->post('content');
+        	$data = array(
+				'pubtime' => date('Y-m-d H:i:s'),
+				'username' => $this->session->userdata('user_id'),
+        		'title' => $this->input->post('title'),
+				'content' => $this->input->post('content'),
+				'type' => 'wage'
+			);
+			$create = $this->model_notice->create($data);
+        	if($create == true) {
+        		$this->session->set_flashdata('success', 'Successfully created');
+        		redirect('super_wage/notification', 'refresh');
+        	}
+        	else {
+        		$this->session->set_flashdata('errors', 'Error occurred!!');
+        		redirect('super_wage/publish_wage', 'refresh');
+        	}
+
+        }
+        else {
+            // false case
+			$notice_data = $this->model_notice->getNoticeData();
+
+			$result = array();
+			
+			foreach ($notice_data as $k => $v) {
+				$result[$k] = $v;
+			}
+			$this->data['notice_data'] = $result;
+            $this->render_super_template('super/wage_publish_wage', $this->data);
+        }	
     }
     public function tax_counter(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){

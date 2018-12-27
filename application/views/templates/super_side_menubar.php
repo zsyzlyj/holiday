@@ -55,6 +55,7 @@
             <li id="manageHolidayUserNav"><a href="<?php echo base_url('super_holiday/manager') ?>"><i class="fa fa-circle-o"></i> 综管、部门负责人管理</a></li>
           </ul>
         </li>
+        
         <li class="treeview" id="mainNoticeNav">
           <a href="#">
             <i class="fa fa-bullhorn"></i>
@@ -66,7 +67,7 @@
           <ul class="treeview-menu">
             <li id="publish_holiday"><a href="<?php echo base_url('super_holiday/publish_holiday') ?>"><i class="fa fa-circle-o"></i> 发布假期公告</a></li>        
             <li id="publish_plan"><a href="<?php echo base_url('super_holiday/publish_plan') ?>"><i class="fa fa-circle-o"></i> 发布年假计划公告</a></li>        
-            <li id="manage_notice"><a href="<?php echo base_url('super_holiday/notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
+            <li id="manage_holiday_notice"><a href="<?php echo base_url('super_holiday/notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
           </ul>
         </li>
         
@@ -109,7 +110,7 @@
             <li id="manageWageUserNav"><a href="<?php echo base_url('super_wage/tag') ?>"><i class="fa fa-circle-o"></i> 综管、部门负责人管理</a></li>
           </ul>
         </li>
-        <li class="treeview" id="mainNoticeNav">
+        <li class="treeview" id="wageNoticeNav">
           <a href="#">
             <i class="fa fa-bullhorn"></i>
             <span>公告</span>
@@ -118,9 +119,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="publish_holiday"><a href="<?php echo base_url('super_holiday/publish_holiday') ?>"><i class="fa fa-circle-o"></i> 发布假期公告</a></li>        
-            <li id="publish_plan"><a href="<?php echo base_url('super_holiday/publish_plan') ?>"><i class="fa fa-circle-o"></i> 发布年假计划公告</a></li>        
-            <li id="manage_notice"><a href="<?php echo base_url('super_holiday/notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
+            <li id="wage_publish_wage"><a href="<?php echo base_url('super_wage/publish_wage') ?>"><i class="fa fa-circle-o"></i> 发布假期公告</a></li>        
+            <li id="manage_wage_notice"><a href="<?php echo base_url('super_wage/notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
           </ul>
         </li>
         <li class="treeview" id="uploadWageDoc">

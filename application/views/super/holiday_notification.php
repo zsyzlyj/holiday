@@ -86,7 +86,7 @@
  <script type="text/javascript">
     $(document).ready(function() {
 
-      $("#mainNoticeNav").addClass('active');
-      $("#manage_notice").addClass('active');
+      $("#holidayNoticeNav").addClass('active');
+      $("#manage_holiday_notice").addClass('active');
     });
   </script>

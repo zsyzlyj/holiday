@@ -29,6 +29,13 @@ class Model_wage_users extends CI_Model
 			return ($create == true) ? true : false;
 		}
 	}
+	public function createbatch($data = '')
+	{
+		if($data) {
+			$create = $this->db->insert_batch('wage_users', $data);
+			return ($create == true) ? true : false;
+		}
+	}
 	/*
 		更新用户的权限
 	*/
@@ -57,13 +64,5 @@ class Model_wage_users extends CI_Model
 	{
 		$sql='delete from users';
 		$delete = $this->db->query($sql);
-	}
-	public function countTotalUsers()
-	{
-		$sql = "SELECT * FROM users";
-		
-		$query = $this->db->query($sql);
-		echo $query->num_rows();
-		return $query->num_rows();
 	}
 }

@@ -72,7 +72,7 @@
  
  <script type="text/javascript">
     $(document).ready(function() {
-      $("#mainNoticeNav").addClass('active');
+      $("#holidayNoticeNav").addClass('active');
       $("#publish_holiday").addClass('active');
     });
 </script>

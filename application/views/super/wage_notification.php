@@ -9,7 +9,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Users</li>
+        <li class="active">Notification</li>
       </ol>
     </section>
 
@@ -36,7 +36,7 @@
             <div class="box-body">
               <div style="overflow:scroll;">
               
-              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;" width="100%">
+              <table id="wageTable" class="table table-bordered table-striped" style="overflow:scroll;" width="100%">
                 <thead>
                 <tr>
                   <th>发布时间</th>
@@ -86,7 +86,7 @@
  <script type="text/javascript">
     $(document).ready(function() {
 
-      $("#mainNoticeNav").addClass('active');
-      $("#manage_notice").addClass('active');
+      $("#wageNoticeNav").addClass('active');
+      $("#manage_wage_notice").addClass('active');
     });
   </script>

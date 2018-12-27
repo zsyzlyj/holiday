@@ -84,12 +84,5 @@ class Model_holiday extends CI_Model
 		$sql='delete from holiday';
 		$delete = $this->db->query($sql);
 	}
-	
-	public function countTotalholiday()
-	{
-		$sql = "SELECT * FROM holiday";
-		$query = $this->db->query($sql);
-		return $query->num_rows();
-	}
 
 }

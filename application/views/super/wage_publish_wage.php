@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        公告编辑（年假计划）
+        公告编辑（薪酬）
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Home</li>
@@ -32,7 +32,7 @@
 
           <div class="box">
             <!-- /.box-header -->
-            <form role="form" action="<?php base_url('super_holiday/publish_plan') ?>" method="post">
+            <form role="form" action="<?php base_url('super_wage/publish_wage') ?>" method="post">
               <div class="box-body">
 
                 <?php echo validation_errors(); ?>
@@ -53,7 +53,7 @@
 
               <div class="box-footer">
                 <button type="submit" class="btn btn-success">发布</button>
-                <a href="<?php echo base_url('super_holiday/notification') ?>" class="btn btn-warning">返回</a>
+                <a href="<?php echo base_url('super_wage/notification') ?>" class="btn btn-warning">返回</a>
               </div>
             </form>
           </div>
@@ -72,7 +72,7 @@
  
  <script type="text/javascript">
     $(document).ready(function() {
-      $("#holidayNoticeNav").addClass('active');
-      $("#publish_plan").addClass('active');
+      $("#wageNoticeNav").addClass('active');
+      $("#wage_publish_wage").addClass('active');
     });
 </script>

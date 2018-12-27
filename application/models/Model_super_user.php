@@ -53,12 +53,4 @@ class Model_super_user extends CI_Model
 		return ($delete == true) ? true : false;
 	}
 
-	public function countTotalUsers()
-	{
-		$sql = "SELECT * FROM super_user";
-		
-		$query = $this->db->query($sql);
-		echo $query->num_rows();
-		return $query->num_rows();
-	}
 }

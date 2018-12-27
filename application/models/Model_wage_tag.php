@@ -29,6 +29,13 @@ class Model_wage_tag extends CI_Model
 			return ($create == true) ? true : false;
 		}
 	}
+	public function createbatch($data)
+	{
+		if($data) {
+			$insert = $this->db->insert_batch('wage_tag', $data);
+			return ($insert == true) ? true : false;
+		}
+	}
 	/*
 		更新用户的权限
 	*/
@@ -42,21 +49,13 @@ class Model_wage_tag extends CI_Model
 	public function delete($id)
 	{
 		$this->db->where('user_id', $id);
-		$delete = $this->db->delete('users');
+		$delete = $this->db->delete('wage_tag');
 		return ($delete == true) ? true : false;
 	}
 
 	public function deleteAll()
 	{
-		$sql='delete from users';
+		$sql='delete from wage_tag';
 		$delete = $this->db->query($sql);
-	}
-	public function countTotalUsers()
-	{
-		$sql = "SELECT * FROM users";
-		
-		$query = $this->db->query($sql);
-		echo $query->num_rows();
-		return $query->num_rows();
 	}
 }

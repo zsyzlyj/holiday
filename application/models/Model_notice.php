@@ -44,11 +44,4 @@ class Model_notice extends CI_Model
 		}
 	}
 
-	public function countTotalnotice()
-	{
-		$sql = "SELECT * FROM notice";
-		$query = $this->db->query($sql);
-		return $query->num_rows();
-	}
-
 }
