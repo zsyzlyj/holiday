@@ -71,7 +71,6 @@ class Admin_Controller extends MY_Controller
 		if($session_data['logged_in_wage'] == TRUE) {
 			redirect('wage/index', 'refresh');
 		}
-		#echo $_SERVER['PHP_SELF']."<br>"; 
 	}
 
 	public function wage_not_logged_in()

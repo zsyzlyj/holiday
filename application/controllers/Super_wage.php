@@ -522,12 +522,10 @@ class Super_wage extends Admin_Controller
                     case 3:$content_data['name']=$b;break;
                     default:
                         $content_data['content'.($a-3)]=$b;
-                        #echo ($a-3).'<br />';
                         break;
                 }
             }
             if($a!=$attr_counter-1){
-                #echo ($attr_counter-4).'<br />';
                 $content_data['content'.($attr_counter-4)]="";
             }
 

@@ -20,7 +20,6 @@ class Model_feedback extends CI_Model
 		if($dept) {	
 			$sql = "SELECT * FROM feedback WHERE locate(?,department)";
 			$query = $this->db->query($sql, array($dept));
-			#echo $query->row_array()['confirm'];
 			return $query->row_array();
 		}
 		$sql = "SELECT * FROM feedback";

@@ -37,7 +37,6 @@ class Wage extends Admin_Controller
 		$result = array('data' => array());
 
         $data = $this->model_wage->getWageData();
-        echo $data;
         
 		foreach ($data as $key => $value) {
 			$result['data'][$key] = array(
@@ -54,8 +53,6 @@ class Wage extends Admin_Controller
             );
             console($result['data']['name']);
 		} // /foreach
-
-        echo json_encode($result);
        /* */
     }
     /*
@@ -96,7 +93,6 @@ class Wage extends Admin_Controller
         $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
         $counter=0;
         foreach($this->data['attr_data'] as $k => $v){
-            #echo $v;
             if($v=='月度绩效工资小计'){
                 $this->data['yuedustart']=$counter;
             }

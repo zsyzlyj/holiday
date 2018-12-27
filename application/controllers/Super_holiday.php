@@ -633,7 +633,6 @@ class Super_holiday extends Admin_Controller
 			}
         }
         if(array_key_exists('user_id2', $_POST)){
-            echo array_key_exists('user_id2', $_POST);
 			if($_POST['user_id2']!=NULL){
                 $id=$_POST['user_id2'];
 			}

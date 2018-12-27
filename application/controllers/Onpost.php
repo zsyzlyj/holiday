@@ -35,7 +35,6 @@ class Onpost extends Admin_Controller
 		$result = array('data' => array());
 
         $data = $this->model_wage->getWageData();
-        echo $data;
         
 		foreach ($data as $key => $value) {
 			$result['data'][$key] = array(
@@ -52,8 +51,6 @@ class Onpost extends Admin_Controller
             );
             console($result['data']['name']);
 		} // /foreach
-
-        echo json_encode($result);
        /* */
 	}
     public function apply_on_post_proof(){
