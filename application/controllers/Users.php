@@ -12,7 +12,7 @@ class Users extends Admin_Controller
 		
 		$this->load->model('model_holiday_users');
 		$this->load->model('model_wage_users');
-		$this->load->model('model_manager');
+		$this->load->model('model_holiday_manager');
 		$this->load->model('model_holiday');
 		$this->data['permission']=$this->session->userdata('permission');
 		$this->data['user_name'] = $this->session->userdata('user_name');
@@ -195,7 +195,7 @@ class Users extends Admin_Controller
 		}
 		if($_POST['permit']==3){
 			//如果这个角色被降级，那么就删除管理层角色表中的这个人
-			$this->model_manager->delete($id);
+			$this->model_holiday_manager->delete($id);
 		}
 		else{
 			$manager_data=array(
@@ -205,12 +205,12 @@ class Users extends Admin_Controller
 				'role' => $role
 			);
 			//更新管理层角色，如果角色存在，那么直接update，如果不存在，那么新建新的角色
-			if($this->model_manager->getManagerById($id))
+			if($this->model_holiday_manager->getManagerById($id))
 			{
-				$this->model_manager->update($manager_data,$id);
+				$this->model_holiday_manager->update($manager_data,$id);
 			}
 			else{
-				$this->model_manager->create($manager_data,$id);
+				$this->model_holiday_manager->create($manager_data,$id);
 			}
 		}
 		$this->index();

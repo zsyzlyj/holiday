@@ -16,7 +16,7 @@ class Onpost extends Admin_Controller
         $this->load->model('model_holiday');
         $this->load->model('model_wage_doc');
         $this->load->model('model_holiday_users');
-        $this->load->model('model_manager');
+        $this->load->model('model_wage_tag');
         $this->data['permission'] = $this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
         $this->data['user_id'] = $this->session->userdata('user_id');

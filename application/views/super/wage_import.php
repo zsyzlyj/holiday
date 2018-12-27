@@ -37,6 +37,9 @@
 <!-- /.content-wrapper -->
 <script type="text/javascript">
     $(document).ready(function() { 
+      
+      $("#wageSyncNav").addClass('active');
+      
       $("#uploadWageFileNav").addClass('active');
       
     });

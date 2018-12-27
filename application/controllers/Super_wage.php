@@ -11,7 +11,6 @@ class Super_wage extends Admin_Controller
         $this->data['page_title'] = 'Super';
         $this->load->model('model_plan');
         $this->load->model('model_notice');
-        $this->load->model('model_manager');
         $this->load->model('model_wage_users');
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
@@ -567,6 +566,52 @@ class Super_wage extends Admin_Controller
             $this->render_super_template('super/wage_import',$this->data);
         } 
     }
+    public function excel(){
+        $this->load->library('PHPExcel');
+        $this->load->library('PHPExcel/IOFactory');
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
+ 
+        $objPHPExcel->setActiveSheetIndex(0);
+        
+        $result = $this->model_wage_attr->exportAttrData();
+        // Field names in the first row
+        $fields = $result->list_fields();
+        $col = 0;
+        foreach ($fields as $field)
+        {
+            if($field != ""){
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $field);
+                $col++;
+            }
+        }
+ 
+        $objPHPExcel->setActiveSheetIndex(0);
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
+ 
+        $filename = date('YmdHis').".xlsx";
+
+        // Sending headers to force the user to download the file
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$filename);
+        header("Content-Disposition:filename=".$filename);
+        header('Cache-Control: max-age=0');
+ 
+        $objWriter->save('php://output');
+
+    }
+    public function export_wage()
+    {
+        $this->excel();
+
+        redirect('super/wage', 'refresh');
+    }
+    public function download_page()
+    {
+        $this->data['user_name'] = $this->session->userdata('user_name');
+        $this->data['path'] = "uploads/standard/wage_sample.xlsx";
+        $this->render_super_template('super/wage_export',$this->data);
+    }
     public function wage_doc_put(){
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
@@ -625,6 +670,27 @@ class Super_wage extends Admin_Controller
         $this->render_super_template('super/wage_doc_list',$this->data);
     }
 
+    /*
+    ============================================================
+    查看部门综管员和负责人主页
+    ============================================================
+    */ 
+    public function tag(){
+        $manager_data = $this->model_wage_tag->getTagData();
+		$result = array();
+		
+		foreach ($manager_data as $k => $v) {
+			$result[$k] = $v;
+		}
+		$permission_set=array(
+			1 => '部门经理',
+			3 => '普通员工'
+		);
+
+		$this->data['manager_data'] = $result;
+		$this->data['permission_set']=$permission_set;
+		$this->render_super_template('super/wage_tag', $this->data);
+    }
     public function tax_counter(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $this->data['result']=10;

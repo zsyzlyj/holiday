@@ -105,7 +105,7 @@
     $(document).ready(function() {
       $('#userTable').DataTable();
 
-      $("#mainUserNav").addClass('active');
+      $("#holidayUserNav").addClass('active');
       $("#UserNav").addClass('active');
     });
   </script>

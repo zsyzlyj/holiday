@@ -13,7 +13,7 @@ class Tax extends Admin_Controller
         $this->load->model('model_holiday_doc');
         $this->load->model('model_plan');
         $this->load->model('model_notice');
-        $this->load->model('model_manager');
+        $this->load->model('model_wage_tag');
         $this->load->model('model_holiday_users');
         $this->load->model('model_feedback'); 
         $this->data['permission']=$this->session->userdata('permission');

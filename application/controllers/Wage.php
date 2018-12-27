@@ -16,7 +16,7 @@ class Wage extends Admin_Controller
         $this->load->model('model_holiday');
         $this->load->model('model_wage_doc');
         $this->load->model('model_wage_users');
-        $this->load->model('model_manager');
+        $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
         $this->data['permission'] = $this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
@@ -328,7 +328,7 @@ class Wage extends Admin_Controller
 
         }
         
-        $admin_data = $this->model_manager->getManagerById($user_id);
+        $admin_data = $this->model_wage_tag->getTagById($user_id);
 
         $admin_result=array();
         $admin_result=explode('/',$admin_data['dept']);

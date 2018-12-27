@@ -125,7 +125,7 @@
   $(document).ready(function() {
     $("#groups").select2();
 
-    $("#mainUserNav").addClass('active');
+    $("#holidayUserNav").addClass('active');
     $("#createUserNav").addClass('active');
   
   });

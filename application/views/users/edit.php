@@ -99,7 +99,7 @@
   $(document).ready(function() {
     $("#groups").select2();
 
-    $("#mainUserNav").addClass('active');
-    $("#manageUserNav").addClass('active');
+    $("#holidayUserNav").addClass('active');
+    $("#manageHolidayUserNav").addClass('active');
   });
 </script>

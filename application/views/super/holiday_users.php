@@ -12,7 +12,7 @@
         <li class="active">Users</li>
       </ol>
     </section>
-
+    <br /><br />
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
@@ -30,19 +30,13 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
-          
-          
-            <a href="<?php echo base_url('users/create') ?>" class="btn btn-primary">Add User</a>
-            <br /> <br />
-          
-
 
           <div class="box">
             <div class="box-header">
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="userTable" class="table table-bordered table-striped">
+              <table id="userTable" class="table table-bordered table-striped mytdstyle">
                 <thead>
                 <tr>
                   <th>用户名</th>
@@ -57,13 +51,9 @@
                       <tr>
                         <td><?php echo $v['username']; ?></td>
                         
-                        <?php if($v['permission']=='超级管理员'): ?>
-                        <td><?php echo '不需要部门' ?></td>
-                        <?php endif; ?>
-                        <!---->
-                        <?php if($v['permission']!='超级管理员'): ?>
+                        
                         <td><?php echo $v['dept']; ?></td>
-                        <?php endif; ?>
+                        
                         <form action="<?php echo base_url('users/update/') ?>" method="post">
                           
                         <td>
@@ -82,7 +72,9 @@
                         <td>
                             <button class="btn btn-success" type="submit"><i class="fa fa-edit"> 提交</i></button>
                         </form>
-                            <a href="<?php echo base_url('users/delete/'.$v['user_id']) ?>" class="btn btn-danger"><i class="fa fa-trash"> 删除</i></a>
+                        <form action="<?php echo base_url('super_holiday/user_delete/') ?>" style="margin:0px;display:inline;" method="post">
+                        <input type="hidden" name="user_id1" value="<?php echo $v['user_id'];?>"/><button type="submit" class="btn btn-danger"><i class="fa fa-trash"> 删除</i></button>
+                      </form>
                         </td>
 
                       </tr>
@@ -110,6 +102,6 @@
       $('#userTable').DataTable();
 
       $("#holidayUserNav").addClass('active');
-      $("#manageHolidayUserNav").addClass('active');
+      $("#UserNav").addClass('active');
     });
   </script>

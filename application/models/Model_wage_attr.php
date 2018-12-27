@@ -28,6 +28,11 @@ class Model_wage_attr extends CI_Model
 		}
 	}
 
+	public function exportAttrData($id = null)
+	{
+		$sql = "SELECT * FROM wage_attr";
+		return $this->db->query($sql);
+	}
 	public function create_attr($data)
 	{
 		if($data) {

@@ -55,7 +55,7 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $("#mainUserNav").addClass('active');
+    $("#holidayUserNav").addClass('active');
     $("#UserNav").addClass('active');
   });
 </script>

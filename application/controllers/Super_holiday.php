@@ -13,7 +13,7 @@ class Super_holiday extends Admin_Controller
         $this->load->model('model_holiday_doc');
         $this->load->model('model_plan');
         $this->load->model('model_notice');
-        $this->load->model('model_manager');
+        $this->load->model('model_holiday_manager');
         $this->load->model('model_holiday_users');
         $this->load->model('model_feedback'); 
         $this->data['permission']=$this->session->userdata('permission');
@@ -258,7 +258,7 @@ class Super_holiday extends Admin_Controller
     public function download_page()
     {
         $this->data['user_name'] = $this->session->userdata('user_name');
-        $this->render_super_template('super/export',$this->data);
+        $this->render_super_template('super/holiday_export',$this->data);
     }
     
     public function holiday_excel_put(){
@@ -345,7 +345,7 @@ class Super_holiday extends Admin_Controller
         $this->model_holiday->deleteAll();
         $this->model_plan->deleteAll();
         $this->model_holiday_users->deleteAll();        
-        $this->model_manager->deleteAll();
+        $this->model_holiday_manager->deleteAll();
         /* excel导入时间的方法！ */
         $initflag=0;
         $holiday_set=array();
@@ -553,7 +553,7 @@ class Super_holiday extends Admin_Controller
         }
 
         $this->data['plan_data'] = $result;
-        $this->render_super_template('super/plan', $this->data);
+        $this->render_super_template('super/holiday_plan', $this->data);
     }
 
     /*
@@ -717,7 +717,7 @@ class Super_holiday extends Admin_Controller
         }
 		$initflag=0;
         $reset=false;
-        $manager_data=$this->model_manager->getManagerData();
+        $manager_data=$this->model_holiday_manager->getManagerData();
         $manager_set=array();
         $feedback_set=array();
         $this->model_feedback->deleteAll();
@@ -771,7 +771,7 @@ class Super_holiday extends Admin_Controller
             }
             unset($Update_data);
         }
-        $this->model_manager->createbatch($manager_set);
+        $this->model_holiday_manager->createbatch($manager_set);
         $this->model_feedback->createbatch($feedback_set);
     }
 
@@ -786,8 +786,8 @@ class Super_holiday extends Admin_Controller
                 }
                 else
                 {
-                    foreach($this->model_manager->getManagerData() as $k => $v){
-                        $this->model_manager->delete($v['user_id']);
+                    foreach($this->model_holiday_manager->getManagerData() as $k => $v){
+                        $this->model_holiday_manager->delete($v['user_id']);
                     }
 
                     $this->manager_excel_put();
@@ -796,10 +796,10 @@ class Super_holiday extends Admin_Controller
             }
         }
         else{
-            $this->render_super_template('super/manager_import',$this->data);
+            $this->render_super_template('super/holiday_manager_import',$this->data);
 		}        
 		
-		$this->render_super_template('super/manager_import', $this->data);
+		$this->render_super_template('super/holiday_manager_import', $this->data);
     }
     /*
     ============================================================
@@ -807,7 +807,7 @@ class Super_holiday extends Admin_Controller
     ============================================================
     */ 
     public function manager(){
-        $manager_data = $this->model_manager->getManagerData();
+        $manager_data = $this->model_holiday_manager->getManagerData();
 		$result = array();
 		
 		foreach ($manager_data as $k => $v) {
@@ -821,7 +821,7 @@ class Super_holiday extends Admin_Controller
 
 		$this->data['manager_data'] = $result;
 		$this->data['permission_set']=$permission_set;
-		$this->render_super_template('super/manager', $this->data);
+		$this->render_super_template('super/holiday_manager', $this->data);
     }
     public function notification()
     {
@@ -839,7 +839,7 @@ class Super_holiday extends Admin_Controller
 		
 		$this->data['notice_data'] = $result;
 		
-        $this->render_super_template('super/notification', $this->data);
+        $this->render_super_template('super/holiday_notification', $this->data);
     }
     public function publish_holiday()
     {
@@ -879,7 +879,7 @@ class Super_holiday extends Admin_Controller
 				$result[$k] = $v;
 			}
 			$this->data['notice_data'] = $result;
-            $this->render_super_template('super/publish_holiday', $this->data);
+            $this->render_super_template('super/holiday_publish_holiday', $this->data);
         }	
 	}
 	public function publish_plan()
@@ -920,7 +920,7 @@ class Super_holiday extends Admin_Controller
 				$result[$k] = $v;
 			}
 			$this->data['notice_data'] = $result;
-            $this->render_super_template('super/publish_plan', $this->data);
+            $this->render_super_template('super/holiday_publish_plan', $this->data);
         }
 	}
     

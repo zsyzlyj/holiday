@@ -104,10 +104,10 @@ CREATE TABLE `log_action` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `manager`
+-- 表的结构 `holiday_manager`
 --
 
-CREATE TABLE `manager` (
+CREATE TABLE `holiday_manager` (
   `user_id` varchar(18) NOT NULL,
   `name` varchar(255) NOT NULL,
   `dept` varchar(255) NOT NULL,

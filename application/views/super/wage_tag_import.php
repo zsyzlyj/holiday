@@ -37,6 +37,7 @@
 <!-- /.content-wrapper -->
 <script type="text/javascript">
     $(document).ready(function() { 
+      $("#wageUserNav").addClass('active');
       $("#uploadTagFileNav").addClass('active');
       
     });

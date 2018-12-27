@@ -1,6 +1,6 @@
 <?php 
 
-class Model_manager extends CI_Model
+class model_holiday_manager extends CI_Model
 {
 	public function __construct()
 	{
@@ -9,14 +9,14 @@ class Model_manager extends CI_Model
 
 	public function getManagerData() 
 	{
-		$sql = "SELECT * FROM manager WHERE user_id != ?";
+		$sql = "SELECT * FROM holiday_manager WHERE user_id != ?";
 		$query = $this->db->query($sql, array(1));
 		return $query->result_array();
 	}
 	public function getManagerById($userId = null) 
 	{
 		if($userId) {
-			$sql = "SELECT * FROM manager WHERE user_id = ?";	
+			$sql = "SELECT * FROM holiday_manager WHERE user_id = ?";	
 			$query = $this->db->query($sql, array($userId));
 			return $query->row_array();
 		}
@@ -24,7 +24,7 @@ class Model_manager extends CI_Model
 	public function getManagerByDept($dept = null) 
 	{
 		if($dept) {
-			$sql = "SELECT * FROM manager WHERE locate(?,department)";
+			$sql = "SELECT * FROM holiday_manager WHERE locate(?,department)";
 			$query = $this->db->query($sql, array($dept));
 			return $query->result_array();
 		}
@@ -33,7 +33,7 @@ class Model_manager extends CI_Model
 	public function create($data = '')
 	{
 		if($data) {
-			$create = $this->db->insert('manager', $data);
+			$create = $this->db->insert('holiday_manager', $data);
 			return ($create == true) ? true : false;
 		}
 	}
@@ -41,7 +41,7 @@ class Model_manager extends CI_Model
 	public function createbatch($data)
 	{
 		if($data) {
-			$insert = $this->db->insert_batch('manager', $data);
+			$insert = $this->db->insert_batch('holiday_manager', $data);
 			return ($insert == true) ? true : false;
 		}
 	}
@@ -51,13 +51,13 @@ class Model_manager extends CI_Model
 	public function update($data=array(),$id)
 	{
 		$this->db->where('user_id',$id);
-		$update = $this->db->update('manager', $data);
+		$update = $this->db->update('holiday_manager', $data);
 		return ($update == true) ? true : false;	
 	}
 	public function edit($data = array(), $id = null, $group_id = null)
 	{
 		$this->db->where('user_id', $id);
-		$update = $this->db->update('manager', $data);
+		$update = $this->db->update('holiday_manager', $data);
 
 		if($group_id) {
 			// user group
@@ -73,7 +73,7 @@ class Model_manager extends CI_Model
 	public function delete($id)
 	{
 		$this->db->where('user_id', $id);
-		$delete = $this->db->delete('manager');
+		$delete = $this->db->delete('holiday_manager');
 		return ($delete == true) ? true : false;
 	}
 	public function deleteAll()

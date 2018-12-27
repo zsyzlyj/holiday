@@ -38,8 +38,8 @@
 <script type="text/javascript">
     $(document).ready(function() {
       
-      $("#mainUserNav").addClass('active');
-      $("#manageUserNav").addClass('active');
+      $("#holidayUserNav").addClass('active');
+      $("#manageHolidayUserNav").addClass('active');
     });
     
   </script>

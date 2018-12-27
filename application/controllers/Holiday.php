@@ -18,7 +18,7 @@ class Holiday extends Admin_Controller
         $this->load->model('model_holiday_doc');
         $this->load->model('model_plan');
         $this->load->model('model_notice');
-        $this->load->model('model_manager');
+        $this->load->model('model_holiday_manager');
         $this->load->model('model_feedback');
         $this->data['notice_data'] = $this->model_notice->getNoticeLatestHoliday();
         $this->data['holiday_doc'] = $this->model_holiday_doc->getHolidayDocData();
@@ -450,7 +450,7 @@ class Holiday extends Admin_Controller
 
         }
         
-        $admin_data = $this->model_manager->getManagerById($user_id);
+        $admin_data = $this->model_holiday_manager->getManagerById($user_id);
 
         $admin_result=array();
         $admin_result=explode('/',$admin_data['dept']);
@@ -489,7 +489,7 @@ class Holiday extends Admin_Controller
             $this->data['current_dept']=$select_dept;
             $this->data['submit_status'] = $this->model_feedback->getFeedbackByDept($select_dept)['submit_status'];
         }
-        $admin_data = $this->model_manager->getManagerById($user_id);
+        $admin_data = $this->model_holiday_manager->getManagerById($user_id);
 
         $admin_result=array();
         $admin_result=explode('/',$admin_data['dept']);
@@ -502,7 +502,7 @@ class Holiday extends Admin_Controller
     }
     public function mydeptplan_submit(){
         $user_id = $this->session->userdata('user_id');
-        $my_data = $this->model_manager->getManagerById($user_id);
+        $my_data = $this->model_holiday_manager->getManagerById($user_id);
         $dept_set=array();
         $data=array();
         $feedback=array();
@@ -781,7 +781,7 @@ class Holiday extends Admin_Controller
             $this->data['feedback_status'] =$feedback['feedback_status'];
         }
 
-        $admin_data = $this->model_manager->getManagerById($user_id);
+        $admin_data = $this->model_holiday_manager->getManagerById($user_id);
 
         $admin_result=array();
         $admin_result=explode('/',$admin_data['dept']);
@@ -796,7 +796,7 @@ class Holiday extends Admin_Controller
     public function audit_result(){
         $user_id=$this->session->userdata('user_id');
         
-        $my_data = $this->model_manager->getManagerById($user_id);
+        $my_data = $this->model_holiday_manager->getManagerById($user_id);
 
         $dept_set=array();
         $data=array();

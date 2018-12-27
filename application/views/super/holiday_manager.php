@@ -9,10 +9,10 @@
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Users</li>
+        <li class="active">Managers</li>
       </ol>
     </section>
-    <br /><br />
+
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
@@ -30,6 +30,12 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
+          
+          
+            <a href="<?php echo base_url('super_holiday/manager_import') ?>" class="btn btn-primary">上传管理员角色</a>
+            <br /> <br />
+          
+
 
           <div class="box">
             <div class="box-header">
@@ -41,18 +47,25 @@
                 <tr>
                   <th>用户名</th>
                   <th>部门</th>
-                  <th>权限</th>
-                  <th>操作</th>
+                  <th>角色</th>
+                  <!--<th>操作</th>-->
                 </tr>
                 </thead>
                 <tbody>
-                  <?php if($user_data): ?>                  
-                    <?php foreach ($user_data as $k => $v): ?>
+                  <?php if($manager_data): ?>                  
+                    <?php foreach ($manager_data as $k => $v): ?>
                       <tr>
-                        <td><?php echo $v['username']; ?></td>
-                        
-                        
+                        <td><?php echo $v['name']; ?></td>
                         <td><?php echo $v['dept']; ?></td>
+                        <td><?php echo $v['role']; ?></td>
+                        <!--
+                        <?php if($v['permission']=='超级管理员'): ?>
+                        <td><?php echo '不需要部门' ?></td>
+                        <?php endif; ?>
+                        
+                        <?php if($v['permission']!='超级管理员'): ?>
+                        <td><?php echo $v['dept']; ?></td>
+                        <?php endif; ?>
                         
                         <form action="<?php echo base_url('users/update/') ?>" method="post">
                           
@@ -72,10 +85,10 @@
                         <td>
                             <button class="btn btn-success" type="submit"><i class="fa fa-edit"> 提交</i></button>
                         </form>
-                        <form action="<?php echo base_url('super_holiday/user_delete/') ?>" style="margin:0px;display:inline;" method="post">
-                        <input type="hidden" name="user_id1" value="<?php echo $v['user_id'];?>"/><button type="submit" class="btn btn-danger"><i class="fa fa-trash"> 删除</i></button>
-                      </form>
+                        
+                            <a href="<?php echo base_url('users/delete/'.$v['user_id']) ?>" class="btn btn-danger"><i class="fa fa-trash"> 删除</i></a>
                         </td>
+                        -->
 
                       </tr>
                     <?php endforeach ?>
@@ -99,9 +112,37 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#userTable').DataTable();
 
-      $("#mainUserNav").addClass('active');
-      $("#UserNav").addClass('active');
+      $('#userTable').DataTable({
+        language: 
+        {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "显示 _MENU_ 项",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": 
+            {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页"
+            },
+            "oAria": 
+            {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        }      
+      });
+      $("#holidayUserNav").addClass('active');
+      $("#manageHolidayUserNav").addClass('active');
     });
   </script>

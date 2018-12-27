@@ -42,7 +42,7 @@
           </ul>
         </li>
         
-        <li class="treeview" id="mainUserNav">
+        <li class="treeview" id="holidayUserNav">
           <a href="#">
             <i class="fa fa-users"></i>
             <span>用户角色管理</span>
@@ -51,8 +51,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="UserNav"><a href="<?php echo base_url('super_holiday/users') ?>"><i class="fa fa-circle-o"></i> 用户管理</a></li>
-            <li id="manageUserNav"><a href="<?php echo base_url('super_holiday/manager') ?>"><i class="fa fa-circle-o"></i> 综管、部门负责人管理</a></li>
+            <!--<li id="UserNav"><a href="<?php echo base_url('super_holiday/users') ?>"><i class="fa fa-circle-o"></i> 用户管理</a></li>-->
+            <li id="manageHolidayUserNav"><a href="<?php echo base_url('super_holiday/manager') ?>"><i class="fa fa-circle-o"></i> 综管、部门负责人管理</a></li>
           </ul>
         </li>
         <li class="treeview" id="mainNoticeNav">
@@ -82,17 +82,47 @@
             <i class="fa fa-file"></i><span>往月薪酬搜索</span>
           </a>
         </li>
-        <li id="uploadWageFileNav">
-          <a href="<?php echo base_url('super_wage/wage_import') ?>">
-          <i class="fa fa-circle-o"></i><span>薪酬导入</span>
+        <li class="treeview" id="wageSyncNav">
+          <a href="#">
+            <i class="fa fa-cloud"></i>
+            <span>本月薪酬信息更新</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
           </a>
+          <ul class="treeview-menu">
+            <li id="uploadWageFileNav"><a href="<?php echo base_url('super_wage/wage_import') ?>"><i class="fa fa-circle-o"></i><span>薪酬导入</span></a></li>
+            <li id="downloadWageNav"><a href="<?php echo base_url('super_wage/download_page') ?>"><i class="fa fa-circle-o"></i> 下载薪酬模板</a></li>
+          </ul>
         </li>
-        <li id="uploadTagFileNav">
-          <a href="<?php echo base_url('super_wage/wage_tag_import') ?>">
-          <i class="fa fa-circle-o"></i><span>人员角色导入</span>
+        
+        <li class="treeview" id="wageUserNav">
+          <a href="#">
+            <i class="fa fa-users"></i>
+            <span>用户角色管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
           </a>
+          <ul class="treeview-menu">
+            <li id="uploadTagFileNav"><a href="<?php echo base_url('super_wage/wage_tag_import') ?>"><i class="fa fa-circle-o"></i><span>人员角色导入</span></a></li>
+            <li id="manageWageUserNav"><a href="<?php echo base_url('super_wage/tag') ?>"><i class="fa fa-circle-o"></i> 综管、部门负责人管理</a></li>
+          </ul>
         </li>
-
+        <li class="treeview" id="mainNoticeNav">
+          <a href="#">
+            <i class="fa fa-bullhorn"></i>
+            <span>公告</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="publish_holiday"><a href="<?php echo base_url('super_holiday/publish_holiday') ?>"><i class="fa fa-circle-o"></i> 发布假期公告</a></li>        
+            <li id="publish_plan"><a href="<?php echo base_url('super_holiday/publish_plan') ?>"><i class="fa fa-circle-o"></i> 发布年假计划公告</a></li>        
+            <li id="manage_notice"><a href="<?php echo base_url('super_holiday/notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
+          </ul>
+        </li>
         <li class="treeview" id="uploadWageDoc">
           <a href="#">
             <i class="fa fa-cloud"></i>

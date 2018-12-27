@@ -32,7 +32,7 @@
           <?php endif; ?>
           
           
-            <a href="<?php echo base_url('super_holiday/manager_import') ?>" class="btn btn-primary">上传管理员角色</a>
+            <a href="<?php echo base_url('super_wage/wage_tag_import') ?>" class="btn btn-primary">上传管理员角色</a>
             <br /> <br />
           
 
@@ -142,7 +142,7 @@
             }
         }      
       });
-      $("#mainUserNav").addClass('active');
-      $("#manageUserNav").addClass('active');
+      $("#wageUserNav").addClass('active');
+      $("#manageWageUserNav").addClass('active');
     });
   </script>
