@@ -778,28 +778,26 @@ class Super_holiday extends Admin_Controller
     public function manager_import()
 	{
         if($_FILES){
-        if($_FILES["file"])
-            {
-                if ($_FILES["file"]["error"] > 0)
+            if($_FILES["file"])
                 {
-                    echo "Error: " . $_FILES["file"]["error"] . "<br />";
-                }
-                else
-                {
-                    foreach($this->model_holiday_manager->getManagerData() as $k => $v){
-                        $this->model_holiday_manager->delete($v['user_id']);
+                    if ($_FILES["file"]["error"] > 0)
+                    {
+                        echo "Error: " . $_FILES["file"]["error"] . "<br />";
                     }
+                    else
+                    {
+                        foreach($this->model_holiday_manager->getManagerData() as $k => $v){
+                            $this->model_holiday_manager->delete($v['user_id']);
+                        }
 
-                    $this->manager_excel_put();
-                    $this->manager();
+                        $this->manager_excel_put();
+                        $this->manager();
+                    }
                 }
-            }
         }
         else{
             $this->render_super_template('super/holiday_manager_import',$this->data);
-		}        
-		
-		$this->render_super_template('super/holiday_manager_import', $this->data);
+        }
     }
     /*
     ============================================================
@@ -830,15 +828,18 @@ class Super_holiday extends Admin_Controller
 		$result = array();
 		
 		foreach ($notice_data as $k => $v) {
-            if($v['type']=='holiday')
+            if($v['type']=='holiday'){
                 $v['type']='假期';
-            if($v['type']=='plan')
+                $result[$k] = $v;
+            }
+            if($v['type']=='plan'){
                 $v['type']='计划';
-            $result[$k] = $v;
+                $result[$k] = $v;
+            }
+            
 		}
-		
 		$this->data['notice_data'] = $result;
-		
+		unset($result);
         $this->render_super_template('super/holiday_notification', $this->data);
     }
     public function publish_holiday()

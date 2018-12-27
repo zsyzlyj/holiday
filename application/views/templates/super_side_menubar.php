@@ -56,10 +56,10 @@
           </ul>
         </li>
         
-        <li class="treeview" id="mainNoticeNav">
+        <li class="treeview" id="holidayNoticeNav">
           <a href="#">
             <i class="fa fa-bullhorn"></i>
-            <span>公告</span>
+            <span>发布公告</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -113,13 +113,13 @@
         <li class="treeview" id="wageNoticeNav">
           <a href="#">
             <i class="fa fa-bullhorn"></i>
-            <span>公告</span>
+            <span>发布公告</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="wage_publish_wage"><a href="<?php echo base_url('super_wage/publish_wage') ?>"><i class="fa fa-circle-o"></i> 发布假期公告</a></li>        
+            <li id="wage_publish_wage"><a href="<?php echo base_url('super_wage/publish_wage') ?>"><i class="fa fa-circle-o"></i> 发布薪酬公告</a></li>        
             <li id="manage_wage_notice"><a href="<?php echo base_url('super_wage/notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
           </ul>
         </li>

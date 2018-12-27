@@ -250,74 +250,7 @@ class Users extends Admin_Controller
         $this->render_template('users/profile', $this->data);
 	}
 
-	public function holiday_setting(){
-		$this->setting('holiday');
-	}
-	public function wage_setting(){
-		$this->setting('wage');
-	}
-	public function setting($type)
-	{
-		$id = $this->session->userdata('user_id');
-		$this->data['user_name'] = $this->session->userdata('user_name');
-		if($id) {
-			$this->form_validation->set_rules('username', 'username', 'trim|max_length[12]');
-
-			if ($this->form_validation->run() == TRUE) {
-	            // true case
-		        if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))) {
-					$this->session->set_flashdata('errors', '修改失败，新密码不能为空');
-					if($type=='holiday')
-						redirect('users/holiday_setting', 'refresh');
-					if($type=='wage')
-						redirect('users/wage_setting', 'refresh');
-		        }
-		        else {
-					$this->form_validation->set_rules('password', 'Password', 'trim|required');
-					$this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|required|matches[password]');
-
-					if($this->form_validation->run() == TRUE) {
-
-						$password = md5($this->input->post('password'));
-
-						$data = array(
-			        		'username' => $this->input->post('username'),
-			        		'password' => $password,
-			        	);
-						if($type=='holiday')
-							$update = $this->model_holiday_users->edit($data, $id);
-						if($type=='wage')
-							$update = $this->model_wage_users->edit($data, $id);
-						
-			        	if($update == true) {
-			        		$this->session->set_flashdata('success', 'Successfully updated');
-			        		redirect('users/'.$type.'_setting/', 'refresh');
-			        	}
-			        	else {
-			        		$this->session->set_flashdata('errors', 'Error occurred!!');
-			        		redirect('users/'.$type.'_setting/', 'refresh');
-			        	}
-					}
-			        else {
-						// false case
-						redirect('users/'.$type.'_setting', 'refresh');
-			        }
-
-		        }
-	        }
-	        else {
-				// false case
-				if($type=='holiday')
-	        		$user_data = $this->model_holiday_users->getUserData($id);
-				if($type=='wage')
-					$user_data = $this->model_wage_users->getUserData($id);
-				$this->data['user_data'] = $user_data;
-	        	
-
-				$this->render_template('users/setting', $this->data);	
-	        }	
-		}
-	}
+	
 
 
 }

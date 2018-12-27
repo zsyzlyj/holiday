@@ -640,11 +640,8 @@ class Holiday extends Admin_Controller
             }
             else
             {
-
                 $this->session->set_flashdata('error', '提交失败，计划总数必须等于可休假总数');
                 $this->staff_plan();
-                #$this->render_template('holiday/staff_plan', $this->data);
-                
             }
             /**/
         }

@@ -78,7 +78,7 @@ class model_holiday_manager extends CI_Model
 	}
 	public function deleteAll()
 	{
-		$sql='delete from manager';
+		$sql='delete from holiday_manager';
 		$delete = $this->db->query($sql);
 	}
 }

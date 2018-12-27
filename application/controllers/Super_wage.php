@@ -412,7 +412,7 @@ class Super_wage extends Admin_Controller
     public function wage_tag_import($filename=NULL)
     {
         if($_FILES){
-        if($_FILES["file"])
+            if($_FILES["file"])
             {
                 if ($_FILES["file"]["error"] > 0)
                 {
@@ -541,7 +541,7 @@ class Super_wage extends Admin_Controller
     public function wage_import($filename=NULL)
     {
         if($_FILES){
-        if($_FILES["file"])
+            if($_FILES["file"])
             {
                 if ($_FILES["file"]["error"] > 0)
                 {
@@ -658,7 +658,6 @@ class Super_wage extends Admin_Controller
                 redirect('super_wage/wage_doc_list', 'refresh');
             }	
 		}
-        $this->render_super_template('super/wage_doc_list',$this->data);
     }
 
     /*
