@@ -348,7 +348,94 @@ class Wage extends Admin_Controller
         $this->proof_Creator("one_child");
     }
 
+    public function search_excel($doc_name,$user_id){
+        $this->load->library("phpexcel");//ci框架中引入excel类
+        $this->load->library('PHPExcel/IOFactory');
+        $dir="uploads/wage";
+        $data=array();
+        if(is_dir($dir)){
+            $files = array();
+            $child_dirs = scandir($dir);
+            foreach($child_dirs as $child_dir){
+                if($child_dir != '.' && $child_dir != '..'){
+                    if(is_dir($dir.'/'.$child_dir)){
+                        $files[$child_dir] = my_scandir($dir.'/'.$child_dir);
+                    }else{
+                        if(strstr($child_dir,$doc_name)){
+                            $PHPExcel = $reader->load($dir.'/'.$child_dir, 'utf-8'); // 载入excel文件
+                            $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
+                            $highestRow = $sheet->getHighestRow(); // 取得总行数
+                            $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+                            for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++) {        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+                                if($data[$rowIndex]['C']===$user_id){
+                                    for ($colIndex = 'A'; $colIndex <= $highestColumm; $colIndex++) {
+                                        $addr = $colIndex . $rowIndex;
+                                        $cell = $sheet->getCell($addr)->getValue();
+                                        if ($cell instanceof PHPExcel_RichText) { //富文本转换字符串
+                                            $cell = $cell->__toString();
+                                        }
+                                        $data[$colIndex] = $cell;
+                                    }
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return $data;
+    }
     public function search(){
-        $this->render_template('wage/search', $this->data);
+        $this->data['wage_data']="";
+        $this->data['attr_data']="";
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $doc_name=substr($_POST['chosen_month'],0,3).substr($_POST['chosen_month'],5,6);
+            $this->data['wage_data']=$this->search_excel($doc_name,$this->data['user_id']);
+            $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
+            $counter=0;
+            foreach($this->data['attr_data'] as $k => $v){
+                if($v=='月度绩效工资小计'){
+                    $this->data['yuedustart']=$counter;
+                }
+                if($v=='省核专项奖励小计'){
+                    $this->data['yueduend']=$counter-1;
+                    $this->data['shengzhuanstart']=$counter;
+                }
+                if($v=='分公司专项奖励小计'){
+                    $this->data['shengzhuanend']=$counter-1;
+                    $this->data['fengongsistart']=$counter;
+                }
+                if($v=='其他小计'){
+                    $this->data['fengongsiend']=$counter-1;
+                    $this->data['qitastart']=$counter;
+                }
+                if($v=='教育经费小计'){
+                    $this->data['qitaend']=$counter-1;
+                    $this->data['jiaoyustart']=$counter;
+                }
+                if($v=='福利费小计'){
+                    $this->data['jiaoyuend']=$counter-1;
+                    $this->data['fulistart']=$counter;
+                }
+                if($v=='当月月应收合计'){
+                    $this->data['fuliend']=$counter-1;
+                    $this->data['koufeistart']=$counter+1;
+                }
+                if($v=='扣款小计'){
+                    $this->data['koufeiend']=$counter;
+                }
+                if($v=='本月工资差异说明'){
+                    $this->data['trueend']=$counter+1;
+                    break;
+                }
+                $counter++;
+            }
+            $this->render_template('wage/search', $this->data);
+        }
+        else{
+            $this->render_template('wage/search', $this->data);
+        }
     }
 }

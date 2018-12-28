@@ -36,10 +36,12 @@
   <!-- icheck -->
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/iCheck/all.css') ?>">
-  <!-- Popup  -->
+
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showmonth.css') ?>">
-  <!-- wage_td_css for large data  -->
-  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/wage_table.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap-datetimepicker.min.css')?>">
+
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,6 +58,7 @@
     display:none;
   }
 </style>
+  
   <!-- jQuery 3 -->
   <script src="<?php echo base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>
   <!-- jQuery UI 1.11.4 -->
@@ -106,9 +109,9 @@
   <!-- DataTables -->
 <script src="<?php echo base_url('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') ?>"></script>
-<script src="<?php echo base_url('assets/dist/js/showmonth.js') ?>"></script>
-
-
+<script src="<?php echo base_url('assets/dist/js/bootstrap-datetimepicker.js') ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/dist/js/bootstrap.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/dist/js/locales/bootstrap-datetimepicker.fr.js');?>" charset="UTF-8"></script>
 
 
 

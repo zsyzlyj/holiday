@@ -47,7 +47,7 @@
             </ul>
           </li>
         <li id="changePassword"><a href="<?php echo base_url('auth/wage_setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
-        <li><a href="<?php echo base_url('auth/wage_logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>登出</span></a></li>
+        <li><a href="<?php echo base_url('auth/wage_logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>退出登录</span></a></li>
         <?php endif ?>
         <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
 
@@ -124,7 +124,7 @@
         </li>
         <li id="changePassword"><a href="<?php echo base_url('auth/holiday_setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
         
-        <li><a href="<?php echo base_url('auth/holiday_logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>登出</span></a></li>
+        <li><a href="<?php echo base_url('auth/holiday_logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>退出登录</span></a></li>
         <?php endif; ?>
       </ul>
     </section>

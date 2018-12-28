@@ -20,11 +20,11 @@
         </a></li>
         <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
         <li><a href="<?php echo base_url('auth/holiday_setting') ?>"><i class="glyphicon glyphicon-edit "></i>&nbsp;修改密码</a></li>
-        <li><a href="<?php echo base_url('auth/holiday_logout') ?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;登出</a></li>
+        <li><a href="<?php echo base_url('auth/holiday_logout') ?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;退出登录</a></li>
         <?php endif; ?>
         <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
         <li><a href="<?php echo base_url('auth/wage_setting') ?>"><i class="glyphicon glyphicon-edit "></i>&nbsp;修改密码</a></li>
-        <li><a href="<?php echo base_url('auth/wage_logout') ?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;登出</a></li>
+        <li><a href="<?php echo base_url('auth/wage_logout') ?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;退出登录</a></li>
         <?php endif; ?>
         
         <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>

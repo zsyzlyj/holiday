@@ -58,37 +58,6 @@
                         <td><?php echo $v['name']; ?></td>
                         <td><?php echo $v['dept']; ?></td>
                         <td><?php echo $v['role']; ?></td>
-                        <!--
-                        <?php if($v['permission']=='超级管理员'): ?>
-                        <td><?php echo '不需要部门' ?></td>
-                        <?php endif; ?>
-                        
-                        <?php if($v['permission']!='超级管理员'): ?>
-                        <td><?php echo $v['dept']; ?></td>
-                        <?php endif; ?>
-                        
-                        <form action="<?php echo base_url('users/update/') ?>" method="post">
-                          
-                        <td>
-                          <input id="user_id" name="user_id" type="hidden" value="<?php echo $v['user_id'] ?>"/>
-                          <select id="permit" name="permit">
-                            <option value="<?php $v['permission'];?>"><?php echo $v['permission']; ?></option>
-                            <?php foreach ($permission_set as $a => $b): ?>
-                              <?php if($b != $v['permission']):?>
-                                <option value="<?php echo $a; ?>"><?php echo $b; ?></option>
-                              <?php endif ?>
-                            <?php endforeach ?>
-                          </select>
-                        </div>
-                        </td>
-                        
-                        <td>
-                            <button class="btn btn-success" type="submit"><i class="fa fa-edit"> 提交</i></button>
-                        </form>
-                        
-                            <a href="<?php echo base_url('users/delete/'.$v['user_id']) ?>" class="btn btn-danger"><i class="fa fa-trash"> 删除</i></a>
-                        </td>
-                        -->
 
                       </tr>
                     <?php endforeach ?>

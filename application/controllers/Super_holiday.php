@@ -345,7 +345,7 @@ class Super_holiday extends Admin_Controller
         $this->model_holiday->deleteAll();
         $this->model_plan->deleteAll();
         $this->model_holiday_users->deleteAll();        
-        $this->model_holiday_manager->deleteAll();
+
         /* excel导入时间的方法！ */
         $initflag=0;
         $holiday_set=array();
@@ -656,7 +656,45 @@ class Super_holiday extends Admin_Controller
 			}	
 		}
 	}        
+    public function update()
+	{
+		$id=$_POST['user_id'];
 
+		$user_data=array(
+			'permission' => $_POST['permit']
+		);
+		$this->model_holiday_users->update($user_data,$id);
+		$user=$this->model_holiday->getHolidayById($id);
+		$role='普通员工';
+		if($_POST['permit']==1){
+			$role='综管员';
+		}
+		if($_POST['permit']==2){
+			$role='部门负责人';
+		}
+		if($_POST['permit']==3){
+			//如果这个角色被降级，那么就删除管理层角色表中的这个人
+			$this->model_holiday_manager->delete($id);
+		}
+		else{
+			$manager_data=array(
+				'user_id' => $id,
+				'name' => $user['name'],
+				'dept' => $user['department'],
+				'role' => $role
+			);
+			//更新管理层角色，如果角色存在，那么直接update，如果不存在，那么新建新的角色
+			if($this->model_holiday_manager->getManagerById($id))
+			{
+				$this->model_holiday_manager->update($manager_data,$id);
+			}
+			else{
+				$this->model_holiday_manager->create($manager_data,$id);
+			}
+		}
+		$this->users();
+
+	}
     public function manager_excel_put(){
         $this->load->library("phpexcel");//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
@@ -729,6 +767,8 @@ class Super_holiday extends Admin_Controller
         foreach ($user as $c => $d){
             $this->model_holiday_users->update($User_default,$user_id);
         }
+        //重置所有的管理人员
+        $this->model_holiday_manager->deleteAll();
         foreach($column as $k => $v)
         {
             foreach($v as $a => $b)

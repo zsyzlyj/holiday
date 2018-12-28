@@ -165,7 +165,7 @@
         <li id="settingMenu"><a href="<?php echo base_url('super_auth/wage_setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
         <?php endif; ?>
         
-        <li><a href="<?php echo base_url('super_auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>登出</span></a></li>
+        <li><a href="<?php echo base_url('super_auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>退出登录</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->

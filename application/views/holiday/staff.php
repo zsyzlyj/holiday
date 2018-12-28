@@ -39,7 +39,7 @@
               </br>              </br>
 
               <h4>
-                <?php if( $notice_data): ?> 
+                <?php if($notice_data): ?> 
                 <?php foreach ($notice_data as $notice): ?>
                 <?php echo $notice['content'];?>
                 <?php endforeach;?>
@@ -60,35 +60,35 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-                <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;text-align: center;border-color:black;">
+                <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;text-align: center;">
                 <thead>
-                <tr style="text-align: center;border-color:black;">
-                  <th style="text-align: center;border-color:black;">姓名</th>
-                  <th style="text-align: center;border-color:black;">部门</th>                
-                  <th style="text-align: center;border-color:black;">社会工龄</th>
-                  <th style="text-align: center;border-color:black;">公司工龄</th>
-                  <th style="text-align: center;border-color:black;">休假总数</th>
-                  <th style="text-align: center;border-color:black;">上年可休数</th>
-                  <th style="text-align: center;border-color:black;">今年可休数</th>
-                  <th style="text-align: center;border-color:black;">荣誉假期</th>
-                  <th style="text-align: center;border-color:black;">已休假数</th>
-                  <th style="text-align: center;border-color:black;">剩下休假数</th>
-                  <!--<th style="text-align: center;border-color:black;">操作</th>-->
+                <tr style="text-align: center;">
+                  <th style="text-align: center;">姓名</th>
+                  <th style="text-align: center;">部门</th>                
+                  <th style="text-align: center;">社会工龄</th>
+                  <th style="text-align: center;">公司工龄</th>
+                  <th style="text-align: center;">休假总数</th>
+                  <th style="text-align: center;">上年可休数</th>
+                  <th style="text-align: center;">今年可休数</th>
+                  <th style="text-align: center;">荣誉假期</th>
+                  <th style="text-align: center;">已休假数</th>
+                  <th style="text-align: center;">剩下休假数</th>
+                  <!--<th style="text-align: center;">操作</th>-->
                 </tr>
                 </thead>
                 <tbody>
                   <?php if($holiday_data): ?>                  
                     <?php $v=$holiday_data ?>
-                      <tr style="text-align: center;border-color:black;">
-                        <td style="text-align: center;border-color:black;"><?php echo $v['name']; ?></td>
-                        <td style="text-align: center;border-color:black;"><?php echo $v['department']; ?></td>
-                        <td style="text-align: center;border-color:black;"><?php echo $v['Totalage']; ?></td>
-                        <td style="text-align: center;border-color:black;"><?php echo $v['Companyage']; ?></td>
-                        <td style="text-align: center;border-color:black;"><?php echo $v['Totalday']; ?></td>
-                        <td style="text-align: center;border-color:black;"><?php echo $v['Lastyear']; ?></td>
-                        <td style="text-align: center;border-color:black;"><?php echo $v['Thisyear']; ?></td>
-                        <td style="text-align: center;border-color:black;"><?php echo $v['Bonus']; ?></td>
-                        <td style="text-align: center;border-color:black;">    
+                      <tr style="text-align: center;">
+                        <td style="text-align: center;"><?php echo $v['name']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['department']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Totalage']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Companyage']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Totalday']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Lastyear']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Thisyear']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Bonus']; ?></td>
+                        <td style="text-align: center;">    
                           <!-- 打开弹窗按钮 -->
                           <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><font color='red'><u><?php echo $v['Used']; ?></u></font></a>
                           
@@ -103,37 +103,37 @@
                               </div>
 
                               <div class="modal-body">
-                              <table id="MonthTable" class="table table-bordered table-striped" style="text-align: center;border-color:black;">
+                              <table id="MonthTable" class="table table-bordered table-striped" style="text-align: center;">
                                 <thead>
-                                  <tr style="text-align:center;border-color:black;">
-                                    <th style="text-align:center;border-color:black;">一月</th>
-                                    <th style="text-align:center;border-color:black;">二月</th>
-                                    <th style="text-align:center;border-color:black;">三月</th>
-                                    <th style="text-align:center;border-color:black;">四月</th>
-                                    <th style="text-align:center;border-color:black;">五月</th>
-                                    <th style="text-align:center;border-color:black;">六月</th>
-                                    <th style="text-align:center;border-color:black;">七月</th>
-                                    <th style="text-align:center;border-color:black;">八月</th>
-                                    <th style="text-align:center;border-color:black;">九月</th>
-                                    <th style="text-align:center;border-color:black;">十月</th>
-                                    <th style="text-align:center;border-color:black;">十一月</th>
-                                    <th style="text-align:center;border-color:black;">十二月</th>
+                                  <tr style="text-align:center;">
+                                    <th style="text-align:center;">一月</th>
+                                    <th style="text-align:center;">二月</th>
+                                    <th style="text-align:center;">三月</th>
+                                    <th style="text-align:center;">四月</th>
+                                    <th style="text-align:center;">五月</th>
+                                    <th style="text-align:center;">六月</th>
+                                    <th style="text-align:center;">七月</th>
+                                    <th style="text-align:center;">八月</th>
+                                    <th style="text-align:center;">九月</th>
+                                    <th style="text-align:center;">十月</th>
+                                    <th style="text-align:center;">十一月</th>
+                                    <th style="text-align:center;">十二月</th>
                                   </tr>
                                   </thead>
                                   <tbody>
-                                      <tr style="text-align: center;border-color:black;">
-                                        <td style="text-align: center;border-color:black;"><?php echo $v['Jan']; ?></td>
-                                        <td style="text-align: center;border-color:black;"><?php echo $v['Feb']; ?></td>
-                                        <td style="text-align: center;border-color:black;"><?php echo $v['Mar']; ?></td>
-                                        <td style="text-align: center;border-color:black;"><?php echo $v['Apr']; ?></td>
-                                        <td style="text-align: center;border-color:black;"><?php echo $v['May']; ?></td>
-                                        <td style="text-align: center;border-color:black;"><?php echo $v['Jun']; ?></td>
-                                        <td style="text-align: center;border-color:black;"><?php echo $v['Jul']; ?></td>
-                                        <td style="text-align: center;border-color:black;"><?php echo $v['Aug']; ?></td>
-                                        <td style="text-align: center;border-color:black;"><?php echo $v['Sep']; ?></td>
-                                        <td style="text-align: center;border-color:black;"><?php echo $v['Oct']; ?></td>
-                                        <td style="text-align: center;border-color:black;"><?php echo $v['Nov']; ?></td>
-                                        <td style="text-align: center;border-color:black;"><?php echo $v['Dece']; ?></td>
+                                      <tr style="text-align: center;">
+                                        <td style="text-align: center;"><?php echo $v['Jan']; ?></td>
+                                        <td style="text-align: center;"><?php echo $v['Feb']; ?></td>
+                                        <td style="text-align: center;"><?php echo $v['Mar']; ?></td>
+                                        <td style="text-align: center;"><?php echo $v['Apr']; ?></td>
+                                        <td style="text-align: center;"><?php echo $v['May']; ?></td>
+                                        <td style="text-align: center;"><?php echo $v['Jun']; ?></td>
+                                        <td style="text-align: center;"><?php echo $v['Jul']; ?></td>
+                                        <td style="text-align: center;"><?php echo $v['Aug']; ?></td>
+                                        <td style="text-align: center;"><?php echo $v['Sep']; ?></td>
+                                        <td style="text-align: center;"><?php echo $v['Oct']; ?></td>
+                                        <td style="text-align: center;"><?php echo $v['Nov']; ?></td>
+                                        <td style="text-align: center;"><?php echo $v['Dece']; ?></td>
                                       </tr>
                                   </tbody>
                               </table>
@@ -141,7 +141,7 @@
                             </div>
                           </div>
                         </td>
-                        <td style="text-align: center;border-color:black;"><?php echo $v['Rest']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Rest']; ?></td>
 
                       </tr>
                   <?php endif; ?>

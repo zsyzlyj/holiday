@@ -25,7 +25,7 @@
         <li><a href="<?php echo base_url('super_auth/wage_setting') ?>"><i class="glyphicon glyphicon-edit "></i>&nbsp;修改密码</a></li>
         <?php endif; ?>
         
-        <li><a href="<?php echo base_url('super_auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;登出
+        <li><a href="<?php echo base_url('super_auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;退出登录
         </a></li>
         <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
     </ul>

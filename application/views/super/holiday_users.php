@@ -54,7 +54,7 @@
                         
                         <td><?php echo $v['dept']; ?></td>
                         
-                        <form action="<?php echo base_url('users/update/') ?>" method="post">
+                        <form action="<?php echo base_url('super_holiday/update/') ?>" method="post">
                           
                         <td>
                           <input id="user_id" name="user_id" type="hidden" value="<?php echo $v['user_id'] ?>"/>
