@@ -25,7 +25,6 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            
             <div class="container">
               <form action="<?php echo base_url('wage/search')?>" class="form-horizontal" method="post" role="form">
                 <fieldset>
@@ -47,7 +46,9 @@
                 </fieldset>
               </form>
             </div>
+            <hr />
             <div style="overflow:scroll;">
+              <fieldset>
               <table id="wageTable"class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;">
                 <thead>
                   <?php $counter=0;?>
@@ -56,13 +57,13 @@
                     <?php foreach($attr_data as $k =>$v):?>
                     <?php if($counter<$trueend):?>
                       <?php if(($counter<5 and $counter>0) or $counter>$koufeiend):?>
-                        <th style="text-align:center;" rowspan="3"><?php echo $v?></th>
+                        <th style="text-align:center;vertical-align:middle;" rowspan="3"><?php echo $v?></th>
                       <?php elseif($counter==5):?>
                         <th style="text-align:center;" colspan="<?php echo $jiaoyuend-4;?>">应发</th>
                       <?php elseif($counter==$fulistart): ?>
                         <th style="text-align:center;" colspan="<?php echo $fuliend-$fulistart+1;?>">福利费</th>
                       <?php elseif($counter==$koufeistart-1): ?>
-                      <th style="text-align:center;" rowspan="3">当月月应收合计</th>
+                      <th style="text-align:center;vertical-align:middle;" rowspan="3">当月月应收合计</th>
                       <?php elseif($counter==$koufeistart): ?>
                       <th style="text-align:center;" colspan="<?php echo $koufeiend-$koufeistart+1;?>">各项扣款</th>
                       <?php endif;?>
@@ -74,7 +75,7 @@
                   <?php foreach($attr_data as $k => $v): ?>
                   <?php if($counter<$trueend):?>
                     <?php if($counter>=5 and $counter<$yuedustart):?>
-                      <th rowspan="2" style="text-align:center;"><?php echo $v?></th>
+                      <th rowspan="2" style="text-align:center;vertical-align:middle;"><?php echo $v?></th>
                     <?php elseif($counter==$yuedustart):?>
                       <th style="text-align:center;" colspan="<?php echo $yueduend-$yuedustart+1;?>">月度绩效</th>
                     <?php elseif($counter==$shengzhuanstart): ?>
@@ -86,9 +87,9 @@
                     <?php elseif($counter==$jiaoyustart): ?>
                       <th style="text-align:center;" colspan="<?php echo $jiaoyuend-$jiaoyustart+1;?>">教育经费</th>
                     <?php elseif($counter>=$fulistart and $counter<=$fuliend): ?>
-                      <th style="text-align:center;" rowspan="2"><?php echo $v?></th>
+                      <th style="text-align:center;vertical-align:middle;" rowspan="2"><?php echo $v?></th>
                     <?php elseif($counter>=$koufeistart and $counter<=$koufeiend): ?>
-                      <th style="text-align:center;" rowspan="2"><?php echo $v?></th>
+                      <th style="text-align:center;vertical-align:middle;" rowspan="2"><?php echo $v?></th>
                     <?php endif;?>    
 
                   <?php endif;$counter++;?>
@@ -127,6 +128,7 @@
                   <?php endif; ?>
                 </tbody>
               </table>
+              </fieldset>
             </div>
           </div>
       </div>

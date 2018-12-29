@@ -30,7 +30,6 @@ class Wage extends Admin_Controller
     }
     
     public function wage_doc(){
-
         $this->render_template('wage/wage_doc', $this->data);
     }
     /*

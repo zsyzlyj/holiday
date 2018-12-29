@@ -73,7 +73,6 @@ class Super_wage extends Admin_Controller
                 $counter++;
             }
         }
-
         $this->render_super_template('super/wage',$this->data);
     }
     public function this_month(){
@@ -110,7 +109,6 @@ class Super_wage extends Admin_Controller
                 if($v=='当月月应收合计'){
                     $this->data['fuliend']=$counter-1;
                     $this->data['koufeistart']=$counter+1;
-                    
                 }
                 if($v=='扣款小计'){
                     $this->data['koufeiend']=$counter;
@@ -119,13 +117,65 @@ class Super_wage extends Admin_Controller
                 $counter++;
             }
         }
-
         $this->render_super_template('super/wage',$this->data);
     }
     public function search(){
-
+        $this->data['wage_data']="";
+        $this->data['attr_data']="";
+        $this->data['chosen_month']="";
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $this->data['chosen_month']=$_POST['chosen_month'];
+            $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
+            if(strlen($doc_name)<=7 and $doc_name!=""){
+                $this->data['wage_data']=$this->search_excel($doc_name,$this->data['user_id']);
+                $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
+                $counter=0;
+                foreach($this->data['attr_data'] as $k => $v){
+                    if($v=='月度绩效工资小计'){
+                        $this->data['yuedustart']=$counter;
+                    }
+                    if($v=='省核专项奖励小计'){
+                        $this->data['yueduend']=$counter-1;
+                        $this->data['shengzhuanstart']=$counter;
+                    }
+                    if($v=='分公司专项奖励小计'){
+                        $this->data['shengzhuanend']=$counter-1;
+                        $this->data['fengongsistart']=$counter;
+                    }
+                    if($v=='其他小计'){
+                        $this->data['fengongsiend']=$counter-1;
+                        $this->data['qitastart']=$counter;
+                    }
+                    if($v=='教育经费小计'){
+                        $this->data['qitaend']=$counter-1;
+                        $this->data['jiaoyustart']=$counter;
+                    }
+                    if($v=='福利费小计'){
+                        $this->data['jiaoyuend']=$counter-1;
+                        $this->data['fulistart']=$counter;
+                    }
+                    if($v=='当月月应收合计'){
+                        $this->data['fuliend']=$counter-1;
+                        $this->data['koufeistart']=$counter+1;
+                    }
+                    if($v=='扣款小计'){
+                        $this->data['koufeiend']=$counter;
+                    }
+                    if($v=='本月工资差异说明'){
+                        $this->data['trueend']=$counter+1;
+                        break;
+                    }
+                    $counter++;
+                }
+            }
+            
+            $this->render_super_template('super/wage_search',$this->data);
+            
+        }
+        else{
+            $this->render_super_template('super/wage_search',$this->data);
+        }
         
-        $this->render_super_template('super/wage_search',$this->data);
     }
     
     public function proof_Creator($type){
