@@ -13,16 +13,24 @@
             </a>
           </li>
           <?php endif; ?>
+          <!--
           <li id="wageMainMenu">
             <a href="<?php echo base_url('wage/staff') ?>">
               <i class="fa fa-money"></i> <span>我的工资信息</span>
             </a>
           </li>
-          <li id="searchwageMainMenu">
-            <a href="<?php echo base_url('wage/search') ?>">
-              <i class="fa fa-search"></i> <span>往月工资查询</span>
+          -->
+          <li id="wagedocMainMenu">
+            <a href="<?php echo base_url('wage/index') ?>">
+              <i class="fa fa-money"></i> <span>薪酬文件</span>
             </a>
           </li>
+          <li id="searchwageMainMenu">
+            <a href="<?php echo base_url('wage/search') ?>">
+              <i class="fa fa-search"></i> <span>工资信息查询</span>
+            </a>
+          </li>
+          <!--
           <li class="treeview" id="applyProofMainMenu">
             <a href="#">
               <i class="fa fa-folder-o"></i>
@@ -46,6 +54,7 @@
               </li>
             </ul>
           </li>
+          -->
         <li id="changePassword"><a href="<?php echo base_url('auth/wage_setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
         <li><a href="<?php echo base_url('auth/wage_logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>退出登录</span></a></li>
         <?php endif ?>

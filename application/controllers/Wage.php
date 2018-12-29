@@ -26,34 +26,12 @@ class Wage extends Admin_Controller
     
 	public function index()
 	{        
-		$this->staff();
+        $this->staff();
     }
-    /*
-    * It Fetches the products data from the product table 
-    * this function is called from the datatable ajax function
-    */
-	public function fetchWageData()
-	{
-		$result = array('data' => array());
+    
+    public function wage_doc(){
 
-        $data = $this->model_wage->getWageData();
-        
-		foreach ($data as $key => $value) {
-			$result['data'][$key] = array(
-				$value['name'],
-				$value['indate'],
-                $value['companyage'],
-                $value['sumage'],
-                $value['sumday'],
-                $value['lastyear'],
-                $value['thisyear'],
-                $value['bonus'],
-                $value['used'],
-                $value['rest'],
-            );
-            console($result['data']['name']);
-		} // /foreach
-       /* */
+        $this->render_template('wage/wage_doc', $this->data);
     }
     /*
     ==============================================================================
@@ -69,7 +47,10 @@ class Wage extends Admin_Controller
     普通员工
     ==============================================================================
     */
-
+    public function staff(){
+        $this->wage_doc();
+    }
+/*
     public function staff()
 	{
         $user_id=$this->session->userdata('user_id');
@@ -128,7 +109,7 @@ class Wage extends Admin_Controller
 
 		$this->render_template('wage/staff', $this->data);
     }
-
+*/
     public function mydeptwage()
     {
         $result=array();
@@ -386,9 +367,7 @@ class Wage extends Admin_Controller
                                 if ($cell instanceof PHPExcel_RichText) { //富文本转换字符串
                                     $cell = $cell->__toString();
                                 }
-                                #echo $cell;
                                 if($cell===$user_id){
-                                    echo $cell;
                                     for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++) {
                                         $cellId = $cellName[$colIndex].$rowIndex;  
                                         $cell = $sheet->getCell($cellId)->getValue();
@@ -419,48 +398,51 @@ class Wage extends Admin_Controller
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $this->data['chosen_month']=$_POST['chosen_month'];
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
-            $this->data['wage_data']=$this->search_excel($doc_name,$this->data['user_id']);
-            echo $doc_name;
-            $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
-            $counter=0;
-            foreach($this->data['attr_data'] as $k => $v){
-                if($v=='月度绩效工资小计'){
-                    $this->data['yuedustart']=$counter;
+            if(strlen($doc_name)<=7 and $doc_name!=""){
+                $this->data['wage_data']=$this->search_excel($doc_name,$this->data['user_id']);
+                $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
+                $counter=0;
+                foreach($this->data['attr_data'] as $k => $v){
+                    if($v=='月度绩效工资小计'){
+                        $this->data['yuedustart']=$counter;
+                    }
+                    if($v=='省核专项奖励小计'){
+                        $this->data['yueduend']=$counter-1;
+                        $this->data['shengzhuanstart']=$counter;
+                    }
+                    if($v=='分公司专项奖励小计'){
+                        $this->data['shengzhuanend']=$counter-1;
+                        $this->data['fengongsistart']=$counter;
+                    }
+                    if($v=='其他小计'){
+                        $this->data['fengongsiend']=$counter-1;
+                        $this->data['qitastart']=$counter;
+                    }
+                    if($v=='教育经费小计'){
+                        $this->data['qitaend']=$counter-1;
+                        $this->data['jiaoyustart']=$counter;
+                    }
+                    if($v=='福利费小计'){
+                        $this->data['jiaoyuend']=$counter-1;
+                        $this->data['fulistart']=$counter;
+                    }
+                    if($v=='当月月应收合计'){
+                        $this->data['fuliend']=$counter-1;
+                        $this->data['koufeistart']=$counter+1;
+                    }
+                    if($v=='扣款小计'){
+                        $this->data['koufeiend']=$counter;
+                    }
+                    if($v=='本月工资差异说明'){
+                        $this->data['trueend']=$counter+1;
+                        break;
+                    }
+                    $counter++;
                 }
-                if($v=='省核专项奖励小计'){
-                    $this->data['yueduend']=$counter-1;
-                    $this->data['shengzhuanstart']=$counter;
-                }
-                if($v=='分公司专项奖励小计'){
-                    $this->data['shengzhuanend']=$counter-1;
-                    $this->data['fengongsistart']=$counter;
-                }
-                if($v=='其他小计'){
-                    $this->data['fengongsiend']=$counter-1;
-                    $this->data['qitastart']=$counter;
-                }
-                if($v=='教育经费小计'){
-                    $this->data['qitaend']=$counter-1;
-                    $this->data['jiaoyustart']=$counter;
-                }
-                if($v=='福利费小计'){
-                    $this->data['jiaoyuend']=$counter-1;
-                    $this->data['fulistart']=$counter;
-                }
-                if($v=='当月月应收合计'){
-                    $this->data['fuliend']=$counter-1;
-                    $this->data['koufeistart']=$counter+1;
-                }
-                if($v=='扣款小计'){
-                    $this->data['koufeiend']=$counter;
-                }
-                if($v=='本月工资差异说明'){
-                    $this->data['trueend']=$counter+1;
-                    break;
-                }
-                $counter++;
             }
+            
             $this->render_template('wage/search', $this->data);
+            
         }
         else{
             $this->render_template('wage/search', $this->data);

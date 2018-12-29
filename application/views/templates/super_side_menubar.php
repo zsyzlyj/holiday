@@ -78,9 +78,9 @@
             <i class="fa fa-money"></i><span>本月薪酬汇总</span>
           </a>
         </li>
-        <li id="wageSearchMainMenu">
+        <li id="searchwageGetherMainMenu">
           <a href="<?php echo base_url('super_wage/search') ?>">
-            <i class="fa fa-file"></i><span>往月薪酬搜索</span>
+            <i class="fa fa-file"></i><span>往月薪酬汇总</span>
           </a>
         </li>
         <li class="treeview" id="wageSyncNav">
@@ -93,7 +93,7 @@
           </a>
           <ul class="treeview-menu">
             <li id="uploadWageFileNav"><a href="<?php echo base_url('super_wage/wage_import') ?>"><i class="fa fa-circle-o"></i><span>薪酬信息导入</span></a></li>
-            <li id="downloadWageNav"><a href="<?php echo base_url('super_wage/download_page') ?>"><i class="fa fa-circle-o"></i> 下载薪酬模板</a></li>
+            <li id="downloadWageNav"><a href="<?php echo base_url('super_wage/download_page') ?>"><i class="fa fa-circle-o"></i>下载薪酬模板</a></li>
           </ul>
         </li>
         

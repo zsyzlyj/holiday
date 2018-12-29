@@ -4,7 +4,12 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b></b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>年假管理系统</b></span>
+      <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
+        <span class="logo-lg"><b>年假查询系统</b></span>
+      <?php endif; ?>
+      <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
+        <span class="logo-lg"><b>工资查询系统</b></span>
+      <?php endif; ?>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">

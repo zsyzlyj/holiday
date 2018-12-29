@@ -253,7 +253,6 @@ class Auth extends Admin_Controller
 					$user_data = $this->model_wage_users->getUserData($id);
 				$this->data['user_data'] = $user_data;
 	        	
-
 				$this->render_template('users/setting', $this->data);	
 	        }	
 		}

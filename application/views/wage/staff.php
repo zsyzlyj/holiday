@@ -33,14 +33,15 @@
 
             <div class="box-body">
               <div style="overflow:scroll;">
-                <table id="wageTable"class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;border-color:black;">
+                <table id="wageTable" class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;border-color:black;">
+                <!--<table id="wageTable" class="table table-striped table-bordered table-hover" style="border-color:black;overflow:scroll;text-align: center;">-->
                   <thead>
                   <?php $counter=0;?>
                   <?php if($attr_data): ?>
                   <tr>
                     <?php foreach($attr_data as $k =>$v):?>
                     <?php if($counter<$trueend):?>
-                      <?php if(($counter<5 and $counter>0) or $counter>$koufeiend ):?>
+                      <?php if(($counter<5 and $counter!=0) or $counter>$koufeiend ):?>
                         <th style="text-align:center;border-color:black;" rowspan="3"><?php echo $v?></th>
                       <?php elseif($counter==5):?>
                         <th style="text-align:center;border-color:black;" colspan="<?php echo $jiaoyuend-4;?>">应发</th>
@@ -99,7 +100,7 @@
                     <?php $counter=0;?>
                     <?php foreach($wage_data as $k => $v): ?>
                       
-                      <?php if($counter<$trueend):?>
+                      <?php if($counter<$trueend and $counter!=0):?>
                       <td style="border-color:black;"><?php echo $v?></td>
                       <?php endif;$counter++;?>
                     <?php endforeach; ?>
