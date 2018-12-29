@@ -351,6 +351,7 @@ class Wage extends Admin_Controller
     public function search_excel($doc_name,$user_id){
         $this->load->library("phpexcel");//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
+        
         $dir="uploads/wage";
         $data=array();
         if(is_dir($dir)){
@@ -362,19 +363,43 @@ class Wage extends Admin_Controller
                         $files[$child_dir] = my_scandir($dir.'/'.$child_dir);
                     }else{
                         if(strstr($child_dir,$doc_name)){
+                            if (strstr($child_dir,'xlsx')) {
+                                $reader = new PHPExcel_Reader_Excel2007();
+                            }
+                            else{
+                                if (strstr($child_dir, 'xls')) {
+                                    $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
+                                }
+                            }
+                            $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
                             $PHPExcel = $reader->load($dir.'/'.$child_dir, 'utf-8'); // 载入excel文件
                             $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
                             $highestRow = $sheet->getHighestRow(); // 取得总行数
                             $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+                        
+                            $columnCnt = array_search($highestColumm, $cellName); 
+
+                            $data = array();
                             for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++) {        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-                                if($data[$rowIndex]['C']===$user_id){
-                                    for ($colIndex = 'A'; $colIndex <= $highestColumm; $colIndex++) {
-                                        $addr = $colIndex . $rowIndex;
-                                        $cell = $sheet->getCell($addr)->getValue();
+                                $cellId = $cellName[2].$rowIndex;  
+                                $cell = $sheet->getCell($cellId)->getCalculatedValue();
+                                if ($cell instanceof PHPExcel_RichText) { //富文本转换字符串
+                                    $cell = $cell->__toString();
+                                }
+                                #echo $cell;
+                                if($cell===$user_id){
+                                    echo $cell;
+                                    for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++) {
+                                        $cellId = $cellName[$colIndex].$rowIndex;  
+                                        $cell = $sheet->getCell($cellId)->getValue();
+                                        $cell = $sheet->getCell($cellId)->getCalculatedValue();
                                         if ($cell instanceof PHPExcel_RichText) { //富文本转换字符串
                                             $cell = $cell->__toString();
                                         }
-                                        $data[$colIndex] = $cell;
+                                        if($cell!="" or $cell=="0"){
+                                            $data[$colIndex] = $cell;
+                                        }
+                                        
                                     }
                                     break;
                                 }
@@ -390,9 +415,12 @@ class Wage extends Admin_Controller
     public function search(){
         $this->data['wage_data']="";
         $this->data['attr_data']="";
+        $this->data['chosen_month']="";
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $doc_name=substr($_POST['chosen_month'],0,3).substr($_POST['chosen_month'],5,6);
+            $this->data['chosen_month']=$_POST['chosen_month'];
+            $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             $this->data['wage_data']=$this->search_excel($doc_name,$this->data['user_id']);
+            echo $doc_name;
             $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
             $counter=0;
             foreach($this->data['attr_data'] as $k => $v){

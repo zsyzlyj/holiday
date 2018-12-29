@@ -124,13 +124,6 @@ class Holiday extends Admin_Controller
                 }
                 else{}
             }
-            /*
-            if($field != 'initflag' and $field != 'user_id')
-            {
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
-            }
- 
-            */
             $row++;
         }
  
