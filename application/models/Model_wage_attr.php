@@ -14,7 +14,12 @@ class Model_wage_attr extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->row_array();
 	}
-
+	public function getWageAttrDataByDate($date)
+	{
+		$sql = "SELECT * FROM wage_attr where date_tag = ?";
+		$query = $this->db->query($sql,array($date));
+		return $query->row_array();
+	}
 	public function getWageTotalData()
 	{
 		$sql = "SELECT * FROM wage_total";
@@ -40,7 +45,12 @@ class Model_wage_attr extends CI_Model
 			return ($insert == true) ? true : false;
 		}
 	}
-
+	public function update($data=array(),$id)
+	{
+		$this->db->where('date_tag',$id);
+		$update = $this->db->update('wage_attr', $data);
+		return ($update == true) ? true : false;	
+	}
 	public function delete_total()
 	{
 		$sql='delete from wage_total';

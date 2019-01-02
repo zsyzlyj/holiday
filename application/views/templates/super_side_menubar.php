@@ -73,20 +73,22 @@
         
         <?php endif; ?>
         <?php if($permission=='工资'):?>
+        <!--
         <li id="wageGatherMainMenu">
           <a href="<?php echo base_url('super_wage/this_month') ?>">
             <i class="fa fa-money"></i><span>本月薪酬汇总</span>
           </a>
         </li>
+        -->
         <li id="searchwageGetherMainMenu">
           <a href="<?php echo base_url('super_wage/search') ?>">
-            <i class="fa fa-file"></i><span>往月薪酬汇总</span>
+            <i class="fa fa-file"></i><span>薪酬汇总查询</span>
           </a>
         </li>
         <li class="treeview" id="wageSyncNav">
           <a href="#">
             <i class="fa fa-cloud"></i>
-            <span>本月薪酬信息更新</span>
+            <span>薪酬信息更新</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

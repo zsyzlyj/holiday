@@ -60,13 +60,13 @@
           <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
         </div>
         <hr />
-        <!--
+        
         <div class="col-xs-8">
           <label>
               <a href="<?php echo base_url('auth/wage_login') ?>"> 工资系统</a>
           </label>
         </div>
-        -->
+        <!---->
         <!-- /.col -->
       </div>
     </form>

@@ -458,7 +458,8 @@ CREATE TABLE `wage_attr` (
   `attr_name117` varchar(50) DEFAULT NULL,
   `attr_name118` varchar(50) DEFAULT NULL,
   `attr_name119` varchar(50) DEFAULT NULL,
-  `attr_name120` varchar(50) DEFAULT NULL
+  `attr_name120` varchar(50) DEFAULT NULL,
+  `date_tag` varchar(50) DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

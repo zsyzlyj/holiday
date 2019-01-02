@@ -7,7 +7,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
       <h1>
-        往月工资信息
+        工资信息查询
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Home</li>
@@ -142,7 +142,6 @@
     $(document).ready(function() { 
       $("#searchwageMainMenu").addClass('active');
       $(".form_datetime").datetimepicker({
-        //language: 'cn',
         format: 'yyyy-mm',
         startView:3,
         minView:3,

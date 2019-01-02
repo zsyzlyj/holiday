@@ -7,7 +7,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
       <h1>
-        往月工资信息
+        工资信息查询
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Home</li>
@@ -26,7 +26,7 @@
           <!-- /.box-header -->
           <div class="box-body">
             <div class="container">
-              <form action="<?php echo base_url('wage/search')?>" class="form-horizontal" method="post" role="form">
+              <form action="<?php echo base_url('super_wage/search')?>" class="form-horizontal" method="post" role="form">
                 <fieldset>
                   <legend></legend>
                   <div class="form-group">
@@ -112,17 +112,18 @@
                 <tbody>
                   
                   <?php if($wage_data):?>
+                  <?php foreach($wage_data as $k => $v): ?>
                     <tr>
                     <?php $counter=0;?>
-                    <?php foreach($wage_data as $k => $v): ?>
+                    <?php foreach($v as $a => $b): ?>
                       <?php if($counter<=$trueend and $counter>0):?>
-                      <td style=""><?php echo $v?></td>
+                      <td style=""><?php echo $b?></td>
                       <?php endif;$counter++;?>
                     <?php endforeach; ?>
                     </tr>
+                  <?php endforeach; ?>
                   <?php else: ?>
                     <?php if($chosen_month!=""):?>
-
                       无当月工资记录
                     <?php endif; ?>
                   <?php endif; ?>
@@ -142,12 +143,40 @@
     $(document).ready(function() { 
       $("#searchwageGetherMainMenu").addClass('active');
       $(".form_datetime").datetimepicker({
-        //language: 'cn',
         format: 'yyyy-mm',
         startView:3,
         minView:3,
         startDate:"2017-12",
         autoclose:true
+      });
+      $('#wageTable').DataTable({
+        language: 
+        {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "显示 _MENU_ 项",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": 
+            {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页"
+            },
+            "oAria": 
+            {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        }      
       });
     
     });

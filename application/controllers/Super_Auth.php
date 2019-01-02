@@ -58,7 +58,7 @@ class Super_Auth extends Admin_Controller
 					$this->session->set_userdata($logged_in_sess);
 					switch($login['permission']){
 						case '工资':
-							redirect('super_wage/this_month', 'refresh');
+							redirect('super_wage/search', 'refresh');
 							break;
 						case '休假':
 							redirect('super_holiday/index', 'refresh');

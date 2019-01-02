@@ -399,7 +399,7 @@ class Wage extends Admin_Controller
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strlen($doc_name)<=7 and $doc_name!=""){
                 $this->data['wage_data']=$this->search_excel($doc_name,$this->data['user_id']);
-                $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
+                $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
                 $counter=0;
                 foreach($this->data['attr_data'] as $k => $v){
                     if($v=='月度绩效工资小计'){

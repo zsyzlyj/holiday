@@ -16,7 +16,7 @@ class Super_wage extends Admin_Controller
         $this->load->model('model_wage_attr');
         $this->load->model('model_wage_record');
         $this->load->model('model_wage');
-        $this->load->model('model_wage_doc');
+        $this->load->model('model_wage_doc'); 
         $this->data['permission']=$this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
@@ -82,7 +82,6 @@ class Super_wage extends Admin_Controller
         $counter=0;
         if($this->data['attr_data']){
             foreach($this->data['attr_data'] as $k => $v){
-                
                 if($v=='月度绩效工资小计'){
                     $this->data['yuedustart']=$counter;
                 }
@@ -119,16 +118,73 @@ class Super_wage extends Admin_Controller
         }
         $this->render_super_template('super/wage',$this->data);
     }
+    public function search_excel($doc_name){
+        $this->load->library("phpexcel");//ci框架中引入excel类
+        $this->load->library('PHPExcel/IOFactory');
+        
+        $dir="uploads/wage";
+        $data=array();
+        if(is_dir($dir)){
+            $files = array();
+            $child_dirs = scandir($dir);
+            foreach($child_dirs as $child_dir){
+                if($child_dir != '.' && $child_dir != '..'){
+                    if(is_dir($dir.'/'.$child_dir)){
+                        $files[$child_dir] = my_scandir($dir.'/'.$child_dir);
+                    }else{
+                        if(strstr($child_dir,$doc_name)){
+                            if (strstr($child_dir,'xlsx')) {
+                                $reader = new PHPExcel_Reader_Excel2007();
+                            }
+                            else{
+                                if (strstr($child_dir, 'xls')) {
+                                    $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
+                                }
+                            }
+                            $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
+                            $PHPExcel = $reader->load($dir.'/'.$child_dir, 'utf-8'); // 载入excel文件
+                            $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
+                            $highestRow = $sheet->getHighestRow(); // 取得总行数
+                            $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+                        
+                            $columnCnt = array_search($highestColumm, $cellName); 
+
+                            $data = array();
+                            for ($rowIndex = 4; $rowIndex <= $highestRow; $rowIndex++) {        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+                                for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++) {
+                                    $cellId = $cellName[$colIndex].$rowIndex;  
+                                    $cell = $sheet->getCell($cellId)->getValue();
+                                    $cell = $sheet->getCell($cellId)->getCalculatedValue();
+                                    if ($cell instanceof PHPExcel_RichText) { //富文本转换字符串
+                                        $cell = $cell->__toString();
+                                    }
+                                    if($cell!="" or $cell=="0"){
+                                        $data[$rowIndex][$colIndex] = $cell;
+                                    }
+                                    if($cell=="" and $colIndex==$columnCnt){
+                                        $data[$rowIndex][$colIndex] = $cell;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        return $data;
+    }
     public function search(){
         $this->data['wage_data']="";
         $this->data['attr_data']="";
         $this->data['chosen_month']="";
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        echo in_array('chosen_month',$_POST);
+        if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('chosen_month',$_POST)){
             $this->data['chosen_month']=$_POST['chosen_month'];
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strlen($doc_name)<=7 and $doc_name!=""){
-                $this->data['wage_data']=$this->search_excel($doc_name,$this->data['user_id']);
-                $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
+                $this->data['wage_data']=$this->search_excel($doc_name);
+                $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
                 $counter=0;
                 foreach($this->data['attr_data'] as $k => $v){
                     if($v=='月度绩效工资小计'){
@@ -487,31 +543,30 @@ class Super_wage extends Admin_Controller
         $this->load->library("phpexcel");//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
  
+        //先做一个文件上传，保存文件
+        $path=$_FILES['file'];
+        $filePath = "uploads/wage/".$path["name"];
+
+        move_uploaded_file($path["tmp_name"],$filePath);
         //根据上传类型做不同处理
-        
+        $file_name="";
         if (strstr($_FILES['file']['name'],'xlsx')) {
             $reader = new PHPExcel_Reader_Excel2007();
-            //保存文件
-            $path=$_FILES['file'];
-            $filePath = "uploads/wage/".date('Ym').".xlsx";
-            move_uploaded_file($path["tmp_name"],$filePath);
+            $file_name = str_replace(".xlsx","",$_FILES['file']['name']);
         }
         else{
             if (strstr($_FILES['file']['name'], 'xls')) {
                 $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
-                //保存文件
-                $path=$_FILES['file'];
-                $filePath = "uploads/wage/".date('Ym').".xls";
-                move_uploaded_file($path["tmp_name"],$filePath);
+                $file_name = str_replace(".xls","",$_FILES['file']['name']);
             }
         }
         //薪酬文件记录写入
         //如果有相同时期的文件，直接覆盖记录，如果没有的话，那就创建新文件记录
-        if($this->model_wage_record->getRecordByDate(date('Ym'))===null){
-            $this->model_wage_record->create(array('upload_date' => date('Ym'),'path' => $filePath));    
+        if($this->model_wage_record->getRecordByDate($file_name)===null){
+            $this->model_wage_record->create(array('upload_date' => $file_name,'path' => $filePath));    
         }
         else{
-            $this->model_wage_record->update(array('path' => $filePath),date('Ym'));
+            $this->model_wage_record->update(array('path' => $filePath),$file_name);
         }
         
         $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
@@ -545,62 +600,22 @@ class Super_wage extends Admin_Controller
         $attr=array();
         $attr_str='';
         $attr_counter=1;
-        foreach($data as $k => $v){
-            $row_data=array();
-            if($counter==2){
-                foreach($v as $a=>$b)
-                {
-                    if($b!=""){
-                        $attribute['attr_name'.$attr_counter]=$b;
-                        $attr_counter++;
-                    }
-                }
+        foreach($data[3] as $k => $v){
+            if($v!=""){
+                $attribute['attr_name'.$attr_counter]=$v;
+                $attr_counter++;
             }
-            if($counter>2){
-                foreach($v as $a=>$b)
-                {
-                    if($b!="" or $b=="0"){
-                       array_push($row_data,$b);
-                       
-                    }
-                }
-                array_push($content,$row_data);
-            }
-            
-            unset($row_data);
-            $counter++;
         }
+        $attribute['date_tag']=$file_name;
         $attr_counter--;
         $this->model_wage_attr->delete_total();
         $this->model_wage_attr->create_total(array('total' => $attr_counter));
-        $this->model_wage_attr->delete_attr();
-        $this->model_wage_attr->create_attr($attribute);
-
-        //把数据打包，写入数据库
-        $this->model_wage->deleteAll();
-        $wage_set=array();
-        foreach($content as $k => $v){
-            $content_data=array();    
-            foreach($v as $a => $b){
-                switch($a){
-                    case 0:$content_data['number']=$b;break;
-                    case 1:$content_data['department']=$b;break;
-                    case 2:$content_data['user_id']=$b;break;
-                    case 3:$content_data['name']=$b;break;
-                    default:
-                        $content_data['content'.($a-3)]=$b;
-                        break;
-                }
-            }
-            if($a!=$attr_counter-1){
-                $content_data['content'.($attr_counter-4)]="";
-            }
-
-            array_push($wage_set,$content_data);
-            unset($content_data);
+        if($this->model_wage_attr->getWageAttrDataByDate($file_name)){
+            $this->model_wage_attr->update_attr($attribute);
         }
-        $this->model_wage->createbatch($wage_set);
-        unset($wage_set);
+        else{
+            $this->model_wage_attr->create_attr($attribute);
+        }
     }
     
     public function wage_import($filename=NULL)
@@ -615,7 +630,8 @@ class Super_wage extends Admin_Controller
                 else
                 {
                     $this->wage_excel_put();
-                    $this->index();
+                    $this->search();
+                    #$this->index();
                 }
             }
         }
@@ -656,12 +672,6 @@ class Super_wage extends Admin_Controller
  
         $objWriter->save('php://output');
 
-    }
-    public function export_wage()
-    {
-        $this->excel();
-
-        redirect('super/wage', 'refresh');
     }
     public function download_page()
     {
