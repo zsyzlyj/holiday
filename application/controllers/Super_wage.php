@@ -763,7 +763,7 @@ class Super_wage extends Admin_Controller
 		
 		foreach ($notice_data as $k => $v) {
             if($v['type']=='wage'){
-                $v['type']='假期';
+                $v['type']='薪酬';
                 $result[$k] = $v;
             }
 		}

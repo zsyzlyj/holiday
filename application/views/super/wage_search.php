@@ -56,7 +56,7 @@
                   <tr>
                     <?php foreach($attr_data as $k =>$v):?>
                     <?php if($counter<$trueend):?>
-                      <?php if(($counter<5 and $counter>0) or $counter>$koufeiend):?>
+                      <?php if($counter<5 or $counter>$koufeiend):?>
                         <th style="text-align:center;vertical-align:middle;" rowspan="3"><?php echo $v?></th>
                       <?php elseif($counter==5):?>
                         <th style="text-align:center;" colspan="<?php echo $jiaoyuend-4;?>">应发</th>
@@ -116,7 +116,7 @@
                     <tr>
                     <?php $counter=0;?>
                     <?php foreach($v as $a => $b): ?>
-                      <?php if($counter<=$trueend and $counter>0):?>
+                      <?php if($counter<=$trueend):?>
                       <td style=""><?php echo $b?></td>
                       <?php endif;$counter++;?>
                     <?php endforeach; ?>
