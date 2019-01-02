@@ -290,12 +290,6 @@ class Holiday extends Admin_Controller
                     $col++;
                 }
             }
-            /*
-            if($field != 'user_id' and $field != 'submit_tag')
-            {
-               $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
-            }
-            */
             $row++;
         }
  
@@ -369,15 +363,8 @@ class Holiday extends Admin_Controller
                     $col++;
                 }
             }
-            /*
-            if($field != 'user_id' and $field != 'submit_tag')
-            {
-               $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
-            }
-            */
             $row++;
         }
-        /**/
  
         $objPHPExcel->setActiveSheetIndex(0);
  
@@ -530,28 +517,8 @@ class Holiday extends Admin_Controller
     public function staff_plan()
     {
         $user_id=$this->session->userdata('user_id');
-        
         $plan_data = $this->model_plan->getplanById($user_id);
-        
-        $notice_data = $this->model_notice->getNoticeLatestPlan();
-        $result = array();
-        
-        $notice_result=array();
-        if($notice_data)
-        {
-            foreach ($notice_data as $k => $v) {
-                $notice_result[$k] = $v;
-            }
-        }
-        if($plan_data)
-        {
-            $plan_data['Totalday']=$plan_data['Thisyear']+$plan_data['Lastyear']+$plan_data['Bonus'];
-            $data = array(
-                'Totalday' => $plan_data['Totalday'],
-            );
-
-            $update = $this->model_plan->update($data, $plan_data['name']);
-        }
+        $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
         $this->data['plan_data'] = $plan_data;
 		$this->render_template('holiday/staff_plan', $this->data);
     }
