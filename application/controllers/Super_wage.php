@@ -178,7 +178,6 @@ class Super_wage extends Admin_Controller
         $this->data['wage_data']="";
         $this->data['attr_data']="";
         $this->data['chosen_month']="";
-        echo in_array('chosen_month',$_POST);
         if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('chosen_month',$_POST)){
             $this->data['chosen_month']=$_POST['chosen_month'];
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
@@ -224,17 +223,59 @@ class Super_wage extends Admin_Controller
                     $counter++;
                 }
             }
-            
             $this->render_super_template('super/wage_search',$this->data);
-            
         }
         else{
             $this->render_super_template('super/wage_search',$this->data);
         }
-        
     }
     
     public function proof_Creator($type){
+        //图片水印制作
+        $ori_img = "assets/images/unicom.jpg";    //原图
+        $new_img = "assets/images/new.jpg";    //生成水印后的图片
+        
+        $original = getimagesize($ori_img);    //得到图片的信息，可以print_r($original)发现它就是一个数组
+
+        switch($original[2]){
+            case 1 : $s_original = imagecreatefromgif($ori_img);
+                break;
+            case 2 : $s_original = imagecreatefromjpeg($ori_img);
+                break;
+            case 3 : $s_original = imagecreatefrompng($ori_img);
+                break;
+        }
+        
+        $font_size = 22;    //字号
+        $tilt = 45;    //文字的倾斜度
+        $color = imagecolorallocatealpha($s_original,200,200,200,0);// 为一幅图像分配颜色 255,0,0表示红色
+        $str = $this->session->userdata('user_id');
+        $poxY = 350;    //Y坐标
+        for($posX=200;$posX<$original[0];$posX+=600){
+            imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
+        }
+        $poxY = 650;    //Y坐标
+        for($posX=450;$posX<$original[0];$posX+=600){
+            imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
+        }
+        $poxY = 950;    //Y坐标
+        for($posX=200;$posX<$original[0];$posX+=600){
+            imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
+        }
+        $poxY = 1250;    //Y坐标
+        for($posX=500;$posX<$original[0];$posX+=600){
+            imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
+        }
+        $poxY = 1550;    //Y坐标
+        for($posX=200;$posX<$original[0];$posX+=600){
+            imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
+        }
+        $poxY = 1850;    //Y坐标
+        for($posX=500;$posX<$original[0];$posX+=600){
+            imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
+        }
+        $loop = imagejpeg($s_original, $new_img);    //生成新的图片(jpg格式)，如果用imagepng可以生成png格式
+        //证明文件生成
         $this->load->library('tcpdf.php');
         //实例化 
         $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false); 
@@ -277,17 +318,20 @@ class Super_wage extends Admin_Controller
         $pdf->AddPage('P', 'A4'); 
         
         //设置背景图片
-        $img_file = 'assets/images/Unicom.jpg';
+        #$img_file = 'assets/images/Unicom.jpg';
+        $img_file=$new_img;
         $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
 
-        $user_data=$this->model_wage->getWageById($this->session->userdata('user_id'));
-        $holiday_data=$this->model_holiday->getHolidayById($this->session->userdata('user_id'));
-
-        $cage=$holiday_data['Companyage'];
-        $user_id=$user_data['user_id'];
-        $username=$user_data['name'];
-        $date=date('Y年m月d日',strtotime($holiday_data['indate']));
-        
+        $user_data=$this->model_wage_tag->getTagById($this->session->userdata('user_id'));
+        #$holiday_data=$this->model_holiday->getHolidayById($this->session->userdata('user_id'));
+        #$holiday_
+        #$cage=$holiday_data['Companyage'];
+        #$user_id=$user_data['user_id'];
+        #$username=$user_data['name'];
+        $user_id="";
+        $username="";
+        #$date=date('Y年m月d日',strtotime($holiday_data['indate']));
+        $date="";
         $str="收 入 证 明\r\n";
         $pdf->SetFont('songti','B',24);
         $pdf->Write(0,$str,'', 0, 'C', false, 0, false, false, 0);
@@ -370,7 +414,7 @@ class Super_wage extends Admin_Controller
         }
 
         $pdf->Output('证明.pdf', 'I');
-        //输出PDF         
+        //输出PDF       
     }
     public function wage_proof(){
         $this->render_super_template('super/wage_proof',$this->data);
