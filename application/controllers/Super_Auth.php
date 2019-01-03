@@ -16,32 +16,32 @@ class Super_Auth extends Admin_Controller
 		$this->data['user_name'] = $this->session->userdata('user_id');
 	}
 
-	/* 
-		查看登录的表格是否正确，主要是检查user_id和password是否和数据库的一致
-		根据数据库中的permission设置permission，根据permission确定不同用户登录后界面上的功能
-		permission的值不同分别跳转：
-		0——超级管理员,index
-		1——综管员,admin
-		2——部门负责人，manager
-		3——普通员工,staff
-	*/
+	/*
+    ============================================================
+    超管登录
+    包括：
+    1、index(),登录界面
+    2、login(),登录界面
+    3、logout(),返回登录界面
+    4、holiday_setting(),假期超管修改密码页面
+    5、wage_setting(),薪酬超管修改密码页面
+    6、setting(),修改密码母板
+    ============================================================
+    */ 
 
 	public function index(){
 		$this->login();
 	}
-	public function login()
-	{
+	public function login(){
 		$this->logged_in_super();
-
 		$this->form_validation->set_rules('user_id', 'user_id', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
-
-        if ($this->form_validation->run() == TRUE) {
+        if ($this->form_validation->run() == TRUE){
             // true case
            	$id_exists = $this->model_super_auth->check_id($this->input->post('user_id'));
-           	if($id_exists == TRUE) {
+           	if($id_exists == TRUE){
            		$login = $this->model_super_auth->login($this->input->post('user_id'), $this->input->post('password'));
-           		if($login) {
+           		if($login){
 					$log=array(
 						'user_id' => $login['user_id'],
 						'username' => $login['user_id'],
@@ -66,25 +66,22 @@ class Super_Auth extends Admin_Controller
 						default:
 							break;
 					}
-
            		}
-           		else {
+           		else{
            			$this->data['errors'] = 'Incorrect id/password combination';
            			$this->load->view('super/login', $this->data);
            		}
            	}
-           	else {
+           	else{
            		$this->data['errors'] = 'Id does not exists';
-
            		$this->load->view('super/login', $this->data);
            	}	
         }
-        else {
+        else{
             // false case
             $this->load->view('super/login');
         }	
 	}
-
 	/*
 		清除session，退出
 		
@@ -123,24 +120,20 @@ class Super_Auth extends Admin_Controller
     用户密码修改
     ============================================================
     */ 
-    public function setting($type=NULL)
-	{
-		
+    public function setting($type=NULL){	
 		$id = $this->session->userdata('user_id');
-		if($id) {
+		if($id){
 			$this->form_validation->set_rules('username', 'username', 'trim|max_length[12]');
-
-			if ($this->form_validation->run() == TRUE) {
+			if ($this->form_validation->run() == TRUE){
 	            // true case
-		        if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))) {
+		        if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))){
 					$this->session->set_flashdata('errors', '新密码为空，请填写新密码');
 		        	redirect('super_auth/'.$type.'_setting/', 'refresh');
 		        }
-		        else {
+		        else{
 					$this->form_validation->set_rules('password', 'Password', 'trim|required');
 					$this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|required|matches[password]');
-
-					if($this->form_validation->run() == TRUE) {
+					if($this->form_validation->run() == TRUE){
 
 						$password = md5($this->input->post('password'));
 
@@ -150,27 +143,24 @@ class Super_Auth extends Admin_Controller
 
 						$update = $this->model_super_user->edit($data, $id);
 						
-			        	if($update == true) {
+			        	if($update == true){
 			        		$this->session->set_flashdata('success', 'Successfully updated');
 			        		redirect('super_auth/'.$type.'_setting/', 'refresh');
 			        	}
-			        	else {
+			        	else{
 			        		$this->session->set_flashdata('errors', 'Error occurred!!');
 			        		redirect('super_auth/'.$type.'_setting/', 'refresh');
 			        	}
 					}
-			        else {
+			        else{
 						// false case
 						$user_data = $this->model_super_user->getUserData($id);
-
 			        	$this->data['user_data'] = $user_data;
-
 						$this->render_super_template('super/setting', $this->data);	
-			        }	
-
+			        }
 		        }
 	        }
-	        else {
+	        else{
 	            // false case
 	        	$user_data = $this->model_super_user->getUserData($id);
 	        	$this->data['user_data'] = $user_data;
