@@ -138,9 +138,9 @@
                         <input type="hidden" id='submit_auth' name='submit_auth' value="1"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="0"/>
                         <?php if(strstr($submit_status,'已') or strstr($v['submit_tag'],'未')):?>
-                        <button  disabled class='btn btn-info'>允许修改</button>
+                        <button  disabled class='btn btn-info'>允许重新填写</button>
                         <?php else:?>
-                        <button class='btn btn-info'>允许修改</button>
+                        <button class='btn btn-info'>允许重新填写</button>
                         <?php endif; ?>
                         </form>
                         </td>

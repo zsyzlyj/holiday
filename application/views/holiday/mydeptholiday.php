@@ -30,13 +30,8 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
-          
-
-
           <div class="box">
-            <div class="box-header">
-            
-            
+            <div class="box-header"> 
             <form action='<?php echo base_url('holiday/mydeptholiday' )?>' method="post" id="selected_dept_form">
             <select id="selected_dept" name="selected_dept" onchange="submitForm();">
               <option value="">
@@ -71,7 +66,7 @@
             <div class="box-body">
               <div style="overflow:scroll;">
               
-              <table id="holidayTable" class="table table-bordered table-striped mytdstyle" style="overflow:scroll;">
+              <table id="holidayTable" class="table table-bordered table-striped mytdstyle" style="overflow:scroll;white-space: nowrap;">
                 <thead>
                 <tr>
                   <th>姓名</th>
@@ -97,7 +92,6 @@
                   
                   <th>已休假数</th>
                   <th>剩下休假数</th>
-                  <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -125,24 +119,13 @@
                         <td><?php echo $v['Oct']; ?></td>
                         <td><?php echo $v['Nov']; ?></td>
                         <td><?php echo $v['Dece']; ?></td>
-                        
                         <td><?php echo $v['Used']; ?></td>
-                        
                         <td><?php echo $v['Rest']; ?></td>
-
-
-                        <td>
-                            <a href="<?php echo base_url('holiday/edit/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
-
-                            <a href="<?php echo base_url('holiday/delete/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-trash"></i></a>
-                        </td>
-
                       </tr>
                     <?php endforeach ?>
                     </tbody>
                   <?php endif; ?>
                   </table>
-                
               </div>
               <!-- /.overflow:scroll -->
             </div>
@@ -153,56 +136,44 @@
         <!-- col-md-12 -->
       </div>
       <!-- /.row -->
-
-      
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  
-  
-  
-
   <script type="text/javascript">
     $(document).ready(function() {
       $('#holidayTable').DataTable({
-  
-      language: {
-          "sProcessing": "处理中...",
-          "sLengthMenu": "显示 _MENU_ 项",
-          "sZeroRecords": "没有匹配结果",
-          "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-          "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-          "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-          "sInfoPostFix": "",
-          "sSearch": "搜索:",
-          "sUrl": "",
-          "sEmptyTable": "表中数据为空",
-          "sLoadingRecords": "载入中...",
-          "sInfoThousands": ",",
-          "oPaginate": {
-              "sFirst": "首页",
-              "sPrevious": "上页",
-              "sNext": "下页",
-              "sLast": "末页"
-          },
-          "oAria": {
-              "sSortAscending": ": 以升序排列此列",
-              "sSortDescending": ": 以降序排列此列"
-          }
-      }
-    });
-
-
+        language: {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "显示 _MENU_ 项",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页"
+            },
+            "oAria": {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        }
+      });
       $("#myDeptHolidayMainMenu").addClass('active');
-    
-      
     });
     function submitForm(){
-    //获取form表单对象
+      //获取form表单对象
         var form = document.getElementById("selected_dept_form");
         form.submit();//form表单提交
     }
-    
   </script>
  

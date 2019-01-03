@@ -26,9 +26,38 @@ class Holiday extends Admin_Controller
             redirect('super_auth/login','refresh');
         }
 	}
-
-	public function index()
-	{
+    /*
+    ============================================================
+    休假管理
+    包括：
+    1、index(),员工个人年假信息展示
+    2、staff(),休假汇总
+    3、excel_mydeptholiday(),上传假期文件
+    4、export_holiday(),跳转上传假期文件页面
+    5、excel_plan(),显示所有的假期文件（使用datatable）
+    6、holiday_doc_delete(),删除一个假期文件,后跳转doc_list
+    7、holiday_excel_put(),处理上传文件,把年假信息导入数据库
+    8、holiday_import(),跳转上传假期信息页面
+    9、download_page(),跳转下载页面,下载页面包含年假上传模板和年假计划
+    10、excel(),构建假期模板文档
+    11、export_holiday(),下载假期模板文档的接口
+    12、excel_plan(),构建假期计划文档
+    13、export_plan(),下载假期计划的接口
+    14、plan(),年假计划汇总
+    15、plan_change_submit(),年假修改权限赋予和撤销,综管员和超管都能用
+    16、users(),查看所有用户的权限，同时可以修改用户的权限
+    17、user_delete(),删除单个用户
+    18、user_update(),更新某个用户的权限
+    19、manager_excel_put(),处理上传文件,把综管员、部门经理信息导入数据库
+    20、manager_import(),跳转上传管理人员名单页面
+    21、manager(),管理人员名单汇总
+    22、notification(),公告历史汇总(年假和计划)
+    23、publish_holiday(),发布年假相关公告
+    24、publish_plan(),发布年假计划相关公告
+    ============================================================
+    */ 
+	public function index(){
+        $this->staff();
     }
 
     /*
@@ -55,92 +84,7 @@ class Holiday extends Admin_Controller
             'action_time' => date('Y-m-d H:i:s')
         );
         $this->model_log_action->create($log);
-
-        
 		$this->render_template('holiday/staff', $this->data);
-    }
-
-    public function excel(){
-        $this->load->library('PHPExcel');
-        $this->load->library('PHPExcel/IOFactory');
-        $objPHPExcel = new PHPExcel();
-        $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
- 
-        $objPHPExcel->setActiveSheetIndex(0);
-        
-        $result = $this->model_holiday->exportHolidayData();
-        // Field names in the first row
-        $fields = $result->list_fields();
-        $col = 0;
-        foreach ($fields as $field)
-        {
-            $v="";
-            switch($field)
-            {
-                case 'name':$v="姓名\t";break;
-                case 'department':$v="部门\t";break;
-                case 'initdate':$v="开始工作时间\t";break;
-                case 'indate':$v="入职时间\t";break;
-                case 'Companyage':$v="社会工龄\t";break;
-                case 'Totalage':$v="公司工龄\t";break;
-                case 'Totalday':$v="可休假总数\t";break;
-                case 'Lastyear':$v="去年休假数\t";break;
-                case 'Thisyear':$v="今年休假数\t";break;
-                case 'Bonus':$v="荣誉休假数\t";break;
-                case 'Used':$v="已休假数\t";break;
-                case 'Rest':$v="未休假数\t";break;
-                case 'Jan':$v="一月\t";break;
-                case 'Feb':$v="二月\t";break;
-                case 'Mar':$v="三月\t";break;
-                case 'Apr':$v="四月\t";break;
-                case 'May':$v="五月\t";break;
-                case 'Jun':$v="六月\t";break;
-                case 'Jul':$v="七月\t";break;
-                case 'Aug':$v="八月\t";break;
-                case 'Sep':$v="九月\t";break;
-                case 'Oct':$v="十月\t";break;
-                case 'Nov':$v="十一月\t";break;
-                case 'Dece':$v="十二月\t";break;    	
-                default:break;
-            }
-            if($v != ""){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
-                $col++;
-            }
-        }
- 
-        // Fetching the table data
-        $row = 2;
-        
-        foreach($result->result() as $data)
-        {
-            $col = 0;
-            foreach ($fields as $field)
-            {
-                if($field != 'user_id')
-                {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
-                    $col++;
-                }
-                else{}
-            }
-            $row++;
-        }
- 
-        $objPHPExcel->setActiveSheetIndex(0);
- 
-        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
- 
-        $filename = date('YmdHis').".xlsx";
-
-        // Sending headers to force the user to download the file
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="'.$filename);
-        header("Content-Disposition:filename=".$filename);
-        header('Cache-Control: max-age=0');
- 
-        $objWriter->save('php://output');
-
     }
 
     public function excel_mydeptholiday($dept){
@@ -148,18 +92,12 @@ class Holiday extends Admin_Controller
         $this->load->library('PHPExcel/IOFactory');
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
- 
         $objPHPExcel->setActiveSheetIndex(0);
-        
         $result = $this->model_holiday->exportmydeptHolidayData($dept);
-        
         // Field names in the first row
-        
         $fields = $result->list_fields();
         $col = 0;
-        
-        foreach ($fields as $field)
-        {
+        foreach ($fields as $field){
             $v="";
             switch($field)
             {
@@ -194,41 +132,29 @@ class Holiday extends Admin_Controller
                 $col++;
             }
         }
- 
         // Fetching the table data
         $row = 2;
-        
-        foreach($result->result() as $data)
-        {
+        foreach($result->result() as $data){
             $col = 0;
-            foreach ($fields as $field)
-            {
-                if($field != 'user_id')
-                {
+            foreach ($fields as $field){
+                if($field != 'user_id'){
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
                     $col++;
                 }
             }
             $row++;
-            
         }
- 
         $objPHPExcel->setActiveSheetIndex(0);
- 
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
- 
         $filename = date('YmdHis').".xlsx";
         // Sending headers to force the user to download the file
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'.$filename);
         header("Content-Disposition:filename=".$filename);
         header('Cache-Control: max-age=0');
- 
         $objWriter->save('php://output');
-
     }
-    public function export_holiday()
-    {
+    public function export_holiday(){
         $this->excel();
         redirect('holiday/index', 'refresh');
     }
