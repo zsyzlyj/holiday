@@ -32,7 +32,7 @@
           <?php endif; ?>         
         
 
-          <div class="box">
+          <div class="box" style="overflow:scroll;">
             <div class="box-header">
 
             </div>
@@ -40,11 +40,11 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;" width="120%">
+              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;white-space: nowrap;">
                 <thead>
                 <tr>
                   <th>姓名</th>
-                  <th>可休假总数</th>
+                  <th style="white-space: nowrap">可休假总数</th>
                   <th>上年可休数</th>
                   <th>今年可休数</th>
                   <th>荣誉假期数</th>
@@ -77,14 +77,14 @@
                           <td><font color='red'><?php echo $v['submit_tag']; ?></font></td>
                         <?php endif; ?>
                         <td>
-                        <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
+                        <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="margin:0px;display:inline;">
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="1"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="0"/>
-                        <button class='btn btn-info'>允许修改</button>
+                        <button class='btn btn-info'>允许重新填写</button>
                         </form>
-                        <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="float:left">
-                        <button class='btn btn-danger'>撤回修改</button>
+                        <form action="<?php echo base_url('holiday/change_submit')?>" method="post" style="margin:0px;display:inline;">
+                        <button class='btn btn-danger'>撤回填写权限</button>
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="0"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="1"/>

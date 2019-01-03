@@ -143,25 +143,7 @@ class Super_holiday extends Admin_Controller
                 $col++;
             }
         }
- /*
-        // Fetching the table data
-        $row = 2;
-        
-        foreach($result->result() as $data)
-        {
-            $col = 0;
-            foreach ($fields as $field)
-            {
-                if($field != 'initflag' and $field != 'user_id')
-                {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
-                    $col++;
-                }
-                else{}
-            }
-            $row++;
-        }
- */
+
         $objPHPExcel->setActiveSheetIndex(0);
  
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
@@ -347,7 +329,6 @@ class Super_holiday extends Admin_Controller
         $this->model_holiday_users->deleteAll();        
 
         /* excel导入时间的方法！ */
-        $initflag=0;
         $holiday_set=array();
         $plan_set=array();
         $user_set=array();
@@ -412,17 +393,14 @@ class Super_holiday extends Admin_Controller
                 'Oct' => $Oct,
                 'Nov' => $Nov,
                 'Dece' => $Dece,
-                'initflag' => $initflag,
                 'User_id' => $User_id
             );
             
             $update_user=true;
-            //如果假期表中没有这个人，那么就年假计划反馈初始化，假期信息初始化，计划初始化，计划提交初始化，用户初始化，
-            //feedback,holiday,plan,submit,user
+            //如果假期表中没有这个人，那么就假期信息初始化，计划初始化，用户初始化，
+            //holiday,plan,user
 
             //初始化假期信息，每个人新建一条假期的记录
-            //如果初始化過就不進行初始化 initflag记录是否被初始化过 0未初始化，1初始化完成
-        
             $Update_data['Companyage']=floor((strtotime(date("Y-m-d"))-strtotime($Update_data['indate']))/86400/365);
             $Update_data['Totalage']=floor((strtotime(date("Y-m-d"))-strtotime($Update_data['initdate']))/86400/365);
 
@@ -437,7 +415,6 @@ class Super_holiday extends Admin_Controller
             }
             $Update_data['Totalday']=$Update_data['Thisyear']+$Update_data['Lastyear']+$Update_data['Bonus'];
             $Update_data['Rest']=$Update_data['Totalday'];
-            $Update_data['initflag']=1;
             $Update_data['Used']=$Update_data['Jan']+$Update_data['Feb']+$Update_data['Mar']+$Update_data['Apr']+$Update_data['May']+$Update_data['Jun']+$Update_data['Jul']+$Update_data['Aug']+$Update_data['Sep']+$Update_data['Oct']+$Update_data['Nov']+$Update_data['Dece'];
     
             #$update=$this->model_holiday->create($Update_data);
@@ -752,7 +729,6 @@ class Super_holiday extends Admin_Controller
                 array_push($column,$v);
             }
         }
-		$initflag=0;
         $reset=false;
         $manager_data=$this->model_holiday_manager->getManagerData();
         $manager_set=array();

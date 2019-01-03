@@ -117,7 +117,7 @@ class Holiday extends Admin_Controller
             $col = 0;
             foreach ($fields as $field)
             {
-                if($field != 'initflag' and $field != 'user_id')
+                if($field != 'user_id')
                 {
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
                     $col++;
@@ -141,11 +141,6 @@ class Holiday extends Admin_Controller
  
         $objWriter->save('php://output');
 
-    }
-
-    public function download_page()
-    {
-        $this->render_template('holiday/export',$this->data);
     }
 
     public function excel_mydeptholiday($dept){
@@ -208,7 +203,7 @@ class Holiday extends Admin_Controller
             $col = 0;
             foreach ($fields as $field)
             {
-                if($field != 'initflag' and $field != 'user_id')
+                if($field != 'user_id')
                 {
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
                     $col++;
@@ -236,7 +231,6 @@ class Holiday extends Admin_Controller
     {
         $this->excel();
         redirect('holiday/index', 'refresh');
-
     }
 
     public function excel_plan(){

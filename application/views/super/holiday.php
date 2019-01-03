@@ -40,9 +40,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              
-              
-              <table id="holidayTable" class="table table-bordered table-striped mytdstyle" style="overflow:scroll;">
+              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;word-break:  keep-all;">
                 <thead>
                 <tr>
                   <th>姓名</th>
@@ -68,7 +66,6 @@
                   
                   <th>已休假数</th>
                   <th>剩下休假数</th>
-                  <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -101,14 +98,6 @@
                         <td><?php echo $v['Used']; ?></td>
                         
                         <td><?php echo $v['Rest']; ?></td>
-
-
-                        <td>
-                            <a href="<?php echo base_url('holiday/edit/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
-
-                            <a href="<?php echo base_url('holiday/delete/'.$v['name']) ?>" class="btn btn-default"><i class="fa fa-trash"></i></a>
-                        </td>
-
                       </tr>
                     <?php endforeach ?>
                     </tbody>
