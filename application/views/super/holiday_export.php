@@ -21,6 +21,9 @@
           <h3>年假模板</h3>
           <br />
           <a href="<?php echo base_url('super_holiday/export_holiday') ?>" class="btn btn-info">下载</a>
+          <h3>年假计划汇总</h3>
+          <br />
+          <a href="<?php echo base_url('super_holiday/export_plan') ?>" class="btn btn-info">下载</a>
         </div>
       </div>
     </section>
