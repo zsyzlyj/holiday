@@ -157,6 +157,12 @@
             <li id="showWageDocNav"><a href="#"><i class="fa fa-circle-o"></i> 人员名单导入</a></li>
           </ul>
         </li>
+        <li id="logTableMainMenu">
+          <a href="<?php echo base_url('super_wage/log_show') ?>">
+            <i class="fa fa-database"></i>
+            <span> 日志查看</span>
+          </a>
+        </li>
         <?php endif; ?>
         
         <!-- user permission info -->

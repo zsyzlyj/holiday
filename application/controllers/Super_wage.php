@@ -860,6 +860,12 @@ class Super_wage extends Admin_Controller
             $this->data['result']=10;
             $this->render_super_template('super/tax_result',$this->data);    
         }
-        $this->render_super_template('super/tax',$this->data);
+        else{
+            $this->render_super_template('super/tax',$this->data);
+        }
+    }
+    public function log_show(){
+        $this->data['log']=$this->model_log_action->getLogData();
+        $this->render_super_template('super/wage_log',$this->data);
     }
 }
