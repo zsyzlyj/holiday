@@ -65,13 +65,13 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off">
+                  <label for="password">新密码</label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="" autocomplete="off">
                 </div>
 
                 <div class="form-group">
-                  <label for="cpassword">Confirm password</label>
-                  <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm Password" autocomplete="off">
+                  <label for="cpassword">确认新密码</label>
+                  <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="" autocomplete="off">
                 </div>
 
               </div>

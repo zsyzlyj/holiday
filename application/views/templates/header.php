@@ -3,7 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Staff</title>
+  <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
+  <title>员工薪酬</title>
+  <?php endif; ?>
+  <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
+  <title>员工年假</title>
+  <?php endif; ?>
+  
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->  
