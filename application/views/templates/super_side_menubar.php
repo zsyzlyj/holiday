@@ -109,7 +109,7 @@
           </a>
           <ul class="treeview-menu">
             <li id="uploadTagFileNav"><a href="<?php echo base_url('super_wage/wage_tag_import') ?>"><i class="fa fa-circle-o"></i><span>人员角色导入</span></a></li>
-            <li id="manageWageUserNav"><a href="<?php echo base_url('super_wage/tag') ?>"><i class="fa fa-circle-o"></i> 综管、部门负责人管理</a></li>
+            <li id="initWageUserNav"><a href="<?php echo base_url('super_wage/init_pass') ?>"><i class="fa fa-circle-o"></i><span>人员密码初始化</span></a></li>
           </ul>
         </li>
         <li class="treeview" id="wageNoticeNav">

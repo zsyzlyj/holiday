@@ -855,6 +855,18 @@ class Super_wage extends Admin_Controller
             $this->render_super_template('super/wage_publish_wage', $this->data);
         }	
     }
+    public function init_pass(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $_POST[''];    
+        }
+        $tag_data=$this->model_wage_tag->getTagData();
+        $result=array();
+        foreach($tag_data as $k => $v){
+            array_push($result,array('name'=>$v['name'],'user_id'=>$v['']));
+        }
+        $this->data['user_data'] = $this->model_wage_users->getUserData();
+        $this->render_super_template('super/wage_init_pass',$this->data);
+    }
     public function tax_counter(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $this->data['result']=10;
