@@ -100,7 +100,7 @@ class Holiday extends Admin_Controller
         foreach ($fields as $field){
             $v="";
             switch($field)
-            {
+           {
                 case 'name':$v="姓名\t";break;
                 case 'department':$v="部门\t";break;
                 case 'initdate':$v="开始工作时间\t";break;
@@ -172,10 +172,10 @@ class Holiday extends Admin_Controller
         $fields = $result->list_fields();
         $col = 0;
         foreach ($fields as $field)
-        {
+       {
             $v="";
             switch($field)
-            {
+           {
                 case 'name':$v="姓名\t";break;
                 case 'department':$v="部门\t";break;
                 case 'Totalday':$v="可休假总数\t";break;
@@ -189,7 +189,7 @@ class Holiday extends Admin_Controller
                 default:break;
             }
             if($v!="")
-            {
+           {
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
                 $col++;
             }
@@ -199,13 +199,13 @@ class Holiday extends Admin_Controller
         $row = 2;
         
         foreach($result->result() as $data)
-        {
+       {
             $col = 0;
             
             foreach ($fields as $field)
-            {
+           {
                 if($field != 'user_id' and $field != 'submit_tag')
-                {
+               {
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
                     $col++;
                 }
@@ -229,7 +229,7 @@ class Holiday extends Admin_Controller
 
     }
     public function export_plan()
-    {
+   {
         $this->excel_plan();
     }
     public function excel_mydeptplan($dept){
@@ -245,10 +245,10 @@ class Holiday extends Admin_Controller
         $fields = $result->list_fields();
         $col = 0;
         foreach ($fields as $field)
-        {
+       {
             $v="";
             switch($field)
-            {
+           {
                 case 'name':$v="姓名\t";break;
                 case 'department':$v="部门\t";break;
                 case 'Thisyear':$v="今年休假数\t";break;
@@ -262,7 +262,7 @@ class Holiday extends Admin_Controller
                 default:break;
             }
             if($v!="")
-            {
+           {
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
                 $col++;
             }
@@ -272,13 +272,13 @@ class Holiday extends Admin_Controller
         $row = 2;
         
         foreach($result->result() as $data)
-        {
+       {
             $col = 0;
             
             foreach ($fields as $field)
-            {
+           {
                 if($field != 'user_id' and $field != 'submit_tag')
-                {
+               {
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
                     $col++;
                 }
@@ -303,7 +303,7 @@ class Holiday extends Admin_Controller
     }
     
     public function export_mydeptplan()
-    {
+   {
         $user_id=$this->session->userdata('user_id');
         $my_data = $this->model_plan->getPlanById($user_id);
 
@@ -311,7 +311,7 @@ class Holiday extends Admin_Controller
     }
 
     public function export_mydeptholiday()
-    {
+   {
         $user_id=$this->session->userdata('user_id');
         $my_data = $this->model_plan->getPlanById($user_id);
 
@@ -328,8 +328,7 @@ class Holiday extends Admin_Controller
         $this->staff();
     }
 
-    public function mydeptholiday()
-    {
+    public function mydeptholiday(){
         $result=array();
         $user_id=$this->session->userdata('user_id');
         $this->data['current_dept']="";
@@ -338,7 +337,7 @@ class Holiday extends Admin_Controller
             $holiday_data = $this->model_holiday->getHolidayByDept($select_dept);
             $result = array();
             foreach ($holiday_data as $k => $v)
-            {
+           {
                 $result[$k] = $v;
             }
 
@@ -357,34 +356,65 @@ class Holiday extends Admin_Controller
         $this->data['holiday_data'] = $result; 
 		$this->render_template('holiday/mydeptholiday', $this->data);
     }
-    public function mydeptplan()
-    {
+    public function mydeptplan(){
         $user_id=$this->session->userdata('user_id');
         $result = array();
         $submitted=0;
         $this->data['current_dept']="";
         $this->data['submit_status'] ="";
-        $select_dept="";
+        $selected_dept="";
+        $domain=array();
         if($_POST){
             if(array_key_exists('selected_dept', $_POST)){
-                $select_dept=$_POST['selected_dept'];
+                $selected_dept=$_POST['selected_dept'];
             }
             if(array_key_exists('current_dept', $_POST)){
-                $select_dept=$_POST['current_dept'];
+                $selected_dept=$_POST['current_dept'];
             }
-            $plan_data = $this->model_plan->getPlanByDept($select_dept);
-            foreach ($plan_data as $k => $v) {
-                $result[$k]=$v;
-                if($v['submit_tag']==1){
-                    $result[$k]['submit_tag'] = '已提交';
-                    $submitted++;
+            if($selected_dept=='营业中心'){
+                $manager_data = $this->model_holiday_manager->getManagerByDept($selected_dept);
+                
+                foreach($manager_data as $k => $v){
+                    if($v['dept']!='营业中心'){
+                        $temp=array();
+                        $tempsubmitted=0;
+                        $plan_data = $this->model_plan->getPlanByDept($v['dept']);
+                        foreach ($plan_data as $a => $b){
+                            if($b['submit_tag']==1){
+                                $tempsubmitted++;
+                            }
+                        }
+                        $temp=array(
+                            'dept' => $v['dept'],
+                            'manager' => $v['name'],
+                            'total' => count($plan_data),
+                            'submitted' => $tempsubmitted,
+                            'submit_status' => $this->model_feedback->getFeedbackByDept($v['dept'])['submit_status']
+                        );
+                        if(count($plan_data)==$tempsubmitted){
+                            $submitted++;
+                        }
+                        array_push($domain,$temp);
+                        unset($temp);
+                    }
                 }
-                else{
-                    $result[$k]['submit_tag'] = '未提交';
+                $this->data['domain']=$domain;
+            }
+            else{
+                $plan_data = $this->model_plan->getPlanByDept($selected_dept);
+                foreach ($plan_data as $k => $v){
+                    $result[$k]=$v;
+                    if($v['submit_tag']==1){
+                        $result[$k]['submit_tag'] = '已提交';
+                        $submitted++;
+                    }
+                    else{
+                        $result[$k]['submit_tag'] = '未提交';
+                    }
                 }
             }
-            $this->data['current_dept']=$select_dept;
-            $this->data['submit_status'] = $this->model_feedback->getFeedbackByDept($select_dept)['submit_status'];
+            $this->data['current_dept']=$selected_dept;
+            $this->data['submit_status'] = $this->model_feedback->getFeedbackByDept($selected_dept)['submit_status'];
         }
         $admin_data = $this->model_holiday_manager->getManagerById($user_id);
 
@@ -392,9 +422,10 @@ class Holiday extends Admin_Controller
         $admin_result=explode('/',$admin_data['dept']);
 
         $this->data['dept_options']=$admin_result;
-        $this->data['submitted'] = $submitted;
+        $this->data['submitted'] = $submitted;        
+        #$this->data['submitted'] = 6;
         $this->data['plan_data'] = $result;
-        $this->data['feedback'] = $this->model_feedback->getFeedbackByDept($select_dept);
+        $this->data['feedback'] = $this->model_feedback->getFeedbackByDept($selected_dept);
         $this->render_template('holiday/mydeptplan', $this->data);
     }
     public function mydeptplan_submit(){
@@ -435,7 +466,7 @@ class Holiday extends Admin_Controller
     */
 
     public function staff_plan()
-    {
+   {
         $user_id=$this->session->userdata('user_id');
         $plan_data = $this->model_plan->getplanById($user_id);
         $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
@@ -448,7 +479,7 @@ class Holiday extends Admin_Controller
     ==============================================================================
     */
     public function update_plan()
-    {
+   {
         /*============================================================*/
         /*
             首页必须要的信息，包括身份证，通知信息
@@ -459,7 +490,7 @@ class Holiday extends Admin_Controller
         $result = array();
 
 
-        foreach ($plan_data as $k => $v) {
+        foreach ($plan_data as $k => $v){
             $result[$k] = $v;
         }
         
@@ -473,9 +504,9 @@ class Holiday extends Admin_Controller
         $this->form_validation->set_rules('thirdquater', 'thirdquater','is_natural|greater_than[-1]');
         $this->form_validation->set_rules('fourthquater', 'fourthquater','is_natural|greater_than[-1]');
 
-        if ($this->form_validation->run() == TRUE) {
+        if ($this->form_validation->run() == TRUE){
             if($_POST['firstquater']+$_POST['secondquater']+$_POST['thirdquater']+$_POST['fourthquater']==$_POST['total'])
-            {
+           {
                 $data = array(
                     'firstquater' => $_POST['firstquater'],
                     'secondquater' => $_POST['secondquater'],
@@ -486,27 +517,112 @@ class Holiday extends Admin_Controller
 
                 $create = $this->model_plan->update($data,$user_id);
                 
-                if($create == true) {
+                if($create == true){
                     $this->session->set_flashdata('success', '提交成功');
                     $this->staff_plan();
                 }
-                else {
+                else{
                     $this->session->set_flashdata('error', '提交失败');
                     $this->staff_plan();
                 }
             }
             else
-            {
+           {
                 $this->session->set_flashdata('error', '提交失败，计划总数必须等于可休假总数');
                 $this->staff_plan();
             }
             /**/
         }
-        else {
+        else{
             $this->staff_plan();
         }
     }
+    /*
+    ==============================================================================
+    片区负责人，综合管理员修改年假计划编辑权限
+    ==============================================================================
+    */
+    public function mydomainholiday(){
+        $holiday_data=array();
+        $user_id=$this->session->userdata('user_id');
+        $selected_dept="";
+        $this->data['current_dept']="";
+        if($_POST){
+            $selected_dept=$_POST['selected_dept'];
+            $holiday_data = $this->model_holiday->getHolidayByDept($selected_dept);
+            $this->data['current_dept']=$selected_dept;
+        }
+        
+        $admin_data = $this->model_holiday_manager->getManagerById($user_id);
+        $admin_result=array();
+        array_push($admin_result,$admin_data['dept']);
+        $this->data['dept_options']=$admin_result;
+        $this->data['holiday_data'] = $holiday_data;
+        unset($admin_result);
+        $this->render_template('holiday/mydomainholiday', $this->data);
+    }
+    public function mydomainplan(){
+        $user_id=$this->session->userdata('user_id');
+        $result = array();
+        $submitted=0;
+        $this->data['current_dept']="";
+        $this->data['submit_status'] ="";
+        $selected_dept="";
+        $domain=array();
+        if($_POST){
+            if(array_key_exists('selected_dept', $_POST)){
+                $selected_dept=$_POST['selected_dept'];
+            }
+            if(array_key_exists('current_dept', $_POST)){
+                $selected_dept=$_POST['current_dept'];
+            }
+            $plan_data = $this->model_plan->getPlanByDept($selected_dept);
+            foreach ($plan_data as $k => $v){
+                $result[$k]=$v;
+                if($v['submit_tag']==1){
+                    $result[$k]['submit_tag'] = '已提交';
+                    $submitted++;
+                }
+                else{
+                    $result[$k]['submit_tag'] = '未提交';
+                }
+            }
+            $this->data['current_dept']=$selected_dept;
+            $this->data['submit_status'] = $this->model_feedback->getFeedbackByDept($selected_dept)['submit_status'];
+        }
+        $admin_data = $this->model_holiday_manager->getManagerById($user_id);
 
+        $admin_result=array();
+
+        array_push($admin_result,$admin_data['dept']);
+        $this->data['dept_options']=$admin_result;
+        $this->data['submitted'] = $submitted;        
+        #$this->data['submitted'] = 42;
+        $this->data['plan_data'] = $result;
+        $this->data['feedback'] = $this->model_feedback->getFeedbackByDept($selected_dept);
+        $this->render_template('holiday/mydomainplan', $this->data);
+    }
+    public function mydomainplan_submit(){
+        $user_id = $this->session->userdata('user_id');
+        $my_data = $this->model_holiday_manager->getManagerById($user_id);
+        $feedback=array();
+        $feedback[$my_data['dept']]=$this->model_feedback->getFeedbackByDept($my_data['dept']);
+        $this->data['feedback'] = $feedback;
+        $this->render_template('holiday/submit_domain_result', $this->data);
+    }
+    public function submit_domain(){
+        if($_POST['current_dept']){
+            $dept=$_POST['current_dept'];
+            $data=array(
+                'department' => $dept,
+                'content' => '',
+                'submit_status' => '已提交'
+            );
+            $this->model_feedback->update($data,$dept);
+            
+        }
+        $this->mydomainplan();
+    }
     /*
     ==============================================================================
     超级管理员，综合管理员修改年假计划编辑权限
@@ -528,7 +644,7 @@ class Holiday extends Admin_Controller
 
             $update = $this->model_plan->update($data,$_POST['user_id']);
             
-            if($update == true) {
+            if($update == true){
                 $this->session->set_flashdata('success', 'Successfully created');
                 $this->plan_set();
             }
@@ -554,7 +670,7 @@ class Holiday extends Admin_Controller
 
             $update = $this->model_plan->update($data,$_POST['user_id']);
             
-            if($update == true) {
+            if($update == true){
                 $this->session->set_flashdata('success', 'Successfully created');
                 $this->mydeptplan();
             }
@@ -564,6 +680,7 @@ class Holiday extends Admin_Controller
         }
 
     }
+
     public function submit_to_audit(){
         if($_POST['current_dept']){
             $dept=$_POST['current_dept'];
@@ -596,7 +713,7 @@ class Holiday extends Admin_Controller
             //如果没有反馈内容，那就是普通的查看，直接去显示提交过来的计划表
             if(array_key_exists('feedback_content', $_POST)){
                 $this->form_validation->set_rules('confirm', 'confirm', 'trim|required');
-                if($this->form_validation->run() == TRUE) {
+                if($this->form_validation->run() == TRUE){
                     //如果反馈的结果是不同意，那么就把该部门的综管员的编辑和提交权限打开。
                     //如果反馈同意就不用做任何事情
                     if($_POST['confirm']==0){
@@ -619,13 +736,13 @@ class Holiday extends Admin_Controller
                     }
                 }
                 $plan_data = $this->model_plan->getPlanByDept($select_dept);
-                foreach ($plan_data as $k => $v) {
+                foreach ($plan_data as $k => $v){
                     $result[$k]=$v;
                 }
             }
             else{
                 $plan_data = $this->model_plan->getPlanByDept($select_dept);
-                foreach ($plan_data as $k => $v) {
+                foreach ($plan_data as $k => $v){
                     $result[$k]=$v;
                 }
             }

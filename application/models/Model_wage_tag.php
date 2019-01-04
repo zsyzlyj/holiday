@@ -1,37 +1,31 @@
 <?php 
 
-class Model_wage_tag extends CI_Model
-{
-	public function __construct()
-	{
+class Model_wage_tag extends CI_Model{
+	public function __construct(){
 		parent::__construct();
 	}
 
-	public function getTagData() 
-	{
+	public function getTagData(){
 		$sql = "SELECT * FROM wage_tag WHERE user_id != ?";
 		$query = $this->db->query($sql, array(1));
 		return $query->result_array();
 	}
-	public function getTagById($userId = null) 
-	{
-		if($userId) {
+	public function getTagById($userId = null){
+		if($userId){
 			$sql = "SELECT * FROM wage_tag WHERE user_id = ?";	
 			$query = $this->db->query($sql, array($userId));
 			return $query->row_array();
 		}
 	}
 
-	public function create($data = '')
-	{
-		if($data) {
+	public function create($data = ''){
+		if($data){
 			$create = $this->db->insert('wage_tag', $data);
 			return ($create == true) ? true : false;
 		}
 	}
-	public function createbatch($data)
-	{
-		if($data) {
+	public function createbatch($data){
+		if($data){
 			$insert = $this->db->insert_batch('wage_tag', $data);
 			return ($insert == true) ? true : false;
 		}
@@ -39,22 +33,19 @@ class Model_wage_tag extends CI_Model
 	/*
 		更新用户的权限
 	*/
-	public function update($data=array(),$id)
-	{
+	public function update($data=array(),$id){
 		$this->db->where('user_id',$id);
 		$update = $this->db->update('wage_tag', $data);
 		return ($update == true) ? true : false;	
 	}
 
-	public function delete($id)
-	{
+	public function delete($id){
 		$this->db->where('user_id', $id);
 		$delete = $this->db->delete('wage_tag');
 		return ($delete == true) ? true : false;
 	}
 
-	public function deleteAll()
-	{
+	public function deleteAll(){
 		$sql='delete from wage_tag';
 		$delete = $this->db->query($sql);
 	}

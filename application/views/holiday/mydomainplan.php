@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        部门年假计划
+        片区年假计划
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Home</li>
@@ -30,10 +30,15 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
-          <div class="box">  
+
+
+
+
+          <div class="box">
+            
             <div class="box-header">
               <br/>
-                <form action='<?php echo base_url('holiday/mydeptplan' )?>' method="post" id="selected_dept_form">
+                <form action='<?php echo base_url('holiday/mydomainplan' )?>' method="post" id="selected_dept_form">
                 <select id="selected_dept" name="selected_dept" onchange="submitForm();">
                   <?php if($current_dept==""):?>
                     <option value="">选择部门</option>
@@ -54,21 +59,22 @@
                 提交进度：<?php echo '<font color="green">'.$submitted.'</font> / '.count($domain)?>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <?php if(!strstr($submit_status,'已')):?>
+                
                 <?php if($submitted==count($domain)):?>
-                <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/submit_to_audit') ?>' method='post'>
+                <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/submit_domain') ?>' method='post'>
                   <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
-                  <button class="btn btn-success">提交</button>
+                  <button class="btn btn-success disabled">提交</button>
                 </form>
                 <?php endif; ?>
                 <?php if($submitted!=count($domain)):?>
-                <button disabled class="btn btn-success disabled">提交</button>
+                <button class="btn btn-success disabled">提交</button>
                 <?php endif; ?>
                 <?php endif; ?>
                 <?php if(strstr($submit_status,'已')):?>
                 <button disabled class="btn btn-success disabled">提交</button>
                 <?php endif; ?>
 
-                
+                <!--
                 <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptplan') ?>' method='post'>
                   <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
                   <?php if(!strstr($feedback['confirm_status'],'不')):?>
@@ -77,6 +83,7 @@
                   <button disabled class="btn btn-warning">导出</button>
                   <?php endif; ?>
                 </form>
+                -->
                 </h3>
             <?php else: ?>
             <?php if($plan_data): ?>  
@@ -84,9 +91,8 @@
                 提交进度：<?php echo '<font color="green">'.$submitted.'</font> / '.count($plan_data)?>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <?php if(!strstr($submit_status,'已')):?>
-                
                 <?php if($submitted==count($plan_data)):?>
-                <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/submit_to_audit') ?>' method='post'>
+                <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/submit_domain') ?>' method='post'>
                   <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
                   <button class="btn btn-success">提交</button>
                 </form>
@@ -96,7 +102,6 @@
                 <?php endif; ?>
                 <?php endif; ?>
                 <?php if(strstr($submit_status,'已')):?>
-                
                 <button disabled class="btn btn-success">提交</button>
                 <?php endif; ?>
 
@@ -134,7 +139,7 @@
                 <tr>
                   <td><?php echo $v['dept'];?></td>
                   <td><?php echo $v['manager'];?></td>
-                  <td style="align:center"><div class="progress"><?php echo $v['total'].' / '.$v['submitted'];?><div class="progress-bar" style="width:<?php echo ($v['submitted']/$v['total']).'%';?>;"></div></div></td>
+                  <td><?php echo $v['total'].' / '.$v['submitted'];?></td>
                   <?php if(strstr($v['submit_status'],'未')):?>
                     <td><font color='red'><?php echo $v['submit_status'];?></font></td>
                   <?php elseif(strstr($v['submit_status'],'已')):?>
@@ -184,7 +189,7 @@
                           <td><font color='red'><?php echo $v['submit_tag']; ?></font></td>
                         <?php endif; ?>
                         <td>
-                        <form action="<?php echo base_url('holiday/change_submit_mydeptplan')?>" method="post" style="float:left">
+                        <form action="<?php echo base_url('holiday/change_submit_mydomainplan')?>" method="post" style="float:left">
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="1"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="0"/>
@@ -224,8 +229,8 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#myDeptPlanNav').addClass('active');
-      $('#mydeptPlanMainMenu').addClass('active');
+      $('#myDomainPlanNav').addClass('active');
+      $('#myDomainPlanMainMenu').addClass('active');
       $('#planTable').DataTable({
         language: 
         {

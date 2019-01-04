@@ -656,7 +656,7 @@ class Super_holiday extends Admin_Controller
         $manager_data=$this->model_holiday_manager->getManagerData();
         $manager_set=array();
         $feedback_set=array();
-        
+        $all_dept=array();
         //重置所有用户的权限
         $User_default=array(
             'permission' => 3
@@ -691,20 +691,26 @@ class Super_holiday extends Admin_Controller
 			}
 			if($Update_data['role']=='部门负责人'){
                 $permission=2;
+            }
+            if(strstr($Update_data['dept'],'片区')){
+                $permission=4;
 			}
 			$Update_user=array(
 				'permission' => $permission
 			);
             $update_user=$this->model_holiday_users->update($Update_user,$user_id);        
-            //初始化年假计划反馈，每个部门新建一个反馈记录，部门为主键            
-            if(in_array($dept,$feedback_set)){
-                $feedback_data=array(
-                    'department' => $dept,
-                );
-                array_push($feedback_set,$feedback_data);
-                unset($feedback_data);
-            }
             unset($Update_data);
+            //初始化年假计划反馈，每个部门新建一个反馈记录，部门为主键            
+            if(!in_array($dept,$all_dept)){
+                array_push($all_dept,$dept);
+            }
+        }
+        foreach($all_dept as $k => $v){
+            $feedback_data=array(
+                'department' => $v,
+            );
+            array_push($feedback_set,$feedback_data);
+            unset($feedback_data);
         }
         $this->model_holiday_manager->createbatch($manager_set);
         $this->model_feedback->createbatch($feedback_set);

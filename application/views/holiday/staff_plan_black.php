@@ -94,7 +94,7 @@
                         <td style="text-align:center;border-color:black;"><?php echo $v['thirdquater']; ?></td>
                         <td style="text-align:center;border-color:black;"><?php echo $v['fourthquater']; ?></td>
                         <td style="text-align:center;border-color:black;">
-                              <button class="btn btn-success disabled" type="submit"><i class="fa fa-check-circle"></i></button>
+                              <button disabled class="btn btn-success " type="submit"><i class="fa fa-check-circle"></i></button>
                           </td>
                         <?php endif; ?>
                         <?php if($v['submit_tag']==0):?>

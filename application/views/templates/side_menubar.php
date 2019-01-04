@@ -30,7 +30,7 @@
               <i class="fa fa-search"></i> <span>工资信息查询</span>
             </a>
           </li>
-          <!--
+          
           <li class="treeview" id="applyProofMainMenu">
             <a href="#">
               <i class="fa fa-folder-o"></i>
@@ -54,12 +54,44 @@
               </li>
             </ul>
           </li>
-          -->
+          <!---->
         <li id="changePassword"><a href="<?php echo base_url('auth/wage_setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
         <li><a href="<?php echo base_url('auth/wage_logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>退出登录</span></a></li>
         <?php endif ?>
         <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
 
+        <?php if($permission == 4): ?>
+        <li id="myDomainHolidayMainMenu">
+          <a href="<?php echo base_url('holiday/mydomainholiday') ?>">
+            <i class="fa fa-file-archive-o"></i>
+            <span>片区年假信息汇总</span>
+          </a>
+        </li>
+        <li class="treeview" id="myDomainPlanMainMenu">
+          <a href="#">
+            <i class="fa fa-folder-o"></i>
+            <span>片区年假计划汇总</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="myDomainPlanNav">
+              <a href="<?php echo base_url('holiday/mydomainplan') ?>">
+                <i class="fa fa-circle-o"></i>
+                <span>年假计划汇总</span>
+              </a>
+            </li>
+            <li id="SubmitStatusNav">
+              <a href="<?php echo base_url('holiday/mydomainplan_submit') ?>">
+                <i class="fa fa-circle-o"></i>
+                <span>汇总提交情况</span>
+              </a>
+            </li>
+          </ul>  
+        </li>
+        
+        <?php endif ?>
         <?php if($permission == 1 or $permission == 2 ): ?>
         <li id="myDeptHolidayMainMenu">
           <a href="<?php echo base_url('holiday/mydeptholiday') ?>">

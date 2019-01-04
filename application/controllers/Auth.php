@@ -68,7 +68,7 @@ class Auth extends Admin_Controller
 						case 2:
 							redirect('holiday/manager', 'refresh');
 							break;
-						case 3:	
+						default:	
 							redirect('holiday/staff', 'refresh');
 							break;	
 					}
