@@ -43,9 +43,11 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/iCheck/all.css') ?>">
 
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showmonth.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap-datetimepicker.min.css')?>">
 
+  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap-switch.css')?>">
 
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -117,7 +119,7 @@
 <script src="<?php echo base_url('assets/dist/js/bootstrap-datetimepicker.js') ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/dist/js/bootstrap.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/dist/js/locales/bootstrap-datetimepicker.fr.js');?>" charset="UTF-8"></script>
-
+<script type="text/javascript" src="<?php echo base_url('assets/dist/js/bootstrap-switch.js');?>" charset="UTF-8"></script>
 
 
 </head>

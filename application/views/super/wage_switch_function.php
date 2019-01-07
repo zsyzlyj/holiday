@@ -17,19 +17,7 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-        <div class="col-md-12 col-xs-12">
-          <?php if($this->session->flashdata('success')): ?>
-            <div class="alert alert-success alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <?php echo $this->session->flashdata('success'); ?>
-            </div>
-          <?php elseif($this->session->flashdata('error')): ?>
-            <div class="alert alert-error alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <?php echo $this->session->flashdata('error'); ?>
-            </div>
-          <?php endif; ?>
-          
+        <div class="col-md-12 col-xs-12">          
           <div class="box">
             
             <!-- /.box-header -->
@@ -39,40 +27,49 @@
               <table id="wageTable" class="table table-bordered table-striped" style="overflow:scroll;" width="100%">
                 <thead>
                 <tr>
-                  <th>发布时间</th>
-                  <th>发布者</th>                
-                  <th>标题</th>
-                  <th>内容</th>
-                  <th>分类</th>
+                  <th>功能</th>
+                  <th>状态</th>
+                  <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                  <?php if($notice_data): ?>                  
-                    <?php foreach ($notice_data as $k => $v): ?>
-                      <tr>
-                        <td><?php echo $v['pubtime']; ?></td>
-                        <td><?php echo $v['username']; ?></td>
-                        <td><?php echo $v['title']; ?></td>
-                        <td><?php echo $v['content']; ?></td>
-                        <td><?php echo $v['type']; ?></td>
-                      </tr>
-                    <?php endforeach ?>
-                  <?php endif; ?>
+                  <?php foreach($wage_func as $k => $v):?>
+                  <tr>
+                  <?php foreach($v as $a => $b):?>
+                    <?php if($a!='id'):?>
+                      <?php if(strstr($b,'关闭')):?>
+                      <td><font color='red'><?php echo $b;?></font></td>
+                      <?php elseif(strstr($b,'开启')): ?>
+                      <td><font color='green'><?php echo $b;?></font></td>
+                      <?php else:?>
+                      <td><?php echo $b;?></td>
+                      <?php endif; ?>
+                    <?php endif; ?>
+                  <?php endforeach; ?>
+                    <td>
+                      <form action="<?php echo base_url('super_wage/switch_function')?>" method="post" style="margin:0px;display:inline;">
+                        <input type="hidden" name="func_name_on" value="<?php echo $v['name'];?>">
+                        <button type="submit" class="btn btn-success">开启</button>
+                      </form>
+                      <form action="<?php echo base_url('super_wage/switch_function')?>" method="post" style="margin:0px;display:inline;">
+                        <input type="hidden" name="func_name_off" value="<?php echo $v['name'];?>">
+                        <button type="submit" class="btn btn-danger">关闭</button>
+                      </form>
+                    </td>    
+                  </tr>
+                  <?php endforeach; ?>
                 </tbody>
-                
               </table>
               </div>
               <!-- /.overflow:scroll -->
             </div>
-            <!-- /.box-body -->
+            <!-- /.box-body -->    
           </div>
           <!-- /.box -->
         </div>
         <!-- col-md-12 -->
       </div>
       <!-- /.row -->
-      
-
     </section>
     <!-- /.content -->
   </div>
@@ -80,11 +77,9 @@
   
  <script type="text/javascript">
     $(document).ready(function() {
-
-      $("switchMainMenu").addClass('active');
+      $('#switchMainMenu').addClass('active');
       $('#wageTable').DataTable({
-        language: 
-        {
+        language:{
             "sProcessing": "处理中...",
             "sLengthMenu": "显示 _MENU_ 项",
             "sZeroRecords": "没有匹配结果",

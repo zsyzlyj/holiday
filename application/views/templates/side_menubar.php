@@ -5,14 +5,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
-          <?php if($permission == 2 ): ?>
-          <li id="myDeptWageMainMenu">
-            <a href="<?php echo base_url('wage/mydeptwage') ?>">
-              <i class="fa fa-file-archive-o"></i>
-              <span>部门工资信息汇总</span>
-            </a>
-          </li>
-          <?php endif; ?>
+          
           <!--
           <li id="wageMainMenu">
             <a href="<?php echo base_url('wage/staff') ?>">
@@ -30,7 +23,14 @@
               <i class="fa fa-search"></i> <span>工资信息查询</span>
             </a>
           </li>
-          
+          <?php if($permission == 2 and strstr($wage_func[0]['status'],'开启')): ?>
+          <li id="myDeptWageMainMenu">
+            <a href="<?php echo base_url('wage/mydeptwage') ?>">
+              <i class="fa fa-file-archive-o"></i>
+              <span>部门工资信息汇总</span>
+            </a>
+          </li>
+          <?php endif; ?>
           <li class="treeview" id="applyProofMainMenu">
             <a href="#">
               <i class="fa fa-folder-o"></i>

@@ -17,6 +17,7 @@ class Super_wage extends Admin_Controller
         $this->load->model('model_wage_record');
         $this->load->model('model_wage');
         $this->load->model('model_wage_doc'); 
+        $this->load->model('model_wage_func'); 
         $this->data['permission']=$this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
@@ -543,7 +544,7 @@ class Super_wage extends Admin_Controller
                 unset($row_data);
                 //新建登陆用户
                 switch($role){
-                    case "部门负责人":$permission=1;break;
+                    case "部门负责人":$permission=2;break;
                     case "员工":$permission=3;break;
                     case "综管员":$permission=3;break;
                 }
@@ -566,16 +567,13 @@ class Super_wage extends Admin_Controller
     public function wage_tag_import($filename=NULL)
     {
         if($_FILES){
-            if($_FILES["file"])
-            {
-                if ($_FILES["file"]["error"] > 0)
-                {
+            if($_FILES["file"]){
+                if ($_FILES["file"]["error"] > 0){
                     echo "Error: " . $_FILES["file"]["error"] . "<br />";
                 }
-                else
-                {
+                else{
                     $this->wage_tag_excel_put();
-                    $this->tag();
+                    $this->reset_pass();
                 }
             }
         }
@@ -792,13 +790,13 @@ class Super_wage extends Admin_Controller
 			$result[$k] = $v;
 		}
 		$permission_set=array(
-			1 => '部门经理',
+			2 => '部门经理',
 			3 => '普通员工'
 		);
 
 		$this->data['manager_data'] = $result;
 		$this->data['permission_set']=$permission_set;
-		$this->render_super_template('super/wage_tag', $this->data);
+		$this->render_super_template('super/wage_reset_pass', $this->data);
     }
     public function notification(){
         $notice_data = $this->model_notice->getNoticeData();
@@ -853,10 +851,25 @@ class Super_wage extends Admin_Controller
 			}
 			$this->data['notice_data'] = $result;
             $this->render_super_template('super/wage_publish_wage', $this->data);
-        }	
+        }
+    }
+    
+    public function tax_counter(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $this->data['result']=10;
+            $this->render_super_template('super/tax_result',$this->data);    
+        }
+        else{
+            $this->render_super_template('super/tax',$this->data);
+        }
+    }
+    public function log_show(){
+        $this->data['log']=$this->model_log_action->getLogData();
+        #print_r($this->data['log']);
+        $this->render_super_template('super/wage_log',$this->data);
     }
     public function reset_pass(){
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('user_id',$_POST)){
             $update=$this->model_wage_users->edit(array('password'=>md5(substr($_POST['user_id'],-6))),$_POST['user_id']);
             if($update == true){
                 $this->session->set_flashdata('success', '密码重置成功！');
@@ -874,18 +887,19 @@ class Super_wage extends Admin_Controller
         unset($result);
         $this->render_super_template('super/wage_reset_pass',$this->data);
     }
-    public function tax_counter(){
+    public function switch_function(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $this->data['result']=10;
-            $this->render_super_template('super/tax_result',$this->data);    
+            if(array_key_exists('func_name_off', $_POST)){
+                $name=$_POST['func_name_off'];
+                $status='已关闭';
+            }
+            if(array_key_exists('func_name_on', $_POST)){
+                $name=$_POST['func_name_on'];
+                $status='已开启';
+            }
+            $this->model_wage_func->edit(array('name' => $name,'status' => $status),$name);
         }
-        else{
-            $this->render_super_template('super/tax',$this->data);
-        }
-    }
-    public function log_show(){
-        $this->data['log']=$this->model_log_action->getLogData();
-        #print_r($this->data['log']);
-        $this->render_super_template('super/wage_log',$this->data);
+        $this->data['wage_func']=$this->model_wage_func->getFuncData();
+        $this->render_super_template('super/wage_switch_function',$this->data);
     }
 }

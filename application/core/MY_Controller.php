@@ -15,7 +15,7 @@ class Admin_Controller extends MY_Controller
 	public function __construct() 
 	{
 		parent::__construct();
-
+		$this->session->set_flashdata('errors', '修改失败，新密码不能为空');
 		if(empty($this->session->userdata('logged_in_holiday'))) {
 			$session_data = array('logged_in_holiday' => FALSE);
 			$this->session->set_userdata($session_data);

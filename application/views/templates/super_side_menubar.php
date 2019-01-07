@@ -165,7 +165,7 @@
         </li>
         <li id="switchMainMenu">
           <a href="<?php echo base_url('super_wage/switch_function') ?>">
-            <i class="fa fa-database"></i>
+            <i class="fa fa-tasks"></i>
             <span> 权限开关</span>
           </a>
         </li>
