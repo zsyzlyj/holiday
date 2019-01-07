@@ -78,11 +78,11 @@ class Users extends Admin_Controller
 					$delete = $this->model_holiday_users->delete($id);
 					
 					if($delete == true) {
-		        		$this->session->set_flashdata('success', 'Successfully removed');
+		        		$this->session->set_flashdata('success', '用户删除成功');
 		        		redirect('users/', 'refresh');
 		        	}
 		        	else {
-		        		$this->session->set_flashdata('error', 'Error occurred!!');
+		        		$this->session->set_flashdata('error', '系统发生未知错误!!');
 		        		redirect('users/delete/'.$id, 'refresh');
 		        	}
 

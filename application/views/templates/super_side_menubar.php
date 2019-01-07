@@ -109,7 +109,7 @@
           </a>
           <ul class="treeview-menu">
             <li id="uploadTagFileNav"><a href="<?php echo base_url('super_wage/wage_tag_import') ?>"><i class="fa fa-circle-o"></i><span>人员角色导入</span></a></li>
-            <li id="initWageUserNav"><a href="<?php echo base_url('super_wage/init_pass') ?>"><i class="fa fa-circle-o"></i><span>人员密码初始化</span></a></li>
+            <li id="resetWageUserNav"><a href="<?php echo base_url('super_wage/reset_pass') ?>"><i class="fa fa-circle-o"></i><span>人员密码初始化</span></a></li>
           </ul>
         </li>
         <li class="treeview" id="wageNoticeNav">
@@ -161,6 +161,12 @@
           <a href="<?php echo base_url('super_wage/log_show') ?>">
             <i class="fa fa-database"></i>
             <span> 日志查看</span>
+          </a>
+        </li>
+        <li id="switchMainMenu">
+          <a href="<?php echo base_url('super_wage/switch_function') ?>">
+            <i class="fa fa-database"></i>
+            <span> 权限开关</span>
           </a>
         </li>
         <?php endif; ?>

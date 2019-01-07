@@ -769,11 +769,11 @@ class Super_wage extends Admin_Controller
         if($date){
 			$delete = $this->model_wage_doc->delete($date);
             if($delete == true) {
-                $this->session->set_flashdata('success', 'Successfully removed');
+                $this->session->set_flashdata('success', '薪酬文件删除成功');
                 redirect('super_wage/wage_doc_list', 'refresh');
             }
             else {
-                $this->session->set_flashdata('error', 'Error occurred!!');
+                $this->session->set_flashdata('error', '系统发生未知错误!!');
                 redirect('super_wage/wage_doc_list', 'refresh');
             }	
 		}
@@ -833,11 +833,11 @@ class Super_wage extends Admin_Controller
 			);
 			$create = $this->model_notice->create($data);
         	if($create == true) {
-        		$this->session->set_flashdata('success', 'Successfully created');
+        		$this->session->set_flashdata('success', '公告发布成功');
         		redirect('super_wage/notification', 'refresh');
         	}
         	else {
-        		$this->session->set_flashdata('errors', 'Error occurred!!');
+        		$this->session->set_flashdata('errors', '系统发生未知错误!!');
         		redirect('super_wage/publish_wage', 'refresh');
         	}
 
@@ -855,17 +855,24 @@ class Super_wage extends Admin_Controller
             $this->render_super_template('super/wage_publish_wage', $this->data);
         }	
     }
-    public function init_pass(){
+    public function reset_pass(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $_POST[''];
+            $update=$this->model_wage_users->edit(array('password'=>md5(substr($_POST['user_id'],-6))),$_POST['user_id']);
+            if($update == true){
+                $this->session->set_flashdata('success', '密码重置成功！');
+            }
+            else{
+                $this->session->set_flashdata('errors', '遇到未知错误!!');
+            }
         }
         $tag_data=$this->model_wage_tag->getTagData();
         $result=array();
         foreach($tag_data as $k => $v){
-            array_push($result,array('name'=>$v['name'],'user_id'=>$v['']));
+            array_push($result,array('name'=>$v['name'],'user_id'=>$v['user_id'],'dept'=>$v['dept']));
         }
-        $this->data['user_data'] = $this->model_wage_users->getUserData();
-        $this->render_super_template('super/wage_init_pass',$this->data);
+        $this->data['user_data'] = $result;
+        unset($result);
+        $this->render_super_template('super/wage_reset_pass',$this->data);
     }
     public function tax_counter(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){

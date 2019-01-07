@@ -68,12 +68,12 @@ class Super_Auth extends Admin_Controller
 					}
            		}
            		else{
-           			$this->data['errors'] = 'Incorrect id/password combination';
+           			$this->data['errors'] = '密码错误';
            			$this->load->view('super/login', $this->data);
            		}
            	}
            	else{
-           		$this->data['errors'] = 'Id does not exists';
+           		$this->data['errors'] = '账户不存在';
            		$this->load->view('super/login', $this->data);
            	}	
         }
@@ -144,11 +144,11 @@ class Super_Auth extends Admin_Controller
 						$update = $this->model_super_user->edit($data, $id);
 						
 			        	if($update == true){
-			        		$this->session->set_flashdata('success', 'Successfully updated');
+			        		$this->session->set_flashdata('success', '密码修改成功');
 			        		redirect('super_auth/'.$type.'_setting/', 'refresh');
 			        	}
 			        	else{
-			        		$this->session->set_flashdata('errors', 'Error occurred!!');
+			        		$this->session->set_flashdata('errors', '系统发生未知错误!!');
 			        		redirect('super_auth/'.$type.'_setting/', 'refresh');
 			        	}
 					}

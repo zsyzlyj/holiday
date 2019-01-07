@@ -497,7 +497,7 @@ class Super_holiday extends Admin_Controller
             }
             $update = $this->model_plan->update($data,$_POST['user_id']);            
             if($update == true){
-                $this->session->set_flashdata('success', 'Successfully created');
+                $this->session->set_flashdata('success', '授权完成');
                 $this->plan();
             }
         }
@@ -554,7 +554,7 @@ class Super_holiday extends Admin_Controller
 			if($this->input->post('confirm')){
                 $delete = $this->model_holiday_users->delete($id);
                 if($delete == true){
-                    $this->session->set_flashdata('success', 'Successfully removed');
+                    $this->session->set_flashdata('success', '删除成功');
                 }
                 else{
                     $this->session->set_flashdata('error', '删除失败');
@@ -785,11 +785,11 @@ class Super_holiday extends Admin_Controller
 			);
 			$create = $this->model_notice->create($data);
         	if($create == true){
-        		$this->session->set_flashdata('success', 'Successfully created');
+        		$this->session->set_flashdata('success', '公告发布成功');
         		redirect('super_holiday/notification', 'refresh');
         	}
         	else{
-        		$this->session->set_flashdata('errors', 'Error occurred!!');
+        		$this->session->set_flashdata('errors', '发生未知错误!!');
         		redirect('super_holiday/publish_holiday', 'refresh');
         	}
         }
@@ -815,11 +815,11 @@ class Super_holiday extends Admin_Controller
 			);
 			$create = $this->model_notice->create($data);
         	if($create == true){
-        		$this->session->set_flashdata('success', 'Successfully created');
+        		$this->session->set_flashdata('success', '公告发布成功！');
         		redirect('super_holiday/notification', 'refresh');
         	}
         	else{
-        		$this->session->set_flashdata('errors', 'Error occurred!!');
+        		$this->session->set_flashdata('errors', '发生未知错误!!');
         		redirect('super_holiday/publish_plan', 'refresh');
         	}
         }

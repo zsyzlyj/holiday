@@ -49,32 +49,17 @@
                   <?php if($user_data): ?>                  
                     <?php foreach ($user_data as $k => $v): ?>
                       <tr>
-                        <td><?php echo $v['username']; ?></td>
-                        <td><?php echo $v['department']; ?></td>
+                        <td><?php echo $v['name']; ?></td>
+                        <td><?php echo $v['user_id']; ?></td>
+                        <td><?php echo $v['dept']; ?></td>
                         
-                        <form action="<?php echo base_url('super_holiday/user_update/') ?>" method="post">
-                          
+                        <form action="<?php echo base_url('super_wage/reset_pass/') ?>" method="post">  
                         <td>
                           <input id="user_id" name="user_id" type="hidden" value="<?php echo $v['user_id'] ?>"/>
-                          <select id="permit" name="permit">
-                            <option value="<?php $v['permission'];?>"><?php echo $v['permission']; ?></option>
-                            <?php foreach ($permission_set as $a => $b): ?>
-                              <?php if($b != $v['permission']):?>
-                                <option value="<?php echo $a; ?>"><?php echo $b; ?></option>
-                              <?php endif ?>
-                            <?php endforeach ?>
-                          </select>
+                          <button class="btn btn-success" type="submit"><i class="fa fa-refresh"> 初始化密码</i></button>
                         </div>
                         </td>
-                        
-                        <td>
-                            <button class="btn btn-success" type="submit"><i class="fa fa-edit"> 提交</i></button>
                         </form>
-                        <form action="<?php echo base_url('super_holiday/user_delete/') ?>" style="margin:0px;display:inline;" method="post">
-                        <input type="hidden" name="user_id1" value="<?php echo $v['user_id'];?>"/><button type="submit" class="btn btn-danger"><i class="fa fa-trash"> 删除</i></button>
-                      </form>
-                        </td>
-
                       </tr>
                     <?php endforeach ?>
                   <?php endif; ?>
@@ -120,8 +105,8 @@
                 "sSortDescending": ": 以降序排列此列"
             }
         }
-    });
-
-      $("#initWageUserNav").addClass('active');
+      });
+      $("#wageUserNav").addClass('active');
+      $("#resetWageUserNav").addClass('active');
     });
   </script>

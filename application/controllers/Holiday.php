@@ -641,11 +641,9 @@ class Holiday extends Admin_Controller
                     'submit_tag' => 1
                 );
             }
-
             $update = $this->model_plan->update($data,$_POST['user_id']);
-            
             if($update == true){
-                $this->session->set_flashdata('success', 'Successfully created');
+                $this->session->set_flashdata('success', '授权完成');
                 $this->plan_set();
             }
         }
@@ -667,11 +665,9 @@ class Holiday extends Admin_Controller
                     'submit_tag' => 1
                 );
             }
-
             $update = $this->model_plan->update($data,$_POST['user_id']);
-            
             if($update == true){
-                $this->session->set_flashdata('success', 'Successfully created');
+                $this->session->set_flashdata('success', '授权完成');
                 $this->mydeptplan();
             }
         }

@@ -75,13 +75,12 @@ class Auth extends Admin_Controller
 
            		}
            		else{
-           			$this->data['errors'] = 'Incorrect id/password combination';
+           			$this->data['errors'] = '密码错误';
            			$this->load->view('holiday_login', $this->data);
            		}
            	}
            	else{
-           		$this->data['errors'] = 'Id does not exists';
-
+           		$this->data['errors'] = '账户不存在';
            		$this->load->view('holiday_login', $this->data);
            	}	
         }
@@ -129,12 +128,12 @@ class Auth extends Admin_Controller
 
            		}
            		else{
-           			$this->data['errors'] = 'Incorrect id/password combination';
+           			$this->data['errors'] = '密码错误';
            			$this->load->view('wage_login', $this->data);
            		}
            	}
            	else{
-           		$this->data['errors'] = 'Id does not exists';
+           		$this->data['errors'] = '账户不存在';
 
            		$this->load->view('wage_login', $this->data);
            	}	
