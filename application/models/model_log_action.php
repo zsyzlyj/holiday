@@ -5,8 +5,8 @@ class Model_log_action extends CI_Model{
 		parent::__construct();
 	}
 	public function getLogData(){
-		$sql = "SELECT * FROM log_action WHERE user_id != ?";
-		$query = $this->db->query($sql, array(1));
+		$sql = "SELECT * FROM log_action";
+		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function getLogById($userId = null){

@@ -857,7 +857,7 @@ class Super_wage extends Admin_Controller
     }
     public function init_pass(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $_POST[''];    
+            $_POST[''];
         }
         $tag_data=$this->model_wage_tag->getTagData();
         $result=array();
@@ -878,6 +878,7 @@ class Super_wage extends Admin_Controller
     }
     public function log_show(){
         $this->data['log']=$this->model_log_action->getLogData();
+        #print_r($this->data['log']);
         $this->render_super_template('super/wage_log',$this->data);
     }
 }

@@ -63,8 +63,7 @@
     $(document).ready(function() { 
       $("#logTableMainMenu").addClass('active');
       $('#wageLogTable').DataTable({
-        language: 
-        {
+        language: {
             "sProcessing": "处理中...",
             "sLengthMenu": "显示 _MENU_ 项",
             "sZeroRecords": "没有匹配结果",
@@ -89,7 +88,8 @@
                 "sSortAscending": ": 以升序排列此列",
                 "sSortDescending": ": 以降序排列此列"
             }
-        }      
+        },
+        "order":[[0,"desc"]],
       });
     });
     

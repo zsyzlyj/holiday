@@ -46,7 +46,7 @@ class Super_Auth extends Admin_Controller
 						'user_id' => $login['user_id'],
 						'username' => $login['user_id'],
 						'login_ip' => $_SERVER["REMOTE_ADDR"],
-						'staff_action' => 'holiday_log_in',
+						'staff_action' => 'super_log_in',
 						'action_time' => date('Y-m-d H:i:s')
 					);
 					$this->model_log_action->create($log);
