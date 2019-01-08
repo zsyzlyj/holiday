@@ -364,8 +364,11 @@ class Wage extends Admin_Controller{
             $this->data['chosen_month']=$_POST['chosen_month'];
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strlen($doc_name)<=7 and $doc_name!=""){
-                $this->data['wage_data']=$this->search_excel($doc_name,$this->data['user_id']);
+                $start_time=microtime(true);
+                $this->data['wage_data']=$this->model_wage->getWageByID($this->data['user_id']);
                 $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
+                $end_time=microtime(true);
+                echo round($end_time-$start_time,4);
                 $counter=0;
                 foreach($this->data['attr_data'] as $k => $v){
                     if($v=='月度绩效工资小计'){

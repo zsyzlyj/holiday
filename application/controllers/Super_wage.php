@@ -134,11 +134,11 @@ class Super_wage extends Admin_Controller
                         $files[$child_dir] = my_scandir($dir.'/'.$child_dir);
                     }else{
                         if(strstr($child_dir,$doc_name)){
-                            if (strstr($child_dir,'xlsx')){
+                            if(strstr($child_dir,'xlsx')){
                                 $reader = new PHPExcel_Reader_Excel2007();
                             }
                             else{
-                                if (strstr($child_dir, 'xls')){
+                                if(strstr($child_dir, 'xls')){
                                     $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
                                 }
                             }
@@ -151,12 +151,12 @@ class Super_wage extends Admin_Controller
                             $columnCnt = array_search($highestColumm, $cellName); 
 
                             $data = array();
-                            for ($rowIndex = 4; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-                                for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
+                            for($rowIndex = 4; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+                                for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
                                     $cellId = $cellName[$colIndex].$rowIndex;  
                                     $cell = $sheet->getCell($cellId)->getValue();
                                     $cell = $sheet->getCell($cellId)->getCalculatedValue();
-                                    if ($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                                    if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
                                         $cell = $cell->__toString();
                                     }
                                     if($cell!="" or $cell=="0"){
@@ -183,7 +183,11 @@ class Super_wage extends Admin_Controller
             $this->data['chosen_month']=$_POST['chosen_month'];
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strlen($doc_name)<=7 and $doc_name!=""){
-                $this->data['wage_data']=$this->search_excel($doc_name);
+                #$start_time=microtime(true);
+                $this->data['wage_data']=$this->model_wage->getWageData();
+                #$end_time=microtime(true);
+                #echo round($end_time-$start_time,4);
+
                 $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
                 $counter=0;
                 foreach($this->data['attr_data'] as $k => $v){
@@ -467,11 +471,11 @@ class Super_wage extends Admin_Controller
         move_uploaded_file($path["tmp_name"],$filePath);
         //根据上传类型做不同处理
         
-        if (strstr($_FILES['file']['name'],'xlsx')){
+        if(strstr($_FILES['file']['name'],'xlsx')){
             $reader = new PHPExcel_Reader_Excel2007();
         }
         else{
-            if (strstr($_FILES['file']['name'], 'xls')){
+            if(strstr($_FILES['file']['name'], 'xls')){
                 $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
             }
         }
@@ -485,12 +489,12 @@ class Super_wage extends Admin_Controller
         $columnCnt = array_search($highestColumm, $cellName); 
 
         $data = array();
-        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-            for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
+        for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
                 $cellId = $cellName[$colIndex].$rowIndex;  
                 $cell = $sheet->getCell($cellId)->getValue();
                 $cell = $sheet->getCell($cellId)->getCalculatedValue();
-                if ($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
                     $cell = $cell->__toString();
                 }
                 $data[$rowIndex][$colIndex] = $cell;
@@ -568,7 +572,7 @@ class Super_wage extends Admin_Controller
    {
         if($_FILES){
             if($_FILES["file"]){
-                if ($_FILES["file"]["error"] > 0){
+                if($_FILES["file"]["error"] > 0){
                     echo "Error: " . $_FILES["file"]["error"] . "<br />";
                 }
                 else{
@@ -592,12 +596,12 @@ class Super_wage extends Admin_Controller
         move_uploaded_file($path["tmp_name"],$filePath);
         //根据上传类型做不同处理
         $file_name="";
-        if (strstr($_FILES['file']['name'],'xlsx')){
+        if(strstr($_FILES['file']['name'],'xlsx')){
             $reader = new PHPExcel_Reader_Excel2007();
             $file_name = str_replace(".xlsx","",$_FILES['file']['name']);
         }
         else{
-            if (strstr($_FILES['file']['name'], 'xls')){
+            if(strstr($_FILES['file']['name'], 'xls')){
                 $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
                 $file_name = str_replace(".xls","",$_FILES['file']['name']);
             }
@@ -619,61 +623,83 @@ class Super_wage extends Admin_Controller
         $columnCnt = array_search($highestColumm, $cellName); 
 
         $data = array();
-        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-            for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
+        $attribute = array();
+        $this->model_wage->deleteByDate($file_name);
+        for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            $temp = array();
+            for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
                 $cellId = $cellName[$colIndex].$rowIndex;  
                 $cell = $sheet->getCell($cellId)->getValue();
                 $cell = $sheet->getCell($cellId)->getCalculatedValue();
-                if ($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
                     $cell = $cell->__toString();
                 }
-                $data[$rowIndex][$colIndex] = $cell;
+                $temp[$colIndex] = $cell;
             }
-        }
-
-        $column=array();
-        $column_name=array();
-        $attribute_data=array();
-        $flag=false;
-        $counter=0;        
-        $attribute=array();
-        $content=array();
-        $total_col=0;
-        $attr=array();
-        $attr_str='';
-        $attr_counter=1;
-        foreach($data[3] as $k => $v){
-            if($v!=""){
-                $attribute['attr_name'.$attr_counter]=$v;
-                $attr_counter++;
+            if($rowIndex==3){
+                $attr_counter=1;
+                foreach($temp as $k => $v){
+                    if($v!=""){
+                        $attribute['attr_name'.$attr_counter]=$v;
+                        $attr_counter++;
+                    }
+                }
+                $attribute['date_tag']=$file_name;
+                $attr_counter--;
+                $this->model_wage_attr->create_total(array('date_tag' => $file_name,'total' => $attr_counter));
+                if($this->model_wage_attr->getWageAttrDataByDate($file_name)){
+                    $this->model_wage_attr->update($attribute,$file_name);
+                }
+                else{
+                    $this->model_wage_attr->create_attr($attribute);
+                }
             }
+            if($rowIndex>3){
+                $wage=array();
+                $counter=0;
+                foreach($temp as $k => $v){
+                    if($v!=""){
+                        switch($k){
+                            case 0:$wage['number']=$v;break;
+                            case 1:$wage['department']=$v;break;
+                            case 2:$wage['user_id']=$v;break;
+                            case 3:$wage['name']=$v;break;
+                            default:$wage['content'.($counter-3)]=$v;break;
+                        }
+                        $counter++;
+                    }
+                    elseif(strlen($v)==1 and $v==""){
+                        $wage['content'.($counter-3)]="0";
+                        $counter++;
+                    }
+                    if($counter==$attr_counter-1){
+                        if($v!=""){
+                            $wage['content'.($counter-3)]=$v;
+                        }
+                        else{
+                            $wage['content'.($counter-3)]=" ";
+                        }
+                        $wage['date_tag']=$file_name;
+                        break;
+                    }
+                }
+                array_push($data,$wage);
+                unset($wage);
+            }
+            unset($temp);
         }
-        $attribute['date_tag']=$file_name;
-        $attr_counter--;
-        $this->model_wage_attr->delete_total();
-        $this->model_wage_attr->create_total(array('total' => $attr_counter));
-        if($this->model_wage_attr->getWageAttrDataByDate($file_name)){
-            $this->model_wage_attr->update_attr($attribute);
-        }
-        else{
-            $this->model_wage_attr->create_attr($attribute);
-        }
+        $this->model_wage->createbatch($data);   
     }
     
-    public function wage_import($filename=NULL)
-   {
+    public function wage_import($filename=NULL){
         if($_FILES){
-            if($_FILES["file"])
-           {
-                if ($_FILES["file"]["error"] > 0)
-               {
+            if($_FILES["file"]){
+                if($_FILES["file"]["error"] > 0){
                     echo "Error: " . $_FILES["file"]["error"] . "<br />";
                 }
-                else
-               {
+                else{
                     $this->wage_excel_put();
                     $this->search();
-                    #$this->index();
                 }
             }
         }
@@ -691,8 +717,7 @@ class Super_wage extends Admin_Controller
         // Field names in the first row
         $fields = $result->list_fields();
         $col = 0;
-        foreach ($fields as $field)
-       {
+        foreach($fields as $field){
             if($field != ""){
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $field);
                 $col++;
@@ -734,7 +759,7 @@ class Super_wage extends Admin_Controller
         if($_FILES){
         if($_FILES["file"])
            {
-                if ($_FILES["file"]["error"] > 0)
+                if($_FILES["file"]["error"] > 0)
                {
                     echo "Error: " . $_FILES["file"]["error"] . "<br />";
                 }
@@ -782,7 +807,7 @@ class Super_wage extends Admin_Controller
         $manager_data = $this->model_wage_tag->getTagData();
 		$result = array();
 		
-		foreach ($manager_data as $k => $v){
+		foreach($manager_data as $k => $v){
 			$result[$k] = $v;
 		}
 		$permission_set=array(
@@ -799,7 +824,7 @@ class Super_wage extends Admin_Controller
 
 		$result = array();
 		
-		foreach ($notice_data as $k => $v){
+		foreach($notice_data as $k => $v){
             if($v['type']=='wage'){
                 $v['type']='薪酬';
                 $result[$k] = $v;
@@ -814,7 +839,7 @@ class Super_wage extends Admin_Controller
         $this->form_validation->set_rules('title', 'title', 'required');
 		$this->form_validation->set_rules('content', 'content', 'required');
 		
-        if ($this->form_validation->run() == TRUE){
+        if($this->form_validation->run() == TRUE){
             // true case
 			$title=$this->input->post('title');
 			$content=$this->input->post('content');
@@ -842,7 +867,7 @@ class Super_wage extends Admin_Controller
 
 			$result = array();
 			
-			foreach ($notice_data as $k => $v){
+			foreach($notice_data as $k => $v){
 				$result[$k] = $v;
 			}
 			$this->data['notice_data'] = $result;

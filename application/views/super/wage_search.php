@@ -146,7 +146,7 @@
         format: "yyyy-mm",
         startView:3,
         minView:3,
-        startDate:"2017-12",
+        startDate:"2017-01",
         autoclose:true,
       });
       $('#wageTable').DataTable({
