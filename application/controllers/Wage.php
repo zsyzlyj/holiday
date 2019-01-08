@@ -561,4 +561,7 @@ class Wage extends Admin_Controller{
             $this->render_template('wage/mydeptwage',$this->data);
         }
     }
+    public function wage_chart(){
+        $this->render_template('wage/wage_chart',$this->data);
+    }
 }
