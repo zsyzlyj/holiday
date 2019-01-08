@@ -76,7 +76,7 @@
   <!-- /.content-wrapper -->
   
  <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function(){
       $('#switchMainMenu').addClass('active');
       $('#wageTable').DataTable({
         language:{
@@ -92,15 +92,13 @@
             "sEmptyTable": "表中数据为空",
             "sLoadingRecords": "载入中...",
             "sInfoThousands": ",",
-            "oPaginate": 
-            {
+            "oPaginate":{
                 "sFirst": "首页",
                 "sPrevious": "上页",
                 "sNext": "下页",
                 "sLast": "末页"
             },
-            "oAria": 
-            {
+            "oAria":{
                 "sSortAscending": ": 以升序排列此列",
                 "sSortDescending": ": 以降序排列此列"
             }

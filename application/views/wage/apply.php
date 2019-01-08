@@ -57,7 +57,7 @@
               <tr>
               <td>2</td>
               <form role="form" action="<?php base_url('users/setting') ?>" method="post">
-              <td>收入证明（工商银行）</td>
+              <td>收入证明（农商银行）</td>
               <td><a href="<?php echo base_url('wage/show_bank_wage_proof') ?>" target="_blank" class="btn btn-warning">浏览</a> </td>
               <td><button type="submit" class="btn btn-primary">提交申请</button></td>
               </form>

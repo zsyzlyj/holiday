@@ -7,15 +7,15 @@
 // -------------------------
 
 // WebKit
-@-webkit-keyframes progress-bar-stripes {
-  from  { background-position: 40px 0; }
-  to    { background-position: 0 0; }
+@-webkit-keyframes progress-bar-stripes{
+  from { background-position: 40px 0; }
+  to   { background-position: 0 0; }
 }
 
 // Spec and IE10+
-@keyframes progress-bar-stripes {
-  from  { background-position: 40px 0; }
-  to    { background-position: 0 0; }
+@keyframes progress-bar-stripes{
+  from { background-position: 40px 0; }
+  to   { background-position: 0 0; }
 }
 
 
@@ -23,7 +23,7 @@
 // -------------------------
 
 // Outer container
-.progress {
+.progress{
   overflow: hidden;
   height: @line-height-computed;
   margin-bottom: @line-height-computed;
@@ -33,7 +33,7 @@
 }
 
 // Bar of progress
-.progress-bar {
+.progress-bar{
   float: left;
   width: 0%;
   height: 100%;
@@ -52,7 +52,7 @@
 // `.progress-bar-striped` class, which you just add to an existing
 // `.progress-bar`.
 .progress-striped .progress-bar,
-.progress-bar-striped {
+.progress-bar-striped{
   #gradient > .striped();
   background-size: 40px 40px;
 }
@@ -62,7 +62,7 @@
 // `.progress.active .progress-bar` is deprecated as of v3.2.0 in favor of the
 // `.progress-bar.active` approach.
 .progress.active .progress-bar,
-.progress-bar.active {
+.progress-bar.active{
   .animation(progress-bar-stripes 2s linear infinite);
 }
 
@@ -70,18 +70,18 @@
 // Variations
 // -------------------------
 
-.progress-bar-success {
+.progress-bar-success{
   .progress-bar-variant(@progress-bar-success-bg);
 }
 
-.progress-bar-info {
+.progress-bar-info{
   .progress-bar-variant(@progress-bar-info-bg);
 }
 
-.progress-bar-warning {
+.progress-bar-warning{
   .progress-bar-variant(@progress-bar-warning-bg);
 }
 
-.progress-bar-danger {
+.progress-bar-danger{
   .progress-bar-variant(@progress-bar-danger-bg);
 }

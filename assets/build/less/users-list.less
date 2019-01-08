@@ -2,21 +2,21 @@
  * Component: Users List
  * ---------------------
  */
-.users-list {
+.users-list{
   &:extend(.list-unstyled);
-  > li {
+  > li{
     width: 25%;
     float: left;
     padding: 10px;
     text-align: center;
-    img {
+    img{
       .border-radius(50%);
       max-width: 100%;
       height: auto;
     }
-    > a:hover {
+    > a:hover{
       &,
-      .users-list-name {
+      .users-list-name{
         color: #999;
       }
     }
@@ -24,11 +24,11 @@
 }
 
 .users-list-name,
-.users-list-date {
+.users-list-date{
   display: block;
 }
 
-.users-list-name {
+.users-list-name{
   font-weight: 600;
   color: #444;
   overflow: hidden;
@@ -36,7 +36,7 @@
   text-overflow: ellipsis;
 }
 
-.users-list-date {
+.users-list-date{
   color: #999;
   font-size: 12px;
 }

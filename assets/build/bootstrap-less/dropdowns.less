@@ -4,7 +4,7 @@
 
 
 // Dropdown arrow/caret
-.caret {
+.caret{
   display: inline-block;
   width: 0;
   height: 0;
@@ -18,17 +18,17 @@
 
 // The dropdown wrapper (div)
 .dropup,
-.dropdown {
+.dropdown{
   position: relative;
 }
 
 // Prevent the focus on the dropdown toggle when closing dropdowns
-.dropdown-toggle:focus {
+.dropdown-toggle:focus{
   outline: 0;
 }
 
 // The dropdown menu (ul)
-.dropdown-menu {
+.dropdown-menu{
   position: absolute;
   top: 100%;
   left: 0;
@@ -51,18 +51,18 @@
   // Aligns the dropdown menu to right
   //
   // Deprecated as of 3.1.0 in favor of `.dropdown-menu-[dir]`
-  &.pull-right {
+  &.pull-right{
     right: 0;
     left: auto;
   }
 
   // Dividers (basically an hr) within the dropdown
-  .divider {
+  .divider{
     .nav-divider(@dropdown-divider-bg);
   }
 
   // Links within the dropdown menu
-  > li > a {
+  > li > a{
     display: block;
     padding: 3px 20px;
     clear: both;
@@ -74,9 +74,9 @@
 }
 
 // Hover/Focus state
-.dropdown-menu > li > a {
+.dropdown-menu > li > a{
   &:hover,
-  &:focus {
+  &:focus{
     text-decoration: none;
     color: @dropdown-link-hover-color;
     background-color: @dropdown-link-hover-bg;
@@ -84,10 +84,10 @@
 }
 
 // Active state
-.dropdown-menu > .active > a {
+.dropdown-menu > .active > a{
   &,
   &:hover,
-  &:focus {
+  &:focus{
     color: @dropdown-link-active-color;
     text-decoration: none;
     outline: 0;
@@ -99,16 +99,16 @@
 //
 // Gray out text and ensure the hover/focus state remains gray
 
-.dropdown-menu > .disabled > a {
+.dropdown-menu > .disabled > a{
   &,
   &:hover,
-  &:focus {
+  &:focus{
     color: @dropdown-link-disabled-color;
   }
 
   // Nuke hover/focus effects
   &:hover,
-  &:focus {
+  &:focus{
     text-decoration: none;
     background-color: transparent;
     background-image: none; // Remove CSS gradient
@@ -118,14 +118,14 @@
 }
 
 // Open state for the dropdown
-.open {
+.open{
   // Show the menu
-  > .dropdown-menu {
+  > .dropdown-menu{
     display: block;
   }
 
   // Remove the outline when :focus is triggered
-  > a {
+  > a{
     outline: 0;
   }
 }
@@ -134,7 +134,7 @@
 //
 // Add extra class to `.dropdown-menu` to flip the alignment of the dropdown
 // menu with the parent.
-.dropdown-menu-right {
+.dropdown-menu-right{
   left: auto; // Reset the default from `.dropdown-menu`
   right: 0;
 }
@@ -144,13 +144,13 @@
 //
 // This is only for left-aligning a dropdown menu within a `.navbar-right` or
 // `.pull-right` nav component.
-.dropdown-menu-left {
+.dropdown-menu-left{
   left: 0;
   right: auto;
 }
 
 // Dropdown section headers
-.dropdown-header {
+.dropdown-header{
   display: block;
   padding: 3px 20px;
   font-size: @font-size-small;
@@ -160,7 +160,7 @@
 }
 
 // Backdrop to catch body clicks on mobile, etc.
-.dropdown-backdrop {
+.dropdown-backdrop{
   position: fixed;
   left: 0;
   right: 0;
@@ -170,7 +170,7 @@
 }
 
 // Right aligned dropdowns
-.pull-right > .dropdown-menu {
+.pull-right > .dropdown-menu{
   right: 0;
   left: auto;
 }
@@ -181,16 +181,16 @@
 // TODO: abstract this so that the navbar fixed styles are not placed here?
 
 .dropup,
-.navbar-fixed-bottom .dropdown {
+.navbar-fixed-bottom .dropdown{
   // Reverse the caret
-  .caret {
+  .caret{
     border-top: 0;
     border-bottom: @caret-width-base dashed;
     border-bottom: @caret-width-base solid ~"\9"; // IE8
     content: "";
   }
   // Different positioning for bottom up menu
-  .dropdown-menu {
+  .dropdown-menu{
     top: auto;
     bottom: 100%;
     margin-bottom: 2px;
@@ -202,14 +202,14 @@
 //
 // Reiterate per navbar.less and the modified component alignment there.
 
-@media (min-width: @grid-float-breakpoint) {
-  .navbar-right {
-    .dropdown-menu {
+@media (min-width: @grid-float-breakpoint){
+  .navbar-right{
+    .dropdown-menu{
       .dropdown-menu-right();
     }
     // Necessary for overrides of the default right aligned menu.
     // Will remove come v4 in all likelihood.
-    .dropdown-menu-left {
+    .dropdown-menu-left{
       .dropdown-menu-left();
     }
   }

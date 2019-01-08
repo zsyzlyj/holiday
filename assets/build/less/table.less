@@ -3,69 +3,69 @@
  * ----------------
  */
 
-.table {
+.table{
   //Cells
   > thead,
   > tbody,
-  > tfoot {
-    > tr {
+  > tfoot{
+    > tr{
       > th,
-      > td {
+      > td{
         border-top: 1px solid @box-border-color;
       }
     }
   }
   //thead cells
-  > thead > tr > th {
+  > thead > tr > th{
     border-bottom: 2px solid @box-border-color;
   }
   //progress bars in tables
-  tr td .progress {
+  tr td .progress{
     margin-top: 5px;
   }
 }
 
 //Bordered Table
-.table-bordered {
+.table-bordered{
   border: 1px solid @box-border-color;
   > thead,
   > tbody,
-  > tfoot {
-    > tr {
+  > tfoot{
+    > tr{
       > th,
-      > td {
+      > td{
         border: 5px solid @box-border-color;
       }
     }
   }
-  > thead > tr {
+  > thead > tr{
     > th,
-    > td {
+    > td{
       border-bottom-width: 2px;
     }
   }
 }
 
-.table.no-border {
+.table.no-border{
   &,
   td,
-  th {
+  th{
     border: 0;
   }
 }
 
 /* .text-center in tables */
-table.text-center {
-  &, td, th {
+table.text-center{
+  &, td, th{
     text-align: center;
   }
 }
 
-.table.align {
-  th {
+.table.align{
+  th{
     text-align: left;
   }
-  td {
+  td{
     text-align: right;
   }
 }

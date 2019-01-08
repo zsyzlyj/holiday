@@ -5,10 +5,10 @@
 // Inlined to avoid the additional HTTP request: h5bp.com/r
 // ==========================================================================
 
-@media print {
+@media print{
     *,
     *:before,
-    *:after {
+    *:after{
         background: transparent !important;
         color: #000 !important; // Black prints faster: h5bp.com/s
         box-shadow: none !important;
@@ -16,83 +16,83 @@
     }
 
     a,
-    a:visited {
+    a:visited{
         text-decoration: underline;
     }
 
-    a[href]:after {
+    a[href]:after{
         content: " (" attr(href) ")";
     }
 
-    abbr[title]:after {
+    abbr[title]:after{
         content: " (" attr(title) ")";
     }
 
     // Don't show links that are fragment identifiers,
     // or use the `javascript:` pseudo protocol
     a[href^="#"]:after,
-    a[href^="javascript:"]:after {
+    a[href^="javascript:"]:after{
         content: "";
     }
 
     pre,
-    blockquote {
+    blockquote{
         border: 1px solid #999;
         page-break-inside: avoid;
     }
 
-    thead {
+    thead{
         display: table-header-group; // h5bp.com/t
     }
 
     tr,
-    img {
+    img{
         page-break-inside: avoid;
     }
 
-    img {
+    img{
         max-width: 100% !important;
     }
 
     p,
     h2,
-    h3 {
+    h3{
         orphans: 3;
         widows: 3;
     }
 
     h2,
-    h3 {
+    h3{
         page-break-after: avoid;
     }
 
     // Bootstrap specific changes start
 
     // Bootstrap components
-    .navbar {
+    .navbar{
         display: none;
     }
     .btn,
-    .dropup > .btn {
-        > .caret {
+    .dropup > .btn{
+        > .caret{
             border-top-color: #000 !important;
         }
     }
-    .label {
+    .label{
         border: 1px solid #000;
     }
 
-    .table {
+    .table{
         border-collapse: collapse !important;
 
         td,
-        th {
+        th{
             background-color: #fff !important;
         }
     }
-    .table-bordered {
+    .table-bordered{
         th,
-        td {
+        td{
             border: 1px solid #ddd !important;
         }
     }

@@ -5,38 +5,38 @@
  * @Usage: $('#my-chat-box').directChat()
  *         or add [data-widget="direct-chat"] to the trigger
  */
-+function ($) {
++function ($){
   'use strict'
 
   var DataKey = 'lte.directchat'
 
-  var Selector = {
+  var Selector ={
     data: '[data-widget="chat-pane-toggle"]',
     box : '.direct-chat'
   }
 
-  var ClassName = {
+  var ClassName ={
     open: 'direct-chat-contacts-open'
   }
 
   // DirectChat Class Definition
   // ===========================
-  var DirectChat = function (element) {
+  var DirectChat = function (element){
     this.element = element
   }
 
-  DirectChat.prototype.toggle = function ($trigger) {
+  DirectChat.prototype.toggle = function ($trigger){
     $trigger.parents(Selector.box).first().toggleClass(ClassName.open)
   }
 
   // Plugin Definition
   // =================
-  function Plugin(option) {
-    return this.each(function () {
+  function Plugin(option){
+    return this.each(function (){
       var $this = $(this)
       var data  = $this.data(DataKey)
 
-      if (!data) {
+      if (!data){
         $this.data(DataKey, (data = new DirectChat($this)))
       }
 
@@ -51,14 +51,14 @@
 
   // No Conflict Mode
   // ================
-  $.fn.directChat.noConflict = function () {
+  $.fn.directChat.noConflict = function (){
     $.fn.directChat = old
     return this
   }
 
   // DirectChat Data API
   // ===================
-  $(document).on('click', Selector.data, function (event) {
+  $(document).on('click', Selector.data, function (event){
     if (event) event.preventDefault()
     Plugin.call($(this), 'toggle')
   })

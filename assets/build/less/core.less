@@ -3,14 +3,14 @@
  * -------------------------
  */
 html,
-body {
+body{
   height: 100%;
-  .layout-boxed & {
+  .layout-boxed &{
     height: 100%;
   }
 }
 
-body {
+body{
   font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   overflow-x: hidden;
@@ -18,13 +18,13 @@ body {
 }
 
 /* Layout */
-.wrapper {
+.wrapper{
   .clearfix();
   height: 100%;
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
-  .layout-boxed & {
+  .layout-boxed &{
     max-width: 1250px;
     margin: 0 auto;
     min-height: 100%;
@@ -33,7 +33,7 @@ body {
   }
 }
 
-.layout-boxed {
+.layout-boxed{
   background: url('@{boxed-layout-bg-image-path}') repeat fixed;
 }
 
@@ -41,7 +41,7 @@ body {
  * Content Wrapper - contains the main content
  */
 .content-wrapper,
-.main-footer {
+.main-footer{
   // Using disposable variable to join statements with a comma
   @transition-rule: @transition-speed @transition-fn,
   margin @transition-speed @transition-fn;
@@ -49,33 +49,33 @@ body {
   margin-left: @sidebar-width;
   z-index: 820;
   // Top nav layout
-  .layout-top-nav & {
+  .layout-top-nav &{
     margin-left: 0;
   }
-  @media (max-width: @screen-xs-max) {
+  @media (max-width: @screen-xs-max){
     margin-left: 0;
   }
   // When opening the sidebar on large screens
-  .sidebar-collapse & {
-    @media (min-width: @screen-sm) {
+  .sidebar-collapse &{
+    @media (min-width: @screen-sm){
       margin-left: 0;
     }
   }
   // When opening the sidebar on small screens
-  .sidebar-open & {
-    @media (max-width: @screen-xs-max) {
+  .sidebar-open &{
+    @media (max-width: @screen-xs-max){
       .translate(@sidebar-width, 0);
     }
   }
 }
 
-.content-wrapper  {
+.content-wrapper {
   min-height: 100%;
   background-color: @content-bg;
   z-index: 800;
 }
 
-.main-footer {
+.main-footer{
   background: #fff;
   padding: 15px;
   color: #444;
@@ -83,35 +83,35 @@ body {
 }
 
 /* Fixed layout */
-.fixed {
+.fixed{
   .main-header,
   .main-sidebar,
-  .left-side {
+  .left-side{
     position: fixed;
   }
-  .main-header {
+  .main-header{
     top: 0;
     right: 0;
     left: 0;
   }
   .content-wrapper,
-  .right-side {
+  .right-side{
     padding-top: 50px;
-    @media (max-width: @screen-header-collapse) {
+    @media (max-width: @screen-header-collapse){
       padding-top: 100px;
     }
   }
-  &.layout-boxed {
-    .wrapper {
+  &.layout-boxed{
+    .wrapper{
       max-width: 100%;
     }
   }
-  .wrapper {
+  .wrapper{
     overflow: hidden;
   }
 }
 
-.hold-transition {
+.hold-transition{
   .content-wrapper,
   .right-side,
   .main-footer,
@@ -119,14 +119,14 @@ body {
   .left-side,
   .main-header .navbar,
   .main-header .logo,
-  .menu-open .fa-angle-left {
+  .menu-open .fa-angle-left{
     /* Fix for IE */
     .transition(none);
   }
 }
 
 /* Content */
-.content {
+.content{
   min-height: 250px;
   padding: 15px;
   .container-fixed(@grid-gutter-width);
@@ -144,29 +144,29 @@ h6,
 .h3,
 .h4,
 .h5,
-.h6 {
+.h6{
   font-family: 'Source Sans Pro', sans-serif;
 }
 
 /* General Links */
-a {
+a{
   color: @link-color;
 }
 
 a:hover,
 a:active,
-a:focus {
+a:focus{
   outline: none;
   text-decoration: none;
   color: @link-hover-color;
 }
 
 /* Page Header */
-.page-header {
+.page-header{
   margin: 10px 0 20px 0;
   font-size: 22px;
 
-  > small {
+  > small{
     color: #666;
     display: block;
     margin-top: 5px;

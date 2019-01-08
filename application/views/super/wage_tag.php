@@ -111,11 +111,11 @@
   <!-- /.content-wrapper -->
 
   <script type="text/javascript">
-    $(document).ready(function() {
-
+    $(document).ready(function(){
+      $("#wageUserNav").addClass('active');
+      $("#manageWageUserNav").addClass('active');
       $('#userTable').DataTable({
-        language: 
-        {
+        language:{
             "sProcessing": "处理中...",
             "sLengthMenu": "显示 _MENU_ 项",
             "sZeroRecords": "没有匹配结果",
@@ -128,21 +128,17 @@
             "sEmptyTable": "表中数据为空",
             "sLoadingRecords": "载入中...",
             "sInfoThousands": ",",
-            "oPaginate": 
-            {
+            "oPaginate":{
                 "sFirst": "首页",
                 "sPrevious": "上页",
                 "sNext": "下页",
                 "sLast": "末页"
             },
-            "oAria": 
-            {
+            "oAria":{
                 "sSortAscending": ": 以升序排列此列",
                 "sSortDescending": ": 以降序排列此列"
             }
         }      
       });
-      $("#wageUserNav").addClass('active');
-      $("#manageWageUserNav").addClass('active');
     });
   </script>

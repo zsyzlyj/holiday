@@ -7,7 +7,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
       <h1>
-        工资信息查询
+        工资明细查询
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Home</li>
@@ -31,7 +31,7 @@
                   <legend></legend>
                   <div class="form-group">
                     <label for="dtp_input1" class="col-md-2 control-label">月份选择</label>
-                    <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                    <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm" data-link-field="dtp_input1">
                       <?php if($chosen_month):?>
                       <input class="form-control" name="chosen_month" size="16" type="text" value="<?php echo $chosen_month;?>" readonly>
                       <?php else:?>
@@ -140,18 +140,17 @@
 </div>
 <!-- /.content-wrapper -->
 <script type="text/javascript">
-    $(document).ready(function() { 
+    $(document).ready(function(){ 
       $("#searchwageGetherMainMenu").addClass('active');
       $(".form_datetime").datetimepicker({
-        format: 'yyyy-mm',
+        format: "yyyy-mm",
         startView:3,
         minView:3,
         startDate:"2017-12",
-        autoclose:true
+        autoclose:true,
       });
       $('#wageTable').DataTable({
-        language: 
-        {
+        language:{
             "sProcessing": "处理中...",
             "sLengthMenu": "显示 _MENU_ 项",
             "sZeroRecords": "没有匹配结果",
@@ -164,15 +163,13 @@
             "sEmptyTable": "表中数据为空",
             "sLoadingRecords": "载入中...",
             "sInfoThousands": ",",
-            "oPaginate": 
-            {
+            "oPaginate":{
                 "sFirst": "首页",
                 "sPrevious": "上页",
                 "sNext": "下页",
                 "sLast": "末页"
             },
-            "oAria": 
-            {
+            "oAria":{
                 "sSortAscending": ": 以升序排列此列",
                 "sSortDescending": ": 以降序排列此列"
             }

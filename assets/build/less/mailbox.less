@@ -2,44 +2,44 @@
  * Page: Mailbox
  * -------------
  */
-.mailbox-messages {
-  > .table {
+.mailbox-messages{
+  > .table{
     margin: 0;
   }
 }
 
-.mailbox-controls {
+.mailbox-controls{
   padding: 5px;
-  &.with-border {
+  &.with-border{
     border-bottom: 1px solid @box-border-color;
   }
 }
 
-.mailbox-read-info {
+.mailbox-read-info{
   border-bottom: 1px solid @box-border-color;
   padding: 10px;
-  h3 {
+  h3{
     font-size: 20px;
     margin: 0;
   }
-  h5 {
+  h5{
     margin: 0;
     padding: 5px 0 0 0;
   }
 }
 
-.mailbox-read-time {
+.mailbox-read-time{
   color: #999;
   font-size: 13px;
 }
 
-.mailbox-read-message {
+.mailbox-read-message{
   padding: 10px;
 }
 
-.mailbox-attachments {
+.mailbox-attachments{
   &:extend(.list-unstyled);
-  li {
+  li{
     float: left;
     width: 200px;
     border: 1px solid #eee;
@@ -48,41 +48,41 @@
   }
 }
 
-.mailbox-attachment-name {
+.mailbox-attachment-name{
   font-weight: bold;
   color: #666;
 }
 
 .mailbox-attachment-icon,
 .mailbox-attachment-info,
-.mailbox-attachment-size {
+.mailbox-attachment-size{
   display: block;
 }
 
-.mailbox-attachment-info {
+.mailbox-attachment-info{
   padding: 10px;
   background: #f4f4f4;
 }
 
-.mailbox-attachment-size {
+.mailbox-attachment-size{
   color: #999;
   font-size: 12px;
 }
 
-.mailbox-attachment-icon {
+.mailbox-attachment-icon{
   text-align: center;
   font-size: 65px;
   color: #666;
   padding: 20px 10px;
-  &.has-img {
+  &.has-img{
     padding: 0;
-    > img {
+    > img{
       max-width: 100%;
       height: auto;
     }
   }
 }
 
-.mailbox-attachment-close {
+.mailbox-attachment-close{
   &:extend(.close);
 }

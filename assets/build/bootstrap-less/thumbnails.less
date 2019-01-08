@@ -4,7 +4,7 @@
 
 
 // Mixin and adjust the regular image class
-.thumbnail {
+.thumbnail{
   display: block;
   padding: @thumbnail-padding;
   margin-bottom: @line-height-computed;
@@ -15,7 +15,7 @@
   .transition(border .2s ease-in-out);
 
   > img,
-  a > img {
+  a > img{
     &:extend(.img-responsive);
     margin-left: auto;
     margin-right: auto;
@@ -24,12 +24,12 @@
   // Add a hover state for linked versions only
   a&:hover,
   a&:focus,
-  a&.active {
+  a&.active{
     border-color: @link-color;
   }
 
   // Image captions
-  .caption {
+  .caption{
     padding: @thumbnail-caption-padding;
     color: @thumbnail-caption-color;
   }

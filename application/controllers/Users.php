@@ -1,9 +1,7 @@
 <?php 
 
-class Users extends Admin_Controller 
-{
-	public function __construct()
-	{
+class Users extends Admin_Controller{
+	public function __construct(){
 		parent::__construct();
 
 		$this->holiday_not_logged_in();
@@ -18,15 +16,14 @@ class Users extends Admin_Controller
 		$this->data['user_name'] = $this->session->userdata('user_name');
 	}
 	
-	public function index()
-	{
+	public function index(){
 		$user_data = $this->model_holiday_users->getUserData();
 
 		$holiday = $this->model_holiday->getHolidayData();
 
 		$result = array();
 		
-		foreach ($user_data as $k => $v) {
+		foreach ($user_data as $k => $v){
 			$result[$k] = $v;
 			foreach($holiday as $a => $b){
 				if($b['name'] == $v['username'] )
@@ -61,39 +58,33 @@ class Users extends Admin_Controller
 		$this->render_template('users/index', $this->data);
 	}
 
-	public function password_hash($pass = '')
-	{
-		if($pass) {
+	public function password_hash($pass = ''){
+		if($pass){
 			$password = password_hash($pass, PASSWORD_DEFAULT);
 			return $password;
 		}
 	}
 	
-	public function delete($id)
-	{
-
-		if($id) {
-			if($this->input->post('confirm')) {
+	public function delete($id){
+		if($id){
+			if($this->input->post('confirm')){
 
 					$delete = $this->model_holiday_users->delete($id);
 					
-					if($delete == true) {
+					if($delete == true){
 		        		$this->session->set_flashdata('success', '用户删除成功');
 		        		redirect('users/', 'refresh');
 		        	}
-		        	else {
+		        	else{
 		        		$this->session->set_flashdata('error', '系统发生未知错误!!');
 		        		redirect('users/delete/'.$id, 'refresh');
 		        	}
 
 			}	
-			else {
+			else{
 				$this->data['user_id'] = $id;
 				$this->render_template('users/delete', $this->data);
 			}	
 		}
 	}
-	
-
-
 }

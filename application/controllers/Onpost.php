@@ -36,7 +36,7 @@ class Onpost extends Admin_Controller
 
         $data = $this->model_wage->getWageData();
         
-		foreach ($data as $key => $value) {
+		foreach ($data as $key => $value){
 			$result['data'][$key] = array(
 				$value['name'],
 				$value['indate'],

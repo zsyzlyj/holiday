@@ -7,12 +7,12 @@
 code,
 kbd,
 pre,
-samp {
+samp{
   font-family: @font-family-monospace;
 }
 
 // Inline code
-code {
+code{
   padding: 2px 4px;
   font-size: 90%;
   color: @code-color;
@@ -21,7 +21,7 @@ code {
 }
 
 // User input typically entered via keyboard
-kbd {
+kbd{
   padding: 2px 4px;
   font-size: 90%;
   color: @kbd-color;
@@ -29,7 +29,7 @@ kbd {
   border-radius: @border-radius-small;
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.25);
 
-  kbd {
+  kbd{
     padding: 0;
     font-size: 100%;
     font-weight: bold;
@@ -38,7 +38,7 @@ kbd {
 }
 
 // Blocks of code
-pre {
+pre{
   display: block;
   padding: ((@line-height-computed - 1) / 2);
   margin: 0 0 (@line-height-computed / 2);
@@ -52,7 +52,7 @@ pre {
   border-radius: @border-radius-base;
 
   // Account for some code outputs that place code tags in pre tags
-  code {
+  code{
     padding: 0;
     font-size: inherit;
     color: inherit;
@@ -63,7 +63,7 @@ pre {
 }
 
 // Enable scrollable blocks of code
-.pre-scrollable {
+.pre-scrollable{
   max-height: @pre-scrollable-max-height;
   overflow-y: scroll;
 }

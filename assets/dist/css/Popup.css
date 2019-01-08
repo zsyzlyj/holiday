@@ -1,6 +1,6 @@
 
 /* 弹窗 (background) */
-.modal {
+.modal{
     display: none; /* 默认隐藏 */
     position: fixed; /* 固定定位 */
     z-index: 1; /* 设置在顶层 */
@@ -14,7 +14,7 @@
 }
  
 /* 弹窗内容 */
-.modal-content {
+.modal-content{
     background-color: #fefefe;
     margin: 15% auto; 
     padding: 20px;
@@ -23,7 +23,7 @@
 }
  
 /* 关闭按钮 */
-.close {
+.close{
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -31,7 +31,7 @@
 }
  
 .close:hover,
-.close:focus {
+.close:focus{
     color: black;
     text-decoration: none;
     cursor: pointer;

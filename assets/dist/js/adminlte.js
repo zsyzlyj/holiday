@@ -13,7 +13,7 @@
 */
 
 // Make sure jQuery has been loaded
-if (typeof jQuery === 'undefined') {
+if (typeof jQuery === 'undefined'){
 throw new Error('AdminLTE requires jQuery')
 }
 
@@ -25,38 +25,38 @@ throw new Error('AdminLTE requires jQuery')
  *         or add [data-widget="box-refresh"] to the box element
  *         Pass any option as data-option="value"
  */
-+function ($) {
++function ($){
   'use strict'
 
   var DataKey = 'lte.boxrefresh'
 
-  var Default = {
+  var Default ={
     source         : '',
-    params         : {},
+    params         :{},
     trigger        : '.refresh-btn',
     content        : '.box-body',
     loadInContent  : true,
     responseType   : '',
     overlayTemplate: '<div class="overlay"><div class="fa fa-refresh fa-spin"></div></div>',
-    onLoadStart    : function () {
+    onLoadStart    : function (){
     },
-    onLoadDone     : function (response) {
+    onLoadDone     : function (response){
       return response
     }
   }
 
-  var Selector = {
+  var Selector ={
     data: '[data-widget="box-refresh"]'
   }
 
   // BoxRefresh Class Definition
   // =========================
-  var BoxRefresh = function (element, options) {
+  var BoxRefresh = function (element, options){
     this.element  = element
     this.options  = options
     this.$overlay = $(options.overlay)
 
-    if (options.source === '') {
+    if (options.source === ''){
       throw new Error('Source url was not defined. Please specify a url in your BoxRefresh source option.')
     }
 
@@ -64,12 +64,12 @@ throw new Error('AdminLTE requires jQuery')
     this.load()
   }
 
-  BoxRefresh.prototype.load = function () {
+  BoxRefresh.prototype.load = function (){
     this._addOverlay()
     this.options.onLoadStart.call($(this))
 
-    $.get(this.options.source, this.options.params, function (response) {
-      if (this.options.loadInContent) {
+    $.get(this.options.source, this.options.params, function (response){
+      if (this.options.loadInContent){
         $(this.options.content).html(response)
       }
       this.options.onLoadDone.call($(this), response)
@@ -79,35 +79,35 @@ throw new Error('AdminLTE requires jQuery')
 
   // Private
 
-  BoxRefresh.prototype._setUpListeners = function () {
-    $(this.element).on('click', Selector.trigger, function (event) {
+  BoxRefresh.prototype._setUpListeners = function (){
+    $(this.element).on('click', Selector.trigger, function (event){
       if (event) event.preventDefault()
       this.load()
     }.bind(this))
   }
 
-  BoxRefresh.prototype._addOverlay = function () {
+  BoxRefresh.prototype._addOverlay = function (){
     $(this.element).append(this.$overlay)
   }
 
-  BoxRefresh.prototype._removeOverlay = function () {
+  BoxRefresh.prototype._removeOverlay = function (){
     $(this.element).remove(this.$overlay)
   }
 
   // Plugin Definition
   // =================
-  function Plugin(option) {
-    return this.each(function () {
+  function Plugin(option){
+    return this.each(function (){
       var $this = $(this)
       var data  = $this.data(DataKey)
 
-      if (!data) {
+      if (!data){
         var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
         $this.data(DataKey, (data = new BoxRefresh($this, options)))
       }
 
-      if (typeof data == 'string') {
-        if (typeof data[option] == 'undefined') {
+      if (typeof data == 'string'){
+        if (typeof data[option] == 'undefined'){
           throw new Error('No method named ' + option)
         }
         data[option]()
@@ -122,15 +122,15 @@ throw new Error('AdminLTE requires jQuery')
 
   // No Conflict Mode
   // ================
-  $.fn.boxRefresh.noConflict = function () {
+  $.fn.boxRefresh.noConflict = function (){
     $.fn.boxRefresh = old
     return this
   }
 
   // BoxRefresh Data API
   // =================
-  $(window).on('load', function () {
-    $(Selector.data).each(function () {
+  $(window).on('load', function (){
+    $(Selector.data).each(function (){
       Plugin.call($(this))
     })
   })
@@ -146,12 +146,12 @@ throw new Error('AdminLTE requires jQuery')
  *         This plugin auto activates on any element using the `.box` class
  *         Pass any option as data-option="value"
  */
-+function ($) {
++function ($){
   'use strict'
 
   var DataKey = 'lte.boxwidget'
 
-  var Default = {
+  var Default ={
     animationSpeed : 500,
     collapseTrigger: '[data-widget="collapse"]',
     removeTrigger  : '[data-widget="remove"]',
@@ -160,7 +160,7 @@ throw new Error('AdminLTE requires jQuery')
     removeIcon     : 'fa-times'
   }
 
-  var Selector = {
+  var Selector ={
     data     : '.box',
     collapsed: '.collapsed-box',
     body     : '.box-body',
@@ -168,11 +168,11 @@ throw new Error('AdminLTE requires jQuery')
     tools    : '.box-tools'
   }
 
-  var ClassName = {
+  var ClassName ={
     collapsed: 'collapsed-box'
   }
 
-  var Event = {
+  var Event ={
     collapsed: 'collapsed.boxwidget',
     expanded : 'expanded.boxwidget',
     removed  : 'removed.boxwidget'
@@ -180,24 +180,24 @@ throw new Error('AdminLTE requires jQuery')
 
   // BoxWidget Class Definition
   // =====================
-  var BoxWidget = function (element, options) {
+  var BoxWidget = function (element, options){
     this.element = element
     this.options = options
 
     this._setUpListeners()
   }
 
-  BoxWidget.prototype.toggle = function () {
+  BoxWidget.prototype.toggle = function (){
     var isOpen = !$(this.element).is(Selector.collapsed)
 
-    if (isOpen) {
+    if (isOpen){
       this.collapse()
-    } else {
+    } else{
       this.expand()
     }
   }
 
-  BoxWidget.prototype.expand = function () {
+  BoxWidget.prototype.expand = function (){
     var expandedEvent = $.Event(Event.expanded)
     var collapseIcon  = this.options.collapseIcon
     var expandIcon    = this.options.expandIcon
@@ -211,12 +211,12 @@ throw new Error('AdminLTE requires jQuery')
       .addClass(collapseIcon)
 
     $(this.element).find(Selector.body + ', ' + Selector.footer)
-      .slideDown(this.options.animationSpeed, function () {
+      .slideDown(this.options.animationSpeed, function (){
         $(this.element).trigger(expandedEvent)
       }.bind(this))
   }
 
-  BoxWidget.prototype.collapse = function () {
+  BoxWidget.prototype.collapse = function (){
     var collapsedEvent = $.Event(Event.collapsed)
     var collapseIcon   = this.options.collapseIcon
     var expandIcon     = this.options.expandIcon
@@ -228,16 +228,16 @@ throw new Error('AdminLTE requires jQuery')
       .addClass(expandIcon)
 
     $(this.element).find(Selector.body + ', ' + Selector.footer)
-      .slideUp(this.options.animationSpeed, function () {
+      .slideUp(this.options.animationSpeed, function (){
         $(this.element).addClass(ClassName.collapsed)
         $(this.element).trigger(collapsedEvent)
       }.bind(this))
   }
 
-  BoxWidget.prototype.remove = function () {
+  BoxWidget.prototype.remove = function (){
     var removedEvent = $.Event(Event.removed)
 
-    $(this.element).slideUp(this.options.animationSpeed, function () {
+    $(this.element).slideUp(this.options.animationSpeed, function (){
       $(this.element).trigger(removedEvent)
       $(this.element).remove()
     }.bind(this))
@@ -245,15 +245,15 @@ throw new Error('AdminLTE requires jQuery')
 
   // Private
 
-  BoxWidget.prototype._setUpListeners = function () {
+  BoxWidget.prototype._setUpListeners = function (){
     var that = this
 
-    $(this.element).on('click', this.options.collapseTrigger, function (event) {
+    $(this.element).on('click', this.options.collapseTrigger, function (event){
       if (event) event.preventDefault()
       that.toggle()
     })
 
-    $(this.element).on('click', this.options.removeTrigger, function (event) {
+    $(this.element).on('click', this.options.removeTrigger, function (event){
       if (event) event.preventDefault()
       that.remove()
     })
@@ -261,18 +261,18 @@ throw new Error('AdminLTE requires jQuery')
 
   // Plugin Definition
   // =================
-  function Plugin(option) {
-    return this.each(function () {
+  function Plugin(option){
+    return this.each(function (){
       var $this = $(this)
       var data  = $this.data(DataKey)
 
-      if (!data) {
+      if (!data){
         var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
         $this.data(DataKey, (data = new BoxWidget($this, options)))
       }
 
-      if (typeof option == 'string') {
-        if (typeof data[option] == 'undefined') {
+      if (typeof option == 'string'){
+        if (typeof data[option] == 'undefined'){
           throw new Error('No method named ' + option)
         }
         data[option]()
@@ -287,15 +287,15 @@ throw new Error('AdminLTE requires jQuery')
 
   // No Conflict Mode
   // ================
-  $.fn.boxWidget.noConflict = function () {
+  $.fn.boxWidget.noConflict = function (){
     $.fn.boxWidget = old
     return this
   }
 
   // BoxWidget Data API
   // ==================
-  $(window).on('load', function () {
-    $(Selector.data).each(function () {
+  $(window).on('load', function (){
+    $(Selector.data).each(function (){
       Plugin.call($(this))
     })
   })
@@ -311,16 +311,16 @@ throw new Error('AdminLTE requires jQuery')
  *         or add [data-toggle="control-sidebar"] to the trigger
  *         Pass any option as data-option="value"
  */
-+function ($) {
++function ($){
   'use strict'
 
   var DataKey = 'lte.controlsidebar'
 
-  var Default = {
+  var Default ={
     slide: true
   }
 
-  var Selector = {
+  var Selector ={
     sidebar: '.control-sidebar',
     data   : '[data-toggle="control-sidebar"]',
     open   : '.control-sidebar-open',
@@ -330,19 +330,19 @@ throw new Error('AdminLTE requires jQuery')
     boxed  : '.layout-boxed'
   }
 
-  var ClassName = {
+  var ClassName ={
     open : 'control-sidebar-open',
     fixed: 'fixed'
   }
 
-  var Event = {
+  var Event ={
     collapsed: 'collapsed.controlsidebar',
     expanded : 'expanded.controlsidebar'
   }
 
   // ControlSidebar Class Definition
   // ===============================
-  var ControlSidebar = function (element, options) {
+  var ControlSidebar = function (element, options){
     this.element         = element
     this.options         = options
     this.hasBindedResize = false
@@ -350,55 +350,55 @@ throw new Error('AdminLTE requires jQuery')
     this.init()
   }
 
-  ControlSidebar.prototype.init = function () {
+  ControlSidebar.prototype.init = function (){
     // Add click listener if the element hasn't been
     // initialized using the data API
-    if (!$(this.element).is(Selector.data)) {
+    if (!$(this.element).is(Selector.data)){
       $(this).on('click', this.toggle)
     }
 
     this.fix()
-    $(window).resize(function () {
+    $(window).resize(function (){
       this.fix()
     }.bind(this))
   }
 
-  ControlSidebar.prototype.toggle = function (event) {
+  ControlSidebar.prototype.toggle = function (event){
     if (event) event.preventDefault()
 
     this.fix()
 
-    if (!$(Selector.sidebar).is(Selector.open) && !$('body').is(Selector.open)) {
+    if (!$(Selector.sidebar).is(Selector.open) && !$('body').is(Selector.open)){
       this.expand()
-    } else {
+    } else{
       this.collapse()
     }
   }
 
-  ControlSidebar.prototype.expand = function () {
-    if (!this.options.slide) {
+  ControlSidebar.prototype.expand = function (){
+    if (!this.options.slide){
       $('body').addClass(ClassName.open)
-    } else {
+    } else{
       $(Selector.sidebar).addClass(ClassName.open)
     }
 
     $(this.element).trigger($.Event(Event.expanded))
   }
 
-  ControlSidebar.prototype.collapse = function () {
+  ControlSidebar.prototype.collapse = function (){
     $('body, ' + Selector.sidebar).removeClass(ClassName.open)
     $(this.element).trigger($.Event(Event.collapsed))
   }
 
-  ControlSidebar.prototype.fix = function () {
-    if ($('body').is(Selector.boxed)) {
+  ControlSidebar.prototype.fix = function (){
+    if ($('body').is(Selector.boxed)){
       this._fixForBoxed($(Selector.bg))
     }
   }
 
   // Private
 
-  ControlSidebar.prototype._fixForBoxed = function (bg) {
+  ControlSidebar.prototype._fixForBoxed = function (bg){
     bg.css({
       position: 'absolute',
       height  : $(Selector.wrapper).height()
@@ -407,12 +407,12 @@ throw new Error('AdminLTE requires jQuery')
 
   // Plugin Definition
   // =================
-  function Plugin(option) {
-    return this.each(function () {
+  function Plugin(option){
+    return this.each(function (){
       var $this = $(this)
       var data  = $this.data(DataKey)
 
-      if (!data) {
+      if (!data){
         var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
         $this.data(DataKey, (data = new ControlSidebar($this, options)))
       }
@@ -428,14 +428,14 @@ throw new Error('AdminLTE requires jQuery')
 
   // No Conflict Mode
   // ================
-  $.fn.controlSidebar.noConflict = function () {
+  $.fn.controlSidebar.noConflict = function (){
     $.fn.controlSidebar = old
     return this
   }
 
   // ControlSidebar Data API
   // =======================
-  $(document).on('click', Selector.data, function (event) {
+  $(document).on('click', Selector.data, function (event){
     if (event) event.preventDefault()
     Plugin.call($(this), 'toggle')
   })
@@ -450,38 +450,38 @@ throw new Error('AdminLTE requires jQuery')
  * @Usage: $('#my-chat-box').directChat()
  *         or add [data-widget="direct-chat"] to the trigger
  */
-+function ($) {
++function ($){
   'use strict'
 
   var DataKey = 'lte.directchat'
 
-  var Selector = {
+  var Selector ={
     data: '[data-widget="chat-pane-toggle"]',
     box : '.direct-chat'
   }
 
-  var ClassName = {
+  var ClassName ={
     open: 'direct-chat-contacts-open'
   }
 
   // DirectChat Class Definition
   // ===========================
-  var DirectChat = function (element) {
+  var DirectChat = function (element){
     this.element = element
   }
 
-  DirectChat.prototype.toggle = function ($trigger) {
+  DirectChat.prototype.toggle = function ($trigger){
     $trigger.parents(Selector.box).first().toggleClass(ClassName.open)
   }
 
   // Plugin Definition
   // =================
-  function Plugin(option) {
-    return this.each(function () {
+  function Plugin(option){
+    return this.each(function (){
       var $this = $(this)
       var data  = $this.data(DataKey)
 
-      if (!data) {
+      if (!data){
         $this.data(DataKey, (data = new DirectChat($this)))
       }
 
@@ -496,14 +496,14 @@ throw new Error('AdminLTE requires jQuery')
 
   // No Conflict Mode
   // ================
-  $.fn.directChat.noConflict = function () {
+  $.fn.directChat.noConflict = function (){
     $.fn.directChat = old
     return this
   }
 
   // DirectChat Data API
   // ===================
-  $(document).on('click', Selector.data, function (event) {
+  $(document).on('click', Selector.data, function (event){
     if (event) event.preventDefault()
     Plugin.call($(this), 'toggle')
   })
@@ -520,17 +520,17 @@ throw new Error('AdminLTE requires jQuery')
  *        Configure any options by passing data-option="value"
  *        to the body tag.
  */
-+function ($) {
++function ($){
   'use strict'
 
   var DataKey = 'lte.layout'
 
-  var Default = {
+  var Default ={
     slimscroll : true,
     resetHeight: true
   }
 
-  var Selector = {
+  var Selector ={
     wrapper       : '.wrapper',
     contentWrapper: '.content-wrapper',
     layoutBoxed   : '.layout-boxed',
@@ -543,36 +543,36 @@ throw new Error('AdminLTE requires jQuery')
     logo          : '.main-header .logo'
   }
 
-  var ClassName = {
+  var ClassName ={
     fixed         : 'fixed',
     holdTransition: 'hold-transition'
   }
 
-  var Layout = function (options) {
+  var Layout = function (options){
     this.options      = options
     this.bindedResize = false
     this.activate()
   }
 
-  Layout.prototype.activate = function () {
+  Layout.prototype.activate = function (){
     this.fix()
     this.fixSidebar()
 
     $('body').removeClass(ClassName.holdTransition)
 
-    if (this.options.resetHeight) {
+    if (this.options.resetHeight){
       $('body, html, ' + Selector.wrapper).css({
         'height'    : 'auto',
         'min-height': '100%'
       })
     }
 
-    if (!this.bindedResize) {
-      $(window).resize(function () {
+    if (!this.bindedResize){
+      $(window).resize(function (){
         this.fix()
         this.fixSidebar()
 
-        $(Selector.logo + ', ' + Selector.sidebar).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
+        $(Selector.logo + ', ' + Selector.sidebar).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function (){
           this.fix()
           this.fixSidebar()
         }.bind(this))
@@ -581,18 +581,18 @@ throw new Error('AdminLTE requires jQuery')
       this.bindedResize = true
     }
 
-    $(Selector.sidebarMenu).on('expanded.tree', function () {
+    $(Selector.sidebarMenu).on('expanded.tree', function (){
       this.fix()
       this.fixSidebar()
     }.bind(this))
 
-    $(Selector.sidebarMenu).on('collapsed.tree', function () {
+    $(Selector.sidebarMenu).on('collapsed.tree', function (){
       this.fix()
       this.fixSidebar()
     }.bind(this))
   }
 
-  Layout.prototype.fix = function () {
+  Layout.prototype.fix = function (){
     // Remove overflow from .wrapper if layout-boxed exists
     $(Selector.layoutBoxed + ' > ' + Selector.wrapper).css('overflow', 'hidden')
 
@@ -604,40 +604,40 @@ throw new Error('AdminLTE requires jQuery')
 
     // Set the min-height of the content and sidebar based on
     // the height of the document.
-    if ($('body').hasClass(ClassName.fixed)) {
+    if ($('body').hasClass(ClassName.fixed)){
       $(Selector.contentWrapper).css('min-height', windowHeight - footerHeight)
-    } else {
+    } else{
       var postSetHeight
 
-      if (windowHeight >= sidebarHeight) {
+      if (windowHeight >= sidebarHeight){
         $(Selector.contentWrapper).css('min-height', windowHeight - neg)
         postSetHeight = windowHeight - neg
-      } else {
+      } else{
         $(Selector.contentWrapper).css('min-height', sidebarHeight)
         postSetHeight = sidebarHeight
       }
 
       // Fix for the control sidebar height
       var $controlSidebar = $(Selector.controlSidebar)
-      if (typeof $controlSidebar !== 'undefined') {
+      if (typeof $controlSidebar !== 'undefined'){
         if ($controlSidebar.height() > postSetHeight)
           $(Selector.contentWrapper).css('min-height', $controlSidebar.height())
       }
     }
   }
 
-  Layout.prototype.fixSidebar = function () {
+  Layout.prototype.fixSidebar = function (){
     // Make sure the body tag has the .fixed class
-    if (!$('body').hasClass(ClassName.fixed)) {
-      if (typeof $.fn.slimScroll !== 'undefined') {
+    if (!$('body').hasClass(ClassName.fixed)){
+      if (typeof $.fn.slimScroll !== 'undefined'){
         $(Selector.sidebar).slimScroll({ destroy: true }).height('auto')
       }
       return
     }
 
     // Enable slimscroll for fixed layout
-    if (this.options.slimscroll) {
-      if (typeof $.fn.slimScroll !== 'undefined') {
+    if (this.options.slimscroll){
+      if (typeof $.fn.slimScroll !== 'undefined'){
         // Destroy if it exists
         // $(Selector.sidebar).slimScroll({ destroy: true }).height('auto')
 
@@ -653,18 +653,18 @@ throw new Error('AdminLTE requires jQuery')
 
   // Plugin Definition
   // =================
-  function Plugin(option) {
-    return this.each(function () {
+  function Plugin(option){
+    return this.each(function (){
       var $this = $(this)
       var data  = $this.data(DataKey)
 
-      if (!data) {
+      if (!data){
         var options = $.extend({}, Default, $this.data(), typeof option === 'object' && option)
         $this.data(DataKey, (data = new Layout(options)))
       }
 
-      if (typeof option === 'string') {
-        if (typeof data[option] === 'undefined') {
+      if (typeof option === 'string'){
+        if (typeof data[option] === 'undefined'){
           throw new Error('No method named ' + option)
         }
         data[option]()
@@ -679,14 +679,14 @@ throw new Error('AdminLTE requires jQuery')
 
   // No conflict mode
   // ================
-  $.fn.layout.noConflict = function () {
+  $.fn.layout.noConflict = function (){
     $.fn.layout = old
     return this
   }
 
   // Layout DATA-API
   // ===============
-  $(window).on('load', function () {
+  $(window).on('load', function (){
     Plugin.call($('body'))
   })
 }(jQuery)
@@ -700,18 +700,18 @@ throw new Error('AdminLTE requires jQuery')
  *          or add [data-toggle="push-menu"] to any button
  *          Pass any option as data-option="value"
  */
-+function ($) {
++function ($){
   'use strict'
 
   var DataKey = 'lte.pushmenu'
 
-  var Default = {
+  var Default ={
     collapseScreenSize   : 767,
     expandOnHover        : false,
     expandTransitionDelay: 200
   }
 
-  var Selector = {
+  var Selector ={
     collapsed     : '.sidebar-collapse',
     open          : '.sidebar-open',
     mainSidebar   : '.main-sidebar',
@@ -723,7 +723,7 @@ throw new Error('AdminLTE requires jQuery')
     layoutFixed   : '.fixed'
   }
 
-  var ClassName = {
+  var ClassName ={
     collapsed    : 'sidebar-collapse',
     open         : 'sidebar-open',
     mini         : 'sidebar-mini',
@@ -732,99 +732,99 @@ throw new Error('AdminLTE requires jQuery')
     layoutFixed  : 'fixed'
   }
 
-  var Event = {
+  var Event ={
     expanded : 'expanded.pushMenu',
     collapsed: 'collapsed.pushMenu'
   }
 
   // PushMenu Class Definition
   // =========================
-  var PushMenu = function (options) {
+  var PushMenu = function (options){
     this.options = options
     this.init()
   }
 
-  PushMenu.prototype.init = function () {
+  PushMenu.prototype.init = function (){
     if (this.options.expandOnHover
-      || ($('body').is(Selector.mini + Selector.layoutFixed))) {
+      || ($('body').is(Selector.mini + Selector.layoutFixed))){
       this.expandOnHover()
       $('body').addClass(ClassName.expandFeature)
     }
 
-    $(Selector.contentWrapper).click(function () {
+    $(Selector.contentWrapper).click(function (){
       // Enable hide menu when clicking on the content-wrapper on small screens
-      if ($(window).width() <= this.options.collapseScreenSize && $('body').hasClass(ClassName.open)) {
+      if ($(window).width() <= this.options.collapseScreenSize && $('body').hasClass(ClassName.open)){
         this.close()
       }
     }.bind(this))
 
     // __Fix for android devices
-    $(Selector.searchInput).click(function (e) {
+    $(Selector.searchInput).click(function (e){
       e.stopPropagation()
     })
   }
 
-  PushMenu.prototype.toggle = function () {
+  PushMenu.prototype.toggle = function (){
     var windowWidth = $(window).width()
     var isOpen      = !$('body').hasClass(ClassName.collapsed)
 
-    if (windowWidth <= this.options.collapseScreenSize) {
+    if (windowWidth <= this.options.collapseScreenSize){
       isOpen = $('body').hasClass(ClassName.open)
     }
 
-    if (!isOpen) {
+    if (!isOpen){
       this.open()
-    } else {
+    } else{
       this.close()
     }
   }
 
-  PushMenu.prototype.open = function () {
+  PushMenu.prototype.open = function (){
     var windowWidth = $(window).width()
 
-    if (windowWidth > this.options.collapseScreenSize) {
+    if (windowWidth > this.options.collapseScreenSize){
       $('body').removeClass(ClassName.collapsed)
         .trigger($.Event(Event.expanded))
     }
-    else {
+    else{
       $('body').addClass(ClassName.open)
         .trigger($.Event(Event.expanded))
     }
   }
 
-  PushMenu.prototype.close = function () {
+  PushMenu.prototype.close = function (){
     var windowWidth = $(window).width()
-    if (windowWidth > this.options.collapseScreenSize) {
+    if (windowWidth > this.options.collapseScreenSize){
       $('body').addClass(ClassName.collapsed)
         .trigger($.Event(Event.collapsed))
-    } else {
+    } else{
       $('body').removeClass(ClassName.open + ' ' + ClassName.collapsed)
         .trigger($.Event(Event.collapsed))
     }
   }
 
-  PushMenu.prototype.expandOnHover = function () {
-    $(Selector.mainSidebar).hover(function () {
+  PushMenu.prototype.expandOnHover = function (){
+    $(Selector.mainSidebar).hover(function (){
       if ($('body').is(Selector.mini + Selector.collapsed)
-        && $(window).width() > this.options.collapseScreenSize) {
+        && $(window).width() > this.options.collapseScreenSize){
         this.expand()
       }
-    }.bind(this), function () {
-      if ($('body').is(Selector.expanded)) {
+    }.bind(this), function (){
+      if ($('body').is(Selector.expanded)){
         this.collapse()
       }
     }.bind(this))
   }
 
-  PushMenu.prototype.expand = function () {
-    setTimeout(function () {
+  PushMenu.prototype.expand = function (){
+    setTimeout(function (){
       $('body').removeClass(ClassName.collapsed)
         .addClass(ClassName.expanded)
     }, this.options.expandTransitionDelay)
   }
 
-  PushMenu.prototype.collapse = function () {
-    setTimeout(function () {
+  PushMenu.prototype.collapse = function (){
+    setTimeout(function (){
       $('body').removeClass(ClassName.expanded)
         .addClass(ClassName.collapsed)
     }, this.options.expandTransitionDelay)
@@ -832,12 +832,12 @@ throw new Error('AdminLTE requires jQuery')
 
   // PushMenu Plugin Definition
   // ==========================
-  function Plugin(option) {
-    return this.each(function () {
+  function Plugin(option){
+    return this.each(function (){
       var $this = $(this)
       var data  = $this.data(DataKey)
 
-      if (!data) {
+      if (!data){
         var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
         $this.data(DataKey, (data = new PushMenu(options)))
       }
@@ -853,18 +853,18 @@ throw new Error('AdminLTE requires jQuery')
 
   // No Conflict Mode
   // ================
-  $.fn.pushMenu.noConflict = function () {
+  $.fn.pushMenu.noConflict = function (){
     $.fn.pushMenu = old
     return this
   }
 
   // Data API
   // ========
-  $(document).on('click', Selector.button, function (e) {
+  $(document).on('click', Selector.button, function (e){
     e.preventDefault()
     Plugin.call($(this), 'toggle')
   })
-  $(window).on('load', function () {
+  $(window).on('load', function (){
     Plugin.call($(Selector.button))
   })
 }(jQuery)
@@ -878,40 +878,40 @@ throw new Error('AdminLTE requires jQuery')
  *         or add [data-widget="todo-list"] to the ul element
  *         Pass any option as data-option="value"
  */
-+function ($) {
++function ($){
   'use strict'
 
   var DataKey = 'lte.todolist'
 
-  var Default = {
-    onCheck  : function (item) {
+  var Default ={
+    onCheck  : function (item){
       return item
     },
-    onUnCheck: function (item) {
+    onUnCheck: function (item){
       return item
     }
   }
 
-  var Selector = {
+  var Selector ={
     data: '[data-widget="todo-list"]'
   }
 
-  var ClassName = {
+  var ClassName ={
     done: 'done'
   }
 
   // TodoList Class Definition
   // =========================
-  var TodoList = function (element, options) {
+  var TodoList = function (element, options){
     this.element = element
     this.options = options
 
     this._setUpListeners()
   }
 
-  TodoList.prototype.toggle = function (item) {
+  TodoList.prototype.toggle = function (item){
     item.parents(Selector.li).first().toggleClass(ClassName.done)
-    if (!item.prop('checked')) {
+    if (!item.prop('checked')){
       this.unCheck(item)
       return
     }
@@ -919,37 +919,37 @@ throw new Error('AdminLTE requires jQuery')
     this.check(item)
   }
 
-  TodoList.prototype.check = function (item) {
+  TodoList.prototype.check = function (item){
     this.options.onCheck.call(item)
   }
 
-  TodoList.prototype.unCheck = function (item) {
+  TodoList.prototype.unCheck = function (item){
     this.options.onUnCheck.call(item)
   }
 
   // Private
 
-  TodoList.prototype._setUpListeners = function () {
+  TodoList.prototype._setUpListeners = function (){
     var that = this
-    $(this.element).on('change ifChanged', 'input:checkbox', function () {
+    $(this.element).on('change ifChanged', 'input:checkbox', function (){
       that.toggle($(this))
     })
   }
 
   // Plugin Definition
   // =================
-  function Plugin(option) {
-    return this.each(function () {
+  function Plugin(option){
+    return this.each(function (){
       var $this = $(this)
       var data  = $this.data(DataKey)
 
-      if (!data) {
+      if (!data){
         var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
         $this.data(DataKey, (data = new TodoList($this, options)))
       }
 
-      if (typeof data == 'string') {
-        if (typeof data[option] == 'undefined') {
+      if (typeof data == 'string'){
+        if (typeof data[option] == 'undefined'){
           throw new Error('No method named ' + option)
         }
         data[option]()
@@ -964,15 +964,15 @@ throw new Error('AdminLTE requires jQuery')
 
   // No Conflict Mode
   // ================
-  $.fn.todoList.noConflict = function () {
+  $.fn.todoList.noConflict = function (){
     $.fn.todoList = old
     return this
   }
 
   // TodoList Data API
   // =================
-  $(window).on('load', function () {
-    $(Selector.data).each(function () {
+  $(window).on('load', function (){
+    $(Selector.data).each(function (){
       Plugin.call($(this))
     })
   })
@@ -989,19 +989,19 @@ throw new Error('AdminLTE requires jQuery')
  *         or add [data-widget="tree"] to the ul element
  *         Pass any option as data-option="value"
  */
-+function ($) {
++function ($){
   'use strict'
 
   var DataKey = 'lte.tree'
 
-  var Default = {
+  var Default ={
     animationSpeed: 500,
     accordion     : true,
     followLink    : false,
     trigger       : '.treeview a'
   }
 
-  var Selector = {
+  var Selector ={
     tree        : '.tree',
     treeview    : '.treeview',
     treeviewMenu: '.treeview-menu',
@@ -1011,19 +1011,19 @@ throw new Error('AdminLTE requires jQuery')
     active      : '.active'
   }
 
-  var ClassName = {
+  var ClassName ={
     open: 'menu-open',
     tree: 'tree'
   }
 
-  var Event = {
+  var Event ={
     collapsed: 'collapsed.tree',
     expanded : 'expanded.tree'
   }
 
   // Tree Class Definition
   // =====================
-  var Tree = function (element, options) {
+  var Tree = function (element, options){
     this.element = element
     this.options = options
 
@@ -1034,47 +1034,47 @@ throw new Error('AdminLTE requires jQuery')
     this._setUpListeners()
   }
 
-  Tree.prototype.toggle = function (link, event) {
+  Tree.prototype.toggle = function (link, event){
     var treeviewMenu = link.next(Selector.treeviewMenu)
     var parentLi     = link.parent()
     var isOpen       = parentLi.hasClass(ClassName.open)
 
-    if (!parentLi.is(Selector.treeview)) {
+    if (!parentLi.is(Selector.treeview)){
       return
     }
 
-    if (!this.options.followLink || link.attr('href') === '#') {
+    if (!this.options.followLink || link.attr('href') === '#'){
       event.preventDefault()
     }
 
-    if (isOpen) {
+    if (isOpen){
       this.collapse(treeviewMenu, parentLi)
-    } else {
+    } else{
       this.expand(treeviewMenu, parentLi)
     }
   }
 
-  Tree.prototype.expand = function (tree, parent) {
+  Tree.prototype.expand = function (tree, parent){
     var expandedEvent = $.Event(Event.expanded)
 
-    if (this.options.accordion) {
+    if (this.options.accordion){
       var openMenuLi = parent.siblings(Selector.open)
       var openTree   = openMenuLi.children(Selector.treeviewMenu)
       this.collapse(openTree, openMenuLi)
     }
 
     parent.addClass(ClassName.open)
-    tree.slideDown(this.options.animationSpeed, function () {
+    tree.slideDown(this.options.animationSpeed, function (){
       $(this.element).trigger(expandedEvent)
     }.bind(this))
   }
 
-  Tree.prototype.collapse = function (tree, parentLi) {
+  Tree.prototype.collapse = function (tree, parentLi){
     var collapsedEvent = $.Event(Event.collapsed)
 
     tree.find(Selector.open).removeClass(ClassName.open)
     parentLi.removeClass(ClassName.open)
-    tree.slideUp(this.options.animationSpeed, function () {
+    tree.slideUp(this.options.animationSpeed, function (){
       tree.find(Selector.open + ' > ' + Selector.treeview).slideUp()
       $(this.element).trigger(collapsedEvent)
     }.bind(this))
@@ -1082,22 +1082,22 @@ throw new Error('AdminLTE requires jQuery')
 
   // Private
 
-  Tree.prototype._setUpListeners = function () {
+  Tree.prototype._setUpListeners = function (){
     var that = this
 
-    $(this.element).on('click', this.options.trigger, function (event) {
+    $(this.element).on('click', this.options.trigger, function (event){
       that.toggle($(this), event)
     })
   }
 
   // Plugin Definition
   // =================
-  function Plugin(option) {
-    return this.each(function () {
+  function Plugin(option){
+    return this.each(function (){
       var $this = $(this)
       var data  = $this.data(DataKey)
 
-      if (!data) {
+      if (!data){
         var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
         $this.data(DataKey, new Tree($this, options))
       }
@@ -1111,15 +1111,15 @@ throw new Error('AdminLTE requires jQuery')
 
   // No Conflict Mode
   // ================
-  $.fn.tree.noConflict = function () {
+  $.fn.tree.noConflict = function (){
     $.fn.tree = old
     return this
   }
 
   // Tree Data API
   // =============
-  $(window).on('load', function () {
-    $(Selector.data).each(function () {
+  $(window).on('load', function (){
+    $(Selector.data).each(function (){
       Plugin.call($(this))
     })
   })

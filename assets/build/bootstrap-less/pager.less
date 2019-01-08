@@ -3,16 +3,16 @@
 // --------------------------------------------------
 
 
-.pager {
+.pager{
   padding-left: 0;
   margin: @line-height-computed 0;
   list-style: none;
   text-align: center;
   &:extend(.clearfix all);
-  li {
+  li{
     display: inline;
     > a,
-    > span {
+    > span{
       display: inline-block;
       padding: 5px 14px;
       background-color: @pager-bg;
@@ -21,31 +21,31 @@
     }
 
     > a:hover,
-    > a:focus {
+    > a:focus{
       text-decoration: none;
       background-color: @pager-hover-bg;
     }
   }
 
-  .next {
+  .next{
     > a,
-    > span {
+    > span{
       float: right;
     }
   }
 
-  .previous {
+  .previous{
     > a,
-    > span {
+    > span{
       float: left;
     }
   }
 
-  .disabled {
+  .disabled{
     > a,
     > a:hover,
     > a:focus,
-    > span {
+    > span{
       color: @pager-disabled-color;
       background-color: @pager-bg;
       cursor: @cursor-disabled;

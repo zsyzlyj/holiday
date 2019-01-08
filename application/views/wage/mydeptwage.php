@@ -32,24 +32,17 @@
           <?php endif; ?>
           <div class="box">
             <div class="box-header">
-            
-            <?php if($wage_data): ?>  
-            <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptholiday') ?>' method='post'>
-              <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
-              <button class="btn btn-warning">导出</button>
-            </form>
-
             </div>
             
             <!-- /.box-header -->
             <div class="box-body">
               <div class="container">
-                <form action="<?php echo base_url('wage/search')?>" class="form-horizontal" method="post" role="form">
+                <form action="<?php echo base_url('wage/search_mydept')?>" class="form-horizontal" method="post" role="form">
                   <fieldset>
                     <legend></legend>
                     <div class="form-group">
                       <label for="dtp_input1" class="col-md-2 control-label">月份选择</label>
-                      <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                      <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm" data-link-field="dtp_input1">
                         <?php if($chosen_month):?>
                         <input class="form-control" name="chosen_month" size="16" type="text" value="<?php echo $chosen_month;?>" readonly>
                         <?php else:?>
@@ -60,13 +53,12 @@
                         <span class="input-group-addon">
                         <form action='<?php echo base_url('wage/mydeptwage')?>' method="post" id="selected_dept_form">
                           <select id="selected_dept" name="selected_dept" onchange="submitForm();">
-                            <option value="">
-                              <?php if($current_dept):?>
-                                <?php echo $current_dept;?>
-                              <?php else: ?>  
-                                选择部门
-                              <?php endif; ?>
-                            </option>
+                            <?php if($current_dept):?>
+                              <option value="<?php echo $current_dept;?>"><?php echo $current_dept;?></option>
+                            <?php else: ?>  
+                              <option value="请选择部门">请选择部门</option>
+                            <?php endif; ?>
+                            
                             <?php foreach($dept_options as $k => $v):?>
                             <?php if($current_dept):?>
                               <?php if($current_dept!=$v):?>
@@ -86,6 +78,7 @@
                   </fieldset>
                 </form>
               </div>
+              <!--end of container-->
               <hr />
               <div style="overflow:scroll;">
                 <fieldset>
@@ -131,7 +124,6 @@
                       <?php elseif($counter>=$koufeistart and $counter<=$koufeiend): ?>
                         <th style="text-align:center;vertical-align:middle;" rowspan="2"><?php echo $v?></th>
                       <?php endif;?>    
-
                     <?php endif;$counter++;?>
                     <?php endforeach; ?>
                     </tr>
@@ -145,33 +137,29 @@
                     <?php endif;$counter++;?>
                     <?php endforeach; ?>
                     </tr>
-                    
-                      
                     <?php endif; ?>
                   </thead>
                   <tbody>
-                    
                     <?php if($wage_data):?>
-                      <tr>
-                      <?php $counter=0;?>
-                      <?php foreach($wage_data as $k => $v): ?>
-                        <?php if($counter<=$trueend and $counter>0):?>
-                        <td style=""><?php echo $v?></td>
-                        <?php endif;$counter++;?>
-                      <?php endforeach; ?>
-                      </tr>
-                    <?php else: ?>
-                      <?php if($chosen_month!=""):?>
-
+                    <?php foreach($wage_data as $k => $v): ?>
+                    <tr>
+                    <?php $counter=0;?>
+                    <?php foreach($v as $a => $b): ?>
+                      <?php if($counter<=$trueend and $counter>0):?>
+                      <td style=""><?php echo $b?></td>
+                      <?php endif;$counter++;?>
+                    <?php endforeach; ?>
+                    </tr>
+                    <?php endforeach; ?>
+                    <?php elseif($chosen_month!=""): ?>
                         无当月工资记录
-                      <?php endif; ?>
                     <?php endif; ?>
                   </tbody>
                 </table>
                 </fieldset>
               </div>
+              <!-- end of overflow:scroll; -->
             </div>
-            <?php endif; ?>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
@@ -179,56 +167,52 @@
         <!-- col-md-12 -->
       </div>
       <!-- /.row -->
-
-      
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  
-  
-  
 
   <script type="text/javascript">
-    $(document).ready(function() {
-      $('#holidayTable').DataTable({
-  
-      language: {
-          "sProcessing": "处理中...",
-          "sLengthMenu": "显示 _MENU_ 项",
-          "sZeroRecords": "没有匹配结果",
-          "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-          "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-          "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-          "sInfoPostFix": "",
-          "sSearch": "搜索:",
-          "sUrl": "",
-          "sEmptyTable": "表中数据为空",
-          "sLoadingRecords": "载入中...",
-          "sInfoThousands": ",",
-          "oPaginate": {
-              "sFirst": "首页",
-              "sPrevious": "上页",
-              "sNext": "下页",
-              "sLast": "末页"
-          },
-          "oAria": {
-              "sSortAscending": ": 以升序排列此列",
-              "sSortDescending": ": 以降序排列此列"
-          }
-      }
-    });
-
-
+    $(document).ready(function(){
       $("#myDeptWageMainMenu").addClass('active');
-    
-      
+      $(".form_datetime").datetimepicker({
+        format: "yyyy-mm",
+        startView:3,
+        minView:3,
+        startDate:"2017-12",
+        autoclose:true
+      });
+      $('#wageTable').DataTable({
+        language:{
+            "sProcessing": "处理中...",
+            "sLengthMenu": "显示 _MENU_ 项",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate":{
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页"
+            },
+            "oAria":{
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        }
+      });
     });
     function submitForm(){
-    //获取form表单对象
+        //获取form表单对象
         var form = document.getElementById("selected_dept_form");
         form.submit();//form表单提交
     }
-    
   </script>
  

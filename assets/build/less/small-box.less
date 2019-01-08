@@ -3,18 +3,18 @@
  * --------------------
  */
 
-.small-box {
+.small-box{
   .border-radius(2px);
   position: relative;
   display: block;
   margin-bottom: 20px;
   box-shadow: @box-boxshadow;
   // content wrapper
-  > .inner {
+  > .inner{
     padding: 10px;
   }
 
-  > .small-box-footer {
+  > .small-box-footer{
     position: relative;
     text-align: center;
     padding: 3px 0;
@@ -24,13 +24,13 @@
     z-index: 10;
     background: rgba(0, 0, 0, 0.1);
     text-decoration: none;
-    &:hover {
+    &:hover{
       color: #fff;
       background: rgba(0, 0, 0, 0.15);
     }
   }
 
-  h3 {
+  h3{
     font-size: 38px;
     font-weight: bold;
     margin: 0 0 10px 0;
@@ -39,9 +39,9 @@
 
   }
 
-  p {
+  p{
     font-size: 15px;
-    > small {
+    > small{
       display: block;
       color: #f9f9f9;
       font-size: 13px;
@@ -49,12 +49,12 @@
     }
   }
 
-  h3, p {
+  h3, p{
     z-index: 5;
   }
 
   // the icon
-  .icon {
+  .icon{
     .transition(all @transition-speed linear);
     position: absolute;
     top: -10px;
@@ -65,24 +65,24 @@
   }
 
   // Small box hover state
-  &:hover {
+  &:hover{
     text-decoration: none;
     color: #f9f9f9;
     // Animate icons on small box hover
-    .icon {
+    .icon{
       font-size: 95px;
     }
   }
 }
 
-@media (max-width: @screen-xs-max) {
+@media (max-width: @screen-xs-max){
   // No need for icons on very small devices
-  .small-box {
+  .small-box{
     text-align: center;
-    .icon {
+    .icon{
       display: none;
     }
-    p {
+    p{
       font-size: 12px;
     }
   }

@@ -4,44 +4,44 @@
  */
 
 // Base styles (regardless of theme)
-.callout {
+.callout{
   .border-radius(3px);
   margin: 0 0 20px 0;
   padding: 15px 30px 15px 15px;
   border-left: 5px solid #eee;
-  a {
+  a{
     color: #fff;
     text-decoration: underline;
-    &:hover {
+    &:hover{
       color: #eee;
     }
   }
-  h4 {
+  h4{
     margin-top: 0;
     font-weight: 600;
   }
-  p:last-child {
+  p:last-child{
     margin-bottom: 0;
   }
   code,
-  .highlight {
+  .highlight{
     background-color: #fff;
   }
 
   // Themes for different contexts
-  &.callout-danger {
+  &.callout-danger{
     &:extend(.bg-red);
     border-color: darken(@red, 10%);
   }
-  &.callout-warning {
+  &.callout-warning{
     &:extend(.bg-yellow);
     border-color: darken(@yellow, 10%);
   }
-  &.callout-info {
+  &.callout-info{
     &:extend(.bg-aqua);
     border-color: darken(@aqua, 10%);
   }
-  &.callout-success {
+  &.callout-success{
     &:extend(.bg-green);
     border-color: darken(@green, 10%);
   }

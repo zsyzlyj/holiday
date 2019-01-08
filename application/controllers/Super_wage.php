@@ -134,11 +134,11 @@ class Super_wage extends Admin_Controller
                         $files[$child_dir] = my_scandir($dir.'/'.$child_dir);
                     }else{
                         if(strstr($child_dir,$doc_name)){
-                            if (strstr($child_dir,'xlsx')) {
+                            if (strstr($child_dir,'xlsx')){
                                 $reader = new PHPExcel_Reader_Excel2007();
                             }
                             else{
-                                if (strstr($child_dir, 'xls')) {
+                                if (strstr($child_dir, 'xls')){
                                     $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
                                 }
                             }
@@ -151,12 +151,12 @@ class Super_wage extends Admin_Controller
                             $columnCnt = array_search($highestColumm, $cellName); 
 
                             $data = array();
-                            for ($rowIndex = 4; $rowIndex <= $highestRow; $rowIndex++) {        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-                                for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++) {
+                            for ($rowIndex = 4; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+                                for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
                                     $cellId = $cellName[$colIndex].$rowIndex;  
                                     $cell = $sheet->getCell($cellId)->getValue();
                                     $cell = $sheet->getCell($cellId)->getCalculatedValue();
-                                    if ($cell instanceof PHPExcel_RichText) { //富文本转换字符串
+                                    if ($cell instanceof PHPExcel_RichText){ //富文本转换字符串
                                         $cell = $cell->__toString();
                                     }
                                     if($cell!="" or $cell=="0"){
@@ -467,11 +467,11 @@ class Super_wage extends Admin_Controller
         move_uploaded_file($path["tmp_name"],$filePath);
         //根据上传类型做不同处理
         
-        if (strstr($_FILES['file']['name'],'xlsx')) {
+        if (strstr($_FILES['file']['name'],'xlsx')){
             $reader = new PHPExcel_Reader_Excel2007();
         }
         else{
-            if (strstr($_FILES['file']['name'], 'xls')) {
+            if (strstr($_FILES['file']['name'], 'xls')){
                 $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
             }
         }
@@ -485,12 +485,12 @@ class Super_wage extends Admin_Controller
         $columnCnt = array_search($highestColumm, $cellName); 
 
         $data = array();
-        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++) {        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-            for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++) {
+        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
                 $cellId = $cellName[$colIndex].$rowIndex;  
                 $cell = $sheet->getCell($cellId)->getValue();
                 $cell = $sheet->getCell($cellId)->getCalculatedValue();
-                if ($cell instanceof PHPExcel_RichText) { //富文本转换字符串
+                if ($cell instanceof PHPExcel_RichText){ //富文本转换字符串
                     $cell = $cell->__toString();
                 }
                 $data[$rowIndex][$colIndex] = $cell;
@@ -518,7 +518,7 @@ class Super_wage extends Admin_Controller
             #$row_data=array();
             if($counter>1){
                 foreach($v as $a=>$b)
-                {
+               {
                     switch($data[1][$a]){
                         case '员工姓名':$name=$b;break;
                         case '身份证号':$user_id=$b;break;
@@ -565,7 +565,7 @@ class Super_wage extends Admin_Controller
         unset($user_set);
     }
     public function wage_tag_import($filename=NULL)
-    {
+   {
         if($_FILES){
             if($_FILES["file"]){
                 if ($_FILES["file"]["error"] > 0){
@@ -592,12 +592,12 @@ class Super_wage extends Admin_Controller
         move_uploaded_file($path["tmp_name"],$filePath);
         //根据上传类型做不同处理
         $file_name="";
-        if (strstr($_FILES['file']['name'],'xlsx')) {
+        if (strstr($_FILES['file']['name'],'xlsx')){
             $reader = new PHPExcel_Reader_Excel2007();
             $file_name = str_replace(".xlsx","",$_FILES['file']['name']);
         }
         else{
-            if (strstr($_FILES['file']['name'], 'xls')) {
+            if (strstr($_FILES['file']['name'], 'xls')){
                 $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
                 $file_name = str_replace(".xls","",$_FILES['file']['name']);
             }
@@ -619,12 +619,12 @@ class Super_wage extends Admin_Controller
         $columnCnt = array_search($highestColumm, $cellName); 
 
         $data = array();
-        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++) {        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-            for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++) {
+        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
                 $cellId = $cellName[$colIndex].$rowIndex;  
                 $cell = $sheet->getCell($cellId)->getValue();
                 $cell = $sheet->getCell($cellId)->getCalculatedValue();
-                if ($cell instanceof PHPExcel_RichText) { //富文本转换字符串
+                if ($cell instanceof PHPExcel_RichText){ //富文本转换字符串
                     $cell = $cell->__toString();
                 }
                 $data[$rowIndex][$colIndex] = $cell;
@@ -661,16 +661,16 @@ class Super_wage extends Admin_Controller
     }
     
     public function wage_import($filename=NULL)
-    {
+   {
         if($_FILES){
             if($_FILES["file"])
-            {
+           {
                 if ($_FILES["file"]["error"] > 0)
-                {
+               {
                     echo "Error: " . $_FILES["file"]["error"] . "<br />";
                 }
                 else
-                {
+               {
                     $this->wage_excel_put();
                     $this->search();
                     #$this->index();
@@ -686,15 +686,13 @@ class Super_wage extends Admin_Controller
         $this->load->library('PHPExcel/IOFactory');
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
- 
-        $objPHPExcel->setActiveSheetIndex(0);
-        
+        $objPHPExcel->setActiveSheetIndex(0);       
         $result = $this->model_wage_attr->exportAttrData();
         // Field names in the first row
         $fields = $result->list_fields();
         $col = 0;
         foreach ($fields as $field)
-        {
+       {
             if($field != ""){
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $field);
                 $col++;
@@ -711,12 +709,10 @@ class Super_wage extends Admin_Controller
         header('Content-Disposition: attachment;filename="'.$filename);
         header("Content-Disposition:filename=".$filename);
         header('Cache-Control: max-age=0');
- 
         $objWriter->save('php://output');
-
     }
     public function download_page()
-    {
+   {
         $this->data['user_name'] = $this->session->userdata('user_name');
         $this->data['path'] = "uploads/standard/wage_sample.xlsx";
         $this->render_super_template('super/wage_export',$this->data);
@@ -734,16 +730,16 @@ class Super_wage extends Admin_Controller
         $this->model_wage_doc->create($doc_data);
     }
     public function wage_doc_import($filename=NULL)
-    {
+   {
         if($_FILES){
         if($_FILES["file"])
-            {
+           {
                 if ($_FILES["file"]["error"] > 0)
-                {
+               {
                     echo "Error: " . $_FILES["file"]["error"] . "<br />";
                 }
                 else
-                {
+               {
                     $this->wage_doc_put();
                     $this->wage_doc_list();
                 }
@@ -766,11 +762,11 @@ class Super_wage extends Admin_Controller
         
         if($date){
 			$delete = $this->model_wage_doc->delete($date);
-            if($delete == true) {
+            if($delete == true){
                 $this->session->set_flashdata('success', '薪酬文件删除成功');
                 redirect('super_wage/wage_doc_list', 'refresh');
             }
-            else {
+            else{
                 $this->session->set_flashdata('error', '系统发生未知错误!!');
                 redirect('super_wage/wage_doc_list', 'refresh');
             }	
@@ -786,7 +782,7 @@ class Super_wage extends Admin_Controller
         $manager_data = $this->model_wage_tag->getTagData();
 		$result = array();
 		
-		foreach ($manager_data as $k => $v) {
+		foreach ($manager_data as $k => $v){
 			$result[$k] = $v;
 		}
 		$permission_set=array(
@@ -803,7 +799,7 @@ class Super_wage extends Admin_Controller
 
 		$result = array();
 		
-		foreach ($notice_data as $k => $v) {
+		foreach ($notice_data as $k => $v){
             if($v['type']=='wage'){
                 $v['type']='薪酬';
                 $result[$k] = $v;
@@ -818,7 +814,7 @@ class Super_wage extends Admin_Controller
         $this->form_validation->set_rules('title', 'title', 'required');
 		$this->form_validation->set_rules('content', 'content', 'required');
 		
-        if ($this->form_validation->run() == TRUE) {
+        if ($this->form_validation->run() == TRUE){
             // true case
 			$title=$this->input->post('title');
 			$content=$this->input->post('content');
@@ -830,23 +826,23 @@ class Super_wage extends Admin_Controller
 				'type' => 'wage'
 			);
 			$create = $this->model_notice->create($data);
-        	if($create == true) {
+        	if($create == true){
         		$this->session->set_flashdata('success', '公告发布成功');
         		redirect('super_wage/notification', 'refresh');
         	}
-        	else {
+        	else{
         		$this->session->set_flashdata('errors', '系统发生未知错误!!');
         		redirect('super_wage/publish_wage', 'refresh');
         	}
 
         }
-        else {
+        else{
             // false case
 			$notice_data = $this->model_notice->getNoticeData();
 
 			$result = array();
 			
-			foreach ($notice_data as $k => $v) {
+			foreach ($notice_data as $k => $v){
 				$result[$k] = $v;
 			}
 			$this->data['notice_data'] = $result;

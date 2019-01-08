@@ -1,5 +1,5 @@
 /* 弹窗 (background) */
-.modal {
+.modal{
     display: none; /* 默认隐藏 */
     position: fixed; 
     z-index: 1; 
@@ -14,7 +14,7 @@
 }
 
 /* 弹窗内容 */
-.modal-content {
+.modal-content{
     position: relative;
     background-color: #fefefe;
     margin: auto;
@@ -29,18 +29,18 @@
 }
 
 /* 添加动画 */
-@-webkit-keyframes animatetop {
-    from {top:-300px; opacity:0} 
-    to {top:0; opacity:1}
+@-webkit-keyframes animatetop{
+    from{top:-300px; opacity:0} 
+    to{top:0; opacity:1}
 }
 
-@keyframes animatetop {
-    from {top:-300px; opacity:0}
-    to {top:0; opacity:1}
+@keyframes animatetop{
+    from{top:-300px; opacity:0}
+    to{top:0; opacity:1}
 }
 
 /* 关闭按钮 */
-.close {
+.close{
     color: white;
     float: right;
     font-size: 28px;
@@ -48,21 +48,21 @@
 }
 
 .close:hover,
-.close:focus {
+.close:focus{
     color: #000;
     text-decoration: none;
     cursor: pointer;
 }
 
-.modal-header {
+.modal-header{
     padding: 2px 10px;
     background-color: #1684a5;
     color: white;
 }
 
-.modal-body {padding: 2px 16px;}
+.modal-body{padding: 2px 16px;}
 
-.modal-footer {
+.modal-footer{
     padding: 2px 16px;
     background-color: #1684a5;
     color: white;

@@ -2,9 +2,9 @@
  * Misc: print
  * -----------
  */
-@media print {
+@media print{
   //Add to elements that you do not want to show when printing
-  .no-print {
+  .no-print{
     display: none !important;
   }
 
@@ -12,42 +12,42 @@
   .main-sidebar,
   .left-side,
   .main-header,
-  .content-header {
+  .content-header{
     &:extend(.no-print);
   }
 
   //This is the only element that should appear, so let's remove the margins
   .content-wrapper,
   .right-side,
-  .main-footer {
+  .main-footer{
     margin-left: 0 !important;
     min-height: 0 !important;
     .translate(0, 0) !important;
   }
 
   .fixed .content-wrapper,
-  .fixed .right-side {
+  .fixed .right-side{
     padding-top: 0 !important;
   }
 
   //Invoice printing
-  .invoice {
+  .invoice{
     width: 100%;
     border: 0;
     margin: 0;
     padding: 0;
   }
 
-  .invoice-col {
+  .invoice-col{
     float: left;
     width: 33.3333333%;
   }
 
   //Make sure table content displays properly
-  .table-responsive {
+  .table-responsive{
     overflow: auto;
     > .table tr th,
-    > .table tr td {
+    > .table tr td{
       white-space: normal !important;
     }
   }

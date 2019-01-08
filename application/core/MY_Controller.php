@@ -15,33 +15,34 @@ class Admin_Controller extends MY_Controller
 	public function __construct() 
 	{
 		parent::__construct();
-		$this->session->set_flashdata('errors', '修改失败，新密码不能为空');
-		if(empty($this->session->userdata('logged_in_holiday'))) {
+		$this->session->set_flashdata('error', '');
+		$this->session->set_flashdata('success', '');
+		if(empty($this->session->userdata('logged_in_holiday'))){
 			$session_data = array('logged_in_holiday' => FALSE);
 			$this->session->set_userdata($session_data);
 		}
-		else {
+		else{
 			$user_id = $this->session->userdata('user_id');
 			$this->load->model('model_holiday_users');
 			$user_data = $this->model_holiday_users->getUserById($user_id);
 			$this->data['permission'] = $user_data['permission'];
 			$this->permission = $user_data['permission'];
 		}
-		if(empty($this->session->userdata('logged_in_super'))) {
+		if(empty($this->session->userdata('logged_in_super'))){
 			$session_data = array('logged_in_super' => FALSE);
 			$this->session->set_userdata($session_data);
 		}
-		else {
+		else{
 			$user_id = $this->session->userdata('user_id');
 			$this->load->model('model_super_user');
 			$user_data = $this->model_super_user->getUserById($user_id);
 			$this->data['permission'] = $user_data['permission'];
 		}
-		if(empty($this->session->userdata('logged_in_wage'))) {
+		if(empty($this->session->userdata('logged_in_wage'))){
 			$session_data = array('logged_in_wage' => FALSE);
 			$this->session->set_userdata($session_data);
 		}
-		else {
+		else{
 			$user_id = $this->session->userdata('user_id');
 			$this->load->model('model_wage_users');
 			$user_data = $this->model_wage_users->getUserById($user_id);
@@ -53,7 +54,7 @@ class Admin_Controller extends MY_Controller
 	public function holiday_logged_in()
 	{
 		$session_data = $this->session->userdata();
-		if($session_data['logged_in_holiday'] == TRUE) {
+		if($session_data['logged_in_holiday'] == TRUE){
 			redirect('holiday/staff', 'refresh');
 		}
 	}
@@ -61,14 +62,14 @@ class Admin_Controller extends MY_Controller
 	public function holiday_not_logged_in()
 	{
 		$session_data = $this->session->userdata();
-		if($session_data['logged_in_holiday'] == FALSE) {
+		if($session_data['logged_in_holiday'] == FALSE){
 			redirect('auth/holiady_login', 'refresh');
 		}
 	}
 	public function wage_logged_in()
 	{
 		$session_data = $this->session->userdata();
-		if($session_data['logged_in_wage'] == TRUE) {
+		if($session_data['logged_in_wage'] == TRUE){
 			redirect('wage/index', 'refresh');
 		}
 	}
@@ -76,21 +77,21 @@ class Admin_Controller extends MY_Controller
 	public function wage_not_logged_in()
 	{
 		$session_data = $this->session->userdata();
-		if($session_data['logged_in_wage'] == FALSE) {
+		if($session_data['logged_in_wage'] == FALSE){
 			redirect('auth/wage_login', 'refresh');
 		}
 	}
 	public function logged_in_super()
 	{
 		$session_data = $this->session->userdata();
-		if($session_data['logged_in_super'] == TRUE) {
+		if($session_data['logged_in_super'] == TRUE){
 			redirect('super_wage/index', 'refresh');
 		}
 	}
 	public function not_logged_in_super()
 	{
 		$session_data = $this->session->userdata();
-		if($session_data['logged_in_super'] == FALSE) {
+		if($session_data['logged_in_super'] == FALSE){
 			redirect('super_auth/login', 'refresh');
 		}
 	}
@@ -121,8 +122,8 @@ class Admin_Controller extends MY_Controller
 		$currencies = $this->currency();
 			
 		$currency = '';
-		foreach ($currencies as $key => $value) {
-			if($key == $company_currency['currency']) {
+		foreach ($currencies as $key => $value){
+			if($key == $company_currency['currency']){
 				$currency = $value;
 			}
 		}

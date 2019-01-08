@@ -3,14 +3,14 @@
  * -------------------
  */
 
-.timeline {
+.timeline{
   position: relative;
   margin: 0 0 30px 0;
   padding: 0;
   list-style: none;
 
   // The line
-  &:before {
+  &:before{
     content: '';
     position: absolute;
     top: 0;
@@ -22,14 +22,14 @@
     .border-radius(2px);
   }
 
-  > li {
+  > li{
     position: relative;
     margin-right: 10px;
     margin-bottom: 15px;
     .clearfix();
 
     // The content
-    > .timeline-item {
+    > .timeline-item{
       .box-shadow(@box-boxshadow);
       .border-radius(@box-border-radius);
       margin-top: 0;
@@ -41,25 +41,25 @@
       position: relative;
 
       // The time and header
-      > .time {
+      > .time{
         color: #999;
         float: right;
         padding: 10px;
         font-size: 12px;
       }
-      > .timeline-header {
+      > .timeline-header{
         margin: 0;
         color: #555;
         border-bottom: 1px solid @box-border-color;
         padding: 10px;
         font-size: 16px;
         line-height: 1.1;
-        > a {
+        > a{
           font-weight: 600;
         }
       }
       // Item body and footer
-      > .timeline-body, > .timeline-footer {
+      > .timeline-body, > .timeline-footer{
         padding: 10px;
       }
 
@@ -68,7 +68,7 @@
     // The icons
     > .fa,
     > .glyphicon,
-    > .ion {
+    > .ion{
       width: 30px;
       height: 30px;
       font-size: 15px;
@@ -84,8 +84,8 @@
   }
 
   // Time label
-  > .time-label {
-    > span {
+  > .time-label{
+    > span{
       font-weight: 600;
       padding: 5px;
       display: inline-block;
@@ -96,13 +96,13 @@
   }
 }
 
-.timeline-inverse {
-  > li {
-    > .timeline-item {
+.timeline-inverse{
+  > li{
+    > .timeline-item{
       background: #f0f0f0;
       border: 1px solid #ddd;
       .box-shadow(none);
-      > .timeline-header {
+      > .timeline-header{
         border-bottom-color: #ddd;
       }
     }

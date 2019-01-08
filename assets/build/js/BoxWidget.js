@@ -6,12 +6,12 @@
  *         This plugin auto activates on any element using the `.box` class
  *         Pass any option as data-option="value"
  */
-+function ($) {
++function ($){
   'use strict'
 
   var DataKey = 'lte.boxwidget'
 
-  var Default = {
+  var Default ={
     animationSpeed : 500,
     collapseTrigger: '[data-widget="collapse"]',
     removeTrigger  : '[data-widget="remove"]',
@@ -20,7 +20,7 @@
     removeIcon     : 'fa-times'
   }
 
-  var Selector = {
+  var Selector ={
     data     : '.box',
     collapsed: '.collapsed-box',
     body     : '.box-body',
@@ -28,11 +28,11 @@
     tools    : '.box-tools'
   }
 
-  var ClassName = {
+  var ClassName ={
     collapsed: 'collapsed-box'
   }
 
-  var Event = {
+  var Event ={
     collapsed: 'collapsed.boxwidget',
     expanded : 'expanded.boxwidget',
     removed  : 'removed.boxwidget'
@@ -40,24 +40,24 @@
 
   // BoxWidget Class Definition
   // =====================
-  var BoxWidget = function (element, options) {
+  var BoxWidget = function (element, options){
     this.element = element
     this.options = options
 
     this._setUpListeners()
   }
 
-  BoxWidget.prototype.toggle = function () {
+  BoxWidget.prototype.toggle = function (){
     var isOpen = !$(this.element).is(Selector.collapsed)
 
-    if (isOpen) {
+    if (isOpen){
       this.collapse()
-    } else {
+    } else{
       this.expand()
     }
   }
 
-  BoxWidget.prototype.expand = function () {
+  BoxWidget.prototype.expand = function (){
     var expandedEvent = $.Event(Event.expanded)
     var collapseIcon  = this.options.collapseIcon
     var expandIcon    = this.options.expandIcon
@@ -71,12 +71,12 @@
       .addClass(collapseIcon)
 
     $(this.element).find(Selector.body + ', ' + Selector.footer)
-      .slideDown(this.options.animationSpeed, function () {
+      .slideDown(this.options.animationSpeed, function (){
         $(this.element).trigger(expandedEvent)
       }.bind(this))
   }
 
-  BoxWidget.prototype.collapse = function () {
+  BoxWidget.prototype.collapse = function (){
     var collapsedEvent = $.Event(Event.collapsed)
     var collapseIcon   = this.options.collapseIcon
     var expandIcon     = this.options.expandIcon
@@ -88,16 +88,16 @@
       .addClass(expandIcon)
 
     $(this.element).find(Selector.body + ', ' + Selector.footer)
-      .slideUp(this.options.animationSpeed, function () {
+      .slideUp(this.options.animationSpeed, function (){
         $(this.element).addClass(ClassName.collapsed)
         $(this.element).trigger(collapsedEvent)
       }.bind(this))
   }
 
-  BoxWidget.prototype.remove = function () {
+  BoxWidget.prototype.remove = function (){
     var removedEvent = $.Event(Event.removed)
 
-    $(this.element).slideUp(this.options.animationSpeed, function () {
+    $(this.element).slideUp(this.options.animationSpeed, function (){
       $(this.element).trigger(removedEvent)
       $(this.element).remove()
     }.bind(this))
@@ -105,15 +105,15 @@
 
   // Private
 
-  BoxWidget.prototype._setUpListeners = function () {
+  BoxWidget.prototype._setUpListeners = function (){
     var that = this
 
-    $(this.element).on('click', this.options.collapseTrigger, function (event) {
+    $(this.element).on('click', this.options.collapseTrigger, function (event){
       if (event) event.preventDefault()
       that.toggle()
     })
 
-    $(this.element).on('click', this.options.removeTrigger, function (event) {
+    $(this.element).on('click', this.options.removeTrigger, function (event){
       if (event) event.preventDefault()
       that.remove()
     })
@@ -121,18 +121,18 @@
 
   // Plugin Definition
   // =================
-  function Plugin(option) {
-    return this.each(function () {
+  function Plugin(option){
+    return this.each(function (){
       var $this = $(this)
       var data  = $this.data(DataKey)
 
-      if (!data) {
+      if (!data){
         var options = $.extend({}, Default, $this.data(), typeof option == 'object' && option)
         $this.data(DataKey, (data = new BoxWidget($this, options)))
       }
 
-      if (typeof option == 'string') {
-        if (typeof data[option] == 'undefined') {
+      if (typeof option == 'string'){
+        if (typeof data[option] == 'undefined'){
           throw new Error('No method named ' + option)
         }
         data[option]()
@@ -147,15 +147,15 @@
 
   // No Conflict Mode
   // ================
-  $.fn.boxWidget.noConflict = function () {
+  $.fn.boxWidget.noConflict = function (){
     $.fn.boxWidget = old
     return this
   }
 
   // BoxWidget Data API
   // ==================
-  $(window).on('load', function () {
-    $(Selector.data).each(function () {
+  $(window).on('load', function (){
+    $(Selector.data).each(function (){
       Plugin.call($(this))
     })
   })

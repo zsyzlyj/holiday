@@ -100,7 +100,7 @@ class Holiday extends Admin_Controller
         foreach ($fields as $field){
             $v="";
             switch($field)
-           {
+          {
                 case 'name':$v="姓名\t";break;
                 case 'department':$v="部门\t";break;
                 case 'initdate':$v="开始工作时间\t";break;
@@ -172,10 +172,10 @@ class Holiday extends Admin_Controller
         $fields = $result->list_fields();
         $col = 0;
         foreach ($fields as $field)
-       {
+      {
             $v="";
             switch($field)
-           {
+          {
                 case 'name':$v="姓名\t";break;
                 case 'department':$v="部门\t";break;
                 case 'Totalday':$v="可休假总数\t";break;
@@ -189,7 +189,7 @@ class Holiday extends Admin_Controller
                 default:break;
             }
             if($v!="")
-           {
+          {
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
                 $col++;
             }
@@ -199,13 +199,13 @@ class Holiday extends Admin_Controller
         $row = 2;
         
         foreach($result->result() as $data)
-       {
+      {
             $col = 0;
             
             foreach ($fields as $field)
-           {
+          {
                 if($field != 'user_id' and $field != 'submit_tag')
-               {
+              {
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
                     $col++;
                 }
@@ -229,7 +229,7 @@ class Holiday extends Admin_Controller
 
     }
     public function export_plan()
-   {
+  {
         $this->excel_plan();
     }
     public function excel_mydeptplan($dept){
@@ -245,10 +245,10 @@ class Holiday extends Admin_Controller
         $fields = $result->list_fields();
         $col = 0;
         foreach ($fields as $field)
-       {
+      {
             $v="";
             switch($field)
-           {
+          {
                 case 'name':$v="姓名\t";break;
                 case 'department':$v="部门\t";break;
                 case 'Thisyear':$v="今年休假数\t";break;
@@ -262,7 +262,7 @@ class Holiday extends Admin_Controller
                 default:break;
             }
             if($v!="")
-           {
+          {
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
                 $col++;
             }
@@ -272,13 +272,13 @@ class Holiday extends Admin_Controller
         $row = 2;
         
         foreach($result->result() as $data)
-       {
+      {
             $col = 0;
             
             foreach ($fields as $field)
-           {
+          {
                 if($field != 'user_id' and $field != 'submit_tag')
-               {
+              {
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
                     $col++;
                 }
@@ -303,7 +303,7 @@ class Holiday extends Admin_Controller
     }
     
     public function export_mydeptplan()
-   {
+  {
         $user_id=$this->session->userdata('user_id');
         $my_data = $this->model_plan->getPlanById($user_id);
 
@@ -311,7 +311,7 @@ class Holiday extends Admin_Controller
     }
 
     public function export_mydeptholiday()
-   {
+  {
         $user_id=$this->session->userdata('user_id');
         $my_data = $this->model_plan->getPlanById($user_id);
 
@@ -337,7 +337,7 @@ class Holiday extends Admin_Controller
             $holiday_data = $this->model_holiday->getHolidayByDept($select_dept);
             $result = array();
             foreach ($holiday_data as $k => $v)
-           {
+          {
                 $result[$k] = $v;
             }
 
@@ -466,7 +466,7 @@ class Holiday extends Admin_Controller
     */
 
     public function staff_plan()
-   {
+  {
         $user_id=$this->session->userdata('user_id');
         $plan_data = $this->model_plan->getplanById($user_id);
         $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
@@ -479,7 +479,7 @@ class Holiday extends Admin_Controller
     ==============================================================================
     */
     public function update_plan()
-   {
+  {
         /*============================================================*/
         /*
             首页必须要的信息，包括身份证，通知信息
@@ -506,7 +506,7 @@ class Holiday extends Admin_Controller
 
         if ($this->form_validation->run() == TRUE){
             if($_POST['firstquater']+$_POST['secondquater']+$_POST['thirdquater']+$_POST['fourthquater']==$_POST['total'])
-           {
+          {
                 $data = array(
                     'firstquater' => $_POST['firstquater'],
                     'secondquater' => $_POST['secondquater'],
@@ -527,7 +527,7 @@ class Holiday extends Admin_Controller
                 }
             }
             else
-           {
+          {
                 $this->session->set_flashdata('error', '提交失败，计划总数必须等于可休假总数');
                 $this->staff_plan();
             }

@@ -2,31 +2,31 @@
  * Component: Products List
  * ------------------------
  */
-.products-list {
+.products-list{
   list-style: none;
   margin: 0;
   padding: 0;
-  > .item {
+  > .item{
     .border-radius(@box-border-radius);
     .box-shadow(@box-boxshadow);
     .clearfix();
     padding: 10px 0;
     background: #fff;
   }
-  .product-img {
+  .product-img{
     float: left;
-    img {
+    img{
       width: 50px;
       height: 50px;
     }
   }
-  .product-info {
+  .product-info{
     margin-left: 60px;
   }
-  .product-title {
+  .product-title{
     font-weight: 600;
   }
-  .product-description {
+  .product-description{
     display: block;
     color: #999;
     overflow: hidden;
@@ -35,11 +35,11 @@
   }
 }
 
-.product-list-in-box > .item {
+.product-list-in-box > .item{
   .box-shadow(none);
   .border-radius(0);
   border-bottom: 1px solid @box-border-color;
-  &:last-of-type {
+  &:last-of-type{
     border-bottom-width: 0;
   }
 }

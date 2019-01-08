@@ -20,12 +20,12 @@
           </li>
           <li id="searchwageMainMenu">
             <a href="<?php echo base_url('wage/search') ?>">
-              <i class="fa fa-search"></i> <span>工资信息查询</span>
+              <i class="fa fa-search"></i> <span>工资明细查询</span>
             </a>
           </li>
           <?php if($permission == 2 and strstr($wage_func[0]['status'],'开启')): ?>
           <li id="myDeptWageMainMenu">
-            <a href="<?php echo base_url('wage/mydeptwage') ?>">
+            <a href="<?php echo base_url('wage/search_mydept') ?>">
               <i class="fa fa-file-archive-o"></i>
               <span>部门工资信息汇总</span>
             </a>
