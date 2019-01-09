@@ -48,13 +48,13 @@
               <li id="applyWageProof">
                 <a href="<?php echo base_url('wage/apply_wage_proof') ?>">
                 <i class="fa fa-circle-o"></i>
-                <span>开具收入证明申请</span>
+                <span>收入证明</span>
                 </a>
               </li>
               <li id="applyOnPostProof">
                 <a href="<?php echo base_url('onpost/apply_on_post_proof') ?>">
                 <i class="fa fa-circle-o"></i>
-                <span>开具在职证明申请</span>
+                <span>在职证明</span>
                 </a>
               </li>
             </ul>
