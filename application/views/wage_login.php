@@ -64,7 +64,7 @@
         <hr />
         <div class="col-xs-8">
           <label>
-              <a href="<?php echo base_url('auth/holiday_login') ?>"> 年假系统</a>
+              <a href="<?php echo base_url('auth/holiday_login') ?>"> 中山联通年假查询系统</a>
           </label>
         </div>
         <!-- /.col -->
