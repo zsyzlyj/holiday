@@ -856,7 +856,7 @@ class Super_wage extends Admin_Controller
         		redirect('super_wage/notification', 'refresh');
         	}
         	else{
-        		$this->session->set_flashdata('errors', '系统发生未知错误!!');
+        		$this->session->set_flashdata('error', '系统发生未知错误!!');
         		redirect('super_wage/publish_wage', 'refresh');
         	}
 
@@ -896,7 +896,7 @@ class Super_wage extends Admin_Controller
                 $this->session->set_flashdata('success', '密码重置成功！');
             }
             else{
-                $this->session->set_flashdata('errors', '遇到未知错误!!');
+                $this->session->set_flashdata('error', '遇到未知错误!!');
             }
         }
         $tag_data=$this->model_wage_tag->getTagData();

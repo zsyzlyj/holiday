@@ -34,7 +34,6 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">申请开具收入证明</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

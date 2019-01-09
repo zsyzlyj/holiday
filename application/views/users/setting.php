@@ -35,8 +35,18 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">修改密码</h3>
+              <div class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                如果不需要修改密码，请不要填写密码栏。点击返回回到主页。
+              </div>
             </div>
+            <!--
+            <div class="alert alert-danger alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                如果不需要修改密码，请不要填写密码栏。点击返回回到主页。
+            </div>
+            -->
+   
             <!-- /.box-header -->
             <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
             <form role="form" action="<?php base_url('auth/wage_setting') ?>" method="post">
@@ -46,7 +56,7 @@
             <?php endif; ?>
             
               <div class="box-body">
-                <div class="col-md-6 ">
+                <div class="col-md-3 col-md-offset-4">
                 <?php echo validation_errors(); ?>
 
                 <div class="form-group">
@@ -54,19 +64,16 @@
                   <input type="text" class="form-control" disabled="disabled" placeholder="Username" value="<?php echo $user_name ?>" autocomplete="off">
                   <input type="hidden" id="username" name="username" value="<?php echo $user_name ?>" />
                 </div>
-
-               
-
                 <div class="form-group">
-                  <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      如果不需要修改密码，请不要填写密码栏。点击返回回到主页。
-                  </div>
+                  
                 </div>
-
+                <div class="form-group">
+                  <label for="password">原密码</label>
+                  <input type="password" class="form-control" id="opassword" name="opassword" placeholder="密码" autocomplete="off">
+                </div>
                 <div class="form-group">
                   <label for="password">新密码</label>
-                  <input type="password" class="form-control" id="password" name="password" placeholder="密码" autocomplete="off">
+                  <input type="password" class="form-control" id="npassword" name="npassword" placeholder="密码" autocomplete="off">
                 </div>
 
                 <div class="form-group">
@@ -78,9 +85,17 @@
               <!-- /.box-body -->
 
               <div class="box-footer">
+              <div class="col-md-6 col-md-offset-4">
                 <button type="submit" class="btn btn-primary">保存修改</button>
+                <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
+                <a href="<?php echo base_url('wage/search') ?>" class="btn btn-warning">返回</a>
+                <?php endif; ?>
+                <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
                 <a href="<?php echo base_url('holiday/staff') ?>" class="btn btn-warning">返回</a>
+                <?php endif; ?>
               </div>
+              </div>
+              
             </form>
           </div>
           <!-- /.box -->

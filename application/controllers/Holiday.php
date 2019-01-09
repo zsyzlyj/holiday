@@ -66,8 +66,7 @@ class Holiday extends Admin_Controller
     ==============================================================================
     */
 
-    public function staff()
-	{
+    public function staff(){
         $user_id=$this->session->userdata('user_id');
         if($user_id==NULL){
             redirect('auth/holiday_logout');
@@ -99,8 +98,7 @@ class Holiday extends Admin_Controller
         $col = 0;
         foreach ($fields as $field){
             $v="";
-            switch($field)
-          {
+            switch($field){
                 case 'name':$v="姓名\t";break;
                 case 'department':$v="部门\t";break;
                 case 'initdate':$v="开始工作时间\t";break;
@@ -171,11 +169,9 @@ class Holiday extends Admin_Controller
         // Field names in the first row
         $fields = $result->list_fields();
         $col = 0;
-        foreach ($fields as $field)
-      {
+        foreach ($fields as $field){
             $v="";
-            switch($field)
-          {
+            switch($field){
                 case 'name':$v="姓名\t";break;
                 case 'department':$v="部门\t";break;
                 case 'Totalday':$v="可休假总数\t";break;
@@ -188,8 +184,7 @@ class Holiday extends Admin_Controller
                 case 'fourthquater':$v="第四季度\t";break;
                 default:break;
             }
-            if($v!="")
-          {
+            if($v!=""){
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
                 $col++;
             }
@@ -198,21 +193,16 @@ class Holiday extends Admin_Controller
         // Fetching the table data
         $row = 2;
         
-        foreach($result->result() as $data)
-      {
-            $col = 0;
-            
-            foreach ($fields as $field)
-          {
-                if($field != 'user_id' and $field != 'submit_tag')
-              {
+        foreach($result->result() as $data){
+            $col = 0;   
+            foreach ($fields as $field){
+                if($field != 'user_id' and $field != 'submit_tag'){
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
                     $col++;
                 }
             }
             $row++;
         }
- 
         $objPHPExcel->setActiveSheetIndex(0);
  
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');

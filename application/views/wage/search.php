@@ -142,6 +142,7 @@
     $(document).ready(function() { 
       $("#searchwageMainMenu").addClass('active');
       $(".form_datetime").datetimepicker({
+        bootcssVer:3,
         format: 'yyyy-mm',
         startView:3,
         minView:3,

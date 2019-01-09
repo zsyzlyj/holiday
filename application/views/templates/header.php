@@ -45,6 +45,8 @@
 
   <!-- bootstrap datetimepicker -->
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showmonth.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap-datetimepicker.min.css')?>">
 
   <!-- Page level plugin CSS-->
@@ -119,9 +121,10 @@
 
 
   <!-- Datetimepicker -->
+  
   <script src="<?php echo base_url('assets/dist/js/bootstrap-datetimepicker.js') ?>"></script>
-  <script type="text/javascript" src="<?php echo base_url('assets/dist/js/bootstrap.min.js'); ?>"></script>
-  <script type="text/javascript" src="<?php echo base_url('assets/dist/js/locales/bootstrap-datetimepicker.fr.js');?>" charset="UTF-8"></script>
+  <script src="<?php echo base_url('assets/dist/js/bootstrap.min.js'); ?>"></script>
+  <script src="<?php echo base_url('assets/dist/js/locales/bootstrap-datetimepicker.fr.js');?>" charset="UTF-8"></script>
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">

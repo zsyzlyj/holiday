@@ -27,15 +27,10 @@ class Model_super_user extends CI_Model{
 	/*
 		更新用户的权限
 	*/
-	public function update($data=array(),$id){
-		$this->db->where('user_id',$id);
-		$update = $this->db->update('super_user', $data);
-		return ($update == true) ? true : false;	
-	}
+
 	public function edit($data = array(), $id = null){
 		$this->db->where('user_id', $id);
-		$update = $this->db->update('super_user', $data);
-			
+		$update = $this->db->update('super_user', $data);			
 		return ($update == true) ? true : false;	
 	}
 	public function delete($id){

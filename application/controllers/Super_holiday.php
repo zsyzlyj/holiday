@@ -789,7 +789,7 @@ class Super_holiday extends Admin_Controller
         		redirect('super_holiday/notification', 'refresh');
         	}
         	else{
-        		$this->session->set_flashdata('errors', '发生未知错误!!');
+        		$this->session->set_flashdata('error', '发生未知错误!!');
         		redirect('super_holiday/publish_holiday', 'refresh');
         	}
         }
@@ -819,7 +819,7 @@ class Super_holiday extends Admin_Controller
         		redirect('super_holiday/notification', 'refresh');
         	}
         	else{
-        		$this->session->set_flashdata('errors', '发生未知错误!!');
+        		$this->session->set_flashdata('error', '发生未知错误!!');
         		redirect('super_holiday/publish_plan', 'refresh');
         	}
         }

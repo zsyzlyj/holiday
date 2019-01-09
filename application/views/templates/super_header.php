@@ -11,8 +11,9 @@
   <?php endif; ?>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->  
+  <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap/dist/css/bootstrap.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') ?>">
   <!-- Font Awesome -->  
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/font-awesome/css/font-awesome.min.css') ?>">
   <!-- Ionicons -->
@@ -43,11 +44,6 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/iCheck/all.css') ?>">
 
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showmonth.css') ?>">
-  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap.css') ?>">
-  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap.min.css') ?>">
-  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap-datetimepicker.min.css')?>">
-
-  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap-switch.css')?>">
 
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -101,12 +97,13 @@
   <script src="<?php echo base_url('assets/bower_components/select2/dist/js/select2.full.min.js') ?>"></script>
   <!-- AdminLTE App -->  
   <script src="<?php echo base_url('assets/dist/js/adminlte.min.js') ?>"></script>
-  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) 
   <script src="<?php echo base_url('assets/dist/js/pages/dashboard.js') ?>"></script>
-  <!-- AdminLTE for demo purposes -->
+  -->
+  <!-- AdminLTE for demo purposes 
   <script src="<?php echo base_url('assets/dist/js/demo.js') ?>"></script>
   <script src="<?php echo base_url('assets/plugins/fileinput/fileinput.min.js') ?>"></script>
-
+-->
   <!-- ChartJS -->
   <script src="<?php echo base_url('assets/bower_components/Chart.js/Chart.js') ?>"></script>
 
@@ -114,12 +111,12 @@
   <script src="<?php echo base_url('assets/plugins/iCheck/icheck.min.js') ?>"></script>
 
   <!-- DataTables -->
-<script src="<?php echo base_url('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') ?>"></script>
-<script src="<?php echo base_url('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') ?>"></script>
-<script src="<?php echo base_url('assets/dist/js/bootstrap-datetimepicker.js') ?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/dist/js/bootstrap.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/dist/js/locales/bootstrap-datetimepicker.fr.js');?>" charset="UTF-8"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/dist/js/bootstrap-switch.js');?>" charset="UTF-8"></script>
+  <script src="<?php echo base_url('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') ?>"></script>
+  <script src="<?php echo base_url('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') ?>"></script>
+  
+  <script src="<?php echo base_url('assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'); ?>"></script>
+
+
 
 
 </head>

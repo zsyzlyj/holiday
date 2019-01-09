@@ -100,7 +100,7 @@ class Super_Auth extends Admin_Controller
 		}
 		$log=array(
 			'user_id' => $this->data['user_id'],
-			'username' => $this->data['user_name'],
+			'username' => $this->data['user_id'],
 			'login_ip' => $_SERVER["REMOTE_ADDR"],
 			'staff_action' => 'super_log_out',
 			'action_time' => date('Y-m-d H:i:s')
@@ -126,46 +126,66 @@ class Super_Auth extends Admin_Controller
 			$this->form_validation->set_rules('username', 'username', 'trim|max_length[12]');
 			if ($this->form_validation->run() == TRUE){
 	            // true case
-		        if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))){
-					$this->session->set_flashdata('errors', '新密码为空，请填写新密码');
-		        	redirect('super_auth/'.$type.'_setting/', 'refresh');
-		        }
+		        if(empty($this->input->post('opassword'))){
+					$this->session->set_flashdata('error', '修改失败，原密码不能为空');
+					if($type=='holiday')
+						redirect('super_auth/holiday_setting', 'refresh');
+					if($type=='wage')
+						redirect('super_auth/wage_setting', 'refresh');
+				}
+				elseif(empty($this->input->post('npassword')) && empty($this->input->post('cpassword'))){
+					$this->session->set_flashdata('error', '修改失败，新密码不能为空');
+					if($type=='holiday')
+						redirect('super_auth/holiday_setting', 'refresh');
+					if($type=='wage')
+						redirect('super_auth/wage_setting', 'refresh');
+				}
 		        else{
-					$this->form_validation->set_rules('password', 'Password', 'trim|required');
-					$this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|required|matches[password]');
+					$this->form_validation->set_rules('opassword', 'Password', 'trim|required');
+					$this->form_validation->set_rules('npassword', 'Password', 'trim|required');
+					$this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|required|matches[npassword]');
 					if($this->form_validation->run() == TRUE){
-
-						$password = md5($this->input->post('password'));
-
-						$data = array(
-			        		'password' => $password,
-			        	);
-
-						$update = $this->model_super_user->edit($data, $id);
+						$compare = $this->model_super_auth->login($id, $this->input->post('opassword'));
+						if($compare){
+							$password = md5($this->input->post('npassword'));
+							$data = array(
+								'user_id' => $id,
+								'password' => $password,
+							);
+							$update = $this->model_super_user->edit($data, $id);
+	
+							if($update == true){
+								$this->session->set_flashdata('success', '修改成功！');
+								$this->render_template('super/setting', $this->data);
+							}
+							else{
+								$this->session->set_flashdata('error', '遇到未知错误!!');
+								$this->render_template('super/setting', $this->data);
+								
+							}
+						}
+						else{
+							$this->session->set_flashdata('error', '原密码错误');
+							if($type=='holiday')
+								redirect('super_auth/holiday_setting', 'refresh');
+							if($type=='wage')
+								redirect('super_auth/wage_setting', 'refresh');
+						}
 						
-			        	if($update == true){
-			        		$this->session->set_flashdata('success', '密码修改成功');
-			        		redirect('super_auth/'.$type.'_setting/', 'refresh');
-			        	}
-			        	else{
-			        		$this->session->set_flashdata('errors', '系统发生未知错误!!');
-			        		redirect('super_auth/'.$type.'_setting/', 'refresh');
-			        	}
 					}
 			        else{
 						// false case
-						$user_data = $this->model_super_user->getUserData($id);
-			        	$this->data['user_data'] = $user_data;
-						$this->render_super_template('super/setting', $this->data);	
+						redirect('super_auth/'.$type.'_setting', 'refresh');
+						#$this->render_template('users/setting', $this->data);	
 			        }
 		        }
 	        }
 	        else{
-	            // false case
-	        	$user_data = $this->model_super_user->getUserData($id);
-	        	$this->data['user_data'] = $user_data;
+				// false case
+				$user_data=$this->model_super_user->getUserData($id);
+				$this->data['user_data'] = $user_data;
 				$this->render_super_template('super/setting', $this->data);	
-	        }	
+	        }
 		}
     }	
 }

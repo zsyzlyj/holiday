@@ -44,68 +44,8 @@ class Wage extends Admin_Controller{
     ==============================================================================
     */
     public function staff(){
-        $this->wage_doc();
+        $this->search();
     }
-/*
-    public function staff()
-	{
-        $user_id=$this->session->userdata('user_id');
-        if($user_id==NULL){
-            redirect('auth/wage_logout');
-        }
-        $log=array(
-            'user_id' => $this->data['user_id'],
-            'username' => $this->data['user_name'],
-            'login_ip' => $_SERVER["REMOTE_ADDR"],
-            'staff_action' => 'wage_staff_get',
-            'action_time' => date('Y-m-d H:i:s')
-        );
-        $this->model_log_action->create($log);
-        $user_id=$this->session->userdata('user_id');
-        $this->data['wage_data'] = $this->model_wage->getWageById($user_id);
-        $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
-        $counter=0;
-        foreach($this->data['attr_data'] as $k => $v){
-            if($v=='月度绩效工资小计'){
-                $this->data['yuedustart']=$counter;
-            }
-            if($v=='省核专项奖励小计'){
-                $this->data['yueduend']=$counter-1;
-                $this->data['shengzhuanstart']=$counter;
-            }
-            if($v=='分公司专项奖励小计'){
-                $this->data['shengzhuanend']=$counter-1;
-                $this->data['fengongsistart']=$counter;
-            }
-            if($v=='其他小计'){
-                $this->data['fengongsiend']=$counter-1;
-                $this->data['qitastart']=$counter;
-            }
-            if($v=='教育经费小计'){
-                $this->data['qitaend']=$counter-1;
-                $this->data['jiaoyustart']=$counter;
-            }
-            if($v=='福利费小计'){
-                $this->data['jiaoyuend']=$counter-1;
-                $this->data['fulistart']=$counter;
-            }
-            if($v=='当月月应收合计'){
-                $this->data['fuliend']=$counter-1;
-                $this->data['koufeistart']=$counter+1;
-            }
-            if($v=='扣款小计'){
-                $this->data['koufeiend']=$counter;
-            }
-            if($v=='本月工资差异说明'){
-                $this->data['trueend']=$counter+1;
-                break;
-            }
-            $counter++;
-        }
-
-		$this->render_template('wage/staff', $this->data);
-    }
-*/
     
     public function export_wage_proof(){
         

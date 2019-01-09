@@ -143,11 +143,12 @@
     $(document).ready(function(){ 
       $("#searchwageGetherMainMenu").addClass('active');
       $(".form_datetime").datetimepicker({
+        bootcssVer:3,
         format: "yyyy-mm",
         startView:3,
         minView:3,
         startDate:"2017-01",
-        autoclose:true,
+        autoclose:true       
       });
       $('#wageTable').DataTable({
         language:{

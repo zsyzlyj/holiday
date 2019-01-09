@@ -15,8 +15,6 @@ class Admin_Controller extends MY_Controller
 	public function __construct() 
 	{
 		parent::__construct();
-		$this->session->set_flashdata('error', '');
-		$this->session->set_flashdata('success', '');
 		if(empty($this->session->userdata('logged_in_holiday'))){
 			$session_data = array('logged_in_holiday' => FALSE);
 			$this->session->set_userdata($session_data);
