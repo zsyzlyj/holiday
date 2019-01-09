@@ -46,7 +46,7 @@
             <?php endif; ?>
             
               <div class="box-body">
-                <div class="col-md-6">
+                <div class="col-md-6 ">
                 <?php echo validation_errors(); ?>
 
                 <div class="form-group">
