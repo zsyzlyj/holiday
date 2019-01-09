@@ -46,7 +46,7 @@
             <?php endif; ?>
             
               <div class="box-body">
-
+                <div class="col-md-6">
                 <?php echo validation_errors(); ?>
 
                 <div class="form-group">
@@ -73,7 +73,7 @@
                   <label for="cpassword">确认新密码</label>
                   <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="确认密码" autocomplete="off">
                 </div>
-
+                </div>
               </div>
               <!-- /.box-body -->
 

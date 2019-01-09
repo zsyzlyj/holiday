@@ -63,7 +63,7 @@
         
         <div class="col-xs-8">
           <label>
-              <a href="<?php echo base_url('auth/wage_login') ?>"> 工资系统</a>
+              <a href="<?php echo base_url('auth/wage_login') ?>"> 中山联通工资查询系统</a>
           </label>
         </div>
         <!---->
