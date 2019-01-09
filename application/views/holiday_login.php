@@ -33,7 +33,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?php echo base_url('auth/holiday_login'); ?>"><b>年假系统</b></a>
+    <a href="<?php echo base_url('auth/holiday_login'); ?>"><b>中山联通年假查询系统</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body"> 
