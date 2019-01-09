@@ -14,6 +14,8 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->  
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap/dist/css/bootstrap.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') ?>">
+  
   <!-- Font Awesome -->  
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/font-awesome/css/font-awesome.min.css') ?>">
   <!-- Ionicons -->
@@ -123,9 +125,8 @@
   <!-- Datetimepicker -->
   
   <script src="<?php echo base_url('assets/dist/js/bootstrap-datetimepicker.js') ?>"></script>
-  <script src="<?php echo base_url('assets/dist/js/bootstrap.min.js'); ?>"></script>
-  <script src="<?php echo base_url('assets/dist/js/locales/bootstrap-datetimepicker.fr.js');?>" charset="UTF-8"></script>
 
+  <script src="<?php echo base_url('assets/bower_components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'); ?>"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">

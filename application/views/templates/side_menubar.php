@@ -18,13 +18,15 @@
               <i class="fa fa-search"></i> <span>工资明细查询</span>
             </a>
           </li>
+          <!--
           <li id="wagechartMainMenu">
             <a href="<?php echo base_url('wage/wage_chart') ?>">
               <i class="fa fa-bar-chart"></i> <span>工资统计</span>
             </a>
           </li>
+          -->
           <li id="wagedocMainMenu">
-            <a href="<?php echo base_url('wage/index') ?>">
+            <a href="<?php echo base_url('wage/wage_doc') ?>">
               <i class="fa fa-money"></i> <span>薪酬文件</span>
             </a>
           </li>
