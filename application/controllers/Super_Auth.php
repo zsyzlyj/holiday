@@ -28,58 +28,124 @@ class Super_Auth extends Admin_Controller
     6、setting(),修改密码母板
     ============================================================
     */ 
+	public function get_code(){
+		$img = imagecreatetruecolor(80, 30);
+		$black = imagecolorallocate($img, 0x00, 0x00, 0x00);
+		$green = imagecolorallocate($img, 0x00, 0xFF, 0x00);
+		$white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
+		imagefill($img, 0, 0, $white);
+		//生成随机的验证码
+		$words = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		$code = substr(str_shuffle($words), 0, 4);
+		imagestring($img, 5, 10, 10, $code, $black);
+		/*
+		//加入噪点干扰
+		for ($i = 0; $i < 300; $i++) {
+			imagesetpixel($img, rand(0, 100), rand(0, 100), $black);
+			imagesetpixel($img, rand(0, 100), rand(0, 100), $green);
+		}
+		//加入线段干扰
+		for ($n = 0; $n <= 1; $n++) {
+			imageline($img, 0, rand(0, 40), 100, rand(0, 40), $black);
+			imageline($img, 0, rand(0, 40), 100, rand(0, 40), $white);
+		}
+		*/
+		//图片保存的位置
+		$new_img = "captcha/".date('YmdHis').'-'.$code.".jpg";
+		$created = imagejpeg($img, $new_img);
 
+		//输出验证码
+		#header("content-type: image/png");
+		#imagepng($img);
+		//销毁图片
+		imagedestroy($img);
+		$result=array(
+			'image' => $new_img,
+			'code' => $code
+		);
+		return $result;
+	}
 	public function index(){
 		$this->login();
 	}
 	public function login(){
 		$this->logged_in_super();
 		$this->form_validation->set_rules('user_id', 'user_id', 'required');
-        $this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('verify_code', 'verify_code', 'required');
+		if(array_key_exists('image', $_SESSION)){
+			if(file_exists($_SESSION['image'])){
+				unlink($_SESSION['image']);
+			}
+		}
+		
         if ($this->form_validation->run() == TRUE){
-            // true case
-           	$id_exists = $this->model_super_auth->check_id($this->input->post('user_id'));
-           	if($id_exists == TRUE){
-           		$login = $this->model_super_auth->login($this->input->post('user_id'), $this->input->post('password'));
-           		if($login){
-					$log=array(
-						'user_id' => $login['user_id'],
-						'username' => $login['user_id'],
-						'login_ip' => $_SERVER["REMOTE_ADDR"],
-						'staff_action' => 'super_log_in',
-						'action_time' => date('Y-m-d H:i:s')
-					);
-					$this->model_log_action->create($log);
-           			$logged_in_sess = array(
-						'user_id' => $login['user_id'],
-						'permission' => $login['permission'],
-				        'logged_in_super' => TRUE
-					);
-					$this->session->set_userdata($logged_in_sess);
-					switch($login['permission']){
-						case '工资':
-							redirect('super_wage/search', 'refresh');
-							break;
-						case '休假':
-							redirect('super_holiday/index', 'refresh');
-							break;
-						default:
-							break;
+			if(strtolower($this->input->post('verify_code'))===strtolower($_SESSION['code'])){
+				// true case
+				$id_exists = $this->model_super_auth->check_id($this->input->post('user_id'));
+				if($id_exists == TRUE){
+					$login = $this->model_super_auth->login($this->input->post('user_id'), $this->input->post('password'));
+					if($login){
+						$log=array(
+							'user_id' => $login['user_id'],
+							'username' => $login['user_id'],
+							'login_ip' => $_SERVER["REMOTE_ADDR"],
+							'staff_action' => 'super_log_in',
+							'action_time' => date('Y-m-d H:i:s')
+						);
+						$this->model_log_action->create($log);
+							$logged_in_sess = array(
+							'user_id' => $login['user_id'],
+							'permission' => $login['permission'],
+							'logged_in_super' => TRUE
+						);
+						$this->session->set_userdata($logged_in_sess);
+						switch($login['permission']){
+							case '工资':
+								redirect('super_wage/search', 'refresh');
+								break;
+							case '休假':
+								redirect('super_holiday/index', 'refresh');
+								break;
+							default:
+								break;
+						}
 					}
-           		}
-           		else{
-           			$this->data['errors'] = '密码错误';
-           			$this->load->view('super/login', $this->data);
-           		}
-           	}
-           	else{
-           		$this->data['errors'] = '账户不存在';
-           		$this->load->view('super/login', $this->data);
-           	}	
+					else{
+						$image_item=$this->get_code();
+						$_SESSION['image']=$image_item['image'];
+						$_SESSION['code']=$image_item['code'];
+						unset($image_item);
+						$this->data['errors'] = '密码错误';
+						$this->load->view('super/login', $this->data);
+					}
+				}
+				else{
+					$image_item=$this->get_code();
+					$_SESSION['image']=$image_item['image'];
+					$_SESSION['code']=$image_item['code'];
+					unset($image_item);
+					$this->data['errors'] = '账户不存在';
+					$this->load->view('super/login', $this->data);
+				}
+			}
+			else{
+				$image_item=$this->get_code();
+				$_SESSION['image']=$image_item['image'];
+				$_SESSION['code']=$image_item['code'];
+				unset($image_item);
+				$this->data['errors'] = '验证码错误';
+				$this->load->view('super/login', $this->data);
+			}
+            
         }
         else{
-            // false case
-            $this->load->view('super/login');
+			// false case
+			$image_item=$this->get_code();
+			$_SESSION['image']=$image_item['image'];
+			$_SESSION['code']=$image_item['code'];
+			unset($image_item);
+            $this->load->view('super/login',$this->data);
         }	
 	}
 	/*

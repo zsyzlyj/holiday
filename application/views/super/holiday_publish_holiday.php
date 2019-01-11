@@ -7,10 +7,8 @@
       <h1>
         公告编辑（年假）
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Notification</li>
-      </ol>
+
+      
     </section>
 
     <!-- Main content -->

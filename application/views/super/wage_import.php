@@ -4,30 +4,69 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    
-    <ol class="breadcrumb">
-      <li><i class="fa fa-dashboard"></i> Home</li>
-      <li class="active">Import</li>
-    </ol>
+    <h1>
+      薪酬信息导入
+    </h1>
   </section>
 
   <!-- Main content -->
   <section class="content">
     <!-- Small boxes (Stat box) -->
+    <?php if($this->session->flashdata('success')): ?>
+      <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <?php echo $this->session->flashdata('success'); ?>
+      </div>
+    <?php elseif($this->session->flashdata('error')): ?>
+      <div class="alert alert-error alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <?php echo $this->session->flashdata('error'); ?>
+      </div>
+    <?php endif; ?>
     <div class="row">
       <div class="col-md-12 col-xs-12">
-        <form action="<?php echo base_url('super_wage/wage_import') ?>" method="post"
-            name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
-            <div>
-                <label><h4>选择上传文件</h4></label> 
-                <br />
-                <br />
-                <h5><input type="file" name="file" id="file" accept=".xls,.xlsx"/></h5>
-                <br />
-                <button type="submit" id="submit" name="import" class="btn btn-warning" >Import</button>
-        
+        <div class="box">
+          <div class="box-header">
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div class="container">
+              <form action="<?php echo base_url('super_wage/wage_import') ?>" method="post"
+                  name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
+                  <fieldset>
+                  <legend></legend>
+                    <div class="form-group">
+                      <div class="input-group date form_datetime col-md-2" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm" data-link-field="dtp_input1">
+                        <input class="form-control" name="chosen_month" size="14" type="text" value="请选择月份" readonly>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                      </div>
+                    </div>
+                    <hr />
+                    <div class="control-group">
+                      <label class="control-label">选择上传文件</label>
+                      <!-- File Upload -->
+                      <div class="controls">
+                        <input type="file" name="file" id="file" accept=".xls,.xlsx"/>
+                      </div>
+                    </div>
+                    <br />
+                    <div class="control-group">
+                      <!-- Button -->
+                      <div class="controls">
+                      <button type="submit" id="submit" name="import" class="btn btn-warning" >上传</button>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                  <div class="form-group">
+                    
+                  </div>
+                  </fieldset>
+              </form>
             </div>
-        </form>
+          </div>
+        </div>
       </div>
     </div>  
 
@@ -41,7 +80,14 @@
       $("#wageSyncNav").addClass('active');
       
       $("#uploadWageFileNav").addClass('active');
-      
+      $(".form_datetime").datetimepicker({
+        bootcssVer:3,
+        format: "yyyy-mm",
+        startView:3,
+        minView:3,
+        startDate:"2017-01",
+        autoclose:true  
+      });
     });
     
   </script>

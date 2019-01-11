@@ -54,18 +54,32 @@
       </div>
       <div class="row">
         <div class="col-xs-8">
+        <input class="form-control" name="verify_code" id="password" placeholder="验证码" autocomplete="off">
+        </div>
+        <div class="col-xs-4">
+        <a href="<?php echo base_url('auth/wage_login');?>"><img src="<?php echo base_url($_SESSION['image']);?>" style="border:1px solid black" value="验证" name="captcha"/></a>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-xs-8">
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
           <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
         </div>
-        <hr />
         
+      </div>
+      <hr />
+      <div class="row">
         <div class="col-xs-8">
           <label>
-              <a href="<?php echo base_url('auth/wage_login') ?>"> 中山联通工资查询系统</a>
+              <a href="<?php echo base_url('auth/wage_login') ?>">中山联通工资查询系统</a>
           </label>
         </div>
+      </div>
+      </div>
+      
         <!---->
         <!-- /.col -->
       </div>

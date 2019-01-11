@@ -304,11 +304,8 @@ class Wage extends Admin_Controller{
             $this->data['chosen_month']=$_POST['chosen_month'];
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strlen($doc_name)<=7 and $doc_name!=""){
-                $start_time=microtime(true);
-                $this->data['wage_data']=$this->model_wage->getWageByID($this->data['user_id']);
+                $this->data['wage_data']=$this->model_wage->getWageByDateAndID($this->data['user_id'],$doc_name);
                 $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
-                $end_time=microtime(true);
-                echo round($end_time-$start_time,4);
                 $counter=0;
                 foreach($this->data['attr_data'] as $k => $v){
                     if($v=='月度绩效工资小计'){
@@ -452,10 +449,10 @@ class Wage extends Admin_Controller{
             else{
                 $this->data['chosen_month']=$_POST['chosen_month'];
                 $this->data['current_dept']=$_POST['selected_dept'];
-                echo $this->data['current_dept'];
                 $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
                 if(strlen($doc_name)<=7 and $doc_name!=""){
-                    $this->data['wage_data']=$this->search_mydept_excel($doc_name,$_POST['selected_dept']);
+                    #$this->data['wage_data']=$this->search_mydept_excel($doc_name,$_POST['selected_dept']);
+                    $this->data['wage_data']=$this->model_wage->getWageByDateAndDept($_POST['selected_dept'],$doc_name);
                     $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
                     $counter=0;
                     foreach($this->data['attr_data'] as $k => $v){

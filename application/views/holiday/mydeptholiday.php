@@ -6,11 +6,6 @@
     <section class="content-header">
       <h1>
         部门年假信息
-      </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Holiday</li>
-      </ol>
     </section>
 
     <!-- Main content -->

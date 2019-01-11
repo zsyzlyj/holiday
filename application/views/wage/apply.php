@@ -7,10 +7,10 @@
       <h1>
         开具收入证明
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Wage</li>
-      </ol>
+      
+        
+        
+      
     </section>
 
     <!-- Main content -->

@@ -7,11 +7,6 @@
       <h1>
         删除年假信息
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li><a href="<?php echo base_url('holiday/') ?>">Users</a></li>
-        <li class="active">Delete</li>
-      </ol>
     </section>
 
     <!-- Main content -->

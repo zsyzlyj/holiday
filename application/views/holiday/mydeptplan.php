@@ -6,11 +6,7 @@
     <section class="content-header">
       <h1>
         部门年假计划
-      </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">plan</li>
-      </ol>
+      </h1>   
     </section>
     
     <!-- Main content -->

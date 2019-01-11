@@ -5,10 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>个税计算器</h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Setting</li>
-      </ol>
+  
     </section>
     <br />
 

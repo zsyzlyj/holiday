@@ -7,10 +7,10 @@
       <h1>
         年假计划
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">plan</li>
-      </ol>
+      
+        
+
+      
     </section>
 
     <!-- Main content -->
@@ -29,9 +29,7 @@
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <?php echo $this->session->flashdata('error'); ?>
             </div>
-          <?php endif; ?>         
-        
-
+          <?php endif; ?>
           <div class="box">
             <div class="box-header">
               <h3 class="box-title"><font color="red">公告说明：</font></h3>

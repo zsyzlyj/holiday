@@ -8,11 +8,11 @@
         Manage
         <small>Groups</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
+      
+        
         <li><a href="<?php echo base_url('users/') ?>">Users</a></li>
-        <li class="active">Delete</li>
-      </ol>
+        
+      
     </section>
 
     <!-- Main content -->

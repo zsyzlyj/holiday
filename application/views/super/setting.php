@@ -8,10 +8,7 @@
         用户
         <small>设置</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Setting</li>
-      </ol>
+  
     </section>
     <br />
 

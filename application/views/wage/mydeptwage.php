@@ -7,10 +7,7 @@
       <h1>
         部门工资信息
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Wage</li>
-      </ol>
+      
     </section>
 
     <!-- Main content -->
@@ -145,7 +142,7 @@
                     <tr>
                     <?php $counter=0;?>
                     <?php foreach($v as $a => $b): ?>
-                      <?php if($counter<=$trueend and $counter>0):?>
+                      <?php if($counter<$trueend and $counter>0):?>
                       <td style=""><?php echo $b?></td>
                       <?php endif;$counter++;?>
                     <?php endforeach; ?>
@@ -179,7 +176,7 @@
         format: "yyyy-mm",
         startView:3,
         minView:3,
-        startDate:"2017-12",
+        startDate:"2017-01",
         autoclose:true
       });
       $('#wageTable').DataTable({

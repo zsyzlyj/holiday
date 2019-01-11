@@ -4,11 +4,6 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    
-    <ol class="breadcrumb">
-      <li><i class="fa fa-dashboard"></i> Home</li>
-      <li class="active">Products</li>
-    </ol>
   </section>
 
   <!-- Main content -->

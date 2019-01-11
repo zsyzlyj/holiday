@@ -8,11 +8,7 @@
       <h1>
         员工管理        
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li>Users</li>
-        <li class="active">Delete</li>
-      </ol>
+      
     </section>
 
     <!-- Main content -->

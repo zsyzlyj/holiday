@@ -7,10 +7,9 @@
       <h1>
         公告历史
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Users</li>
-      </ol>
+
+
+      
     </section>
 
     <!-- Main content -->

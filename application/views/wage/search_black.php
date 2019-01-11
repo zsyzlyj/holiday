@@ -9,10 +9,10 @@
       <h1>
         往月工资信息
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Wage</li>
-      </ol>
+      
+        
+        
+      
     </section>
 
   <!-- Main content -->

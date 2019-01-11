@@ -7,10 +7,10 @@
       <h1>
         年假计划
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">plan</li>
-      </ol>
+      
+        
+
+      
     </section>
 
     <!-- Main content -->

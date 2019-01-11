@@ -32,6 +32,7 @@ class Super_wage extends Admin_Controller
     ============================================================
     */ 
     public function index(){
+        /*
         $this->data['wage_total']=$this->model_wage_attr->getWageTotalData()['total'];
         $this->data['wage_data']=$this->model_wage->getWageData();
         $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
@@ -75,6 +76,8 @@ class Super_wage extends Admin_Controller
             }
         }
         $this->render_super_template('super/wage',$this->data);
+        */
+        $this->search();
     }
     public function this_month(){
         $this->data['wage_total']=$this->model_wage_attr->getWageTotalData()['total'];
@@ -183,11 +186,7 @@ class Super_wage extends Admin_Controller
             $this->data['chosen_month']=$_POST['chosen_month'];
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strlen($doc_name)<=7 and $doc_name!=""){
-                #$start_time=microtime(true);
-                $this->data['wage_data']=$this->model_wage->getWageData();
-                #$end_time=microtime(true);
-                #echo round($end_time-$start_time,4);
-
+                $this->data['wage_data']=$this->model_wage->getWageDataByDate($doc_name);
                 $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
                 $counter=0;
                 foreach($this->data['attr_data'] as $k => $v){
@@ -585,34 +584,33 @@ class Super_wage extends Admin_Controller
             $this->render_super_template('super/wage_tag_import',$this->data);
         } 
     }
-    public function wage_excel_put(){
+    public function wage_excel_put($filename){
         $this->load->library("phpexcel");//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
  
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
-        $filePath = "uploads/wage/".$path["name"];
-
-        move_uploaded_file($path["tmp_name"],$filePath);
+        
         //根据上传类型做不同处理
-        $file_name="";
         if(strstr($_FILES['file']['name'],'xlsx')){
             $reader = new PHPExcel_Reader_Excel2007();
-            $file_name = str_replace(".xlsx","",$_FILES['file']['name']);
+            $filePath = "uploads/wage/".$filename.'.xlsx';
+            move_uploaded_file($path["tmp_name"],$filePath);
         }
         else{
             if(strstr($_FILES['file']['name'], 'xls')){
                 $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
-                $file_name = str_replace(".xls","",$_FILES['file']['name']);
+                $filePath = "uploads/wage/".$filename.'.xls';
+                move_uploaded_file($path["tmp_name"],$filePath);
             }
         }
         //薪酬文件记录写入
         //如果有相同时期的文件，直接覆盖记录，如果没有的话，那就创建新文件记录
-        if($this->model_wage_record->getRecordByDate($file_name)===null){
-            $this->model_wage_record->create(array('upload_date' => $file_name,'path' => $filePath));    
+        if($this->model_wage_record->getRecordByDate($filename)===null){
+            $this->model_wage_record->create(array('upload_date' => $filename,'path' => $filePath));    
         }
         else{
-            $this->model_wage_record->update(array('path' => $filePath),$file_name);
+            $this->model_wage_record->update(array('path' => $filePath),$filename);
         }
         
         $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
@@ -624,7 +622,8 @@ class Super_wage extends Admin_Controller
 
         $data = array();
         $attribute = array();
-        $this->model_wage->deleteByDate($file_name);
+        $this->model_wage->deleteByDate($filename);
+        
         for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
             $temp = array();
             for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
@@ -644,11 +643,11 @@ class Super_wage extends Admin_Controller
                         $attr_counter++;
                     }
                 }
-                $attribute['date_tag']=$file_name;
+                $attribute['date_tag']=$filename;
                 $attr_counter--;
-                $this->model_wage_attr->create_total(array('date_tag' => $file_name,'total' => $attr_counter));
-                if($this->model_wage_attr->getWageAttrDataByDate($file_name)){
-                    $this->model_wage_attr->update($attribute,$file_name);
+                $this->model_wage_attr->create_total(array('date_tag' => $filename,'total' => $attr_counter));
+                if($this->model_wage_attr->getWageAttrDataByDate($filename)){
+                    $this->model_wage_attr->update($attribute,$filename);
                 }
                 else{
                     $this->model_wage_attr->create_attr($attribute);
@@ -658,6 +657,16 @@ class Super_wage extends Admin_Controller
                 $wage=array();
                 $counter=0;
                 foreach($temp as $k => $v){
+                    if($counter==$attr_counter-1){
+                        if($v!=""){
+                            $wage['content'.($counter-3)]=$v;
+                        }
+                        else{
+                            $wage['content'.($counter-3)]="";
+                        }
+                        $wage['date_tag']=$filename;
+                        break;
+                    }
                     if($v!=""){
                         switch($k){
                             case 0:$wage['number']=$v;break;
@@ -668,20 +677,11 @@ class Super_wage extends Admin_Controller
                         }
                         $counter++;
                     }
-                    elseif(strlen($v)==1 and $v==""){
+                    elseif(strlen($v)==1 and $v==0){
                         $wage['content'.($counter-3)]="0";
                         $counter++;
                     }
-                    if($counter==$attr_counter-1){
-                        if($v!=""){
-                            $wage['content'.($counter-3)]=$v;
-                        }
-                        else{
-                            $wage['content'.($counter-3)]=" ";
-                        }
-                        $wage['date_tag']=$file_name;
-                        break;
-                    }
+                    
                 }
                 array_push($data,$wage);
                 unset($wage);
@@ -691,21 +691,40 @@ class Super_wage extends Admin_Controller
         $this->model_wage->createbatch($data);   
     }
     
-    public function wage_import($filename=NULL){
-        if($_FILES){
-            if($_FILES["file"]){
-                if($_FILES["file"]["error"] > 0){
-                    echo "Error: " . $_FILES["file"]["error"] . "<br />";
-                }
-                else{
-                    $this->wage_excel_put();
-                    $this->search();
+    public function wage_import(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('chosen_month',$_POST)){
+            $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
+            if(strstr($doc_name,'1899')){
+                $this->session->set_flashdata('error', '请选择月份!!');
+                $this->render_super_template('super/wage_import',$this->data);
+            }
+            else{
+                if(strlen($doc_name)<=7 and $doc_name!=""){
+                    if($_FILES){
+                        if($_FILES["file"]){
+                            if($_FILES["file"]["error"] > 0){
+                                $this->session->set_flashdata('error', '请选择文件!!');
+                                $this->render_super_template('super/wage_import',$this->data);
+                            }
+                            else{
+                                $this->wage_excel_put($doc_name);
+                                $this->data['wage_data']="";
+                                $this->data['attr_data']="";
+                                $this->data['chosen_month']="";
+                                $this->render_super_template('super/wage_search',$this->data);
+                            }
+                        }
+                    }
+                    else{
+                        $this->session->set_flashdata('error', '请选择文件!!');
+                        $this->render_super_template('super/wage_import',$this->data);
+                    }
                 }
             }
         }
         else{
             $this->render_super_template('super/wage_import',$this->data);
-        } 
+        }
     }
     public function excel(){
         $this->load->library('PHPExcel');
@@ -726,9 +745,7 @@ class Super_wage extends Admin_Controller
  
         $objPHPExcel->setActiveSheetIndex(0);
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
- 
         $filename = date('YmdHis').".xlsx";
-
         // Sending headers to force the user to download the file
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'.$filename);
@@ -736,8 +753,7 @@ class Super_wage extends Admin_Controller
         header('Cache-Control: max-age=0');
         $objWriter->save('php://output');
     }
-    public function download_page()
-   {
+    public function download_page(){
         $this->data['user_name'] = $this->session->userdata('user_name');
         $this->data['path'] = "uploads/standard/wage_sample.xlsx";
         $this->render_super_template('super/wage_export',$this->data);
@@ -754,17 +770,13 @@ class Super_wage extends Admin_Controller
         );
         $this->model_wage_doc->create($doc_data);
     }
-    public function wage_doc_import($filename=NULL)
-   {
+    public function wage_doc_import($filename=NULL){
         if($_FILES){
-        if($_FILES["file"])
-           {
-                if($_FILES["file"]["error"] > 0)
-               {
+            if($_FILES["file"]){
+                if($_FILES["file"]["error"] > 0){
                     echo "Error: " . $_FILES["file"]["error"] . "<br />";
                 }
-                else
-               {
+                else{
                     $this->wage_doc_put();
                     $this->wage_doc_list();
                 }
@@ -781,10 +793,8 @@ class Super_wage extends Admin_Controller
         $this->render_super_template('super/wage_doc_list',$this->data);
     }
     
-    
     public function wage_doc_delete(){
-        $date = $_POST['time'];
-        
+        $date = $_POST['time'];   
         if($date){
 			$delete = $this->model_wage_doc->delete($date);
             if($delete == true){
@@ -821,16 +831,13 @@ class Super_wage extends Admin_Controller
     }
     public function notification(){
         $notice_data = $this->model_notice->getNoticeData();
-
 		$result = array();
-		
 		foreach($notice_data as $k => $v){
             if($v['type']=='wage'){
                 $v['type']='薪酬';
                 $result[$k] = $v;
             }
 		}
-		
 		$this->data['notice_data'] = $result;
 		unset($result);
         $this->render_super_template('super/wage_notification', $this->data);

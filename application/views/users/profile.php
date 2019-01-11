@@ -8,10 +8,10 @@
         User
         <small>Profile</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Profile</li>
-      </ol>
+      
+        
+
+      
     </section>
 
     <!-- Main content -->

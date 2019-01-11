@@ -7,10 +7,10 @@
       <h1>
         计划提交情况
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Holiday</li>
-      </ol>
+      
+        
+        
+      
     </section>
 
     <!-- Main content -->

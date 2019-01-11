@@ -25,6 +25,27 @@ class Model_wage extends CI_Model{
 			return $query->result_array();
 		}
 	}
+	public function getWageDataByDate($date = null){
+		if($date){
+			$sql = "SELECT * FROM wage WHERE locate(?,date_tag)";	
+			$query = $this->db->query($sql, array($date));
+			return $query->result_array();
+		}
+	}
+	public function getWageByDateAndId($id,$date){
+		if($date and $id){
+			$sql = "SELECT * FROM (select * from wage where locate(?,user_id)) as t WHERE locate(?,date_tag)";	
+			$query = $this->db->query($sql, array($id,$date));
+			return $query->row_array();
+		}
+	}
+	public function getWageByDateAndDept($dept,$date){
+		if($date and $dept){
+			$sql = "SELECT * FROM (select * from wage where locate(?,department)) as t WHERE locate(?,date_tag)";	
+			$query = $this->db->query($sql, array($dept,$date));
+			return $query->result_array();
+		}
+	}
 	public function exportWageData($id = null){
 		$sql = "SELECT * FROM wage";
 		return $this->db->query($sql);

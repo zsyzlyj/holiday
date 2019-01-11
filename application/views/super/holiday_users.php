@@ -7,10 +7,10 @@
       <h1>
         用户权限管理
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Users</li>
-      </ol>
+      
+        
+
+      
     </section>
     <br /><br />
     <!-- Main content -->

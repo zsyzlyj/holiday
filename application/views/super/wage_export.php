@@ -8,10 +8,10 @@
       <h1>
         文件下载
       </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Wage</li>
-      </ol>
+      
+        
+        
+      
     </section>
     <hr />
     <!-- Main content -->

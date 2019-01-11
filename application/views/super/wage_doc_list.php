@@ -7,10 +7,10 @@
     <h1>
       薪资文件汇总
     </h1>
-    <ol class="breadcrumb">
-      <li><i class="fa fa-dashboard"></i> Home</li>
-      <li class="active">Wage</li>
-    </ol>
+    
+      
+      
+    
   </section>
   <br />
   <br />
