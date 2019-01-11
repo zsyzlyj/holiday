@@ -125,8 +125,8 @@
   <!-- Datetimepicker -->
   
   <script src="<?php echo base_url('assets/dist/js/bootstrap-datetimepicker.js') ?>"></script>
-
   <script src="<?php echo base_url('assets/bower_components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'); ?>"></script>
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">

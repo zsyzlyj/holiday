@@ -18,10 +18,7 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/AdminLTE.min.css') ?>">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/iCheck/square/blue.css') ?>">
-  <!-- Login Background -->
-  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/reset.css') ?>">
-  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/supersized.css') ?>">
-  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/style.css') ?>">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -34,15 +31,6 @@
 
 </head>
 <body class="hold-transition login-page">
-  <div class="page-container">
-    <h1>Login</h1>
-    <form action="" method="post">
-        <input type="text" name="username" class="username" placeholder="Username">
-        <input type="password" name="password" class="password" placeholder="Password">
-        <button type="submit">Sign me in</button>
-        <div class="error"><span>+</span></div>
-    </form>
-  </div>
 <div class="login-box">
   <div class="login-logo">
     <a href="<?php echo base_url('super_auth/login'); ?>"><b>管理</b></a>
@@ -87,16 +75,14 @@
   <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
-<script src="<?php echo base_url('assets/dist/js/jquery-1.8.2.min.js'); ?>"></script>
-<!-- Bootstrap 3.3.7 
+
+<!-- jQuery 3 -->
+
+<script src="<?php echo base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>
+<!-- Bootstrap 3.3.7 -->
 <script src="<?php echo base_url('assets/bower_components/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
--->
 <!-- iCheck -->
 <script src="<?php echo base_url('assets/plugins/iCheck/icheck.min.js') ?>"></script>
-
-<script src="<?php echo base_url('assets/dist/js/supersized.3.2.7.min.js'); ?>"></script>
-<script src="<?php echo base_url('assets/dist/js/supersized-init.js'); ?>"></script>
-<script src="<?php echo base_url('assets/dist/js/scripts.js'); ?>"></script>
 <script>
   $(function () {
     $('input').iCheck({
