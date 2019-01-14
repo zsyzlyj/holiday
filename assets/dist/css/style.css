@@ -32,6 +32,19 @@ form {
     text-align: center;
 }
 
+a {
+    width: 270px;
+    height: 42px;
+    margin-top: 27px;
+    padding: 0 15px;
+    font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #fff;
+    -o-transition: all .2s;
+    -moz-transition: all .2s;
+    -webkit-transition: all .2s;
+    -ms-transition: all .2s;
+}
 input {
     width: 270px;
     height: 42px;
@@ -74,9 +87,14 @@ input:focus {
         0 2px 7px 0 rgba(0,0,0,.2);
 }
 
+.verify{
+    width: 160px;
+    height: 42px;
+    margin-left: 17px;
+}
 button {
     cursor: pointer;
-    width: 300px;
+    width: 270px;
     height: 44px;
     margin-top: 25px;
     padding: 0;
@@ -178,8 +196,6 @@ button:active {
     -ms-transition: all .2s;
 }
 
-.connect a.facebook { background: url(../img/facebook.png) center center no-repeat; }
-.connect a.twitter { background: url(../img/twitter.png) center center no-repeat; }
 
 .connect a:hover { background-position: center bottom; }
 

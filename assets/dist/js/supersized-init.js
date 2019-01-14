@@ -1,7 +1,6 @@
 jQuery(function($){
 
     $.supersized({
-
         // Functionality
         slide_interval     : 4000,    // Length between transitions
         transition         : 1,    // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
@@ -20,9 +19,9 @@ jQuery(function($){
         // Components
         slide_links        : 'blank',    // Individual links for each slide (Options: false, 'num', 'name', 'blank')
         slides             : [    // Slideshow Images
-                                 {image : 'http://localhost/human_resources/assets/img/backgrounds/1.jpg'},
-                                 {image : 'http://localhost/human_resources/assets/img/backgrounds/2.jpg'},
-                                 {image : 'http://localhost/human_resources/assets/img/backgrounds/3.jpg'}
+                                 {image : 'assets/dist/img/backgrounds/1.jpg'},
+                                 {image : 'assets/dist/img/backgrounds/2.jpg'},
+                                 {image : 'assets/dist/img/backgrounds/3.jpg'}
                              ]
 
     });
