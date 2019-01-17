@@ -145,7 +145,7 @@ class Super_Auth extends Admin_Controller
 			$_SESSION['image']=$image_item['image'];
 			$_SESSION['code']=$image_item['code'];
 			unset($image_item);
-            $this->load->view('super/login_blur',$this->data);
+            $this->load->view('super/login_origin',$this->data);
         }	
 	}
 	/*

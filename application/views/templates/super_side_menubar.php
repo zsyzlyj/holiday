@@ -85,19 +85,17 @@
             <i class="fa fa-file"></i><span>薪酬汇总查询</span>
           </a>
         </li>
-        <li class="treeview" id="wageSyncNav">
-          <a href="#">
-            <i class="fa fa-cloud"></i>
-            <span>薪酬信息更新</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+        <li id="uploadWageFileNav">
+          <a href="<?php echo base_url('super_wage/wage_import') ?>">
+            <i class="fa fa-cloud-upload"></i><span>薪酬信息导入</span>
           </a>
-          <ul class="treeview-menu">
-            <li id="uploadWageFileNav"><a href="<?php echo base_url('super_wage/wage_import') ?>"><i class="fa fa-circle-o"></i><span>薪酬信息导入</span></a></li>
-            <li id="downloadWageNav"><a href="<?php echo base_url('super_wage/download_page') ?>"><i class="fa fa-circle-o"></i>下载薪酬模板</a></li>
-          </ul>
         </li>
+        <li id="downloadWageNav">
+          <a href="<?php echo base_url('super_wage/download_page') ?>">
+            <i class="fa fa-cloud-download"></i><span>薪酬信息导出</span>
+          </a>
+        </li>
+
         
         <li class="treeview" id="wageUserNav">
           <a href="#">

@@ -83,6 +83,7 @@ class Holiday extends Admin_Controller
             'action_time' => date('Y-m-d H:i:s')
         );
         $this->model_log_action->create($log);
+
 		$this->render_template('holiday/staff', $this->data);
     }
 

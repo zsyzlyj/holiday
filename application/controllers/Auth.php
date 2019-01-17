@@ -114,7 +114,7 @@ class Auth extends Admin_Controller
 								break;
 							default:	
 								redirect('holiday/staff', 'refresh');
-								break;	
+								break;
 						}
 					}
 					else{
@@ -135,6 +135,14 @@ class Auth extends Admin_Controller
 					$this->load->view('holiday_login', $this->data);
 				}
 			}
+			else{
+				$image_item=$this->get_code();
+				$_SESSION['image']=$image_item['image'];
+				$_SESSION['code']=$image_item['code'];
+				unset($image_item);
+				$this->data['errors'] = '验证码不正确';
+				$this->load->view('holiday_login', $this->data);
+			}
         }
         else{
 			// false case
@@ -143,7 +151,7 @@ class Auth extends Admin_Controller
 			$_SESSION['code']=$image_item['code'];
 			$_SESSION['image']=$image_item['image'];
 			unset($image_item);
-            $this->load->view('holiday_login');
+            $this->load->view('holiday_login',$this->data);
         }	
 	}
 	public function wage_login(){

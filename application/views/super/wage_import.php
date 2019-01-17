@@ -54,7 +54,8 @@
                     <div class="control-group">
                       <!-- Button -->
                       <div class="controls">
-                      <button type="submit" id="submit" name="import" class="btn btn-warning" >上传</button>
+                        <button type="submit" id="submit" name="import" class="btn btn-warning" >上传</button>
+                        <a class="btn btn-info" href="<?php echo base_url($path) ?>">下载模板</a>
                       </div>
                     </div>
                   </fieldset>
@@ -76,9 +77,6 @@
 <!-- /.content-wrapper -->
 <script type="text/javascript">
     $(document).ready(function() { 
-      
-      $("#wageSyncNav").addClass('active');
-      
       $("#uploadWageFileNav").addClass('active');
       $(".form_datetime").datetimepicker({
         bootcssVer:3,

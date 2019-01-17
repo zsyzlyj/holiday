@@ -6,14 +6,10 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-      <h1>
-        薪酬文件
-      </h1>
-      
-        
-        
-      
-    </section>
+    <h1>
+      薪酬文件
+    </h1>      
+  </section>
 
   <!-- Main content -->
   <section class="content">
@@ -25,12 +21,10 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            
             <div class="container">
               <form action="<?php echo base_url('wage/search')?>" class="form-horizontal" method="post" role="form">
                 <fieldset>
                   <legend></legend>
-                  <div class="form-group">
                 </fieldset>
               </form>
             </div>

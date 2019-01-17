@@ -47,6 +47,7 @@
 
   <!-- bootstrap datetimepicker -->
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showmonth.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showapply.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap-datetimepicker.min.css')?>">

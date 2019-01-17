@@ -7,10 +7,6 @@
       <h1>
         年假计划
       </h1>
-      
-        
-
-      
     </section>
 
     <!-- Main content -->
@@ -82,7 +78,6 @@
                                   
                     <?php $v=$plan_data ?>
                       <tr style="text-align:center;">
-                      
                         <td style="text-align:center;"><font size="3"><?php echo $v['name']; ?></font></td>
                         <td style="text-align:center;"><font size="4"><?php echo $v['Lastyear']; ?></font></td>
                         <td style="text-align:center;"><font size="4"><?php echo $v['Thisyear']; ?></font></td>

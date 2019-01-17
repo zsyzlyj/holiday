@@ -39,10 +39,11 @@
         <input class="verify col-md-6" name="verify_code" id="password" placeholder="验证码" autocomplete="off"><a class="col-md-3" href="<?php echo base_url('super_auth/login');?>"><img src="<?php echo base_url($_SESSION['image']);?>" style="border:1px solid black" value="验证" name="captcha"/></a></input>
         <button type="submit">登录</button>
         <div class="error"><span>+</span></div>
-    
-      </div>      
+      </div>
     </form>
+    
   </div>
+  <a href="<?php echo base_url('auth/wage_login'); ?>" style="color:#FFFFFF"><h4>员工薪酬系统</h4></a>
 </div>
 <!-- /.login-box -->
 <script src="<?php echo base_url('assets/dist/js/jquery-1.8.2.min.js'); ?>"></script>

@@ -19,7 +19,7 @@ class Model_wage extends CI_Model{
 		}
 	}
 	public function getWageByDept($dept = null){
-		if($dept){	
+		if($dept){
 			$sql = "SELECT * FROM wage WHERE locate(?,department)";
 			$query = $this->db->query($sql, array($dept));
 			return $query->result_array();
@@ -34,13 +34,14 @@ class Model_wage extends CI_Model{
 	}
 	public function getWageByDateAndId($id,$date){
 		if($date and $id){
-			$sql = "SELECT * FROM (select * from wage where locate(?,user_id)) as t WHERE locate(?,date_tag)";	
-			$query = $this->db->query($sql, array($id,$date));
-			return $query->row_array();
+			$query=$this->db->where_in('user_id', $id)->get_where('wage',array('date_tag'=>$date));
+			#$sql = "SELECT * FROM (select * from wage where user_id in ?) as t WHERE locate(?,date_tag)";	
+			#$query = $this->db->query($sql, array($id,$date));
+			return $query->result_array();
 		}
 	}
 	public function getWageByDateAndDept($dept,$date){
-		if($date and $dept){
+		if($date and $dept){	
 			$sql = "SELECT * FROM (select * from wage where locate(?,department)) as t WHERE locate(?,date_tag)";	
 			$query = $this->db->query($sql, array($dept,$date));
 			return $query->result_array();

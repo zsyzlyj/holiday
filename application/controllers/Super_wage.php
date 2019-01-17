@@ -11,6 +11,8 @@ class Super_wage extends Admin_Controller
         $this->data['page_title'] = 'Super';
         $this->load->model('model_plan');
         $this->load->model('model_notice');
+        $this->load->model('model_dept');
+
         $this->load->model('model_wage_users');
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
@@ -515,13 +517,15 @@ class Super_wage extends Admin_Controller
 
         $this->model_wage_tag->deleteAll();
         $this->model_wage_users->deleteAll();
+        $this->model_dept->deleteAll();
         $wage_set=array();
         $user_set=array();
+        $all_dept=array();
+        $dept_set=array();
         foreach($data as $k => $v){
             #$row_data=array();
             if($counter>1){
-                foreach($v as $a=>$b)
-               {
+                foreach($v as $a=>$b){
                     switch($data[1][$a]){
                         case '员工姓名':$name=$b;break;
                         case '身份证号':$user_id=$b;break;
@@ -559,13 +563,29 @@ class Super_wage extends Admin_Controller
                 );
                 array_push($user_set,$user_data);
                 unset($user_data);
+                //如果不是多部门，不包含/，那么就记录下来
+                if(strpos($dept,'/') != true){
+                    if(!in_array($dept,$all_dept) and $dept!="" and $dept!="产假退回"){
+                        array_push($all_dept,$dept);
+                    }
+                }
             }
             $counter++;
         }
         $this->model_wage_tag->createbatch($wage_set);
         $this->model_wage_users->createbatch($user_set);
+        foreach($all_dept as $k => $v){
+            $dept_data=array(
+                'dept_name' => $v,
+            );
+            array_push($dept_set,$dept_data);
+            unset($dept_data);
+        }
+        $this->model_dept->createbatch($dept_set);
         unset($wage_set);
         unset($user_set);
+        unset($dept_set);
+
     }
     public function wage_tag_import($filename=NULL)
    {
@@ -597,12 +617,11 @@ class Super_wage extends Admin_Controller
             $filePath = "uploads/wage/".$filename.'.xlsx';
             move_uploaded_file($path["tmp_name"],$filePath);
         }
-        else{
-            if(strstr($_FILES['file']['name'], 'xls')){
-                $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
-                $filePath = "uploads/wage/".$filename.'.xls';
-                move_uploaded_file($path["tmp_name"],$filePath);
-            }
+        elseif(strstr($_FILES['file']['name'], 'xls')){
+            $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
+            $filePath = "uploads/wage/".$filename.'.xls';
+            move_uploaded_file($path["tmp_name"],$filePath);
+            
         }
         //薪酬文件记录写入
         //如果有相同时期的文件，直接覆盖记录，如果没有的话，那就创建新文件记录
@@ -692,6 +711,7 @@ class Super_wage extends Admin_Controller
     }
     
     public function wage_import(){
+        $this->data['path'] = "uploads/standard/wage_sample.xlsx";
         if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('chosen_month',$_POST)){
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strstr($doc_name,'1899')){
@@ -726,37 +746,268 @@ class Super_wage extends Admin_Controller
             $this->render_super_template('super/wage_import',$this->data);
         }
     }
-    public function excel(){
+    public function wage_temp_put(){
+        $this->load->library("phpexcel");//ci框架中引入excel类
+        $this->load->library('PHPExcel/IOFactory');
+        $path=$_FILES['selected_user'];
+        //根据上传类型做不同处理
+        if(strstr($_FILES['selected_user']['name'],'xlsx')){
+            $reader = new PHPExcel_Reader_Excel2007();
+            $filePath = 'uploads/wage/temp.xlsx';
+            move_uploaded_file($path["tmp_name"],$filePath);
+        }
+        elseif(strstr($_FILES['selected_user']['name'], 'xls')){
+            $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
+            $filePath = 'uploads/wage/temp.xlsx';
+            move_uploaded_file($path["tmp_name"],$filePath);
+        }
+        $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ');  
+        $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
+        $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+        $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+    
+        $columnCnt = array_search($highestColumm, $cellName); 
+        $data = array();
+        for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
+                $cellId = $cellName[$colIndex].$rowIndex;  
+                $cell = $sheet->getCell($cellId)->getValue();
+                $cell = $sheet->getCell($cellId)->getCalculatedValue();
+                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                    $cell = $cell->__toString();
+                }
+                $data[$rowIndex][$colIndex] = $cell;
+            }
+        }
+        $result=array();
+        foreach($data as $k =>$v){
+            if($k!=1){
+                $temp=array(
+                    'user_id' => $v[0]
+                );
+                array_push($result,$v[0]);
+            }
+            #unset($temp);
+        }
+        return $result;
+    }
+    public function excel($start = null,$end = null,$dept = null){
         $this->load->library('PHPExcel');
         $this->load->library('PHPExcel/IOFactory');
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
-        $objPHPExcel->setActiveSheetIndex(0);       
-        $result = $this->model_wage_attr->exportAttrData();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $start=substr($start,0,4).substr($start,5,6);
+        $end=substr($end,0,4).substr($end,5,6);
+        //没有日期区间，差值为0
+        $wage=array();
+        $attr=array();
+        if($end-$start==0){
+            $attr=$this->model_wage_attr->getWageAttrDataByDate($start);
+            //all,部门无条件,两种情况，一种是全部，一种是导入名单
+            if($dept=='all'){
+                //无导入名单和有导入名单
+                if($_FILES){
+                    if($_FILES["selected_user"]){
+                        if($_FILES["selected_user"]["error"]==4){
+                            //无导入名单
+                            //all,该部门全部导出
+                            $wage=$this->model_wage->getWageDataByDate($start);
+                        }
+                        else{
+                            //有导入名单
+                            #$this->wage_doc_put();
+                            $user_set=$this->wage_temp_put();
+                            #echo var_dump($user_set);
+                            
+                            $wage=$this->model_wage->getWageByDateAndId($user_set,$start);
+                            /*
+                            foreach($wage as $v){
+                                foreach($v as $a => $b){
+                                    echo $b;
+                                }
+                            }
+                            */
+                            #echo "Building: upload file<br />";
+                        }
+                    }
+                    else{
+                        redirect('super_wage/download_page', 'refresh');                        
+                    }
+                }
+                else{
+                    redirect('super_wage/download_page', 'refresh');
+                }
+            }
+            //指定部门,没有选用户
+            elseif($dept!='all'){
+                if($_FILES){
+                    if($_FILES["selected_user"]){
+                        //没有上传文件
+                        if($_FILES["selected_user"]["error"]==4){
+                            //指定部门人员
+                            $wage=$this->model_wage->getWageByDateAndDept($dept,$start);
+                        }
+                        //上传了文件
+                        //异常处理,如果部门指定，同时有名单
+                        else{
+                            $this->session->set_flashdata('error', '不能同时指定部门和上传名单');
+                            redirect('super_wage/download_page', 'refresh');
+                        }
+                    }
+                    else{
+                        redirect('super_wage/download_page', 'refresh');                        
+                    }
+                }
+                else{
+                    redirect('super_wage/download_page', 'refresh');
+                }
+            }
+        }
+        //有日期区间
+        else{
+            /*
+            for(){
+                $attr=$this->model_wage_attr->getWageAttrDataByDate($start);
+                //all,部门无条件,两种情况，一种是全部，一种是导入名单
+                if($dept=='all'){
+                    //无导入名单和有导入名单
+                    if($_FILES){
+                        if($_FILES["selected_user"]){
+                            if($_FILES["selected_user"]["error"]==4){
+                                //无导入名单
+                                //all,该部门全部导出
+                                $wage=$this->model_wage->getWageDataByDate($start);
+                            }
+                            else{
+                                //有导入名单
+                                #$this->wage_doc_put();
+                                $user_set=$this->wage_temp_put();
+                                #echo var_dump($user_set);
+                                
+                                $wage=$this->model_wage->getWageByDateAndId($user_set,$start);
+                                /*
+                                foreach($wage as $v){
+                                    foreach($v as $a => $b){
+                                        echo $b;
+                                    }
+                                }
+                                */
+                                #echo "Building: upload file<br />";
+                            }
+                        }
+                        else{
+                            redirect('super_wage/download_page', 'refresh');                        
+                        }
+                    }
+                    else{
+                        redirect('super_wage/download_page', 'refresh');
+                    }
+                }
+                //指定部门,没有选用户
+                elseif($dept!='all'){
+                    if($_FILES){
+                        if($_FILES["selected_user"]){
+                            //没有上传文件
+                            if($_FILES["selected_user"]["error"]==4){
+                                //指定部门人员
+                                $wage=$this->model_wage->getWageByDateAndDept($dept,$start);
+                            }
+                            //上传了文件
+                            //异常处理,如果部门指定，同时有名单
+                            else{
+                                $this->session->set_flashdata('error', '不能同时指定部门和上传名单');
+                                redirect('super_wage/download_page', 'refresh');
+                            }
+                        }
+                        else{
+                            redirect('super_wage/download_page', 'refresh');                        
+                        }
+                    }
+                    else{
+                        redirect('super_wage/download_page', 'refresh');
+                    }
+                }
+            }
+            */
+        }
+        
+        /**/
         // Field names in the first row
-        $fields = $result->list_fields();
         $col = 0;
-        foreach($fields as $field){
-            if($field != ""){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $field);
+        foreach($attr as $k => $v){
+            if($v != "" and $k!="date_tag" and $k!="attr_name1"){
+                #echo $v;
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
                 $col++;
             }
         }
- 
+        $col = 0;
+        $row = 2;
+        
+
+        foreach($wage as $k => $v){
+            foreach($v as $a => $b){
+                if($b != "" and $a!="date_tag" and $a!="number"){
+                    
+                    if($a=='user_id'){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, ' '.$b);
+                    }
+                    else{
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
+                    }
+                    
+                    $col++;
+                }
+                
+            }
+            $col=0;
+            $row++;
+        }
+        
+        $col=0;
+        
+        
         $objPHPExcel->setActiveSheetIndex(0);
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $filename = date('YmdHis').".xlsx";
         // Sending headers to force the user to download the file
+        
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'.$filename);
         header("Content-Disposition:filename=".$filename);
         header('Cache-Control: max-age=0');
         $objWriter->save('php://output');
+        /**/
     }
     public function download_page(){
-        $this->data['user_name'] = $this->session->userdata('user_name');
-        $this->data['path'] = "uploads/standard/wage_sample.xlsx";
-        $this->render_super_template('super/wage_export',$this->data);
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            if($_POST['end_month']!='单击选择月份' and !strstr($_POST['end_month'],'1899') and $_POST['start_month']!='单击选择月份' and !strstr($_POST['start_month'],'1899')){
+                $this->data['path'] = "uploads/standard/wage_sample.xlsx";
+                $this->excel($_POST['start_month'],$_POST['end_month'],$_POST['selected_dept']);
+                /*
+                $this->data['path'] = "uploads/standard/wage_sample.xlsx";
+                $start_month=substr($_POST['start_month'],0,4).substr($_POST['start_month'],5,6);
+                $end_month=substr($_POST['end_month'],0,4).substr($_POST['end_month'],5,6);
+                $this->excel($start_month,$end_month,$_POST['selected_dept'],$_POST['selected_user']);
+                */
+                #$this->render_super_template('super/wage_export',$this->data);
+            }
+            else{
+                $this->session->set_flashdata('error', '请选择月份!!');
+                redirect('super_wage/download_page', 'refresh');
+            }
+        }
+        else{
+            $this->data['user_name'] = $this->session->userdata('user_name');
+            $this->data['wage_data']="";
+            $this->data['attr_data']="";
+            $this->data['chosen_month']="";
+            $this->data['dept_set']=$this->model_dept->getDeptData();
+            $this->data['user_set']=$this->model_wage_tag->getTagData();
+            $this->render_super_template('super/wage_export',$this->data);
+        }
     }
     public function wage_doc_put(){
         //先做一个文件上传，保存文件

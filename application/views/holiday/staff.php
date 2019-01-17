@@ -89,16 +89,16 @@
                           <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><font color='red'><u><?php echo $v['Used']; ?></u></font></a>
                           
                           <!-- 弹窗 -->
-                          <div id="myModal" class="modal fade" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div id="myModal" class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             
                             <!-- 弹窗内容 -->
-                            <div class="modal-content">
-                              <div class="modal-header">
+                            <div class="modal-content-month">
+                              <div class="modal-header-month">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 <h3>已休假明细</h3>
                               </div>
 
-                              <div class="modal-body">
+                              <div class="modal-body-month">
                               <table id="MonthTable" class="table table-bordered table-striped" style="text-align: center;">
                                 <thead>
                                   <tr style="text-align:center;">
