@@ -60,9 +60,13 @@
                 <thead>
                 <tr style="text-align: center;">
                   <th style="text-align: center;">姓名</th>
-                  <th style="text-align: center;">部门</th>                
+                  <th style="text-align: center;">部门</th>     
+                  <th style="text-align: center;">开始工作年月</th>             
                   <th style="text-align: center;">社会工龄</th>
+                  <th style="text-align: center;">入司年月</th> 
                   <th style="text-align: center;">公司工龄</th>
+                   
+                  
                   <th style="text-align: center;">休假总数</th>
                   <th style="text-align: center;">上年可休数</th>
                   <th style="text-align: center;">今年可休数</th>
@@ -78,7 +82,9 @@
                       <tr style="text-align: center;">
                         <td style="text-align: center;"><?php echo $v['name']; ?></td>
                         <td style="text-align: center;"><?php echo $v['department']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['initdate']; ?></td>
                         <td style="text-align: center;"><?php echo $v['Totalage']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['indate']; ?></td>
                         <td style="text-align: center;"><?php echo $v['Companyage']; ?></td>
                         <td style="text-align: center;"><?php echo $v['Totalday']; ?></td>
                         <td style="text-align: center;"><?php echo $v['Lastyear']; ?></td>

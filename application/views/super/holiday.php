@@ -42,8 +42,10 @@
                 <thead>
                 <tr>
                   <th>姓名</th>
-                  <th>部门</th>                
+                  <th>部门</th>  
+                  <th>开始工作年份</th>   
                   <th>社会工龄</th>
+                  <th>入司年份</th> 
                   <th>公司工龄</th>
                   <th>可休假总数</th>
                   <th>荣誉假期</th>
@@ -72,7 +74,10 @@
                       <tr>
                         <td><?php echo $v['name']; ?></td>
                         <td><?php echo $v['department']; ?></td>
+                        <td><?php echo $v['initdate']; ?></td>
+                        
                         <td><?php echo $v['Totalage']; ?></td>
+                        <td><?php echo $v['indate']; ?></td>
                         <td><?php echo $v['Companyage']; ?></td>
                         
                         <td><?php echo $v['Totalday']; ?></td>
