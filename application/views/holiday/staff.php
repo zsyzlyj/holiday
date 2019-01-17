@@ -61,12 +61,10 @@
                 <tr style="text-align: center;">
                   <th style="text-align: center;">姓名</th>
                   <th style="text-align: center;">部门</th>     
-                  <th style="text-align: center;">开始工作年月</th>             
+                  <th style="text-align: center;">参加工作时间</th>             
                   <th style="text-align: center;">社会工龄</th>
-                  <th style="text-align: center;">入司年月</th> 
+                  <th style="text-align: center;">加入本企业时间</th> 
                   <th style="text-align: center;">公司工龄</th>
-                   
-                  
                   <th style="text-align: center;">休假总数</th>
                   <th style="text-align: center;">上年可休数</th>
                   <th style="text-align: center;">今年可休数</th>
