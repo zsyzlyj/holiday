@@ -805,40 +805,39 @@ class Super_wage extends Admin_Controller
         $attr=array();
         $wage_set=array();
         $mark=array();
-        $attr_temp=$this->model_wage_attr->getWageAttrDataByDate($start);
+        $mark_set=array();
         $counter=0;
-        
         if($end-$start==0){
             #echo $end-$start;
             $attr=$this->model_wage_attr->getWageAttrDataByDate($start);
             foreach($attr as $k => $v){
                 $counter=0;
-                foreach($attr_temp as $k => $v){
+                foreach($attr as $k => $v){
                     if($v=='月度绩效工资小计'){
                         $mark['yuedustart']=$counter;
                     }
                     if($v=='省核专项奖励小计'){
-                        $mark['yueduend']=$counter-1;
+                        #$mark['yueduend']=$counter-1;
                         $mark['shengzhuanstart']=$counter;
                     }
                     if($v=='分公司专项奖励小计'){
-                        $mark['shengzhuanend']=$counter-1;
+                        #$mark['shengzhuanend']=$counter-1;
                         $mark['fengongsistart']=$counter;
                     }
                     if($v=='其他小计'){
-                        $mark['fengongsiend']=$counter-1;
+                        #$mark['fengongsiend']=$counter-1;
                         $mark['qitastart']=$counter;
                     }
                     if($v=='教育经费小计'){
-                        $mark['qitaend']=$counter-1;
+                        #$mark['qitaend']=$counter-1;
                         $mark['jiaoyustart']=$counter;
                     }
                     if($v=='福利费小计'){
-                        $mark['jiaoyuend']=$counter-1;
+                        #$mark['jiaoyuend']=$counter-1;
                         $mark['fulistart']=$counter;
                     }
                     if($v=='当月月应收合计'){
-                        $mark['fuliend']=$counter-1;
+                        #$mark['fuliend']=$counter-1;
                         $mark['yingshou']=$counter;
                         $mark['koufeistart']=$counter+1;
                     }
@@ -849,7 +848,7 @@ class Super_wage extends Admin_Controller
                     $counter++;
                 }
             }
-            #echo var_dump($attr);
+
             //all,部门无条件,两种情况，一种是全部，一种是导入名单
             if($dept=='all'){
                 //无导入名单和有导入名单
@@ -912,37 +911,38 @@ class Super_wage extends Admin_Controller
                 $attr=$this->model_wage_attr->getWageAttrDataByDate($date_tag);
                 foreach($this->model_wage_attr->getWageAttrDataByDate($start) as $k => $v){
                     $counter=0;
-                    foreach($attr_temp as $k => $v){
+                    foreach($attr as $k => $v){
                         if($v=='月度绩效工资小计'){
                             $mark['yuedustart']=$counter;
                         }
                         if($v=='省核专项奖励小计'){
-                            $mark['yueduend']=$counter-1;
+                            #$mark['yueduend']=$counter-1;
                             $mark['shengzhuanstart']=$counter;
                         }
                         if($v=='分公司专项奖励小计'){
-                            $mark['shengzhuanend']=$counter-1;
+                            #$mark['shengzhuanend']=$counter-1;
                             $mark['fengongsistart']=$counter;
                         }
                         if($v=='其他小计'){
-                            $mark['fengongsiend']=$counter-1;
+                            #$mark['fengongsiend']=$counter-1;
                             $mark['qitastart']=$counter;
                         }
                         if($v=='教育经费小计'){
-                            $mark['qitaend']=$counter-1;
+                            #$mark['qitaend']=$counter-1;
                             $mark['jiaoyustart']=$counter;
                         }
                         if($v=='福利费小计'){
-                            $mark['jiaoyuend']=$counter-1;
+                            #$mark['jiaoyuend']=$counter-1;
                             $mark['fulistart']=$counter;
                         }
                         if($v=='当月月应收合计'){
-                            $mark['fuliend']=$counter-1;
+                            #$mark['fuliend']=$counter-1;
                             $mark['yingshou']=$counter;
                             $mark['koufeistart']=$counter+1;
                         }
                         if($v=='扣款小计'){
                             $mark['koufeiend']=$counter;
+                            array_push($mark_set,$mark);
                             break;
                         }
                         $counter++;
@@ -1060,35 +1060,47 @@ class Super_wage extends Admin_Controller
             foreach($wage_set as $c => $wtemp){
                 $col = 0;
                 foreach($wtemp['attr'] as $k => $v){
-                    if($v != "" and $k!="date_tag" and $k!="attr_name1" and in_array($col,$mark)){
-                        #echo $v;
+                    if($v != "" and $k!="date_tag" and $k!="attr_name1" and in_array($counter,$mark_set[$c])){
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
-                        
+                        $col++;    
                     }
-                    $col++;
+                    elseif($counter<$mark_set[$c]['yuedustart']){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
+                        $col++;
+                    }
+                    $counter++;
                 }
-                /*
                 $col = 0;
+                $counter=0;
                 $row++;
 
                 foreach($wtemp['wage'] as $k => $v){
                     foreach($v as $a => $b){
-                        if($b != "" and $a!="date_tag" and $a!="number" and in_array($col,$mark)){
+                        if($b != "" and $a!="date_tag" and $a!="number" and in_array($counter,$mark_set[$c])){
                             if($a=='user_id'){
                                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, ' '.$b);
                             }
                             else{
                                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
                             }
-                            
                             $col++;
                         }
+                        elseif($counter<$mark_set[$c]['yuedustart']){
+                            if($a=='user_id'){
+                                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, ' '.$b);
+                            }
+                            else{
+                                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
+                            }
+                            $col++;
+                        }
+                        $counter++;
                         
                     }
                     $col=0;
+                    $counter=0;
                     $row++;
                 }
-                */
             }
             
         }
