@@ -142,6 +142,7 @@
             <span> 收入证明</span>
           </a>
         </li>
+        <!--
         <li class="treeview" id="taxCounterMenu">
           <a href="#">
             <i class="fa fa-cloud"></i>
@@ -155,6 +156,7 @@
             <li id="showWageDocNav"><a href="#"><i class="fa fa-circle-o"></i> 人员名单导入</a></li>
           </ul>
         </li>
+        -->
         <li id="logTableMainMenu">
           <a href="<?php echo base_url('super_wage/log_show') ?>">
             <i class="fa fa-database"></i>

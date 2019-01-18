@@ -29,7 +29,7 @@ class Super_Auth extends Admin_Controller
     ============================================================
     */ 
 	public function get_code(){
-		$img = imagecreatetruecolor(80, 30);
+		$img = imagecreatetruecolor(90, 40);
 		$black = imagecolorallocate($img, 0x00, 0x00, 0x00);
 		$green = imagecolorallocate($img, 0x00, 0xFF, 0x00);
 		$white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
