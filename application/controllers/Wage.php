@@ -6,13 +6,13 @@ class Wage extends Admin_Controller{
 	public function __construct(){
 		parent::__construct();
 
-		$this->wage_not_logged_in();
-
+		$this->not_logged_in();
 		$this->data['page_title'] = 'Wage';
         $this->load->model('model_wage');
         $this->load->model('model_holiday');
+        $this->load->model('model_users');
         $this->load->model('model_wage_doc');
-        $this->load->model('model_wage_users');
+        
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
         $this->load->model('model_wage_func');
@@ -345,7 +345,6 @@ class Wage extends Admin_Controller{
                     $counter++;
                 }
             }
-            
             $this->render_template('wage/search', $this->data);
             
         }

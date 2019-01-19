@@ -40,9 +40,10 @@
                 <thead>
                 <tr>
                   <th>用户名</th>
-                  <th>部门</th>
                   <th>身份证</th>
+                  <th>部门</th>
                   <th>操作</th>
+                  <th>状态</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -60,6 +61,7 @@
                         </div>
                         </td>
                         </form>
+                        <td><?php echo $v['reset_tag']; ?></td>
                       </tr>
                     <?php endforeach ?>
                   <?php endif; ?>

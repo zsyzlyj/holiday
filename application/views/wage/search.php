@@ -106,7 +106,6 @@
                   <?php endif; ?>
                 </thead>
                 <tbody>
-                  
                   <?php if($wage_data):?>
                     <tr>
                     <?php $counter=0;?>

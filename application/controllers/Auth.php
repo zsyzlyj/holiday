@@ -2,11 +2,8 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends Admin_Controller 
-{
-
-	public function __construct()
-	{
+class Auth extends Admin_Controller {
+	public function __construct(){
 		parent::__construct();
 
 		$this->load->model('model_auth');
@@ -71,6 +68,102 @@ class Auth extends Admin_Controller
 			'code' => $code
 		);
 		return $result;
+	}
+	public function login(){
+		$this->logged_in();
+		$this->form_validation->set_rules('user_id', 'user_id', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('verify_code', 'verify_code', 'required');
+		if(array_key_exists('image', $_SESSION)){
+			if(file_exists($_SESSION['image'])){
+				unlink($_SESSION['image']);
+			}
+		}
+		if ($this->form_validation->run() == TRUE){
+            if(strtolower($this->input->post('verify_code'))===strtolower($_SESSION['code'])){
+				// true case
+				$id_exists = $this->model_auth->check_id($this->input->post('user_id'));
+				if($id_exists == TRUE){
+					$login = $this->model_auth->login($this->input->post('user_id'), $this->input->post('password'));
+					if($login){
+						$log=array(
+							'user_id' => $login['user_id'],
+							'username' => $login['username'],
+							'login_ip' => $_SERVER["REMOTE_ADDR"],
+							'staff_action' => 'holiday_log_in',
+							'action_time' => date('Y-m-d H:i:s')
+						);
+						$this->model_log_action->create($log);
+						$logged_in_sess = array(
+							'user_name' => $login['username'],
+							'user_id' => $login['user_id'],
+							'permission' => $login['permission'],
+							'logged_in' => TRUE
+						);
+						$this->data['user_name'] = $login['username'];
+						$this->session->set_userdata($logged_in_sess);
+						#$this->load->view('dashboard');
+						redirect('dashboard', 'refresh');
+					}
+					else{
+						$image_item=$this->get_code();
+						$_SESSION['image']=$image_item['image'];
+						$_SESSION['code']=$image_item['code'];
+						unset($image_item);
+						$this->data['errors'] = '密码错误';
+						$this->load->view('login', $this->data);
+					}
+				}
+				else{
+					$image_item=$this->get_code();
+					$_SESSION['image']=$image_item['image'];
+					$_SESSION['code']=$image_item['code'];
+					unset($image_item);
+					$this->data['errors'] = '账户不存在';
+					$this->load->view('login', $this->data);
+				}
+			}
+			else{
+				$image_item=$this->get_code();
+				$_SESSION['image']=$image_item['image'];
+				$_SESSION['code']=$image_item['code'];
+				unset($image_item);
+				$this->data['errors'] = '验证码不正确';
+				$this->load->view('login', $this->data);
+			}
+        }
+        else{
+			// false case
+			$image_item=$this->get_code();
+			$_SESSION['image']=$image_item['image'];
+			$_SESSION['code']=$image_item['code'];
+			$_SESSION['image']=$image_item['image'];
+			unset($image_item);
+            $this->load->view('login',$this->data);
+        }	
+	}
+	public function logout(){	
+		if(array_key_exists('user_id', $this->data)){
+			if($this->data['user_id']==NULL){
+				$this->session->sess_destroy();
+				redirect('auth/login', 'refresh');
+			}
+		}
+		else{
+			$this->session->sess_destroy();
+			redirect('auth/login', 'refresh');
+		}
+		$log=array(
+			'user_id' => $this->data['user_id'],
+			'username' => $this->data['user_name'],
+			'login_ip' => $_SERVER["REMOTE_ADDR"],
+			'staff_action' => 'log_out',
+			'action_time' => date('Y-m-d H:i:s')
+		);
+		$this->model_log_action->create($log);
+		unset($log);
+		$this->session->sess_destroy();
+		redirect('auth/login', 'refresh');
 	}
 	public function holiday_login(){
 		$this->holiday_logged_in();

@@ -2,9 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Super_Auth extends Admin_Controller 
-{
-
+class Super_Auth extends Admin_Controller{
 	public function __construct()
 	{
 		parent::__construct();

@@ -12,14 +12,14 @@ class Super_wage extends Admin_Controller
         $this->load->model('model_plan');
         $this->load->model('model_notice');
         $this->load->model('model_dept');
-
-        $this->load->model('model_wage_users');
+        $this->load->model('model_users');
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
         $this->load->model('model_wage_record');
         $this->load->model('model_wage');
         $this->load->model('model_wage_doc'); 
-        $this->load->model('model_wage_func'); 
+        $this->load->model('model_wage_func');
+        $this->data['notice_data'] = $this->model_notice->getNoticeLatestWage();
         $this->data['permission']=$this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
@@ -188,7 +188,7 @@ class Super_wage extends Admin_Controller
             $this->data['chosen_month']=$_POST['chosen_month'];
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strlen($doc_name)<=7 and $doc_name!=""){
-                $this->data['wage_data']=$this->model_wage->getWageDataByDate($doc_name);
+                $this->data['wage_data']=$this->model_wage->getWageByDate($doc_name);
                 $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
                 $counter=0;
                 foreach($this->data['attr_data'] as $k => $v){
@@ -516,7 +516,7 @@ class Super_wage extends Admin_Controller
         $counter=0;
 
         $this->model_wage_tag->deleteAll();
-        $this->model_wage_users->deleteAll();
+        $this->model_users->deleteAll();
         $this->model_dept->deleteAll();
         $wage_set=array();
         $user_set=array();
@@ -553,7 +553,8 @@ class Super_wage extends Admin_Controller
                 switch($role){
                     case "部门负责人":$permission=2;break;
                     case "员工":$permission=3;break;
-                    case "综管员":$permission=3;break;
+                    case "综管员":$permission=1;break;
+                    #case ""
                 }
                 $user_data=array(
                     'username' => $name,
@@ -573,7 +574,7 @@ class Super_wage extends Admin_Controller
             $counter++;
         }
         $this->model_wage_tag->createbatch($wage_set);
-        $this->model_wage_users->createbatch($user_set);
+        $this->model_users->createbatch($user_set);
         foreach($all_dept as $k => $v){
             $dept_data=array(
                 'dept_name' => $v,
@@ -857,12 +858,12 @@ class Super_wage extends Admin_Controller
                         if($_FILES["selected_user"]["error"]==4){
                             //无导入名单
                             //all,该部门全部导出
-                            $wage=$this->model_wage->getWageDataByDate($start);
+                            $wage=$this->model_wage->getWageByDate($start);
                         }
                         else{
                             //有导入名单
                             $user_set=$this->wage_temp_put();
-                            $wage=$this->model_wage->getWageByDateAndId($user_set,$start);
+                            $wage=$this->model_wage->getWageByDateAndIdset($user_set,$start);
                         }
                     }
                     else{
@@ -956,12 +957,12 @@ class Super_wage extends Admin_Controller
                             if($_FILES["selected_user"]["error"]==4){
                                 //无导入名单
                                 //all,该部门全部导出
-                                $wage=$this->model_wage->getWageDataByDate($date_tag);
+                                $wage=$this->model_wage->getWageByDate($date_tag);
                             }
                             else{
                                 //有导入名单
                                 $user_set=$this->wage_temp_put();
-                                $wage=$this->model_wage->getWageByDateAndId($user_set,$date_tag);
+                                $wage=$this->model_wage->getWageByDateAndIdset($user_set,$date_tag);
                             }
                         }
                         else{
@@ -1298,9 +1299,17 @@ class Super_wage extends Admin_Controller
             }
         }
         $tag_data=$this->model_wage_tag->getTagData();
+
         $result=array();
+        $tag="";
         foreach($tag_data as $k => $v){
-            array_push($result,array('name'=>$v['name'],'user_id'=>$v['user_id'],'dept'=>$v['dept']));
+            if($this->model_users->getUserById($v['user_id'])['password']===md5(substr($v['user_id'],-6))){
+                $tag='密码为初始密码';
+            }
+            else{
+                $tag='密码已更改';
+            }
+            array_push($result,array('name'=>$v['name'],'user_id'=>$v['user_id'],'dept'=>$v['dept'],'reset_tag'=>$tag));
         }
         $this->data['user_data'] = $result;
         unset($result);

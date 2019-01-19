@@ -8,7 +8,7 @@ class Holiday extends Admin_Controller
 	{
 		parent::__construct();
 
-		$this->holiday_not_logged_in();
+		$this->not_logged_in();
 
         $this->data['page_title'] = 'Holiday';
         $this->data['permission'] = $this->session->userdata('permission');

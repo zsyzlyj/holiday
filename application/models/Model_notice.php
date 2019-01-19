@@ -22,6 +22,11 @@ class Model_notice extends CI_Model{
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+	public function getNoticeLatestWage($id = null){
+		$sql = "SELECT * FROM notice where notice.type='wage' order by pubtime desc limit 1";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 	public function create($data){
 		if($data){
 			$insert = $this->db->insert('notice', $data);
