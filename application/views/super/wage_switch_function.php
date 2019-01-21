@@ -5,12 +5,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        公告历史
+        权限开关
       </h1>
-      
-        
-
-      
     </section>
 
     <!-- Main content -->
