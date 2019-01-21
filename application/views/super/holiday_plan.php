@@ -7,10 +7,6 @@
       <h1>
         年假计划
       </h1>
-      
-        
-
-      
     </section>
 
     <!-- Main content -->
@@ -18,7 +14,6 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-md-12 col-xs-12">
-
           <?php if($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -29,14 +24,10 @@
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <?php echo $this->session->flashdata('error'); ?>
             </div>
-          <?php endif; ?>         
-        
-
+          <?php endif; ?>
           <div class="box">
             <div class="box-header">
-
-            </div>
-            
+            </div>         
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
@@ -60,8 +51,7 @@
                   <?php if($plan_data): ?>    
               
                     <?php foreach($plan_data as $k => $v): ?>
-                      <tr>
-                      
+                      <tr>                     
                         <td><?php echo $v['name']; ?></td>
                         <td><?php echo $v['Totalday']; ?></td>
                         <td><?php echo $v['Lastyear']; ?></td>
@@ -88,8 +78,7 @@
                         <button class='btn btn-danger'>撤回填写权限</button>
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="0"/>
-                        <input type="hidden" id='submit_revolt' name='submit_revolt' value="1"/>
-                        
+                        <input type="hidden" id='submit_revolt' name='submit_revolt' value="1"/>  
                         </form>
                         </td>
                       </tr>

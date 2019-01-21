@@ -7,10 +7,7 @@
       <h1>
         年假计划
       </h1>
-
-      
     </section>
-
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->

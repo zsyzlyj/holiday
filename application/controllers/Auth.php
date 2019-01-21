@@ -48,13 +48,11 @@ class Auth extends Admin_Controller {
 			$words = 'abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
 			$code = substr(str_shuffle($words), 0, 4);
 			imagestring($img, 5, 10, 10, $code, $black);
-
-			$new_img = "captcha/".date('YmdHis').'-'.$code.".jpg";
+			$new_img = "captcha/".date('YmdHis').'-'.$code.".jpg";			
 			$created = imagejpeg($img, $new_img);
-
 			$_SESSION['code']=$code;
 			$_SESSION['image']=$new_img;
-			echo '<a href="javascript:void(0);"  _onclick="get_captcha();"><img src="http://localhost/human_resources/'.$new_img.'" style="border:1px solid black"/></a>';
+			echo '<a href="javascript:void(0);"  _onclick="get_captcha();"><img src="http://'.$_SERVER['HTTP_HOST'].'/human_resources/'.$new_img.'" style="border:1px solid black"/></a>';
 			//销毁图片
 			imagedestroy($img);
         } else {
