@@ -9,10 +9,6 @@
     <h1>
       工资明细查询
     </h1>
-    
-      
-      
-    
   </section>
 
   <!-- Main content -->

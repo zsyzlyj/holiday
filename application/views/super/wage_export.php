@@ -7,11 +7,7 @@
     <section class="content-header">
       <h1>
         文件下载
-      </h1>
-      
-        
-        
-      
+      </h1>      
     </section>
     <hr />
     <!-- Main content -->
@@ -35,29 +31,25 @@
                 <form class="form-horizontal" action="<?php echo base_url('super_wage/download_page')?>" method="post" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
                   <fieldset>
                     <div id="legend" class="">
-                      <legend class="">表单名</legend>
+                      <legend class=""></legend>
                     </div>
                     <div class="form-group">
                       <label for="dtp_input1" class="col-md-2 control-label">开始月份</label>
-                      <div class="input-group date start_form_datetime col-md-3" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm" data-link-field="dtp_input1">
+                      <div class="input-group date form_datetime col-md-2" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm" data-link-field="dtp_input1">
                         <?php if($chosen_month):?>
                         <input class="form-control" id="datetimeStart" name="start_month" size="12" type="text" value="<?php echo $chosen_month;?>" readonly>
                         <?php else:?>
                         <input class="form-control" id="datetimeStart" name="start_month" size="12" type="text" value="单击选择月份" readonly>
                         <?php endif;?>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                       </div>
   
                       <label for="dtp_input1" class="col-md-2 control-label">结束月份</label>
-                      <div class="input-group date end_form_datetime col-md-3" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm" data-link-field="dtp_input1">
+                      <div class="input-group date form_datetime col-md-2" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm" data-link-field="dtp_input1">
                         <?php if($chosen_month):?>
                         <input class="form-control" id="datetimeEnd" name="end_month" size="12" type="text" value="<?php echo $chosen_month;?>" readonly>
                         <?php else:?>
                         <input class="form-control" id="datetimeEnd" name="end_month" size="12" type="text" value="单击选择月份" readonly>
                         <?php endif;?>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                       </div>
                       <!-- /.input-group -->               
                     </div>
@@ -119,7 +111,21 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $("#downloadWageNav").addClass('active');
-
+      $("#datetimeStart").datetimepicker({
+          bootcssVer:3,
+          format: "yyyy-mm",
+          startView:3,
+          minView:3,
+          startDate:"2017-01",
+          autoclose:true  
+        }).on("changeDate",function(ev){
+          if(ev.date){
+              $("#datetimeEnd").datetimepicker('setStartDate', new Date(ev.date.valueOf()));
+          }else{
+              $("#datetimeEnd").datetimepicker('setStartDate',null);
+          }
+        });
+      });
       $("#datetimeEnd").datetimepicker({
         bootcssVer:3,
         format: "yyyy-mm",
@@ -127,20 +133,15 @@
         minView:3,
         startDate:"2017-01",
         autoclose:true  
-      }).on("click",function(){
-        $("#datetimeEnd").datetimepicker("setStartDate",$("#datetimeStart".val()))
-      });
-      $("#datetimeStart").datetimepicker({
-        bootcssVer:3,
-        format: "yyyy-mm",
-        startView:3,
-        minView:3,
-        startDate:"2017-01",
-        autoclose:true  
-      }).on("click",function(){
-        $("#datetimeStart").datetimepicker("setEndDate",$("#datetimeEnd").val())
-      });
-    });
+      }).on("changeDate",function(ev){
+           //选择的日期不能小于第一个日期控件的日期
+           if(ev.date){
+                $("#datetimeStart").datetimepicker('setEndDate', new Date(ev.date.valueOf()));
+           }else{
+                $("#datetimeStart").datetimepicker('setEndDate',new Date());
+           }
+        });  
+      
     function checkdeptOnclick(checkbox){
       if (checkbox.checked == true){
         //Action for checked
