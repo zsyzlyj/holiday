@@ -5,10 +5,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        用户
-        <small>设置</small>
+        修改密码
       </h1>
-  
     </section>
 
     <!-- Main content -->
@@ -16,8 +14,6 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-md-12 col-xs-12">
-
-
           <?php if($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -45,12 +41,7 @@
             -->
    
             <!-- /.box-header -->
-            <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
-            <form role="form" action="<?php base_url('auth/wage_setting') ?>" method="post">
-            <?php endif; ?>
-            <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
-            <form role="form" action="<?php base_url('auth/holiday_setting') ?>" method="post">
-            <?php endif; ?>
+            <form role="form" action="<?php base_url('auth/setting') ?>" method="post">
             
               <div class="box-body">
                 <div class="col-md-3 col-md-offset-4">
