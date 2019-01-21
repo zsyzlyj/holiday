@@ -589,6 +589,7 @@ class Super_wage extends Admin_Controller
 
     }
     public function wage_tag_import($filename=NULL){
+        $this->data['path'] = "uploads/standard/人员信息大表模板.xlsx";
         if($_FILES){
             if($_FILES["file"]){
                 if($_FILES["file"]["error"] > 0){
@@ -711,7 +712,7 @@ class Super_wage extends Admin_Controller
     }
     
     public function wage_import(){
-        $this->data['path'] = "uploads/standard/wage_sample.xlsx";
+        $this->data['path'] = "uploads/standard/薪酬导入模板.xlsx";
         if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('chosen_month',$_POST)){
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strstr($doc_name,'1899')){
@@ -1122,9 +1123,10 @@ class Super_wage extends Admin_Controller
         /**/
     }
     public function download_page(){
+        $this->data['path'] = "uploads/standard/人员导入模板.xlsx";
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if($_POST['end_month']!='单击选择月份' and !strstr($_POST['end_month'],'1899') and $_POST['start_month']!='单击选择月份' and !strstr($_POST['start_month'],'1899')){
-                $this->data['path'] = "uploads/standard/wage_sample.xlsx";
+                $this->data['path'] = "uploads/standard/人员导入模板.xlsx";
                 $this->excel($_POST['start_month'],$_POST['end_month'],$_POST['selected_dept']);
                 /*
                 $this->data['path'] = "uploads/standard/wage_sample.xlsx";

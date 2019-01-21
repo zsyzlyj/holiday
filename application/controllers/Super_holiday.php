@@ -720,8 +720,8 @@ class Super_holiday extends Admin_Controller
         $this->model_feedback->createbatch($feedback_set);
     }
 
-    public function manager_import()
-	{
+    public function manager_import(){
+        $this->data['path'] = "uploads/standard/负责人和綜管員角色表模板.xlsx";
         if($_FILES){
             if($_FILES["file"]){
                 if($_FILES["file"]["error"] > 0){

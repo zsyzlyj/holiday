@@ -24,7 +24,7 @@
                 <br />
                 <h5><input type="file" name="file" id="file" accept=".xls,.xlsx"/></h5>
                 <br />
-                <button type="submit" id="submit" name="import" class="btn btn-warning" >Import</button>
+                <button type="submit" id="submit" name="import" class="btn btn-warning" >导入</button>
         
             </div>
         </form>
@@ -37,7 +37,7 @@
 <!-- /.content-wrapper -->
 <script type="text/javascript">
     $(document).ready(function() {
-      $("#holidaySyncNav").addClass('active');
+
       $("#uploadHolidayNav").addClass('active');
       
     });

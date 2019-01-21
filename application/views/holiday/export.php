@@ -33,7 +33,6 @@
   
   <script type="text/javascript">
     $(document).ready(function() {
-      $("#holidaySyncNav").addClass('active');
       $("#downloadHolidayNav").addClass('active');
       
     });

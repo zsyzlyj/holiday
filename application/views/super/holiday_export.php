@@ -18,9 +18,6 @@
     <section class="content">
       <div class="col-md-12 col-xs-12">
         <div class="row">
-          <h3>年假模板</h3>
-          <br />
-          <a href="<?php echo base_url('super_holiday/export_holiday') ?>" class="btn btn-info">下载</a>
           <h3>年假计划汇总</h3>
           <br />
           <a href="<?php echo base_url('super_holiday/export_plan') ?>" class="btn btn-info">下载</a>
@@ -34,7 +31,7 @@
   
   <script type="text/javascript">
     $(document).ready(function() {
-      $("#holidaySyncNav").addClass('active');
+
       $("#downloadHolidayNav").addClass('active');
       
     });

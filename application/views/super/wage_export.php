@@ -100,6 +100,7 @@
                     <div class="form-group">
                       <div class="input-group col-md-offset-2">
                         <button class="btn btn-success">下载</button>
+                        <a class="btn btn-info" href="<?php echo base_url($path) ?>">人员名单模板下载</a>
                       </div>
                     </div>
                   </fieldset>
