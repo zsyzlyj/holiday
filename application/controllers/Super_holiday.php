@@ -73,7 +73,8 @@ class Super_holiday extends Admin_Controller
         if($_FILES){
             if($_FILES["file"]){
                 if($_FILES["file"]["error"] > 0){
-                    echo "Error: " . $_FILES["file"]["error"] . "<br />";
+                    $this->session->set_flashdata('error', '请选择要上传的文件！');
+                    $this->render_super_template('super/holiday_doc_import',$this->data);
                 }
                 else{
                     $this->holiday_doc_put();
@@ -301,7 +302,8 @@ class Super_holiday extends Admin_Controller
         if($_FILES){
             if($_FILES["file"]){
                 if($_FILES["file"]["error"] > 0){
-                    echo "Error: " . $_FILES["file"]["error"] . "<br />";
+                    $this->session->set_flashdata('error', '请选择要上传的文件！');
+                    $this->render_super_template('super/holiday_import',$this->data);
                 }
                 else{
                     $this->holiday_excel_put();
@@ -725,7 +727,8 @@ class Super_holiday extends Admin_Controller
         if($_FILES){
             if($_FILES["file"]){
                 if($_FILES["file"]["error"] > 0){
-                    echo "Error: " . $_FILES["file"]["error"] . "<br />";
+                    $this->session->set_flashdata('error', '请选择要上传的文件！');
+                    $this->render_super_template('super/holiday_manager_import',$this->data);
                 }
                 else{
                     foreach($this->model_holiday_manager->getManagerData() as $k => $v){

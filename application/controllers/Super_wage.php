@@ -593,7 +593,8 @@ class Super_wage extends Admin_Controller
         if($_FILES){
             if($_FILES["file"]){
                 if($_FILES["file"]["error"] > 0){
-                    echo "Error: " . $_FILES["file"]["error"] . "<br />";
+                    $this->session->set_flashdata('error', '请选择要上传的文件！');
+                    $this->render_super_template('super/wage_tag_import',$this->data);
                 }
                 else{
                     $this->wage_tag_excel_put();
@@ -1167,7 +1168,8 @@ class Super_wage extends Admin_Controller
         if($_FILES){
             if($_FILES["file"]){
                 if($_FILES["file"]["error"] > 0){
-                    echo "Error: " . $_FILES["file"]["error"] . "<br />";
+                    $this->session->set_flashdata('error', '请选择要上传的文件！');
+                    $this->render_super_template('super/wage_doc_import',$this->data);
                 }
                 else{
                     $this->wage_doc_put();
