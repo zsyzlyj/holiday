@@ -391,7 +391,6 @@ class Auth extends Admin_Controller {
 							$this->session->set_flashdata('error', '原密码错误');	
 							redirect('auth/setting', 'refresh');
 						}
-						
 					}
 			        else{
 						// false case

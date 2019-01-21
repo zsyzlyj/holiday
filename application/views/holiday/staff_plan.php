@@ -100,7 +100,7 @@
                           <td style="text-align:center;"><input type="text" style="width:100px;" id='thirdquater' name='thirdquater' value="<?php echo $v['thirdquater']; ?>"></td>
                           <td style="text-align:center;"><input type="text" style="width:100px;" id='fourthquater' name='fourthquater' value="<?php echo $v['fourthquater']; ?>"></td>
                           <td style="text-align:center;">
-                              <button class="btn btn-success" type="submit"><i class="fa fa-check-circle"></i></button>
+                              <button class="btn btn-success" type="submit" onClick="javascript:if(!confirm('你确定删除吗？')) { return false;};location='url';"><i class="fa fa-check-circle"></i></button>
                           </td>
                         </form>
                         <?php endif; ?>
@@ -132,11 +132,12 @@
   <!-- /.content-wrapper -->
   
   
-  
+
 
   <script type="text/javascript">
     $(document).ready(function() {
       $("#planMainMenu").addClass('active');
+      
       /*
       $('#planTable').DataTable({
         language: 

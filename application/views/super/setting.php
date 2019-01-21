@@ -5,10 +5,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        用户
-        <small>设置</small>
+        修改密码
       </h1>
-  
     </section>
     <br />
 
@@ -40,10 +38,10 @@
             </div>
             <!-- /.box-header -->
             <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
-            <form role="form" action="<?php base_url('super_wage/setting') ?>" method="post">
+            <form role="form" action="<?php base_url('super_auth/wage_setting') ?>" method="post">
             <?php endif; ?>
             <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
-            <form role="form" action="<?php base_url('super_holiday/setting') ?>" method="post">
+            <form role="form" action="<?php base_url('super_auth/holiday_ setting') ?>" method="post">
             <?php endif; ?>
               <div class="box-body">
                 <div class="col-md-4 col-md-offset-4">

@@ -588,8 +588,7 @@ class Super_wage extends Admin_Controller
         unset($dept_set);
 
     }
-    public function wage_tag_import($filename=NULL)
-   {
+    public function wage_tag_import($filename=NULL){
         if($_FILES){
             if($_FILES["file"]){
                 if($_FILES["file"]["error"] > 0){

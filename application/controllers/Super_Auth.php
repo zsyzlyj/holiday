@@ -194,11 +194,11 @@ class Super_Auth extends Admin_Controller{
 	
 							if($update == true){
 								$this->session->set_flashdata('success', '修改成功！');
-								$this->render_template('super/setting', $this->data);
+								$this->render_super_template('super/setting', $this->data);
 							}
 							else{
 								$this->session->set_flashdata('error', '遇到未知错误!!');
-								$this->render_template('super/setting', $this->data);
+								$this->render_super_template('super/setting', $this->data);
 								
 							}
 						}
@@ -214,7 +214,6 @@ class Super_Auth extends Admin_Controller{
 			        else{
 						// false case
 						redirect('super_auth/'.$type.'_setting', 'refresh');
-						#$this->render_template('users/setting', $this->data);	
 			        }
 		        }
 	        }
