@@ -6,7 +6,7 @@ class Model_users extends CI_Model{
 	}
 
 	public function getUserData(){
-		$sql = "SELECT * FROM wage_users WHERE user_id != ?";
+		$sql = "SELECT * FROM users WHERE user_id != ?";
 		$query = $this->db->query($sql, array(1));
 		return $query->result_array();
 	}

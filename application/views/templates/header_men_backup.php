@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="javascript:void(0);" class="logo" style="cursor:default">
+    <a href="javascript:void(0);" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b></b></span>
       <!-- logo for regular state and mobile devices -->
@@ -20,10 +20,10 @@
     
     <ul class="nav navbar-nav navbar-right">
 
-        <li><a href="javascript:void(0);" style="cursor:default">
+        <li><a href="javascript:void(0);">
         <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;<?php echo $user_name;?>
         </a></li>
-        <li><a href="<?php echo base_url('dashboard') ?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;退出</a></li>
+        <li><a href="<?php echo base_url('auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;退出登录</a></li>
         <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
     </ul>
 

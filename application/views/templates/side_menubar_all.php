@@ -4,8 +4,6 @@
       
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
-          
           <!--
           <li id="wageMainMenu">
             <a href="<?php echo base_url('wage/staff') ?>">
@@ -67,9 +65,6 @@
         <!--
         <li><a href="<?php echo base_url('auth/wage_logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>退出登录</span></a></li>
         -->
-        <?php endif ?>
-        <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
-
         <?php if($permission == 4): ?>
         <li id="myDomainHolidayMainMenu">
           <a href="<?php echo base_url('holiday/mydomainholiday') ?>">
@@ -179,7 +174,7 @@
         <!--
         <li><a href="<?php echo base_url('auth/holiday_logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>退出登录</span></a></li>
         -->
-        <?php endif; ?>
+
         <li id="changePassword"><a href="<?php echo base_url('auth/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
       </ul>
     </section>

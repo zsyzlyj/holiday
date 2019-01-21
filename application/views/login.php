@@ -32,7 +32,7 @@
                     <input class="form-control" type="text" name="verify_code" id="password" placeholder="验证码" autocomplete="off">
                     </div>
                     <div class="col-md-4">
-                    <a href="<?php echo base_url('auth/login');?>"><img src="<?php echo base_url($_SESSION['image']);?>" style="border:1px solid black" value="验证" name="captcha"/></a>
+                        <a href="javascript:void(0);" id="reload-captcha"><p id="captcha-image"></p></a>
                     </div>
                 </div>
                 <input value="登录" style="width:100%;" type="submit">
@@ -40,6 +40,18 @@
         </div>
     </div>
 </div>
+<script src="<?php echo base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>
+<script type="text/javascript">
+    function get_captcha() {
+        $.get("<?php echo base_url('auth/get_captcha');?>", function(data){
+            $('#captcha-image').html(data);
+        });
+    };
+    $(document).ready(function() {
+        get_captcha();
+        $('#reload-captcha').click(get_captcha);
+    });
 
+</script>
 </body>
 </html>

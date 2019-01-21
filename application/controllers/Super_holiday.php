@@ -180,7 +180,7 @@ class Super_holiday extends Admin_Controller
         //删除所有假期信息，计划，用户   
         $this->model_holiday->deleteAll();
         $this->model_plan->deleteAll();
-        $this->model_holiday_users->deleteAll();        
+        #$this->model_holiday_users->deleteAll();        
 
         /* excel导入时间的方法！ */
         $holiday_set=array();
@@ -283,6 +283,7 @@ class Super_holiday extends Admin_Controller
             );
             array_push($plan_set,$plan_data);
             //初始化用户信息，每个人新建一条用户记录，用于登陆，密码为身份证后六位
+            /*
             $Update_user_data=array(
                 'user_id' => $User_id,
                 'username' => $name,
@@ -290,10 +291,11 @@ class Super_holiday extends Admin_Controller
                 'permission' => '3'
             );
             array_push($user_set,$Update_user_data);
+            */
         }
         $this->model_holiday->createbatch($holiday_set);
         $this->model_plan->createbatch($plan_set);
-        $this->model_holiday_users->createbatch($user_set);
+        #$this->model_holiday_users->createbatch($user_set);
     }
     public function holiday_import($filename=NULL){
         if($_FILES){
@@ -661,12 +663,14 @@ class Super_holiday extends Admin_Controller
         $User_default=array(
             'permission' => 3
         );
+        /*
         $user=$this->model_holiday_users->getUserData();
         foreach ($user as $c => $d){
             $this->model_holiday_users->update($User_default,$user_id);
         }
+        */
         //删除所有的管理人员
-        $this->model_holiday_manager->deleteAll();
+        #$this->model_holiday_manager->deleteAll();
         //删除所有的反馈信息
         $this->model_feedback->deleteAll();
         foreach($column as $k => $v){

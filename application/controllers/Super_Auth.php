@@ -6,7 +6,7 @@ class Super_Auth extends Admin_Controller{
 	public function __construct()
 	{
 		parent::__construct();
-
+		$this->load->helper('url');
 		$this->load->model('model_super_auth');
 		$this->load->model('model_super_user');
 		$this->data['permission']=$this->session->userdata('permission');
@@ -25,44 +25,37 @@ class Super_Auth extends Admin_Controller{
     5、wage_setting(),薪酬超管修改密码页面
     6、setting(),修改密码母板
     ============================================================
-    */ 
-	public function get_code(){
-		$img = imagecreatetruecolor(90, 40);
-		$black = imagecolorallocate($img, 0x00, 0x00, 0x00);
-		$green = imagecolorallocate($img, 0x00, 0xFF, 0x00);
-		$white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
-		imagefill($img, 0, 0, $white);
-		//生成随机的验证码
-		$words = 'abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
-		$code = substr(str_shuffle($words), 0, 4);
-		imagestring($img, 5, 10, 10, $code, $black);
-		/*
-		//加入噪点干扰
-		for ($i = 0; $i < 300; $i++) {
-			imagesetpixel($img, rand(0, 100), rand(0, 100), $black);
-			imagesetpixel($img, rand(0, 100), rand(0, 100), $green);
-		}
-		//加入线段干扰
-		for ($n = 0; $n <= 1; $n++) {
-			imageline($img, 0, rand(0, 40), 100, rand(0, 40), $black);
-			imageline($img, 0, rand(0, 40), 100, rand(0, 40), $white);
-		}
-		*/
-		//图片保存的位置
-		$new_img = "captcha/".date('YmdHis').'-'.$code.".jpg";
-		$created = imagejpeg($img, $new_img);
+	*/ 
+	public function get_captcha(){
+        if ($this->input->is_ajax_request()) {
+			if(array_key_exists('image', $_SESSION)){
+				if(file_exists($_SESSION['image'])){
+					unlink($_SESSION['image']);
+				}
+			}
+            $img = imagecreatetruecolor(90, 40);
+			$black = imagecolorallocate($img, 0x00, 0x00, 0x00);
+			$green = imagecolorallocate($img, 0x00, 0xFF, 0x00);
+			$white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
+			imagefill($img, 0, 0, $white);
+			//生成随机的验证码
+			$words = 'abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
+			$code = substr(str_shuffle($words), 0, 4);
+			imagestring($img, 5, 10, 10, $code, $black);
 
-		//输出验证码
-		#header("content-type: image/png");
-		#imagepng($img);
-		//销毁图片
-		imagedestroy($img);
-		$result=array(
-			'image' => $new_img,
-			'code' => $code
-		);
-		return $result;
-	}
+			$new_img = "captcha/".date('YmdHis').'-'.$code.".jpg";
+			$created = imagejpeg($img, $new_img);
+
+			$_SESSION['code']=$code;
+			$_SESSION['image']=$new_img;
+			echo '<a href="javascript:void(0);"  _onclick="get_captcha();"><img src="http://localhost/human_resources/'.$new_img.'" style="border:1px solid black"/></a>';
+			//销毁图片
+			imagedestroy($img);
+        } else {
+            show_404();
+        }
+    }
+	
 	public function index(){
 		$this->login();
 	}
@@ -76,7 +69,6 @@ class Super_Auth extends Admin_Controller{
 				unlink($_SESSION['image']);
 			}
 		}
-		
         if ($this->form_validation->run() == TRUE){
 			if(strtolower($this->input->post('verify_code'))===strtolower($_SESSION['code'])){
 				// true case
@@ -110,28 +102,16 @@ class Super_Auth extends Admin_Controller{
 						}
 					}
 					else{
-						$image_item=$this->get_code();
-						$_SESSION['image']=$image_item['image'];
-						$_SESSION['code']=$image_item['code'];
-						unset($image_item);
 						$this->data['errors'] = '密码错误';
 						$this->load->view('super/login', $this->data);
 					}
 				}
 				else{
-					$image_item=$this->get_code();
-					$_SESSION['image']=$image_item['image'];
-					$_SESSION['code']=$image_item['code'];
-					unset($image_item);
 					$this->data['errors'] = '账户不存在';
 					$this->load->view('super/login', $this->data);
 				}
 			}
 			else{
-				$image_item=$this->get_code();
-				$_SESSION['image']=$image_item['image'];
-				$_SESSION['code']=$image_item['code'];
-				unset($image_item);
 				$this->data['errors'] = '验证码错误';
 				$this->load->view('super/login', $this->data);
 			}
@@ -139,11 +119,7 @@ class Super_Auth extends Admin_Controller{
         }
         else{
 			// false case
-			$image_item=$this->get_code();
-			$_SESSION['image']=$image_item['image'];
-			$_SESSION['code']=$image_item['code'];
-			unset($image_item);
-            $this->load->view('super/login',$this->data);
+			$this->load->view('super/login',$this->data);
         }	
 	}
 	/*

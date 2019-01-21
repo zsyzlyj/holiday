@@ -1290,7 +1290,7 @@ class Super_wage extends Admin_Controller
     }
     public function reset_pass(){
         if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('user_id',$_POST)){
-            $update=$this->model_wage_users->edit(array('password'=>md5(substr($_POST['user_id'],-6))),$_POST['user_id']);
+            $update=$this->model_users->edit(array('password'=>md5(substr($_POST['user_id'],-6))),$_POST['user_id']);
             if($update == true){
                 $this->session->set_flashdata('success', '密码重置成功！');
             }

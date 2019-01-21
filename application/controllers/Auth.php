@@ -32,43 +32,35 @@ class Auth extends Admin_Controller {
 		2——部门负责人，manager
 		3——普通员工,staff
 	*/
-	public function get_code(){
-		$img = imagecreatetruecolor(90, 40);
-		$black = imagecolorallocate($img, 0x00, 0x00, 0x00);
-		$green = imagecolorallocate($img, 0x00, 0xFF, 0x00);
-		$white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
-		imagefill($img, 0, 0, $white);
-		//生成随机的验证码
-		$words = 'abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
-		$code = substr(str_shuffle($words), 0, 4);
-		imagestring($img, 5, 10, 10, $code, $black);
-		/*
-		//加入噪点干扰
-		for ($i = 0; $i < 300; $i++) {
-			imagesetpixel($img, rand(0, 100), rand(0, 100), $black);
-			imagesetpixel($img, rand(0, 100), rand(0, 100), $green);
-		}
-		//加入线段干扰
-		for ($n = 0; $n <= 1; $n++) {
-			imageline($img, 0, rand(0, 40), 100, rand(0, 40), $black);
-			imageline($img, 0, rand(0, 40), 100, rand(0, 40), $white);
-		}
-		*/
-		//图片保存的位置
-		$new_img = "captcha/".date('YmdHis').'-'.$code.".jpg";
-		$created = imagejpeg($img, $new_img);
+	public function get_captcha(){
+        if ($this->input->is_ajax_request()) {
+			if(array_key_exists('image', $_SESSION)){
+				if(file_exists($_SESSION['image'])){
+					unlink($_SESSION['image']);
+				}
+			}
+            $img = imagecreatetruecolor(90, 40);
+			$black = imagecolorallocate($img, 0x00, 0x00, 0x00);
+			$green = imagecolorallocate($img, 0x00, 0xFF, 0x00);
+			$white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
+			imagefill($img, 0, 0, $white);
+			//生成随机的验证码
+			$words = 'abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
+			$code = substr(str_shuffle($words), 0, 4);
+			imagestring($img, 5, 10, 10, $code, $black);
 
-		//输出验证码
-		#header("content-type: image/png");
-		#imagepng($img);
-		//销毁图片
-		imagedestroy($img);
-		$result=array(
-			'image' => $new_img,
-			'code' => $code
-		);
-		return $result;
-	}
+			$new_img = "captcha/".date('YmdHis').'-'.$code.".jpg";
+			$created = imagejpeg($img, $new_img);
+
+			$_SESSION['code']=$code;
+			$_SESSION['image']=$new_img;
+			echo '<a href="javascript:void(0);"  _onclick="get_captcha();"><img src="http://localhost/human_resources/'.$new_img.'" style="border:1px solid black"/></a>';
+			//销毁图片
+			imagedestroy($img);
+        } else {
+            show_404();
+        }
+    }
 	public function login(){
 		$this->logged_in();
 		$this->form_validation->set_rules('user_id', 'user_id', 'required');
@@ -102,43 +94,25 @@ class Auth extends Admin_Controller {
 						);
 						$this->data['user_name'] = $login['username'];
 						$this->session->set_userdata($logged_in_sess);
-						#$this->load->view('dashboard');
 						redirect('dashboard', 'refresh');
 					}
 					else{
-						$image_item=$this->get_code();
-						$_SESSION['image']=$image_item['image'];
-						$_SESSION['code']=$image_item['code'];
-						unset($image_item);
 						$this->data['errors'] = '密码错误';
 						$this->load->view('login', $this->data);
 					}
 				}
 				else{
-					$image_item=$this->get_code();
-					$_SESSION['image']=$image_item['image'];
-					$_SESSION['code']=$image_item['code'];
-					unset($image_item);
 					$this->data['errors'] = '账户不存在';
 					$this->load->view('login', $this->data);
 				}
 			}
 			else{
-				$image_item=$this->get_code();
-				$_SESSION['image']=$image_item['image'];
-				$_SESSION['code']=$image_item['code'];
-				unset($image_item);
 				$this->data['errors'] = '验证码不正确';
 				$this->load->view('login', $this->data);
 			}
         }
         else{
 			// false case
-			$image_item=$this->get_code();
-			$_SESSION['image']=$image_item['image'];
-			$_SESSION['code']=$image_item['code'];
-			$_SESSION['image']=$image_item['image'];
-			unset($image_item);
             $this->load->view('login',$this->data);
         }	
 	}
@@ -378,12 +352,71 @@ class Auth extends Admin_Controller {
 		redirect('auth/wage_login', 'refresh');
 	}
 
+	public function setting(){
+		$id = $this->session->userdata('user_id');
+		$this->data['user_name'] = $this->session->userdata('user_name');
+		if($id){
+			$this->form_validation->set_rules('username', 'username', 'trim|max_length[12]');
+			if ($this->form_validation->run() == TRUE){
+	            // true case
+		        if(empty($this->input->post('opassword'))){
+					$this->session->set_flashdata('error', '修改失败，原密码不能为空');
+					redirect('auth/setting', 'refresh');
+				}
+				elseif(empty($this->input->post('npassword')) && empty($this->input->post('cpassword'))){
+					$this->session->set_flashdata('error', '修改失败，新密码不能为空');
+					redirect('auth/setting', 'refresh');
+				}
+		        else{
+					$this->form_validation->set_rules('opassword', 'Password', 'trim|required');
+					$this->form_validation->set_rules('npassword', 'Password', 'trim|required');
+					$this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|required|matches[npassword]');
+					if($this->form_validation->run() == TRUE){
+						$compare = $this->model_auth->login($id, $this->input->post('opassword'));
+						if($compare){
+							$password = md5($this->input->post('npassword'));
+							$data = array(
+								'username' => $this->input->post('username'),
+								'password' => $password,
+							);
+							$update = $this->model_users->edit($data, $id);	
+							if($update == true){
+								$this->session->set_flashdata('success', '修改成功！');
+								$this->render_template('users/setting', $this->data);
+							}
+							else{
+								$this->session->set_flashdata('error', '遇到未知错误!!');
+								$this->render_template('users/setting', $this->data);
+							}
+						}
+						else{
+							$this->session->set_flashdata('error', '原密码错误');	
+							redirect('auth/setting', 'refresh');
+						}
+						
+					}
+			        else{
+						// false case
+						redirect('auth/setting', 'refresh');
+			        }
+		        }
+	        }
+	        else{
+				// false case
+				$user_data = $this->model_users->getUserData($id);
+				$this->data['user_data'] = $user_data;
+				$this->render_template('users/setting', $this->data);	
+	        }
+		}
+	}
+	/*
 	public function holiday_setting(){
 		$this->setting('holiday');
 	}
 	public function wage_setting(){
 		$this->setting('wage');
 	}
+	
 	public function setting($type){
 		$id = $this->session->userdata('user_id');
 		$this->data['user_name'] = $this->session->userdata('user_name');
@@ -458,5 +491,5 @@ class Auth extends Admin_Controller {
 	        }
 		}
 	}
-	
+	*/
 }
