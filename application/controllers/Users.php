@@ -4,16 +4,15 @@ class Users extends Admin_Controller{
 	public function __construct(){
 		parent::__construct();
 
-		$this->holiday_not_logged_in();
+		$this->not_logged_in();
 		
 		$this->data['page_title'] = 'Users';
-		
-		$this->load->model('model_holiday_users');
-		$this->load->model('model_wage_users');
+		$this->load->model('model_wage_tag');
 		$this->load->model('model_holiday_manager');
 		$this->load->model('model_holiday');
 		$this->data['permission']=$this->session->userdata('permission');
 		$this->data['user_name'] = $this->session->userdata('user_name');
+		$this->data['user_id'] = $this->session->userdata('user_id');
 	}
 	
 	public function index(){
@@ -86,5 +85,9 @@ class Users extends Admin_Controller{
 				$this->render_template('users/delete', $this->data);
 			}	
 		}
+	}
+	public function profile(){
+		$this->data['user_info']=$this->model_wage_tag->getTagById($this->data['user_id']);
+		$this->render_template('users/profile', $this->data);
 	}
 }

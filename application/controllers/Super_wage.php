@@ -510,6 +510,14 @@ class Super_wage extends Admin_Controller
         $gender='';
         $dept='';
         $position='';
+        $company='';
+        $marry='';
+        $child='';
+        $highest_qualification='';
+        $highest_degree='';
+        $ft_highest_degree='';
+        $ft_highest_qualification='';
+        $service_mode='';
         $indate='';
         $role='';
         $proof_tag='';
@@ -525,17 +533,36 @@ class Super_wage extends Admin_Controller
         foreach($data as $k => $v){
             #$row_data=array();
             if($counter>1){
+                $col=0;
                 foreach($v as $a=>$b){
                     switch($data[1][$a]){
                         case '员工姓名':$name=$b;break;
                         case '身份证号':$user_id=$b;break;
                         case '性别':$gender=$b;break;
                         case '所在部门':$dept=$b;break;
+                        case '科室':$office=$b;break;
                         case '岗位':$position=$b;break;
-                        case '加入本企业时间':$indate=$b;break;
-                        case '系统角色':$role=$b;break;
+                        case '合同签订公司':$company=$b;break;
+                        case '婚姻情况':$marry=$b;break;
+                        case '生育情况':$child=$b;break;
+                        case '最高学历':$highest_qualification=$b;break;
+                        case '最高学位':$highest_degree=$b;break;
+                        case '全日制最高学历':$ft_highest_qualification=$b;break;
+                        case '全日制最高学位':$ft_highest_degree=$b;break;
+                        case '用工形式':$service_mode=$b;break;
+                        case '加入本企业时间':$indate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
                         case '收入证明标识':$proof_tag=$b;break;
                     }
+                    if($col==13){
+                        $qian3=$b;
+                    }
+                    if($col==14){
+                        $qian2=$b;
+                    }
+                    if($col==15){
+                        $qian1=$b;
+                    }
+                    $col++;
                 }
                 //新建用户标识
                 $row_data=array(
@@ -543,24 +570,37 @@ class Super_wage extends Admin_Controller
                     'user_id' => $user_id,
                     'gender' => $gender,
                     'dept' => $dept,
+                    'office' => $office,
                     'position' => $position,
-                    'role' => $role,
-                    'proof_tag' => $proof_tag
+                    'company' => $company,
+                    'marry' => $marry,
+                    'child' => $child,
+                    'highest_qualification' => $highest_qualification,
+                    'highest_degree' => $highest_degree,
+                    'ft_highest_qualification' => $ft_highest_qualification,
+                    'ft_highest_degree' => $ft_highest_degree,
+                    'service_mode' => $service_mode,
+                    'indate' => $indate,
+                    'proof_tag' => $proof_tag,
+                    'qian3' => $qian3,
+                    'qian2' => $qian2,
+                    'qian1' => $qian1
                 );
                 array_push($wage_set,$row_data);
                 unset($row_data);
                 //新建登陆用户
+                /*
                 switch($role){
                     case '部门负责人':$permission=2;break;
                     case '员工':$permission=3;break;
                     case '综管员':$permission=1;break;
                     #case ''
-                }
+                }*/
                 $user_data=array(
                     'username' => $name,
                     'user_id' => $user_id,
                     'password' => md5(substr($user_id,-6)),
-                    'permission' => $permission,
+                    'permission' => 3,
                 );
                 array_push($user_set,$user_data);
                 unset($user_data);

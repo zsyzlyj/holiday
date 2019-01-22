@@ -5,13 +5,9 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        User
-        <small>Profile</small>
+        个人基本信息
       </h1>
-      
-        
 
-      
     </section>
 
     <!-- Main content -->
@@ -22,18 +18,72 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Profile <?php echo $user_data['username'];?></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table class="table table-bordered table-condensed table-hovered">
-                <tr>
-                  <th>Username</th>
-                  <td><?php echo $user_data['username']; ?></td>
-                  <th>Username</th>
-                  <td><?php echo $user_data['username']; ?></td>
-                  <th>Username</th>
-                  <td><?php echo $user_data['username']; ?></td>
+              <table class="table" style="font-size:17px;font-family:微软雅黑;">
+                <tr style="height:60px;">
+                  <th style="font-size:25px" colspan="3">基本信息</th>
+                </tr>
+                <tr style="height:40px;">
+                  <td style="width:300px">姓名：<?php echo $user_info['name'];?></td>
+                  <td style="width:300px">性别：<?php echo $user_info['gender'];?></td>
+                  <td style="width:300px">入司时间：<?php echo $user_info['indate'];?></td>
+                </tr>
+                
+                <tr style="border:none;height:40px;">
+                  <td style="border:none;">部门：<?php echo $user_info['dept'];?></td>
+                  <td style="border:none;">科室：<?php echo $user_info['office'];?></td>
+                  <td style="border:none;;">岗位：<?php echo $user_info['position'];?></td>
+                </tr>
+                <tr style="border:none;height:40px;">
+                  <td style="border:none;" colspan="3">合同签订公司：<?php echo $user_info['company'];?></td>
+                </tr>
+                <tr style="height:20px;"></tr>
+                <tr style="height:60px;">
+                  <th style="font-size:25px" colspan="3">婚育信息</th>
+                </tr>
+                <tr style="height:40px;">
+                  <td style="width:300px">婚姻状态：<?php echo $user_info['marry'];?></td>
+                  <td style="width:300px">生育状况：<?php echo $user_info['child'];?></td>
+                  <td style="width:300px"></td>
+                </tr>
+                <tr style="height:20px;"></tr>
+                <tr style="height:60px;">
+                  <th style="font-size:25px" colspan="3">教育信息</th>
+                </tr>
+                <tr style="height:40px;">
+                  <td style="width:300px">全日制最高学历：<?php echo $user_info['ft_highest_qualification'];?></td>
+                  <td style="width:300px">学位：<?php echo $user_info['ft_highest_degree'];?></td>
+                  <td style="width:300px"></td>
+                </tr>
+                <tr style="border:none;height:40px;">
+                  <td style="border:none;">最高学历：<?php echo $user_info['highest_qualification'];?></td>
+                  <td style="border:none;">学位：<?php echo $user_info['highest_degree'];?></td>
+                  <td style="border:none;"></td>
+                </tr>
+                <tr style="height:20px;"></tr>
+                <tr style="height:60px;">
+                  <th style="font-size:25px" colspan="3">考核信息</th>
+                </tr>
+                <tr style="height:20px;">
+                  <td style="width:300px">近三年考核结果：</td>
+                  <td style="width:300px"></td>
+                  <td style="width:300px"></td>
+                </tr>
+                <tr style="height:20px;">
+                  <table class="table table-striped table-bordered">
+                  <thead>
+                    <th style="text-align:center;"><?php echo date("Y")-3;?>年年度考核结果</th>
+                    <th style="text-align:center;"><?php echo date("Y")-2;?>年年度考核结果</th>
+                    <th style="text-align:center;"><?php echo date("Y")-1;?>年年度考核结果</th>
+                  </thead>
+                  <tbody>
+                    <td style="width:300px;text-align:center;"><?php echo $user_info['qian3'];?></td>
+                    <td style="width:300px;text-align:center;"><?php echo $user_info['qian2'];?></td>
+                    <td style="width:300px;text-align:center;"><?php echo $user_info['qian1'];?></td>
+                  </table>
+                  </table>
                 </tr>
               </table>
             </div>
@@ -50,5 +100,10 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <script type="text/javascript">
 
+    $(document).ready(function() {
+      $("#userProfile").addClass('active');
+    });
+  </script>
  

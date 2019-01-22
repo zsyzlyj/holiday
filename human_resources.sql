@@ -485,9 +485,17 @@ CREATE TABLE `wage_tag` (
   `user_id` varchar(18) NOT NULL,
   `gender` varchar(50) DEFAULT NULL,
   `dept` varchar(50) DEFAULT NULL,
+  `office` varchar(50) DEFAULT NULL,
   `position` varchar(50) DEFAULT NULL,
+  `company` varchar(50) DEFAULT NULL,
+  `marry` varchar(50) DEFAULT NULL,
+  `child` varchar(50) DEFAULT NULL,
+  `highest_qualification` varchar(50) DEFAULT NULL,
+  `highest_degree` varchar(50) DEFAULT NULL,
+  `ft_highest_qualification` varchar(50) DEFAULT NULL,
+  `ft_highest_degree` varchar(50) DEFAULT NULL,
+  `service_mode` varchar(50) DEFAULT NULL,
   `indate` date DEFAULT NULL,
-  `role` varchar(50) DEFAULT NULL,
   `proof_tag` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
