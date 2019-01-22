@@ -39,7 +39,7 @@
         </div>
         <div class="box-body">
           <div style="overflow:scroll;">
-            <table id="holidayDocTable" class="table table-striped" >
+            <table id="holidayDocTable" class="table table-bordered table-striped" >
               <thead>
                 <tr>
                   <th>日期</th>

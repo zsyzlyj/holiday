@@ -25,9 +25,7 @@
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <?php echo $this->session->flashdata('error'); ?>
             </div>
-          <?php endif; ?>         
-        
-
+          <?php endif; ?>
           <div class="box">
             <div class="box-header">
               <h3 class="box-title"><font color="red">公告说明：</font></h3>
@@ -40,9 +38,9 @@
               <?php endif ?>
               </h4>
             </div>
-            
             <!-- /.box-header -->
             <div class="box-body">
+            
               <div style="overflow:scroll;">
               <?php if($plan_data): ?>  
                 <h3>状态：
@@ -100,7 +98,22 @@
                           <td style="text-align:center;"><input type="text" style="width:100px;" id='thirdquater' name='thirdquater' value="<?php echo $v['thirdquater']; ?>"></td>
                           <td style="text-align:center;"><input type="text" style="width:100px;" id='fourthquater' name='fourthquater' value="<?php echo $v['fourthquater']; ?>"></td>
                           <td style="text-align:center;">
-                              <button class="btn btn-success" type="submit" onClick="javascript:if(!confirm('你确定删除吗？')) { return false;};location='url';"><i class="fa fa-check-circle"></i></button>
+                            <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-check-circle"></i></a>
+                            <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                              <div class="modal-content-month">
+                                <div class="modal-header">
+                                  <h4>请确认</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <h4 style="text-align:left">确认提交吗？</h4>
+                                  <h4 style="text-align:left"><font color="red">提交后不可再修改</font></h4>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                  <button type="submit" class="btn btn-success btn-ok">确认提交</a>
+                                </div>
+                              </div><!-- /.modal-content -->
+                            </div><!-- /.modal -->
                           </td>
                         </form>
                         <?php endif; ?>
@@ -112,7 +125,7 @@
               </table>
               <hr />
               <div>
-              <h5><font color="red">（温馨提示：年假计划只能填写一次，提交后不可修改）</font></h5>
+              <h5><font color="red">（温馨提示：年假计划只能填写一次，提交后不可修改。如要修改请联系综管员）</font></h5>
               </div>
               </div>
               <!-- /.overflow:scroll -->
@@ -130,14 +143,15 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  
+  <!-- 按钮触发模态框 -->
+
   
 
 
   <script type="text/javascript">
+
     $(document).ready(function() {
       $("#planMainMenu").addClass('active');
-      
       /*
       $('#planTable').DataTable({
         language: 

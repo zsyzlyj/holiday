@@ -97,27 +97,27 @@
                             
                             <!-- 弹窗内容 -->
                             <div class="modal-content-month">
-                              <div class="modal-header-month">
+                              <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 <h3>已休假明细</h3>
                               </div>
 
-                              <div class="modal-body-month">
+                              <div class="modal-body">
                               <table id="MonthTable" class="table table-bordered table-striped" style="text-align: center;">
                                 <thead>
                                   <tr style="text-align:center;">
-                                    <th style="text-align:center;">一月</th>
-                                    <th style="text-align:center;">二月</th>
-                                    <th style="text-align:center;">三月</th>
-                                    <th style="text-align:center;">四月</th>
-                                    <th style="text-align:center;">五月</th>
-                                    <th style="text-align:center;">六月</th>
-                                    <th style="text-align:center;">七月</th>
-                                    <th style="text-align:center;">八月</th>
-                                    <th style="text-align:center;">九月</th>
-                                    <th style="text-align:center;">十月</th>
-                                    <th style="text-align:center;">十一月</th>
-                                    <th style="text-align:center;">十二月</th>
+                                    <th style="text-align:center;width:60px">一月</th>
+                                    <th style="text-align:center;width:60px">二月</th>
+                                    <th style="text-align:center;width:60px">三月</th>
+                                    <th style="text-align:center;width:60px">四月</th>
+                                    <th style="text-align:center;width:60px">五月</th>
+                                    <th style="text-align:center;width:60px">六月</th>
+                                    <th style="text-align:center;width:60px">七月</th>
+                                    <th style="text-align:center;width:60px">八月</th>
+                                    <th style="text-align:center;width:60px">九月</th>
+                                    <th style="text-align:center;width:60px">十月</th>
+                                    <th style="text-align:center;width:60px">十一月</th>
+                                    <th style="text-align:center;width:60px">十二月</th>
                                   </tr>
                                   </thead>
                                   <tbody>

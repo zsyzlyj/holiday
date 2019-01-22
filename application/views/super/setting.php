@@ -71,7 +71,21 @@
 
               <div class="box-footer">
                 <div class="col-md-4 col-md-offset-4">
-                <button type="submit" class="btn btn-primary">保存修改</button>
+                <a href="javascript:void(0)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">保存修改</a>
+                <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                  <div class="modal-content-month">
+                    <div class="modal-header">
+                      <h4>请确认</h4>
+                    </div>
+                    <div class="modal-body">
+                      <h4 style="text-align:left">确认修改吗？</h4>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                      <button type="submit" class="btn btn-success btn-ok">确认修改</a>
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
                 <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
                 <a href="<?php echo base_url('super_wage/search') ?>" class="btn btn-warning">返回</a>
                 <?php endif; ?>

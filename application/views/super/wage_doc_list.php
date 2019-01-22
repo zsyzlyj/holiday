@@ -39,7 +39,7 @@
         </div>
         <div class="box-body">
           <div style="overflow:scroll;">
-            <table id="wageDocTable" class="table table-striped" >
+            <table id="wageDocTable" class="table table-bordered table-striped" >
               <thead>
                 <tr>
                   <th>序号</th>

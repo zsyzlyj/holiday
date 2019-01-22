@@ -26,7 +26,7 @@
         </div>
         <div class="box-body">
           <div style="overflow:scroll;">
-            <table id="wageLogTable" class="table table-striped" >
+            <table id="wageLogTable" class="table table-bordered table-striped" >
               <thead>
                 <tr>
                   <th>操作时间</th>

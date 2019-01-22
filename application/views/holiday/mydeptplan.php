@@ -14,7 +14,6 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-md-12 col-xs-12">
-
           <?php if($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -53,7 +52,21 @@
                 <?php if($submitted==count($domain)):?>
                 <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/submit_to_audit') ?>' method='post'>
                   <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
-                  <button class="btn btn-success">提交</button>
+                  <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal">提交</a>
+                  <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                    <div class="modal-content-month">
+                      <div class="modal-header">
+                        <h4>请确认</h4>
+                      </div>
+                      <div class="modal-body">
+                        <h4 style="text-align:left">确认提交吗？</h4>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-success btn-ok">确认提交</a>
+                      </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal -->
                 </form>
                 <?php endif; ?>
                 <?php if($submitted!=count($domain)):?>

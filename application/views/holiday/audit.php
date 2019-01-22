@@ -26,15 +26,8 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
-          
-
-
           <div class="box">
-            
-            
             <div class="box-header">
-            
-            
             <form action='<?php echo base_url('holiday/audit' )?>' method="post" id="selected_dept_form">
             <select id="selected_dept" name="selected_dept" onchange="submitForm();">
               <option value="">
@@ -106,7 +99,6 @@
                         <td><?php echo $v['secondquater']; ?></td>
                         <td><?php echo $v['thirdquater']; ?></td>
                         <td><?php echo $v['fourthquater']; ?></td>
-
                       </tr>
                     <?php endforeach ?>
                     </tbody>
@@ -130,7 +122,21 @@
                 <label><input name="confirm" type="radio" value="0" />&nbsp;不同意 </label>
                 <br />
                 <br />
-                <button type='submit' class="btn btn-success">提交</button>
+                <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal">提交</a>
+                <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                  <div class="modal-content-month">
+                    <div class="modal-header">
+                      <h4>请确认</h4>
+                    </div>
+                    <div class="modal-body">
+                      <h4 style="text-align:left">确认提交吗？</h4>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                      <button type="submit" class="btn btn-success btn-ok">确认提交</a>
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
 
               </form>
               </div>
