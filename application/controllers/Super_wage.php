@@ -125,10 +125,10 @@ class Super_wage extends Admin_Controller
         $this->render_super_template('super/wage',$this->data);
     }
     public function search_excel($doc_name){
-        $this->load->library("phpexcel");//ci框架中引入excel类
+        $this->load->library('phpexcel');//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
         
-        $dir="uploads/wage";
+        $dir='uploads/wage';
         $data=array();
         if(is_dir($dir)){
             $files = array();
@@ -164,10 +164,10 @@ class Super_wage extends Admin_Controller
                                     if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
                                         $cell = $cell->__toString();
                                     }
-                                    if($cell!="" or $cell=="0"){
+                                    if($cell!='' or $cell=='0'){
                                         $data[$rowIndex][$colIndex] = $cell;
                                     }
-                                    if($cell=="" and $colIndex==$columnCnt){
+                                    if($cell=='' and $colIndex==$columnCnt){
                                         $data[$rowIndex][$colIndex] = $cell;
                                     }
                                 }
@@ -181,13 +181,13 @@ class Super_wage extends Admin_Controller
         return $data;
     }
     public function search(){
-        $this->data['wage_data']="";
-        $this->data['attr_data']="";
-        $this->data['chosen_month']="";
+        $this->data['wage_data']='';
+        $this->data['attr_data']='';
+        $this->data['chosen_month']='';
         if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('chosen_month',$_POST)){
             $this->data['chosen_month']=$_POST['chosen_month'];
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
-            if(strlen($doc_name)<=7 and $doc_name!=""){
+            if(strlen($doc_name)<=7 and $doc_name!=''){
                 $this->data['wage_data']=$this->model_wage->getWageByDate($doc_name);
                 $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
                 $counter=0;
@@ -238,8 +238,8 @@ class Super_wage extends Admin_Controller
     
     public function proof_Creator($type){
         //图片水印制作
-        $ori_img = "assets/images/unicomletterb.jpg";    //原图
-        $new_img = "assets/images/new.jpg";    //生成水印后的图片
+        $ori_img = 'assets/images/unicomletterb.jpg';    //原图
+        $new_img = 'assets/images/new.jpg';    //生成水印后的图片
         
         $original = getimagesize($ori_img);    //得到图片的信息，可以print_r($original)发现它就是一个数组
 
@@ -334,74 +334,74 @@ class Super_wage extends Admin_Controller
         #$cage=$holiday_data['Companyage'];
         #$user_id=$user_data['user_id'];
         #$username=$user_data['name'];
-        $user_id="";
-        $username="";
+        $user_id='';
+        $username='';
         #$date=date('Y年m月d日',strtotime($holiday_data['indate']));
-        $date="";
-        $str="收 入 证 明\r\n";
+        $date='';
+        $str='收 入 证 明\r\n';
         $pdf->SetFont('songti','B',24);
         $pdf->Write(0,$str,'', 0, 'C', false, 0, false, false, 0);
 
         switch($type){
             case 'wage':
-                $str="\r\n          兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任职综合部 综合文秘室 综合秘书，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟圆整），以上情况属实。此证明仅限于申请贷款之用。\r\n         特此证明！\r\n";
+                $str='\r\n          兹证明'.$username.'，身份证号码：'.$user_id.'为中国联合网络通信有限公司中山市分公司正式员工，自'.$date.'起为我司工作，现于我单位任职综合部 综合文秘室 综合秘书，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟圆整），以上情况属实。此证明仅限于申请贷款之用。\r\n         特此证明！\r\n';
                 break;
             case 'bank_wage':
-                $str="\r\n中山农村商业银行股份有限公司：\r\n            兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任职 网络建设部 无线网建设室 室主任，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟伍佰圆整），以上情况属实。此证明仅用于申请贷款之用。\r\n          特此证明！";
+                $str='\r\n中山农村商业银行股份有限公司：\r\n            兹证明'.$username.'（身份证号码：'.$user_id.'）为我单位正式员工，自'.$date.'起为我单位工作，现于我单位任职 网络建设部 无线网建设室 室主任，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟伍佰圆整），以上情况属实。此证明仅用于申请贷款之用。\r\n          特此证明！';
                 break;
             case 'fund':
-                $str="\r\n中山市住房公积金管理中心：\r\n            为申请住房公积金贷款事宜，兹证明 ".$username."，性别：，身份证号 ".$user_id."，是我单位职工，已在我单位工作满".$cage."年，该职工上一年度在我单位总收入约为 XXXX元（大写：拾壹萬伍仟圆整 ）。\r\n\r\n";
+                $str='\r\n中山市住房公积金管理中心：\r\n            为申请住房公积金贷款事宜，兹证明 '.$username.'，性别：，身份证号 '.$user_id.'，是我单位职工，已在我单位工作满'.$cage.'年，该职工上一年度在我单位总收入约为 XXXX元（大写：拾壹萬伍仟圆整 ）。\r\n\r\n';
                 break;
             case 'royal':
-                $str="          ".$username."（男，身份证号：".$user_id."） 同志自".$date."进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n          特此证明!\r\n";
+                $str='          '.$username.'（男，身份证号：'.$user_id.'） 同志自'.$date.'进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n          特此证明!\r\n';
                 break;
             case 'on_post_1':
-                $str="\r\n          兹有我单位员工".$username."，身份证号：".$user_id."，该员工于".$date."起至今在我公司工作。\r\n            特此证明。\r\n";
+                $str='\r\n          兹有我单位员工'.$username.'，身份证号：'.$user_id.'，该员工于'.$date.'起至今在我公司工作。\r\n            特此证明。\r\n';
                 $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日");
+                $str='\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n'.date('Y年m月d日');
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case 'on_post_2':
-                $str="\r\n          兹有".$username."（女，身份证号：".$user_id."），为中国联合网络通信有限公司中山市分公司中层管理干部，现任中国联合网络通信有限公司中山市分公司综合部部门经理。\r\n            特此证明。\r\n\r\n";
+                $str='\r\n          兹有'.$username.'（女，身份证号：'.$user_id.'），为中国联合网络通信有限公司中山市分公司中层管理干部，现任中国联合网络通信有限公司中山市分公司综合部部门经理。\r\n            特此证明。\r\n\r\n';
                 $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日");
+                $str='\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n'.date('Y年m月d日');
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case 'on_post_3':
-                $str="\r\n          兹有刘颖（女，身份证号：110108196709174243），为中国联合网络通信有限公司中山市分公司中层管理干部，现任中国联合网络通信有限公司中山市分公司综合部部门经理。\r\n            特此证明。\r\n";
+                $str='\r\n          兹有刘颖（女，身份证号：110108196709174243），为中国联合网络通信有限公司中山市分公司中层管理干部，现任中国联合网络通信有限公司中山市分公司综合部部门经理。\r\n            特此证明。\r\n';
                 $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
+                $str='\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n'.date('Y年m月d日').'\r\n\r\n\r\n\r\n';
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 $pdf->setCellHeightRatio(1.5); 
                 $pdf->SetFont('songti', '', 9);
-                $str="单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356";
+                $str='单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356';
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
 
                 break;
             case 'on_post_4':
-                $str="\r\n          兹有我单位".$username."同志，性别：男，身份证号码：".$user_id."，于".$date."至今在我单位从事 南部固网销售公司总经理 （职位）工作。\r\n单位名称：中国联合网络通信有限公司中山市分公司\r\n          联系地址：中山市东区长江北路6号联通大厦\r\n          联系人：徐小姐        联系电话：0760-23771356\r\n          特此证明。\r\n       （此证明仅用于办理流动人员积分制管理使用）\r\n";
+                $str='\r\n          兹有我单位'.$username.'同志，性别：男，身份证号码：'.$user_id.'，于'.$date.'至今在我单位从事 南部固网销售公司总经理 （职位）工作。\r\n单位名称：中国联合网络通信有限公司中山市分公司\r\n          联系地址：中山市东区长江北路6号联通大厦\r\n          联系人：徐小姐        联系电话：0760-23771356\r\n          特此证明。\r\n       （此证明仅用于办理流动人员积分制管理使用）\r\n';
                 $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
+                $str='\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n'.date('Y年m月d日').'\r\n\r\n\r\n\r\n';
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case 'on_post_5':
-                $str="\r\n          兹有".$username."（女，身份证号：".$user_id."），自".$date."进入我公司工作，现任中国联合网络通信有限公司中山市分公司员工 （职位）。\r\n          特此证明。\r\n       （此证明仅用于办理居住证使用）";
+                $str='\r\n          兹有'.$username.'（女，身份证号：'.$user_id.'），自'.$date.'进入我公司工作，现任中国联合网络通信有限公司中山市分公司员工 （职位）。\r\n          特此证明。\r\n       （此证明仅用于办理居住证使用）';
                 $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
+                $str='\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n'.date('Y年m月d日').'\r\n\r\n\r\n\r\n';
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 $pdf->setCellHeightRatio(1.5); 
                 $pdf->SetFont('songti', '', 9);
-                $str="单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356";
+                $str='单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356';
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 
                 break;
             case 'one_child':
-                $str="";
+                $str='';
                 break;
 
             default:break;
@@ -410,12 +410,12 @@ class Super_wage extends Admin_Controller
         if(!(strstr($type,'post'))){
             $pdf->SetFont('songti','',14);
             $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-            $str="\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n单位（盖章）\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n\r\n";
+            $str='\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n单位（盖章）\r\n'.date('Y年m月d日').'\r\n\r\n\r\n\r\n\r\n';
             $pdf->setCellHeightRatio(1.7); 
             $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
             $pdf->setCellHeightRatio(1.5); 
             $pdf->SetFont('songti', '', 9);
-            $str="\r\n\r\n联系地址：中山市长江北路6号联通大厦\r\n联系人：甘先生\r\n联系电话：0760-23692312";
+            $str='\r\n\r\n联系地址：中山市长江北路6号联通大厦\r\n联系人：甘先生\r\n联系电话：0760-23692312';
             $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false);
         }
 
@@ -427,49 +427,49 @@ class Super_wage extends Admin_Controller
     }
     //收入证明
     public function show_wage_proof(){
-        $this->proof_Creator("wage");
+        $this->proof_Creator('wage');
     }
     //公积金证明
     public function show_fund_proof(){
-        $this->proof_Creator("fund");
+        $this->proof_Creator('fund');
     }
 
     //农商银行收入证明
     public function show_bank_wage_proof(){
-        $this->proof_Creator("bank_wage");
+        $this->proof_Creator('bank_wage');
     }
     
     //收入证明
     public function show_royal_proof(){
-        $this->proof_Creator("royal");
+        $this->proof_Creator('royal');
     }
     
     public function show_on_post_1_proof(){
-        $this->proof_Creator("on_post_1");
+        $this->proof_Creator('on_post_1');
     }
     public function show_on_post_2_proof(){
-        $this->proof_Creator("on_post_2");
+        $this->proof_Creator('on_post_2');
     }
     public function show_on_post_3_proof(){
-        $this->proof_Creator("on_post_3");
+        $this->proof_Creator('on_post_3');
     }
     public function show_on_post_4_proof(){
-        $this->proof_Creator("on_post_4");
+        $this->proof_Creator('on_post_4');
     }
     public function show_on_post_5_proof(){
-        $this->proof_Creator("on_post_5");
+        $this->proof_Creator('on_post_5');
     }
     //收入证明
     public function show_one_child_proof(){
-        $this->proof_Creator("one_child");
+        $this->proof_Creator('one_child');
     }
     public function wage_tag_excel_put(){
-        $this->load->library("phpexcel");//ci框架中引入excel类
+        $this->load->library('phpexcel');//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
-        $filePath = "uploads/wage_user/".$path["name"];
-        move_uploaded_file($path["tmp_name"],$filePath);
+        $filePath = 'uploads/wage_user/'.$path['name'];
+        move_uploaded_file($path['tmp_name'],$filePath);
         //根据上传类型做不同处理
         
         if(strstr($_FILES['file']['name'],'xlsx')){
@@ -551,10 +551,10 @@ class Super_wage extends Admin_Controller
                 unset($row_data);
                 //新建登陆用户
                 switch($role){
-                    case "部门负责人":$permission=2;break;
-                    case "员工":$permission=3;break;
-                    case "综管员":$permission=1;break;
-                    #case ""
+                    case '部门负责人':$permission=2;break;
+                    case '员工':$permission=3;break;
+                    case '综管员':$permission=1;break;
+                    #case ''
                 }
                 $user_data=array(
                     'username' => $name,
@@ -566,7 +566,7 @@ class Super_wage extends Admin_Controller
                 unset($user_data);
                 //如果不是多部门，不包含/，那么就记录下来
                 if(strpos($dept,'/') != true){
-                    if(!in_array($dept,$all_dept) and $dept!="" and $dept!="产假退回"){
+                    if(!in_array($dept,$all_dept) and $dept!='' and $dept!='产假退回'){
                         array_push($all_dept,$dept);
                     }
                 }
@@ -589,10 +589,10 @@ class Super_wage extends Admin_Controller
 
     }
     public function wage_tag_import($filename=NULL){
-        $this->data['path'] = "uploads/standard/人员信息大表模板.xlsx";
+        $this->data['path'] = 'uploads/standard/人员信息大表模板.xlsx';
         if($_FILES){
-            if($_FILES["file"]){
-                if($_FILES["file"]["error"] > 0){
+            if($_FILES['file']){
+                if($_FILES['file']['error'] > 0){
                     $this->session->set_flashdata('error', '请选择要上传的文件！');
                     $this->render_super_template('super/wage_tag_import',$this->data);
                 }
@@ -607,7 +607,7 @@ class Super_wage extends Admin_Controller
         } 
     }
     public function wage_excel_put($filename){
-        $this->load->library("phpexcel");//ci框架中引入excel类
+        $this->load->library('phpexcel');//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
  
         //先做一个文件上传，保存文件
@@ -616,13 +616,13 @@ class Super_wage extends Admin_Controller
         //根据上传类型做不同处理
         if(strstr($_FILES['file']['name'],'xlsx')){
             $reader = new PHPExcel_Reader_Excel2007();
-            $filePath = "uploads/wage/".$filename.'.xlsx';
-            move_uploaded_file($path["tmp_name"],$filePath);
+            $filePath = 'uploads/wage/'.$filename.'.xlsx';
+            move_uploaded_file($path['tmp_name'],$filePath);
         }
         elseif(strstr($_FILES['file']['name'], 'xls')){
             $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
-            $filePath = "uploads/wage/".$filename.'.xls';
-            move_uploaded_file($path["tmp_name"],$filePath);
+            $filePath = 'uploads/wage/'.$filename.'.xls';
+            move_uploaded_file($path['tmp_name'],$filePath);
             
         }
         //薪酬文件记录写入
@@ -659,7 +659,7 @@ class Super_wage extends Admin_Controller
             if($rowIndex==3){
                 $attr_counter=1;
                 foreach($temp as $k => $v){
-                    if($v!=""){
+                    if($v!=''){
                         $attribute['attr_name'.$attr_counter]=$v;
                         $attr_counter++;
                     }
@@ -679,16 +679,16 @@ class Super_wage extends Admin_Controller
                 $counter=0;
                 foreach($temp as $k => $v){
                     if($counter==$attr_counter-1){
-                        if($v!=""){
+                        if($v!=''){
                             $wage['content'.($counter-3)]=$v;
                         }
                         else{
-                            $wage['content'.($counter-3)]="";
+                            $wage['content'.($counter-3)]='';
                         }
                         $wage['date_tag']=$filename;
                         break;
                     }
-                    if($v!=""){
+                    if($v!=''){
                         switch($k){
                             case 0:$wage['number']=$v;break;
                             case 1:$wage['department']=$v;break;
@@ -699,7 +699,7 @@ class Super_wage extends Admin_Controller
                         $counter++;
                     }
                     elseif(strlen($v)==1 and $v==0){
-                        $wage['content'.($counter-3)]="0";
+                        $wage['content'.($counter-3)]='0';
                         $counter++;
                     }
                     
@@ -713,7 +713,7 @@ class Super_wage extends Admin_Controller
     }
     
     public function wage_import(){
-        $this->data['path'] = "uploads/standard/薪酬导入模板.xlsx";
+        $this->data['path'] = 'uploads/standard/薪酬导入模板.xlsx';
         if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('chosen_month',$_POST)){
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strstr($doc_name,'1899')){
@@ -721,18 +721,18 @@ class Super_wage extends Admin_Controller
                 $this->render_super_template('super/wage_import',$this->data);
             }
             else{
-                if(strlen($doc_name)<=7 and $doc_name!=""){
+                if(strlen($doc_name)<=7 and $doc_name!=''){
                     if($_FILES){
-                        if($_FILES["file"]){
-                            if($_FILES["file"]["error"] > 0){
+                        if($_FILES['file']){
+                            if($_FILES['file']['error'] > 0){
                                 $this->session->set_flashdata('error', '请选择文件!!');
                                 $this->render_super_template('super/wage_import',$this->data);
                             }
                             else{
                                 $this->wage_excel_put($doc_name);
-                                $this->data['wage_data']="";
-                                $this->data['attr_data']="";
-                                $this->data['chosen_month']="";
+                                $this->data['wage_data']='';
+                                $this->data['attr_data']='';
+                                $this->data['chosen_month']='';
                                 $this->render_super_template('super/wage_search',$this->data);
                             }
                         }
@@ -749,19 +749,19 @@ class Super_wage extends Admin_Controller
         }
     }
     public function wage_temp_put(){
-        $this->load->library("phpexcel");//ci框架中引入excel类
+        $this->load->library('phpexcel');//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
         $path=$_FILES['selected_user'];
         //根据上传类型做不同处理
         if(strstr($_FILES['selected_user']['name'],'xlsx')){
             $reader = new PHPExcel_Reader_Excel2007();
             $filePath = 'uploads/wage/temp.xlsx';
-            move_uploaded_file($path["tmp_name"],$filePath);
+            move_uploaded_file($path['tmp_name'],$filePath);
         }
         elseif(strstr($_FILES['selected_user']['name'], 'xls')){
             $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
             $filePath = 'uploads/wage/temp.xlsx';
-            move_uploaded_file($path["tmp_name"],$filePath);
+            move_uploaded_file($path['tmp_name'],$filePath);
         }
         $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ');  
         $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
@@ -798,7 +798,7 @@ class Super_wage extends Admin_Controller
         $this->load->library('PHPExcel');
         $this->load->library('PHPExcel/IOFactory');
         $objPHPExcel = new PHPExcel();
-        $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
+        $objPHPExcel->getProperties()->setTitle('export')->setDescription('none');
         $objPHPExcel->setActiveSheetIndex(0);
         $start=substr($start_month,0,4).substr($start_month,5,6);
         $end=substr($end_month,0,4).substr($end_month,5,6);
@@ -855,8 +855,8 @@ class Super_wage extends Admin_Controller
             if($dept=='all'){
                 //无导入名单和有导入名单
                 if($_FILES){
-                    if($_FILES["selected_user"]){
-                        if($_FILES["selected_user"]["error"]==4){
+                    if($_FILES['selected_user']){
+                        if($_FILES['selected_user']['error']==4){
                             //无导入名单
                             //all,该部门全部导出
                             $wage=$this->model_wage->getWageByDate($start);
@@ -878,9 +878,9 @@ class Super_wage extends Admin_Controller
             //指定部门,没有选用户
             elseif($dept!='all'){
                 if($_FILES){
-                    if($_FILES["selected_user"]){
+                    if($_FILES['selected_user']){
                         //没有上传文件
-                        if($_FILES["selected_user"]["error"]==4){
+                        if($_FILES['selected_user']['error']==4){
                             //指定部门人员
                             $wage=$this->model_wage->getWageByDateAndDept($dept,$start);
                         }
@@ -954,8 +954,8 @@ class Super_wage extends Admin_Controller
                 if($dept=='all'){
                     //无导入名单和有导入名单
                     if($_FILES){
-                        if($_FILES["selected_user"]){
-                            if($_FILES["selected_user"]["error"]==4){
+                        if($_FILES['selected_user']){
+                            if($_FILES['selected_user']['error']==4){
                                 //无导入名单
                                 //all,该部门全部导出
                                 $wage=$this->model_wage->getWageByDate($date_tag);
@@ -977,9 +977,9 @@ class Super_wage extends Admin_Controller
                 //指定部门,没有选用户
                 elseif($dept!='all'){
                     if($_FILES){
-                        if($_FILES["selected_user"]){
+                        if($_FILES['selected_user']){
                             //没有上传文件
-                            if($_FILES["selected_user"]["error"]==4){
+                            if($_FILES['selected_user']['error']==4){
                                 //指定部门人员
                                 $wage=$this->model_wage->getWageByDateAndDept($dept,$date_tag);
                             }
@@ -1013,25 +1013,30 @@ class Super_wage extends Admin_Controller
         $counter=0;
         if(empty($wage_set)){
             // Field names in the first row
-            $col = 0;
+            $col=0;
             $counter=0;
             foreach($attr as $k => $v){
-                if($v != "" and $k!="date_tag" and $k!="attr_name1" and in_array($counter,$mark)){
+                //如果该项目不为空，同时不是时间戳，同时
+                if($v != '' and $k!='date_tag' and $k!='attr_name1' and in_array($counter,$mark)){
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
                     $col++;
                 }
                 elseif($counter<$mark['yuedustart']){
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
                     $col++;
+                }elseif($k=='date_tag'){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, '时间戳');
+                    $col++;
                 }
+                
                 $counter++;
             }
-            $col = 0;
+            $col=0;
             $counter=0;
             $row++;
             foreach($wage as $k => $v){
                 foreach($v as $a => $b){
-                    if($b != "" and $a!="date_tag" and $a!="number" and in_array($counter,$mark)){
+                    if($b != '' and $a!='date_tag' and $a!='number' and in_array($counter,$mark)){
                         if($a=='user_id'){
                             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, ' '.$b);
                         }
@@ -1048,7 +1053,10 @@ class Super_wage extends Admin_Controller
                             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
                         }
                         $col++;
-                    }     
+                    }elseif($a=='date_tag'){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
+                        $col++;
+                    }   
                     $counter++;
                 }
                 $col=0;
@@ -1062,7 +1070,7 @@ class Super_wage extends Admin_Controller
             foreach($wage_set as $c => $wtemp){
                 $col = 0;
                 foreach($wtemp['attr'] as $k => $v){
-                    if($v != "" and $k!="date_tag" and $k!="attr_name1" and in_array($counter,$mark_set[$c])){
+                    if($v != '' and $k!='date_tag' and $k!='attr_name1' and in_array($counter,$mark_set[$c])){
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
                         $col++;    
                     }
@@ -1070,15 +1078,19 @@ class Super_wage extends Admin_Controller
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
                         $col++;
                     }
+                    elseif($k=='date_tag'){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, '时间戳');
+                        $col++;
+                    }
                     $counter++;
                 }
-                $col = 0;
+                $col=0;
                 $counter=0;
                 $row++;
 
                 foreach($wtemp['wage'] as $k => $v){
                     foreach($v as $a => $b){
-                        if($b != "" and $a!="date_tag" and $a!="number" and in_array($counter,$mark_set[$c])){
+                        if($b != '' and $a!='date_tag' and $a!='number' and in_array($counter,$mark_set[$c])){
                             if($a=='user_id'){
                                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, ' '.$b);
                             }
@@ -1091,9 +1103,14 @@ class Super_wage extends Admin_Controller
                             if($a=='user_id'){
                                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, ' '.$b);
                             }
+                            
                             else{
                                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
                             }
+                            $col++;
+                        }
+                        elseif($a=='date_tag'){
+                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
                             $col++;
                         }
                         $counter++;
@@ -1106,31 +1123,27 @@ class Super_wage extends Admin_Controller
             }
             
         }
-        
-        
         $col=0;
-        
-        
         $objPHPExcel->setActiveSheetIndex(0);
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        $filename = date('YmdHis').".xlsx";
+        $filename = date('YmdHis').'.xlsx';
         // Sending headers to force the user to download the file
         
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="'.$filename);
-        header("Content-Disposition:filename=".$filename);
+        header('Content-Disposition: attachment;filename='.$filename);
+        header('Content-Disposition:filename='.$filename);
         header('Cache-Control: max-age=0');
         $objWriter->save('php://output');
         /**/
     }
     public function download_page(){
-        $this->data['path'] = "uploads/standard/人员导入模板.xlsx";
+        $this->data['path'] = 'uploads/standard/人员导入模板.xlsx';
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if($_POST['end_month']!='单击选择月份' and !strstr($_POST['end_month'],'1899') and $_POST['start_month']!='单击选择月份' and !strstr($_POST['start_month'],'1899')){
-                $this->data['path'] = "uploads/standard/人员导入模板.xlsx";
+                $this->data['path'] = 'uploads/standard/人员导入模板.xlsx';
                 $this->excel($_POST['start_month'],$_POST['end_month'],$_POST['selected_dept']);
                 /*
-                $this->data['path'] = "uploads/standard/wage_sample.xlsx";
+                $this->data['path'] = 'uploads/standard/wage_sample.xlsx';
                 $start_month=substr($_POST['start_month'],0,4).substr($_POST['start_month'],5,6);
                 $end_month=substr($_POST['end_month'],0,4).substr($_POST['end_month'],5,6);
                 $this->excel($start_month,$end_month,$_POST['selected_dept'],$_POST['selected_user']);
@@ -1144,9 +1157,9 @@ class Super_wage extends Admin_Controller
         }
         else{
             $this->data['user_name'] = $this->session->userdata('user_name');
-            $this->data['wage_data']="";
-            $this->data['attr_data']="";
-            $this->data['chosen_month']="";
+            $this->data['wage_data']='';
+            $this->data['attr_data']='';
+            $this->data['chosen_month']='';
             $this->data['dept_set']=$this->model_dept->getDeptData();
             $this->data['user_set']=$this->model_wage_tag->getTagData();
             $this->render_super_template('super/wage_export',$this->data);
@@ -1155,19 +1168,19 @@ class Super_wage extends Admin_Controller
     public function wage_doc_put(){
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
-        $filePath = "uploads/wage_doc/".$path["name"];
-        move_uploaded_file($path["tmp_name"],$filePath);
+        $filePath = 'uploads/wage_doc/'.$path['name'];
+        move_uploaded_file($path['tmp_name'],$filePath);
         $doc_data=array(
             'number' => date('Y-m-d H:i:s'),
-            'doc_name' => basename($filePath,".pdf"),
+            'doc_name' => basename($filePath,'.pdf'),
             'doc_path' => $filePath,
         );
         $this->model_wage_doc->create($doc_data);
     }
     public function wage_doc_import($filename=NULL){
         if($_FILES){
-            if($_FILES["file"]){
-                if($_FILES["file"]["error"] > 0){
+            if($_FILES['file']){
+                if($_FILES['file']['error'] > 0){
                     $this->session->set_flashdata('error', '请选择要上传的文件！');
                     $this->render_super_template('super/wage_doc_import',$this->data);
                 }
@@ -1304,7 +1317,7 @@ class Super_wage extends Admin_Controller
         $tag_data=$this->model_wage_tag->getTagData();
 
         $result=array();
-        $tag="";
+        $tag='';
         foreach($tag_data as $k => $v){
             if($this->model_users->getUserById($v['user_id'])['password']===md5(substr($v['user_id'],-6))){
                 $tag='密码为初始密码';
