@@ -38,37 +38,38 @@
                   <th>详情</th>
                 </thead>
                 <tbody>
+                  <?php for($i=0;$i<count($name);$i++):?>
                   <tr>
-                    <td>1</td>
-                    <td>收入证明</td>
+                    <td><?php echo $i+1;?></td>
+                    <td><?php echo $name[$i]?></td>
                     <td>
-                      <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal" class="btn btn-warning">浏览</a>
+                      <?php if(!empty($status)):?>
+                        <?php if($status[$i]):?>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal<?php echo $i;?>" class="btn btn-info">浏览</a>
+                        <?php else:?>
+                        <a disabled href="javascript:void(0)" data-toggle="modal" data-target="#myModal<?php echo $i;?>" class="btn btn-info">浏览</a>
+                        <?php endif;?>
+                      <?php else:?>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal<?php echo $i;?>" class="btn btn-info">浏览</a>
+                      <?php endif;?>
                       <!-- 弹窗 -->
-                      <div id="myModal" class="modal-apply fade" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div id="myModal<?php echo $i;?>" class="modal-apply fade" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <!-- 弹窗内容 -->
                         <div class="modal-content-apply">
-                          <div class="modal-header-apply">
+                          <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ><font color="black">×</font></button>
                             <h3><font color="black">样式预览</font></h3>
                           </div>
                           <!-- model-header-apply -->
-                          <div class="modal-body-apply">
-                            <table class="table">
-                              <tbody>
-                                <tr>
-                                  <td style="align:center"> 
-                                    <iframe width="600" height="450" src="<?php echo base_url('wage/show_wage_proof') ?>"></iframe>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
+                          <div class="modal-body">
+                            <iframe width="600" height="700" src="<?php echo base_url($url[$i]);?>"></iframe>
                           </div>
                           <!-- model-body-apply -->
                           <div class="modal-footer">
                             <button class="btn btn-info" data-dismiss="modal" aria-hidden="true">关闭</button>
                             <form action="<?php base_url('wage/apply_wage_proof') ?>" style="margin:0px;display:inline;" method="post">
-                              <input type="hidden" name="type" value="标准收入证明"/>
-                              <button class="btn btn-success">提交申请</button>
+                              <input type="hidden" name="type" value="<?php echo $name[$i];?>"/>
+                              <button type="submit" class="btn btn-success">提交申请</button>
                             </form>
                           </div>
                           <!-- model-footer-apply -->
@@ -76,24 +77,10 @@
                         <!-- model-content-apply -->
                       </div>
                       <!-- model-apply -->
+                      
                     </td>
                   </tr>
-                  <tr>
-                    <td>2</td>
-                    <form role="form" action="<?php base_url('users/setting') ?>" method="post">
-                    <td>收入证明（农商银行）</td>
-                    <td><a href="<?php echo base_url('wage/show_bank_wage_proof') ?>" target="_blank" class="btn btn-warning">浏览</a> </td>
-                    <td><button type="submit" class="btn btn-primary">提交申请</button></td>
-                    </form>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <form role="form" action="<?php base_url('users/setting') ?>" method="post">
-                    <td>收入证明（公积金）</td>
-                    <td><a href="<?php echo base_url('wage/show_fund_proof') ?>" target="_blank" class="btn btn-warning">浏览</a> </td>
-                    <td><button type="submit" class="btn btn-primary">提交申请</button></td>
-                    </form>
-                  </tr>
+                  <?php endfor;?>
                 </tbody>
               </table>
             </div>

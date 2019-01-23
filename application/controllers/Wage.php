@@ -12,7 +12,7 @@ class Wage extends Admin_Controller{
         $this->load->model('model_holiday');
         $this->load->model('model_users');
         $this->load->model('model_wage_doc');
-        
+        $this->load->model('model_wage_apply');
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
         $this->load->model('model_wage_func');
@@ -51,11 +51,50 @@ class Wage extends Admin_Controller{
         
     }
     public function apply_wage_proof(){
-        $this->data['submitted']=0;
-        $this->data['']=array(
+        $user_id=$this->session->userdata('user_id');
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $apply_data=array(
+                'user_id' => $user_id,
+                'name' => $this->session->userdata('user_name'),
+                'type' => $_POST['type'],
+                'submit_time' => date('Y-m-d H:i:s'),
+                'submit_status' => '已提交',
+                'feedback_status' => '未审核'
+            );
+            $this->model_wage_apply->create($apply_data);
+        }
+        //获取数据库中 未提交 状态的这个人证明开具信息
+        $apply_info=$this->model_wage_apply->getApplyByIdAndStatus($user_id,'已提交');
+        $this->data['name']=array(
             0 => '工资证明',
             1 => '工资证明（农商银行）',
-            2 => '',
+            2 => '收入证明（公积金）',
+        );
+        $status=array();
+        //预设全部可以浏览
+        for($i=0;$i<count($this->data['name']);$i++){
+            $status[$i]=true;
+        }
+        #echo var_dump($apply_info);
+        //如果已提交则为false，不能浏览
+        foreach($apply_info as $k =>$v){
+            echo $v['type'];
+            switch($v['type']){
+                case '工资证明':$status[0]=false;break;
+                case '工资证明（农商银行）':$status[1]=false;break;
+                case '收入证明（公积金）':$status[2]=false;break;
+            }
+        }
+        $this->data['status']=$status;
+        $this->data['name']=array(
+            0 => '工资证明',
+            1 => '工资证明（农商银行）',
+            2 => '收入证明（公积金）',
+        );
+        $this->data['url']=array(
+            0 => 'wage/show_wage_proof',
+            1 => 'wage/show_bank_wage_proof',
+            2 => 'wage/show_fund_proof'
         );
         $this->render_template('wage/apply', $this->data);
     }
