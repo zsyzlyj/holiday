@@ -36,6 +36,8 @@
                   <th>序号</th>
                   <th>名称</th>
                   <th>详情</th>
+                  <th>提交状态</th>
+                  <th>审核状态</th>
                 </thead>
                 <tbody>
                   <?php for($i=0;$i<count($name);$i++):?>
@@ -77,8 +79,22 @@
                         <!-- model-content-apply -->
                       </div>
                       <!-- model-apply -->
-                      
                     </td>
+                    <?php if(strstr($submit_status[$i],'已')):?>
+                    <td><font color="green"><?php echo $submit_status[$i];?></font></td>
+                    <?php elseif(strstr($submit_status[$i],'未')):?>
+                    <td><font color="black"><?php echo $submit_status[$i];?></font></td>
+                    <?php else:?>
+                      <td>未提交</td>
+                    <?php endif;?>
+                    <?php if(strstr($feedback_status[$i],'已')):?>
+                    <td><font color="green"><?php echo $feedback_status[$i]?></font></td>
+                    <?php elseif(strstr($feedback_status[$i],'未')):?>
+                    <td><font color="black"><?php echo $feedback_status[$i]?></font></td>
+                    <?php else:?>
+                      <td>未审核</td>
+                    <?php endif;?>
+                    
                   </tr>
                   <?php endfor;?>
                 </tbody>

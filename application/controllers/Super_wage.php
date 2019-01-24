@@ -16,6 +16,7 @@ class Super_wage extends Admin_Controller
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
         $this->load->model('model_wage_record');
+        $this->load->model('model_wage_apply');
         $this->load->model('model_wage');
         $this->load->model('model_wage_doc'); 
         $this->load->model('model_wage_func');
@@ -236,7 +237,7 @@ class Super_wage extends Admin_Controller
         }
     }
     
-    public function proof_Creator($type){
+    public function proof_Creator($name,$type){
         //图片水印制作
         $ori_img = 'assets/images/unicomletterb.jpg';    //原图
         $new_img = 'assets/images/new.jpg';    //生成水印后的图片
@@ -327,7 +328,6 @@ class Super_wage extends Admin_Controller
         #$img_file = 'assets/images/Unicom.jpg';
         $img_file=$new_img;
         $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
-
         $user_data=$this->model_wage_tag->getTagById($this->session->userdata('user_id'));
         #$holiday_data=$this->model_holiday->getHolidayById($this->session->userdata('user_id'));
         #$holiday_
@@ -338,91 +338,103 @@ class Super_wage extends Admin_Controller
         $username='';
         #$date=date('Y年m月d日',strtotime($holiday_data['indate']));
         $date='';
-        $str='收 入 证 明\r\n';
+        $str="收 入 证 明";
         $pdf->SetFont('songti','B',24);
-        $pdf->Write(0,$str,'', 0, 'C', false, 0, false, false, 0);
-
+        $pdf->Write(0,$str,'', 0, 'C', true, 0, false, false, 0);
+        
         switch($type){
-            case 'wage':
-                $str='\r\n          兹证明'.$username.'，身份证号码：'.$user_id.'为中国联合网络通信有限公司中山市分公司正式员工，自'.$date.'起为我司工作，现于我单位任职综合部 综合文秘室 综合秘书，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟圆整），以上情况属实。此证明仅限于申请贷款之用。\r\n         特此证明！\r\n';
+            case '收入证明':
+                $str="\r\n          兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任职综合部 综合文秘室 综合秘书，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟圆整），以上情况属实。此证明仅限于申请贷款之用。\r\n         特此证明！\r\n";
                 break;
-            case 'bank_wage':
-                $str='\r\n中山农村商业银行股份有限公司：\r\n            兹证明'.$username.'（身份证号码：'.$user_id.'）为我单位正式员工，自'.$date.'起为我单位工作，现于我单位任职 网络建设部 无线网建设室 室主任，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟伍佰圆整），以上情况属实。此证明仅用于申请贷款之用。\r\n          特此证明！';
+            case '收入证明（农商银行）':
+                $str="\r\n中山农村商业银行股份有限公司：\r\n            兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任职 网络建设部 无线网建设室 室主任，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟伍佰圆整），以上情况属实。此证明仅用于申请贷款之用。\r\n          特此证明！";
                 break;
-            case 'fund':
-                $str='\r\n中山市住房公积金管理中心：\r\n            为申请住房公积金贷款事宜，兹证明 '.$username.'，性别：，身份证号 '.$user_id.'，是我单位职工，已在我单位工作满'.$cage.'年，该职工上一年度在我单位总收入约为 XXXX元（大写：拾壹萬伍仟圆整 ）。\r\n\r\n';
+            case '收入证明（公积金）':
+                $str="\r\n中山市住房公积金管理中心：\r\n            为申请住房公积金贷款事宜，兹证明 ".$username."，性别：，身份证号 ".$user_id."，是我单位职工，已在我单位工作满".""."年，该职工上一年度在我单位总收入约为 XXXX元（大写：拾壹萬伍仟圆整 ）。\r\n\r\n";
                 break;
             case 'royal':
-                $str='          '.$username.'（男，身份证号：'.$user_id.'） 同志自'.$date.'进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n          特此证明!\r\n';
+                $str="          ".$username."（男，身份证号：".$user_id."） 同志自".$date."进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n          特此证明!\r\n";
                 break;
             case 'on_post_1':
-                $str='\r\n          兹有我单位员工'.$username.'，身份证号：'.$user_id.'，该员工于'.$date.'起至今在我公司工作。\r\n            特此证明。\r\n';
-                $pdf->SetFont('songti','',14);
-                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str='\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n'.date('Y年m月d日');
-                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
+                $str="\r\n          兹有我单位员工".$username."，身份证号：".$user_id."，该员工于".$date."起至今在我公司工作。\r\n            特此证明。\r\n";
+                
                 break;
             case 'on_post_2':
-                $str='\r\n          兹有'.$username.'（女，身份证号：'.$user_id.'），为中国联合网络通信有限公司中山市分公司中层管理干部，现任中国联合网络通信有限公司中山市分公司综合部部门经理。\r\n            特此证明。\r\n\r\n';
-                $pdf->SetFont('songti','',14);
-                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str='\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n'.date('Y年m月d日');
-                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
+                $str="\r\n          兹有".$username."（女，身份证号：".$user_id."），为中国联合网络通信有限公司中山市分公司中层管理干部，现任中国联合网络通信有限公司中山市分公司综合部部门经理。\r\n            特此证明。\r\n\r\n";
+                
                 break;
             case 'on_post_3':
-                $str='\r\n          兹有刘颖（女，身份证号：110108196709174243），为中国联合网络通信有限公司中山市分公司中层管理干部，现任中国联合网络通信有限公司中山市分公司综合部部门经理。\r\n            特此证明。\r\n';
+                $str="\r\n          兹有刘颖（女，身份证号：110108196709174243），为中国联合网络通信有限公司中山市分公司中层管理干部，现任中国联合网络通信有限公司中山市分公司综合部部门经理。\r\n            特此证明。\r\n";
                 $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str='\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n'.date('Y年m月d日').'\r\n\r\n\r\n\r\n';
+                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date('Y年m月d日')."\r\n\r\n\r\n\r\n";
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 $pdf->setCellHeightRatio(1.5); 
                 $pdf->SetFont('songti', '', 9);
-                $str='单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356';
+                $str="单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356";
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
 
                 break;
             case 'on_post_4':
-                $str='\r\n          兹有我单位'.$username.'同志，性别：男，身份证号码：'.$user_id.'，于'.$date.'至今在我单位从事 南部固网销售公司总经理 （职位）工作。\r\n单位名称：中国联合网络通信有限公司中山市分公司\r\n          联系地址：中山市东区长江北路6号联通大厦\r\n          联系人：徐小姐        联系电话：0760-23771356\r\n          特此证明。\r\n       （此证明仅用于办理流动人员积分制管理使用）\r\n';
+                $str="\r\n          兹有我单位".$username."同志，性别：男，身份证号码：".$user_id."，于".$date."至今在我单位从事 南部固网销售公司总经理 （职位）工作。\r\n单位名称：中国联合网络通信有限公司中山市分公司\r\n          联系地址：中山市东区长江北路6号联通大厦\r\n          联系人：徐小姐        联系电话：0760-23771356\r\n          特此证明。\r\n       （此证明仅用于办理流动人员积分制管理使用）\r\n";
                 $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str='\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n'.date('Y年m月d日').'\r\n\r\n\r\n\r\n';
+                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date('Y年m月d日')."\r\n\r\n\r\n\r\n";
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case 'on_post_5':
-                $str='\r\n          兹有'.$username.'（女，身份证号：'.$user_id.'），自'.$date.'进入我公司工作，现任中国联合网络通信有限公司中山市分公司员工 （职位）。\r\n          特此证明。\r\n       （此证明仅用于办理居住证使用）';
+                $str="\r\n          兹有".$username."（女，身份证号：".$user_id."），自".$date."进入我公司工作，现任中国联合网络通信有限公司中山市分公司员工 （职位）。\r\n          特此证明。\r\n       （此证明仅用于办理居住证使用）";
                 $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str='\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n'.date('Y年m月d日').'\r\n\r\n\r\n\r\n';
+                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date('Y年m月d日')."\r\n\r\n\r\n\r\n";
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 $pdf->setCellHeightRatio(1.5); 
                 $pdf->SetFont('songti', '', 9);
-                $str='单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356';
+                $str="单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356";
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                
                 break;
             case 'one_child':
-                $str='';
+                $str="";
                 break;
-
             default:break;
         }
 
         if(!(strstr($type,'post'))){
             $pdf->SetFont('songti','',14);
             $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-            $str='\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n单位（盖章）\r\n'.date('Y年m月d日').'\r\n\r\n\r\n\r\n\r\n';
+            $str="\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n单位（盖章）\r\n".date('Y年m月d日')."\r\n\r\n\r\n\r\n\r\n";
             $pdf->setCellHeightRatio(1.7); 
             $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
             $pdf->setCellHeightRatio(1.5); 
             $pdf->SetFont('songti', '', 9);
-            $str='\r\n\r\n联系地址：中山市长江北路6号联通大厦\r\n联系人：甘先生\r\n联系电话：0760-23692312';
+            $str="\r\n\r\n联系地址：中山市长江北路6号联通大厦\r\n联系人：甘先生\r\n联系电话：0760-23692312";
             $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false);
         }
-
-        $pdf->Output('证明.pdf', 'I');
-        //输出PDF       
+        //输出PDF
+        $date_name=date('YmdHis');
+        $path=dirname(__FILE__,3).'/wageproof/'.$date_name.'-'.$name.'.pdf';
+        $pdf->Output($path, 'F');
+        $url='wageproof/'.$date_name.'-'.$name.'.pdf';
+        return $url;
     }
     public function wage_proof(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $id=$_POST['id'];
+            $data=array(
+                'submit_status' => '未提交',
+                'feedback_status' => '已审阅',
+                'feedback_time' => date('Y-m-d H:i:s')
+            );
+            $this->model_wage_apply->update($data,$id);
+        }
+        $this->data['apply_data']=$this->model_wage_apply->getApplyData();
+        $temp=array();
+        foreach($this->data['apply_data'] as $k => $v){
+            if(strstr($v['feedback_status'],'未')){
+                array_push($temp,$this->proof_Creator($v['name'],$v['type']));
+            }
+        }
+        $this->data['url']=$temp;
         $this->render_super_template('super/wage_proof',$this->data);
     }
     //收入证明
@@ -1319,9 +1331,7 @@ class Super_wage extends Admin_Controller
         else{
             // false case
 			$notice_data = $this->model_notice->getNoticeData();
-
 			$result = array();
-			
 			foreach($notice_data as $k => $v){
 				$result[$k] = $v;
 			}

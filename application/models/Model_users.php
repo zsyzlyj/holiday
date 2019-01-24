@@ -38,7 +38,6 @@ class Model_users extends CI_Model{
 	public function edit($data = array(), $id = null){
 		$this->db->where('user_id', $id);
 		$update = $this->db->update('users', $data);
-			
 		return ($update == true) ? true : false;	
 	}
 

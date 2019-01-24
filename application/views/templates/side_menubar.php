@@ -54,7 +54,8 @@
                 </a>
               </li>
               <li id="applyOnPostProof">
-                <a href="<?php echo base_url('onpost/apply_on_post_proof') ?>">
+                <!--<a href="<?php echo base_url('onpost/apply_on_post_proof') ?>">-->
+                <a href="#">
                 <i class="fa fa-circle-o"></i>
                 <span>在职证明</span>
                 </a>

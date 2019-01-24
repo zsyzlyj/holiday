@@ -6,16 +6,16 @@ class Model_wage_apply extends CI_Model{
 	}
 
 	/* get the brand data */
-	public function getWageData(){
-		$sql = "SELECT * FROM wage";
+	public function getApplyData(){
+		$sql = "SELECT * FROM wage_apply";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
-	public function getWageById($userId = null){
+	public function getApplyById($userId = null){
 		if($userId){
-			$sql = "SELECT * FROM wage WHERE user_id = ?";	
+			$sql = "SELECT * FROM wage_apply WHERE user_id = ?";	
 			$query = $this->db->query($sql, array($userId));
-			return $query->row_array();
+			return $query->result_array();
 		}
 	}
 	public function getApplyByIdAndStatus($id,$status){
@@ -32,5 +32,11 @@ class Model_wage_apply extends CI_Model{
 			$insert = $this->db->insert('wage_apply', $data);
 			return ($insert == true) ? true : false;
 		}
+	}
+
+	public function update($data=array(),$id){
+		$this->db->where('id',$id);
+		$update = $this->db->update('wage_apply', $data);
+		return ($update == true) ? true : false;	
 	}
 }

@@ -61,34 +61,66 @@ class Wage extends Admin_Controller{
                 'submit_status' => '已提交',
                 'feedback_status' => '未审核'
             );
-            $this->model_wage_apply->create($apply_data);
+            if($this->model_wage_apply->getApplyByIdAndStatus($user_id,$_POST['type'])){
+                $this->model_wage_apply->update($apply_data,$user_id);
+            }
+            else $this->model_wage_apply->create($apply_data);
         }
-        //获取数据库中 未提交 状态的这个人证明开具信息
-        $apply_info=$this->model_wage_apply->getApplyByIdAndStatus($user_id,'已提交');
+        //获取数据库中 已提交 状态的这个人证明开具信息
+        #$apply_info=$this->model_wage_apply->getApplyByIdAndStatus($user_id,'已提交');
+        $apply_info=$this->model_wage_apply->getApplyById($user_id);
         $this->data['name']=array(
-            0 => '工资证明',
-            1 => '工资证明（农商银行）',
+            0 => '收入证明',
+            1 => '收入证明（农商银行）',
             2 => '收入证明（公积金）',
         );
         $status=array();
+        $submit_status=array();
+        $feedback_status=array();
         //预设全部可以浏览
         for($i=0;$i<count($this->data['name']);$i++){
             $status[$i]=true;
+            $submit_status[$i]='';
+            $feedback_status[$i]='';
         }
-        #echo var_dump($apply_info);
         //如果已提交则为false，不能浏览
         foreach($apply_info as $k =>$v){
-            echo $v['type'];
             switch($v['type']){
-                case '工资证明':$status[0]=false;break;
-                case '工资证明（农商银行）':$status[1]=false;break;
-                case '收入证明（公积金）':$status[2]=false;break;
+                case '收入证明':
+                    $submit_status[0]=$v['submit_status'];
+                    $feedback_status[0]=$v['feedback_status'];
+                    if(strstr($v['submit_status'],'已')){
+                        if(strstr($v['feedback_status'],'已'))
+                            $status[0]=true;
+                        else $status[0]=false;
+                    }
+                    break;
+                case '收入证明（农商银行）':
+                    $submit_status[1]=$v['submit_status'];
+                    $feedback_status[1]=$v['feedback_status'];
+                    if(strstr($v['submit_status'],'已')){
+                        if(strstr($v['feedback_status'],'已'))
+                            $status[1]=true;
+                        else $status[1]=false;
+                    }
+                    break;
+                case '收入证明（公积金）':
+                    $submit_status[2]=$v['submit_status'];
+                    $feedback_status[2]=$v['feedback_status'];
+                    if(strstr($v['submit_status'],'已')){
+                        if(strstr($v['feedback_status'],'已'))
+                            $status[2]=true;
+                        else $status[2]=false;
+                    }
+                    break;
             }
         }
+        $this->data['submit_status']=$submit_status;
+        $this->data['feedback_status']=$feedback_status;
         $this->data['status']=$status;
         $this->data['name']=array(
-            0 => '工资证明',
-            1 => '工资证明（农商银行）',
+            0 => '收入证明',
+            1 => '收入证明（农商银行）',
             2 => '收入证明（公积金）',
         );
         $this->data['url']=array(
