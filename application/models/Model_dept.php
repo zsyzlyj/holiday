@@ -11,11 +11,31 @@ class Model_dept extends CI_Model{
 		return $query->result_array();
 	}
 
+	public function check_dept($dept){
+		if($dept){
+			$sql = 'SELECT * FROM department WHERE dept_name = ?';
+			$query = $this->db->query($sql, array($dept));
+			$result = $query->num_rows();
+			return ($result == 1) ? true : false;
+		}
+		return false;
+	}
 	public function createbatch($data){
 		if($data){
 			$insert = $this->db->insert_batch('department', $data);
 			return ($insert == true) ? true : false;
 		}
+	}
+	public function create($data){
+		if($data){
+			$insert = $this->db->insert('department', $data);
+			return ($insert == true) ? true : false;
+		}
+	}
+	public function update($data=array(),$dept){
+		$this->db->where('dept_name',$dept);
+		$update = $this->db->update('department', $data);
+		return ($update == true) ? true : false;	
 	}
 	public function deleteAll(){
 		$sql='delete from department';

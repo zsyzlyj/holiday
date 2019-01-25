@@ -39,6 +39,7 @@
   <!-- icheck -->
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/iCheck/all.css') ?>">
+  <link href="<?php echo base_url('assets/images/logo-ico.ico');?>" type="image/x-icon" rel="shortcut icon">
 
   <!-- bootstrap datetimepicker -->
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showmonth.css') ?>">

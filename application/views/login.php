@@ -5,11 +5,13 @@
 <meta http-equiv="Pragma" content="no-cache"> 
 <meta http-equiv="Cache-Control" content="no-cache"> 
 <meta http-equiv="Expires" content="0"> 
-<title>后台管理</title>
+<title>中山联通人力资源管理系统</title>
 
 <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap/dist/css/bootstrap.min.css') ?>">
   
 <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/login.css') ?>">
+<link href="<?php echo base_url('assets/images/logo-ico.ico');?>" type="image/x-icon" rel="shortcut icon">
+
 </head>
 
 <body>

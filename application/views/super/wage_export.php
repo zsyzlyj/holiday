@@ -53,7 +53,7 @@
                       <!-- /.input-group -->               
                     </div>
                     
-
+                    <p id="dept_options"></p>
                     <!-- Multiple Checkboxes -->
                     
                     <div class="form-group" id="check_dept">
@@ -110,6 +110,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $("#downloadWageNav").addClass('active');
+      
       $("#datetimeStart").datetimepicker({
           bootcssVer:3,
           format: "yyyy-mm",
@@ -124,7 +125,7 @@
               $("#datetimeEnd").datetimepicker('setStartDate',null);
           }
         });
-      });
+      
       $("#datetimeEnd").datetimepicker({
         bootcssVer:3,
         format: "yyyy-mm",
@@ -140,41 +141,41 @@
                 $("#datetimeStart").datetimepicker('setEndDate',new Date());
            }
         });  
-      
-    function checkdeptOnclick(checkbox){
-      if (checkbox.checked == true){
-        //Action for checked
-        var ui = document.getElementById("select_dept");
-        ui.style.display="";
-        var ui = document.getElementById("check_user");
-        ui.style.display="none";
-        var ui = document.getElementById("select_user");
-        ui.style.display="none";
-      }else{
-        //Action for not checked
-        var ui = document.getElementById("select_dept");
-        ui.style.display="none";
-        var ui = document.getElementById("check_user");
-        ui.style.display="";
-      }  
-    }
-    function checkimportOnclick(checkbox){
-      if (checkbox.checked == true){
-        //Action for checked
-        var ui = document.getElementById("check_dept");
-        ui.style.display="none";
-        var ui = document.getElementById("select_dept");
-        ui.style.display="none";
-        var ui = document.getElementById("select_file");
-        ui.style.display="";
-      }else{
-        //Action for not checked
-        var ui = document.getElementById("select_file");
-        ui.style.display="none";
-        var ui = document.getElementById("check_dept");
-        ui.style.display="";
-        var ui = document.getElementById("select_dept");
-        ui.style.display="none";
+      });
+      function checkdeptOnclick(checkbox){
+        if (checkbox.checked == true){
+          //Action for checked
+          var ui = document.getElementById("select_dept");
+          ui.style.display="";
+          var ui = document.getElementById("check_user");
+          ui.style.display="none";
+          var ui = document.getElementById("select_user");
+          ui.style.display="none";
+        }else{
+          //Action for not checked
+          var ui = document.getElementById("select_dept");
+          ui.style.display="none";
+          var ui = document.getElementById("check_user");
+          ui.style.display="";
+        }  
       }
-    }
+      function checkimportOnclick(checkbox){
+        if (checkbox.checked == true){
+          //Action for checked
+          var ui = document.getElementById("check_dept");
+          ui.style.display="none";
+          var ui = document.getElementById("select_dept");
+          ui.style.display="none";
+          var ui = document.getElementById("select_file");
+          ui.style.display="";
+        }else{
+          //Action for not checked
+          var ui = document.getElementById("select_file");
+          ui.style.display="none";
+          var ui = document.getElementById("check_dept");
+          ui.style.display="";
+          var ui = document.getElementById("select_dept");
+          ui.style.display="none";
+        }
+      }
   </script>

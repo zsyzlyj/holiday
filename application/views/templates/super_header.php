@@ -44,7 +44,9 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/iCheck/all.css') ?>">
 
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showmonth.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showapply.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
+  <link href="<?php echo base_url('assets/images/logo-ico.ico');?>" type="image/x-icon" rel="shortcut icon">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

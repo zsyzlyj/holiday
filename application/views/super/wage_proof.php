@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        文件下载
+        收入证明
       </h1>  
     </section>
     <hr />
@@ -45,8 +45,8 @@
                       <a disabled href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $k;?>"><i class="fa fa-check-circle"></i></a>
                       <?php else:?>
                       <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $k;?>"><i class="fa fa-check-circle"></i></a>
-                      <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $k;?>">
-                        <div class="modal-content-month">
+                      <div class="modal-apply fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $k;?>">
+                        <div class="modal-content-apply">
                           <div class="modal-header">
                             <h4>请确认</h4>
                           </div>
@@ -57,7 +57,7 @@
                             <form action="<?php echo base_url('super_wage/wage_proof');?>" method="post">
                             <input name="id" type="hidden" value="<?php echo $v['id'];?>" />
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <button type="submit" class="btn btn-success btn-ok">确认提交</a>
+                            <button type="submit" class="btn btn-success btn-ok">确认审核</a>
                             </form>
                           </div>
                         </div><!-- /.modal-content -->

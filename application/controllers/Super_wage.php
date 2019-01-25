@@ -237,9 +237,79 @@ class Super_wage extends Admin_Controller
         }
     }
     
-    public function proof_Creator($name,$type){
+    /**
+    *数字金额转换成中文大写金额的函数
+    *String Int $num 要转换的小写数字或小写字符串
+    *return 大写字母
+    *小数位为两位
+    **/
+    private function num_to_rmb($num){
+        $c1 = "零壹贰叁肆伍陆柒捌玖";
+        $c2 = "分角圓拾佰仟萬拾佰仟億";
+        //精确到分后面就不要了，所以只留两个小数位
+        $num = round($num, 2); 
+        //将数字转化为整数
+        $num = $num * 100;
+        if (strlen($num) > 10) {
+            return "金额太大，请检查";
+        } 
+        $i = 0;
+        $c = "";
+        while (1) {
+            if ($i == 0) {
+                //获取最后一位数字
+                $n = substr($num, strlen($num)-1, 1);
+            } else {
+                $n = $num % 10;
+            }
+            //每次将最后一位数字转化为中文
+            $p1 = substr($c1, 3 * $n, 3);
+            $p2 = substr($c2, 3 * $i, 3);
+            if ($n != '0' || ($n == '0' && ($p2 == '亿' || $p2 == '萬' || $p2 == '圓'))) {
+                $c = $p1 . $p2 . $c;
+            } else {
+                $c = $p1 . $c;
+            }
+            $i = $i + 1;
+            //去掉数字最后一位了
+            $num = $num / 10;
+            $num = (int)$num;
+            //结束循环
+            if ($num == 0) {
+                break;
+            } 
+        }
+        $j = 0;
+        $slen = strlen($c);
+        while ($j < $slen) {
+            //utf8一个汉字相当3个字符
+            $m = substr($c, $j, 6);
+            //处理数字中很多0的情况,每次循环去掉一个汉字“零”
+            if ($m == '零圓' || $m == '零萬' || $m == '零亿' || $m == '零零') {
+                $left = substr($c, 0, $j);
+                $right = substr($c, $j + 3);
+                $c = $left . $right;
+                $j = $j-3;
+                $slen = $slen-3;
+            } 
+            $j = $j + 3;
+        } 
+        //这个是为了去掉类似23.0中最后一个“零”字
+        if (substr($c, strlen($c)-3, 3) == '零') {
+            $c = substr($c, 0, strlen($c)-3);
+        }
+        //将处理的汉字加上“整”
+        if (empty($c)) {
+            return "零圓整";
+        }else{
+            return $c . "整";
+        }
+    }
+    
+    public function proof_Creator($user_id,$type){
         //图片水印制作
         $ori_img = 'assets/images/unicomletterb.jpg';    //原图
+        /*
         $new_img = 'assets/images/new.jpg';    //生成水印后的图片
         
         $original = getimagesize($ori_img);    //得到图片的信息，可以print_r($original)发现它就是一个数组
@@ -252,7 +322,8 @@ class Super_wage extends Admin_Controller
             case 3 : $s_original = imagecreatefrompng($ori_img);
                 break;
         }
-        
+        */
+        /*
         $font_size = 22;    //字号
         $tilt = 45;    //文字的倾斜度
         $color = imagecolorallocatealpha($s_original,0,0,0,0);// 为一幅图像分配颜色 255,0,0表示红色
@@ -282,6 +353,7 @@ class Super_wage extends Admin_Controller
             imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
         }
         $loop = imagejpeg($s_original, $new_img);    //生成新的图片(jpg格式)，如果用imagepng可以生成png格式
+        */
         //证明文件生成
         $this->load->library('tcpdf.php');
         //实例化 
@@ -326,31 +398,41 @@ class Super_wage extends Admin_Controller
         
         //设置背景图片
         #$img_file = 'assets/images/Unicom.jpg';
-        $img_file=$new_img;
+        #$img_file=$new_img;
+        $img_file=$ori_img;
         $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
-        $user_data=$this->model_wage_tag->getTagById($this->session->userdata('user_id'));
-        #$holiday_data=$this->model_holiday->getHolidayById($this->session->userdata('user_id'));
-        #$holiday_
+        $user_data=$this->model_wage_tag->getTagById($user_id);
         #$cage=$holiday_data['Companyage'];
         #$user_id=$user_data['user_id'];
-        #$username=$user_data['name'];
-        $user_id='';
-        $username='';
-        #$date=date('Y年m月d日',strtotime($holiday_data['indate']));
-        $date='';
+        $username=$user_data['name'];
+        $date_set=array();
+        $date=date('Y年m月d日',strtotime($user_data['indate']));
+        $ToEndMonth=strtotime(date('Y-m')); //转换一下
+        $ToStartMonth=strtotime('-12 Month', $ToEndMonth);
+        $i=false; //开始标示
+        while( $ToStartMonth < $ToEndMonth ) {
+            $NewMonth = !$i ? date('Y-m', strtotime('+0 Month', $ToStartMonth)) : date('Y-m', strtotime('+1 Month', $ToStartMonth));
+            $ToStartMonth = strtotime( $NewMonth );
+            $i = true;
+            array_push($date_set,substr($NewMonth,0,4).substr($NewMonth,5,6));
+        }
+        $avg=$this->model_wage->countAvg($date_set,$user_id)['total'];
+        $dept=$user_data['dept'];
+        $gender=$user_data['gender'];
+        $position=$user_data['position'];
         $str="收 入 证 明";
         $pdf->SetFont('songti','B',24);
         $pdf->Write(0,$str,'', 0, 'C', true, 0, false, false, 0);
-        
+        $rmb=$this->num_to_rmb($avg);
         switch($type){
             case '收入证明':
-                $str="\r\n          兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任职综合部 综合文秘室 综合秘书，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟圆整），以上情况属实。此证明仅限于申请贷款之用。\r\n         特此证明！\r\n";
+                $str="\r\n          兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任职综合部 综合文秘室 综合秘书，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n         特此证明！\r\n";
                 break;
             case '收入证明（农商银行）':
-                $str="\r\n中山农村商业银行股份有限公司：\r\n            兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任职 网络建设部 无线网建设室 室主任，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟伍佰圆整），以上情况属实。此证明仅用于申请贷款之用。\r\n          特此证明！";
+                $str="\r\n中山农村商业银行股份有限公司：\r\n            兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任职".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅用于申请贷款之用。\r\n          特此证明！";
                 break;
             case '收入证明（公积金）':
-                $str="\r\n中山市住房公积金管理中心：\r\n            为申请住房公积金贷款事宜，兹证明 ".$username."，性别：，身份证号 ".$user_id."，是我单位职工，已在我单位工作满".""."年，该职工上一年度在我单位总收入约为 XXXX元（大写：拾壹萬伍仟圆整 ）。\r\n\r\n";
+                $str="\r\n中山市住房公积金管理中心：\r\n            为申请住房公积金贷款事宜，兹证明 ".$username."，性别：".$gender."，身份证号 ".$user_id."，是我单位职工，已在我单位工作满".""."年，该职工上一年度在我单位总收入约为".$avg."元（大写：".$rmb."）。\r\n\r\n";
                 break;
             case 'royal':
                 $str="          ".$username."（男，身份证号：".$user_id."） 同志自".$date."进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n          特此证明!\r\n";
@@ -402,7 +484,7 @@ class Super_wage extends Admin_Controller
         if(!(strstr($type,'post'))){
             $pdf->SetFont('songti','',14);
             $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-            $str="\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n单位（盖章）\r\n".date('Y年m月d日')."\r\n\r\n\r\n\r\n\r\n";
+            $str="\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n单位（盖章）\r\n".date('Y年m月d日')."\r\n\r\n\r\n";
             $pdf->setCellHeightRatio(1.7); 
             $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
             $pdf->setCellHeightRatio(1.5); 
@@ -412,9 +494,9 @@ class Super_wage extends Admin_Controller
         }
         //输出PDF
         $date_name=date('YmdHis');
-        $path=dirname(__FILE__,3).'/wageproof/'.$date_name.'-'.$name.'.pdf';
+        $path=dirname(__FILE__,3).'/wageproof/'.$date_name.'-'.$username.'.pdf';
         $pdf->Output($path, 'F');
-        $url='wageproof/'.$date_name.'-'.$name.'.pdf';
+        $url='wageproof/'.$date_name.'-'.$username.'.pdf';
         return $url;
     }
     public function wage_proof(){
@@ -431,7 +513,8 @@ class Super_wage extends Admin_Controller
         $temp=array();
         foreach($this->data['apply_data'] as $k => $v){
             if(strstr($v['feedback_status'],'未')){
-                array_push($temp,$this->proof_Creator($v['name'],$v['type']));
+                $url=$this->proof_Creator($v['user_id'],$v['type']);
+                $temp[$k]=$url;
             }
         }
         $this->data['url']=$temp;
@@ -616,29 +699,15 @@ class Super_wage extends Admin_Controller
                 );
                 array_push($user_set,$user_data);
                 unset($user_data);
-                //如果不是多部门，不包含/，那么就记录下来
-                if(strpos($dept,'/') != true){
-                    if(!in_array($dept,$all_dept) and $dept!='' and $dept!='产假退回'){
-                        array_push($all_dept,$dept);
-                    }
-                }
+
             }
             $counter++;
         }
         $this->model_wage_tag->createbatch($wage_set);
         $this->model_users->createbatch($user_set);
-        foreach($all_dept as $k => $v){
-            $dept_data=array(
-                'dept_name' => $v,
-            );
-            array_push($dept_set,$dept_data);
-            unset($dept_data);
-        }
-        $this->model_dept->createbatch($dept_set);
+        
         unset($wage_set);
         unset($user_set);
-        unset($dept_set);
-
     }
     public function wage_tag_import($filename=NULL){
         $this->data['path'] = 'uploads/standard/人员信息大表模板.xlsx';
@@ -754,10 +823,20 @@ class Super_wage extends Admin_Controller
                         $wage['content'.($counter-3)]='0';
                         $counter++;
                     }
-                    
                 }
+                $dept=$wage['department'];
+                $wage['total']=$wage['content'.(count($wage)-6)];
                 array_push($data,$wage);
                 unset($wage);
+                //如果不是多部门，不包含/，那么就记录下来
+                if(strpos($dept,'/') != true){
+                    $dept_data=array(
+                        'dept_name' => $dept,
+                    );
+                    //如果不存在，则创建
+                    if(!$this->model_dept->check_dept($dept))
+                        $this->model_dept->update($dept_data,$dept);
+                }
             }
             unset($temp);
         }
@@ -1186,7 +1265,6 @@ class Super_wage extends Admin_Controller
         header('Content-Disposition:filename='.$filename);
         header('Cache-Control: max-age=0');
         $objWriter->save('php://output');
-        /**/
     }
     public function download_page(){
         $this->data['path'] = 'uploads/standard/人员导入模板.xlsx';

@@ -9,7 +9,6 @@
   <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
   <title>员工年假</title>
   <?php endif; ?>
-  
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->  
@@ -18,6 +17,7 @@
   
   <!-- Font Awesome -->  
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/font-awesome/css/font-awesome.min.css') ?>">
+  
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/Ionicons/css/ionicons.min.css') ?>">
   <!-- Theme style -->
@@ -54,6 +54,8 @@
 
   <!-- Page level plugin CSS-->
   <link href="<?php echo base_url('assets/dist/vendor/datatables/dataTables.bootstrap4.css') ?>" rel="stylesheet">
+  <link href="<?php echo base_url('assets/images/logo-ico.ico');?>" type="image/x-icon" rel="shortcut icon">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
