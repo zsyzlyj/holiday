@@ -4,7 +4,7 @@
       
     </a>
     <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
+    <nav class="mylogo navbar navbar-static-top">
     
       <ul class="nav navbar-nav navbar-right">
 

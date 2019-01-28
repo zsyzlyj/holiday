@@ -50,6 +50,115 @@ class Wage extends Admin_Controller{
     public function export_wage_proof(){
         
     }
+    public function apply_on_post_proof(){
+        $user_id=$this->session->userdata('user_id');
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $apply_data=array(
+                'user_id' => $user_id,
+                'name' => $this->session->userdata('user_name'),
+                'type' => $_POST['type'],
+                'submit_time' => date('Y-m-d H:i:s'),
+                'submit_status' => '已提交',
+                'feedback_status' => '未审核'
+            );
+            if($this->model_wage_apply->getApplyByIdAndStatus($user_id,$_POST['type'])){
+                $this->model_wage_apply->update($apply_data,$user_id);
+            }
+            else $this->model_wage_apply->create($apply_data);
+        }
+        //获取数据库中 已提交 状态的这个人证明开具信息
+        #$apply_info=$this->model_wage_apply->getApplyByIdAndStatus($user_id,'已提交');
+        $apply_info=$this->model_wage_apply->getApplyById($user_id);
+        $this->data['name']=array(
+            0 => '现实表现证明',
+            1 => '在职证明1',
+            2 => '在职证明2',
+            3 => '在职证明（积分入户1）',
+            4 => '在职证明（积分入户2）',
+            5 => '在职证明（居住证）'
+        );
+        $status=array();
+        $submit_status=array();
+        $feedback_status=array();
+        //预设全部可以浏览
+        for($i=0;$i<count($this->data['name']);$i++){
+            $status[$i]=true;
+            $submit_status[$i]='';
+            $feedback_status[$i]='';
+        }
+        //如果已提交则为false，不能浏览
+        foreach($apply_info as $k =>$v){
+            switch($v['type']){
+                case '现实表现证明':
+                    $submit_status[0]=$v['submit_status'];
+                    $feedback_status[0]=$v['feedback_status'];
+                    if(strstr($v['submit_status'],'已')){
+                        if(strstr($v['feedback_status'],'已'))
+                            $status[0]=true;
+                        else $status[0]=false;
+                    }
+                    break;
+                case '在职证明1':
+                    $submit_status[1]=$v['submit_status'];
+                    $feedback_status[1]=$v['feedback_status'];
+                    if(strstr($v['submit_status'],'已')){
+                        if(strstr($v['feedback_status'],'已'))
+                            $status[1]=true;
+                        else $status[1]=false;
+                    }
+                    break;
+                case '在职证明2':
+                    $submit_status[2]=$v['submit_status'];
+                    $feedback_status[2]=$v['feedback_status'];
+                    if(strstr($v['submit_status'],'已')){
+                        if(strstr($v['feedback_status'],'已'))
+                            $status[2]=true;
+                        else $status[2]=false;
+                    }
+                    break;
+                case '在职证明（积分入户1）':
+                    $submit_status[3]=$v['submit_status'];
+                    $feedback_status[3]=$v['feedback_status'];
+                    if(strstr($v['submit_status'],'已')){
+                        if(strstr($v['feedback_status'],'已'))
+                            $status[3]=true;
+                        else $status[3]=false;
+                    }
+                    break;
+                case '在职证明（积分入户2）':
+                    $submit_status[4]=$v['submit_status'];
+                    $feedback_status[4]=$v['feedback_status'];
+                    if(strstr($v['submit_status'],'已')){
+                        if(strstr($v['feedback_status'],'已'))
+                            $status[4]=true;
+                        else $status[4]=false;
+                    }
+                    break;
+                case '在职证明（居住证）':
+                    $submit_status[5]=$v['submit_status'];
+                    $feedback_status[5]=$v['feedback_status'];
+                    if(strstr($v['submit_status'],'已')){
+                        if(strstr($v['feedback_status'],'已'))
+                            $status[5]=true;
+                        else $status[5]=false;
+                    }
+                    break;
+            }
+        }
+        $this->data['submit_status']=$submit_status;
+        $this->data['feedback_status']=$feedback_status;
+        $this->data['status']=$status;
+
+        $this->data['url']=array(
+            0 => 'wage/show_royal_post_proof',
+            1 => 'wage/show_on_post_1_proof',
+            2 => 'wage/show_on_post_2_proof',
+            3 => 'wage/show_on_post_3_proof',
+            4 => 'wage/show_on_post_4_proof',
+            5 => 'wage/show_on_post_5_proof',
+        );
+        $this->render_template('wage/apply_on_post', $this->data);
+    }
     public function apply_wage_proof(){
         $user_id=$this->session->userdata('user_id');
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -118,11 +227,7 @@ class Wage extends Admin_Controller{
         $this->data['submit_status']=$submit_status;
         $this->data['feedback_status']=$feedback_status;
         $this->data['status']=$status;
-        $this->data['name']=array(
-            0 => '收入证明',
-            1 => '收入证明（农商银行）',
-            2 => '收入证明（公积金）',
-        );
+
         $this->data['url']=array(
             0 => 'wage/show_wage_proof',
             1 => 'wage/show_bank_wage_proof',
@@ -182,7 +287,12 @@ class Wage extends Admin_Controller{
         $username=$user_data['name'];
         $date=date('Y年m月d日',strtotime($holiday_data['indate']));
         
-        $str="收 入 证 明\r\n";
+        if(!(strstr($type,'post'))){
+            $str="收 入 证 明\r\n";
+        }
+        else{
+            $str="在 职 证 明\r\n";
+        }
         $pdf->SetFont('kozminproregular','B',24);
         $pdf->Write(0,$str,'', 0, 'C', false, 0, false, false, 0);
 
@@ -196,11 +306,15 @@ class Wage extends Admin_Controller{
             case 'fund':
                 $str="\r\n中山市住房公积金管理中心：\r\n            为申请住房公积金贷款事宜，兹证明 姓名，性别：，身份证号：111111111111111111，是我单位职工，已在我单位工作满50年，该职工上一年度在我单位总收入约为XXXX元（大写：拾壹萬伍仟圆整 ）。\r\n\r\n";
                 break;
-            case 'royal':
-                $str="           姓名 （男，身份证号：111111111111111111） 同志自 1971年1月1日 进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n          特此证明!\r\n";
+            case 'royal_post':
+                $str="\r\n           姓名（男，身份证号：111111111111111111） 同志自 1971年1月1日 进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n          特此证明!\r\n";
+                $pdf->SetFont('kozminproregular','',14);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case 'on_post_1':
-                $str="\r\n          兹有我单位员工 姓名 ，身份证号：111111111111111111，该员工于 1971年1月1日 起至今在我公司工作。\r\n            特此证明。\r\n";
+                $str="\r\n          兹有我单位员工姓名，身份证号：111111111111111111，该员工于 1971年1月1日 起至今在我公司工作。\r\n            特此证明。\r\n";
                 $pdf->SetFont('kozminproregular','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
@@ -223,7 +337,6 @@ class Wage extends Admin_Controller{
                 $pdf->SetFont('kozminproregular', '', 9);
                 $str="单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356";
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-
                 break;
             case 'on_post_4':
                 $str="\r\n          兹有我单位 姓名 同志，性别：男，身份证号码：111111111111111111，于 1971年1月1日 至今在我单位从事 南部固网销售公司总经理 （职位）工作。\r\n单位名称：中国联合网络通信有限公司中山市分公司\r\n          联系地址：中山市东区长江北路6号联通大厦\r\n          联系人：徐小姐        联系电话：0760-23771356\r\n          特此证明。\r\n       （此证明仅用于办理流动人员积分制管理使用）\r\n";
@@ -281,10 +394,9 @@ class Wage extends Admin_Controller{
     }
     
     //收入证明
-    public function show_royal_proof(){
-        $this->proof_Creator("royal");
+    public function show_royal_post_proof(){
+        $this->proof_Creator("royal_post");
     }
-    
     public function show_on_post_1_proof(){
         $this->proof_Creator("on_post_1");
     }

@@ -434,18 +434,18 @@ class Super_wage extends Admin_Controller
             case '收入证明（公积金）':
                 $str="\r\n中山市住房公积金管理中心：\r\n            为申请住房公积金贷款事宜，兹证明 ".$username."，性别：".$gender."，身份证号 ".$user_id."，是我单位职工，已在我单位工作满".""."年，该职工上一年度在我单位总收入约为".$avg."元（大写：".$rmb."）。\r\n\r\n";
                 break;
-            case 'royal':
+            case '现实表现证明':
                 $str="          ".$username."（男，身份证号：".$user_id."） 同志自".$date."进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n          特此证明!\r\n";
                 break;
-            case 'on_post_1':
+            case '在职证明1':
                 $str="\r\n          兹有我单位员工".$username."，身份证号：".$user_id."，该员工于".$date."起至今在我公司工作。\r\n            特此证明。\r\n";
                 
                 break;
-            case 'on_post_2':
+            case '在职证明2':
                 $str="\r\n          兹有".$username."（女，身份证号：".$user_id."），为中国联合网络通信有限公司中山市分公司中层管理干部，现任中国联合网络通信有限公司中山市分公司综合部部门经理。\r\n            特此证明。\r\n\r\n";
                 
                 break;
-            case 'on_post_3':
+            case '在职证明（积分入户1）':
                 $str="\r\n          兹有刘颖（女，身份证号：110108196709174243），为中国联合网络通信有限公司中山市分公司中层管理干部，现任中国联合网络通信有限公司中山市分公司综合部部门经理。\r\n            特此证明。\r\n";
                 $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
@@ -457,14 +457,14 @@ class Super_wage extends Admin_Controller
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
 
                 break;
-            case 'on_post_4':
+            case '在职证明（积分入户2）':
                 $str="\r\n          兹有我单位".$username."同志，性别：男，身份证号码：".$user_id."，于".$date."至今在我单位从事 南部固网销售公司总经理 （职位）工作。\r\n单位名称：中国联合网络通信有限公司中山市分公司\r\n          联系地址：中山市东区长江北路6号联通大厦\r\n          联系人：徐小姐        联系电话：0760-23771356\r\n          特此证明。\r\n       （此证明仅用于办理流动人员积分制管理使用）\r\n";
                 $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date('Y年m月d日')."\r\n\r\n\r\n\r\n";
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
-            case 'on_post_5':
+            case '在职证明（居住证）':
                 $str="\r\n          兹有".$username."（女，身份证号：".$user_id."），自".$date."进入我公司工作，现任中国联合网络通信有限公司中山市分公司员工 （职位）。\r\n          特此证明。\r\n       （此证明仅用于办理居住证使用）";
                 $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
@@ -520,6 +520,7 @@ class Super_wage extends Admin_Controller
         $this->data['url']=$temp;
         $this->render_super_template('super/wage_proof',$this->data);
     }
+    
     //收入证明
     public function show_wage_proof(){
         $this->proof_Creator('wage');
