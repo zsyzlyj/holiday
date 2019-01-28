@@ -14,8 +14,17 @@ class Model_users extends CI_Model{
 		if($userId){
 			$sql = "SELECT * FROM users WHERE user_id = ?";	
 			$query = $this->db->query($sql, array($userId));
+			$query->num_rows();
 			return $query->row_array();
 		}
+	}
+	public function checkUserById($userId = null){
+		if($userId){
+			$sql = "SELECT * FROM users WHERE user_id = ?";	
+			$query = $this->db->query($sql, array($userId));
+			return ($query->num_rows() == 1) ? true : false;
+		}
+		return false;
 	}
 
 	public function create($data = ''){
@@ -34,6 +43,12 @@ class Model_users extends CI_Model{
 		$this->db->where('user_id',$id);
 		$update = $this->db->update('users', $data);
 		return ($update == true) ? true : false;	
+	}
+	public function updatebatch($data=array()){
+		if($data){
+			$create = $this->db->update_batch('users', $data, 'user_id');
+			return ($create == true) ? true : false;
+		}
 	}
 	public function edit($data = array(), $id = null){
 		$this->db->where('user_id', $id);

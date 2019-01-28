@@ -13,6 +13,7 @@ class Super_wage extends Admin_Controller
         $this->load->model('model_notice');
         $this->load->model('model_dept');
         $this->load->model('model_users');
+        $this->load->model('model_all_user');
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
         $this->load->model('model_wage_record');
@@ -589,7 +590,7 @@ class Super_wage extends Admin_Controller
         $counter=0;
 
         $this->model_wage_tag->deleteAll();
-        $this->model_users->deleteAll();
+        #$this->model_users->deleteAll();
         $this->model_dept->deleteAll();
         $wage_set=array();
         $user_set=array();
@@ -654,22 +655,19 @@ class Super_wage extends Admin_Controller
                 array_push($wage_set,$row_data);
                 unset($row_data);
                 //新建登陆用户
-                /*
-                switch($role){
-                    case '部门负责人':$permission=2;break;
-                    case '员工':$permission=3;break;
-                    case '综管员':$permission=1;break;
-                    #case ''
-                }*/
-                $user_data=array(
-                    'username' => $name,
-                    'user_id' => $user_id,
-                    'password' => md5(substr($user_id,-6)),
-                    'permission' => 3,
-                );
-                array_push($user_set,$user_data);
-                unset($user_data);
-
+                //如果数据库中没有这个用户，那么就创建记录，否则不做任何事
+                if(!$this->model_users->checkUserById($user_id)){
+                    echo 'new user';
+                    #$this->model_users->update();
+                    $user_data=array(
+                        'username' => $name,
+                        'user_id' => $user_id,
+                        'password' => md5(substr($user_id,-6)),
+                        'permission' => 3,
+                    );
+                    array_push($user_set,$user_data);
+                    unset($user_data);
+                }
             }
             $counter++;
         }
@@ -689,6 +687,115 @@ class Super_wage extends Admin_Controller
                 }
                 else{
                     $this->wage_tag_excel_put();
+                    $this->reset_pass();
+                }
+            }
+        }
+        else{
+            $this->render_super_template('super/wage_tag_import',$this->data);
+        } 
+    }
+    public function wage_all_user_put(){
+        $this->load->library('phpexcel');//ci框架中引入excel类
+        $this->load->library('PHPExcel/IOFactory');
+        //先做一个文件上传，保存文件
+        $path=$_FILES['file'];
+        $filePath = 'uploads/wage_user/'.$path['name'];
+        move_uploaded_file($path['tmp_name'],$filePath);
+        //根据上传类型做不同处理
+        
+        if(strstr($_FILES['file']['name'],'xlsx')){
+            $reader = new PHPExcel_Reader_Excel2007();
+        }
+        else{
+            if(strstr($_FILES['file']['name'], 'xls')){
+                $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
+            }
+        }
+
+        $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
+        $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
+        $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+        $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+    
+        $columnCnt = array_search($highestColumm, $cellName); 
+
+        $data = array();
+        for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
+                $cellId = $cellName[$colIndex].$rowIndex;  
+                $cell = $sheet->getCell($cellId)->getValue();
+                $cell = $sheet->getCell($cellId)->getCalculatedValue();
+                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                    $cell = $cell->__toString();
+                }
+                $data[$rowIndex][$colIndex] = $cell;
+            }
+        }
+
+        $column=array();
+        $column_name=array();
+        $attribute_data=array();
+        
+        $user_id='';
+        $pwd='';
+        $name='';
+        $dept='';
+        $mobile='';
+        $counter=0;
+        $this->model_all_user->deleteAll();
+        $all_user_set=array();
+        $user_set=array();
+
+        foreach($data as $k => $v){
+            if($counter>1){
+                foreach($v as $a=>$b){
+                    switch($data[1][$a]){
+                        case 'id_num':$user_id=$b;break;
+                        case 'pwd':$pwd=$b;break;
+                        case 'department':$dept=$b;break;
+                        case 'mobile':$mobile=$b;break;
+                        case 'staff_name':$name=$b;break;
+                    }
+                }
+                //新建全用户历史
+                $row_data=array(
+                    'id_num' => $user_id,
+                    'name' => $name,
+                    'pwd' => $pwd,
+                    'dept' => $dept,
+                    'mobile' => $mobile,
+                );
+                array_push($all_user_set,$row_data);
+                unset($row_data);
+                //新建登陆用户
+                //如果用户数据库中有这个用户，那么就更新该用户的密码，否则不做任何事
+                if(!$this->model_users->checkUserById($user_id)){
+                    $user_data=array(
+                        'user_id' => $user_id,
+                        'password' => $pwd,
+                    );
+                    array_push($user_set,$user_data);
+                    unset($user_data);
+                }
+            }
+            $counter++;
+        }
+        $this->model_all_user->createbatch($all_user_set);
+        $this->model_users->updatebatch($user_set);
+        unset($all_user_set);
+        unset($user_set);
+    }
+    public function wage_all_user_import($filename=NULL){
+        if($_FILES){
+            if($_FILES['file']){
+                if($_FILES['file']['error'] > 0){
+                    $this->session->set_flashdata('error', '请选择要上传的文件！');
+                    $this->render_super_template('super/wage_tag_import',$this->data);
+                }
+                else{
+                    $this->wage_all_user_put();
                     $this->reset_pass();
                 }
             }

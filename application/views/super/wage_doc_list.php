@@ -52,13 +52,30 @@
                 
                 <?php foreach($wage_doc as $k => $v):?>
                 <tr>
-                  <form action='<?php echo base_url('super_wage/wage_doc_delete')?>' method='POST'>
                   <td><?php echo $v['number'];?></td>
                   <td><?php echo $v['doc_name'];?></td>
-                  <td><a href='<?php echo base_url($v['doc_path']);?>' target="_blank">浏览</a></td>  
-                  <input type='hidden' value="<?php echo $v['number']; ?>" name='time'/>
-                  <td><button class="btn btn-danger"><i class="fa fa-trash"> 删除</i></a></td>
-                  </form>
+                  <td><a href='<?php echo base_url($v['doc_path']);?>' target="_blank">浏览</a></td>
+                  <td>
+                    <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash">删除</i></a>
+                    <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                      <div class="modal-content-month">
+                        <div class="modal-header">
+                          <h4>请确认</h4>
+                        </div>
+                        <div class="modal-body">
+                          <h4 style="text-align:left">确认删除吗？</h4>
+                        </div>
+                        <div class="modal-footer">
+                          
+                          <form action='<?php echo base_url('super_wage/wage_doc_delete')?>' method='POST'>
+                          <input type='hidden' value="<?php echo $v['number']; ?>" name='time'/>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                          <button type="submit" class="btn btn-success btn-ok">确认删除</a>
+                          </form>
+                        </div>
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                  </td>
                 </tr>
                 
                 <?php endforeach;?>

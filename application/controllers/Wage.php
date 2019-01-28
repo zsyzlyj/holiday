@@ -75,7 +75,10 @@ class Wage extends Admin_Controller{
             2 => '在职证明2',
             3 => '在职证明（积分入户1）',
             4 => '在职证明（积分入户2）',
-            5 => '在职证明（居住证）'
+            5 => '在职证明（居住证）',
+            6 => '在职证明（购房补贴）',
+            7 => '计生证明',
+            8 => '子女户口非在注册证明'
         );
         $status=array();
         $submit_status=array();
@@ -143,6 +146,33 @@ class Wage extends Admin_Controller{
                         else $status[5]=false;
                     }
                     break;
+                case '在职证明（住房补贴）':
+                    $submit_status[6]=$v['submit_status'];
+                    $feedback_status[6]=$v['feedback_status'];
+                    if(strstr($v['submit_status'],'已')){
+                        if(strstr($v['feedback_status'],'已'))
+                            $status[6]=true;
+                        else $status[6]=false;
+                    }
+                    break;
+                case '计生证明':
+                    $submit_status[7]=$v['submit_status'];
+                    $feedback_status[7]=$v['feedback_status'];
+                    if(strstr($v['submit_status'],'已')){
+                        if(strstr($v['feedback_status'],'已'))
+                            $status[7]=true;
+                        else $status[7]=false;
+                    }
+                    break;
+                case '子女户口非在注册证明':
+                    $submit_status[8]=$v['submit_status'];
+                    $feedback_status[8]=$v['feedback_status'];
+                    if(strstr($v['submit_status'],'已')){
+                        if(strstr($v['feedback_status'],'已'))
+                            $status[8]=true;
+                        else $status[8]=false;
+                    }
+                    break;
             }
         }
         $this->data['submit_status']=$submit_status;
@@ -150,12 +180,15 @@ class Wage extends Admin_Controller{
         $this->data['status']=$status;
 
         $this->data['url']=array(
-            0 => 'wage/show_royal_post_proof',
+            0 => 'wage/show_royal_proof',
             1 => 'wage/show_on_post_1_proof',
             2 => 'wage/show_on_post_2_proof',
             3 => 'wage/show_on_post_3_proof',
             4 => 'wage/show_on_post_4_proof',
             5 => 'wage/show_on_post_5_proof',
+            6 => 'wage/show_on_post_6_proof',
+            7 => 'wage/show_child_1_proof',
+            8 => 'wage/show_child_2_proof',
         );
         $this->render_template('wage/apply_on_post', $this->data);
     }
@@ -231,7 +264,7 @@ class Wage extends Admin_Controller{
         $this->data['url']=array(
             0 => 'wage/show_wage_proof',
             1 => 'wage/show_bank_wage_proof',
-            2 => 'wage/show_fund_proof'
+            2 => 'wage/show_fund_wage_proof'
         );
         $this->render_template('wage/apply', $this->data);
     }
@@ -287,11 +320,15 @@ class Wage extends Admin_Controller{
         $username=$user_data['name'];
         $date=date('Y年m月d日',strtotime($holiday_data['indate']));
         
-        if(!(strstr($type,'post'))){
+        if(strstr($type,'wage')){
             $str="收 入 证 明\r\n";
         }
-        else{
-            $str="在 职 证 明\r\n";
+        elseif(strstr($type,'post') or strstr($type,'child_2')){
+            $str="证            明\r\n";
+        }elseif(strstr($type,'royal')){
+            $str="现 实 表 现 证 明\r\n";
+        }elseif(strstr($type,'child_1')){
+            $str="计 生 证 明\r\n";
         }
         $pdf->SetFont('kozminproregular','B',24);
         $pdf->Write(0,$str,'', 0, 'C', false, 0, false, false, 0);
@@ -303,10 +340,10 @@ class Wage extends Admin_Controller{
             case 'bank_wage':
                 $str="\r\n中山农村商业银行股份有限公司：\r\n            兹证明（姓名）（身份证号码： 111111111111111111）为我单位正式员工，自1971年1月1日起为我单位工作，现于我单位任职 网络建设部 无线网建设室 室主任，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟伍佰圆整），以上情况属实。此证明仅用于申请贷款之用。\r\n          特此证明！";
                 break;
-            case 'fund':
+            case 'fund_wage':
                 $str="\r\n中山市住房公积金管理中心：\r\n            为申请住房公积金贷款事宜，兹证明（姓名），（性别）：，身份证号：111111111111111111，是我单位职工，已在我单位工作满50年，该职工上一年度在我单位总收入约为XXXX元（大写：拾壹萬伍仟圆整 ）。\r\n\r\n";
                 break;
-            case 'royal_post':
+            case 'royal':
                 $str="\r\n          （姓名）（性别，身份证号：111111111111111111）同志自 1971年1月1日 进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n          特此证明!\r\n";
                 $pdf->SetFont('kozminproregular','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
@@ -355,16 +392,35 @@ class Wage extends Admin_Controller{
                 $pdf->SetFont('kozminproregular', '', 9);
                 $str="单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356";
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                
                 break;
-            case 'one_child':
-                $str="";
+            case 'on_post_6':
+                $str="\r\n          （姓名）同志（性别，身份证号码：111111111111111111），2008年7月1日起在我司工作，在职期间未享受过实物分房及建、购房相关补贴，该证明用于申请住房补贴使用。\r\n          特此证明。";
+                $pdf->SetFont('kozminproregular','',14);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                $str="\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源部\r\n".date("Y年m月d日");
+                $pdf->SetFont('kozminproregular','',14);
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
-
+            case 'child_1':
+                $str="\r\n          （姓名）（身份证号：111111111111111111），为中国联合网络通信有限公司中山市分公司在编员工，于20xx年xx月与xxx登记结婚，属初婚已育壹孩，没有违反计划生育政策。其在我司工作期间的计划生育工作由我司负责管理。\r\n          特此证明。";
+                $pdf->SetFont('kozminproregular','',14);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                $str="\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
+                $pdf->SetFont('kozminproregular','',14);
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
+                break;
+            case 'child_2':
+                $str="\r\n          兹有（姓名）（性别，身份证号：111111111111111111）为我司在编员工，户籍迁入我司集体户统一管理，于20xx年xx月xx日与xxx登记结婚，20xx年xx月xx日育有一女，其女xxx非我司在册集体户口。\r\n          特此证明。";
+                $pdf->SetFont('kozminproregular','',14);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                $str="\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
+                $pdf->SetFont('kozminproregular','',14);
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
+                break;
             default:break;
         }
 
-        if(!(strstr($type,'post'))){
+        if(strstr($type,'wage')){
             $pdf->SetFont('kozminproregular','',14);
             $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
             $str="\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n单位（盖章）\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n\r\n";
@@ -384,8 +440,8 @@ class Wage extends Admin_Controller{
         $this->proof_Creator("wage");
     }
     //公积金证明
-    public function show_fund_proof(){
-        $this->proof_Creator("fund");
+    public function show_fund_wage_proof(){
+        $this->proof_Creator("fund_wage");
     }
 
     //农商银行收入证明
@@ -394,8 +450,8 @@ class Wage extends Admin_Controller{
     }
     
     //收入证明
-    public function show_royal_post_proof(){
-        $this->proof_Creator("royal_post");
+    public function show_royal_proof(){
+        $this->proof_Creator("royal");
     }
     public function show_on_post_1_proof(){
         $this->proof_Creator("on_post_1");
@@ -412,9 +468,14 @@ class Wage extends Admin_Controller{
     public function show_on_post_5_proof(){
         $this->proof_Creator("on_post_5");
     }
-    //收入证明
-    public function show_one_child_proof(){
-        $this->proof_Creator("one_child");
+    public function show_on_post_6_proof(){
+        $this->proof_Creator("on_post_6");
+    }
+    public function show_child_1_proof(){
+        $this->proof_Creator("child_1");
+    }
+    public function show_child_2_proof(){
+        $this->proof_Creator("child_2");
     }
 
     public function search_excel($doc_name,$user_id){

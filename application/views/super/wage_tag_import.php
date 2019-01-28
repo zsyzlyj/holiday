@@ -31,8 +31,19 @@
                 <h5><input type="file" name="file" id="file" accept=".xls,.xlsx"/></h5>
                 <br />
                 <button type="submit" id="submit" name="import" class="btn btn-warning" >导入</button>
-                <a class="btn btn-info" href="<?php echo base_url($path) ?>">人员信息大表模板下载</a>
-                      
+                <a class="btn btn-info" href="<?php echo base_url($path) ?>">人员信息大表模板下载</a>  
+            </div>
+        </form>
+        <hr />
+        <form action="<?php echo base_url('super_wage/wage_all_user_import') ?>" method="post"
+            name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
+            <div>
+                <label><h4>选择上传文件</h4></label> 
+                <br />
+                <br />
+                <h5><input type="file" name="file" id="file" accept=".xls,.xlsx"/></h5>
+                <br />
+                <button type="submit" id="submit" name="import" class="btn btn-warning" >导入</button>
             </div>
         </form>
       </div>
