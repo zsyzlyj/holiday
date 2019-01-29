@@ -24,14 +24,14 @@
             </div>
             <form action="<?php echo base_url('auth/login') ?>" method="post">
                 <div class="form-group has-feedback">
-                    <input class="form-control" type="text" name="user_id" id="user_id" placeholder="用户名" autocomplete="off">
+                    <input class="form-control" type="text" name="user_id" id="user_id" placeholder="用户名" required="required"  autocomplete="off">
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control" name="password" id="password" placeholder="密码" autocomplete="off">
+                    <input type="password" class="form-control" name="password" id="password" required="required" placeholder="密码" autocomplete="off">
                 </div>
                 <div class="row">
                     <div class="col-md-7">
-                    <input class="form-control" type="text" name="verify_code" id="password" placeholder="验证码" autocomplete="off">
+                    <input class="form-control" type="text" name="verify_code" id="password" required="required" placeholder="验证码" autocomplete="off">
                     </div>
                     <div class="col-md-4">
                         <a href="javascript:void(0);" id="reload-captcha"><p id="captcha-image"></p></a>

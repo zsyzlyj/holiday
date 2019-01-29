@@ -58,7 +58,8 @@
                 </div>
                 <div class="form-group">
                   <label for="password">新密码</label>
-                  <input type="password" class="form-control" id="npassword" name="npassword" placeholder="" autocomplete="off">
+                  <input type="password" class="form-control" id="npassword" name="npassword" placeholder="" autocomplete="off" />
+                  <span style="display:inline-block;" class="fa fa-eye form-control-feedback"></span>
                 </div>
 
                 <div class="form-group">
