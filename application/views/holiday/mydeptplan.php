@@ -109,7 +109,6 @@
                 <button disabled class="btn btn-success">提交</button>
                 <?php endif; ?>
 
-                
                 <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptplan') ?>' method='post'>
                   <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
                   <?php if(!strstr($feedback['confirm_status'],'不')):?>

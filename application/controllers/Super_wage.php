@@ -1441,7 +1441,9 @@ class Super_wage extends Admin_Controller
                 }
                 else{
                     $this->wage_doc_put();
-                    $this->wage_doc_list();
+                    $wage_doc=$this->model_wage_doc->getWageDocData();
+                    $this->data['wage_doc']=$wage_doc;
+                    $this->render_super_template('super/wage_doc_list',$this->data);
                 }
             }
         }

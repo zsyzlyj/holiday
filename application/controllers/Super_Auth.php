@@ -116,8 +116,7 @@ class Super_Auth extends Admin_Controller{
             
         }
         else{
-			// false case
-			$this->data['errors'] = '账户或密码错误';
+			// 打开登录界面
 			$this->load->view('super/login',$this->data);
         }	
 	}

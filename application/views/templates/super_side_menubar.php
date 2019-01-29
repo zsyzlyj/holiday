@@ -15,6 +15,9 @@
             <i class="fa fa-edit"></i> <span>年假计划汇总</span>
           </a>
         </li>
+        
+        <li id="uploadHolidayNav"><a href="<?php echo base_url('super_holiday/holiday_import') ?>"><i class="fa fa-cloud-upload"></i> 上传年假信息</a></li>
+        <li id="downloadHolidayNav"><a href="<?php echo base_url('super_holiday/download_page') ?>"><i class="fa fa-cloud-download"></i> 下载年假计划汇总表</a></li>
         <li class="treeview" id="uploadHolidayDoc">
           <a href="#">
             <i class="fa fa-cloud"></i>
@@ -28,9 +31,6 @@
             <li id="showHolidayDocNav"><a href="<?php echo base_url('super_holiday/holiday_doc_list') ?>"><i class="fa fa-circle-o"></i> 年假文件汇总</a></li>
           </ul>
         </li>
-        <li id="uploadHolidayNav"><a href="<?php echo base_url('super_holiday/holiday_import') ?>"><i class="fa fa-cloud-upload"></i> 上传年假信息</a></li>
-        <li id="downloadHolidayNav"><a href="<?php echo base_url('super_holiday/download_page') ?>"><i class="fa fa-cloud-download"></i> 下载年假计划汇总表</a></li>
-      
         <li class="treeview" id="holidayUserNav">
           <a href="#">
             <i class="fa fa-users"></i>

@@ -8,7 +8,7 @@ class Users extends Admin_Controller{
 		
 		$this->data['page_title'] = 'Users';
 		$this->load->model('model_wage_tag');
-		$this->load->model('model_holiday_manager');
+		$this->load->model('model_manager');
 		$this->load->model('model_holiday');
 		$this->data['permission']=$this->session->userdata('permission');
 		$this->data['user_name'] = $this->session->userdata('user_name');

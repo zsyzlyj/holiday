@@ -18,7 +18,7 @@ class Holiday extends Admin_Controller
         $this->load->model('model_holiday_doc');
         $this->load->model('model_plan');
         $this->load->model('model_notice');
-        $this->load->model('model_holiday_manager');
+        $this->load->model('model_manager');
         $this->load->model('model_feedback');
         $this->data['notice_data'] = $this->model_notice->getNoticeLatestHoliday();
         $this->data['holiday_doc'] = $this->model_holiday_doc->getHolidayDocData();
@@ -293,16 +293,14 @@ class Holiday extends Admin_Controller
 
     }
     
-    public function export_mydeptplan()
-  {
+    public function export_mydeptplan(){
         $user_id=$this->session->userdata('user_id');
         $my_data = $this->model_plan->getPlanById($user_id);
 
         $this->excel_mydeptplan($_POST['current_dept']);
     }
 
-    public function export_mydeptholiday()
-  {
+    public function export_mydeptholiday(){
         $user_id=$this->session->userdata('user_id');
         $my_data = $this->model_plan->getPlanById($user_id);
 
@@ -337,7 +335,7 @@ class Holiday extends Admin_Controller
 
         }
         
-        $admin_data = $this->model_holiday_manager->getManagerById($user_id);
+        $admin_data = $this->model_manager->getManagerById($user_id);
 
         $admin_result=array();
         $admin_result=explode('/',$admin_data['dept']);
@@ -363,7 +361,7 @@ class Holiday extends Admin_Controller
                 $selected_dept=$_POST['current_dept'];
             }
             if($selected_dept=='营业中心'){
-                $manager_data = $this->model_holiday_manager->getManagerByDept($selected_dept);
+                $manager_data = $this->model_manager->getManagerByDept($selected_dept);
                 
                 foreach($manager_data as $k => $v){
                     if($v['dept']!='营业中心'){
@@ -407,21 +405,19 @@ class Holiday extends Admin_Controller
             $this->data['current_dept']=$selected_dept;
             $this->data['submit_status'] = $this->model_feedback->getFeedbackByDept($selected_dept)['submit_status'];
         }
-        $admin_data = $this->model_holiday_manager->getManagerById($user_id);
-
+        $admin_data = $this->model_manager->getManagerById($user_id);
         $admin_result=array();
         $admin_result=explode('/',$admin_data['dept']);
 
         $this->data['dept_options']=$admin_result;
         $this->data['submitted'] = $submitted;        
-        #$this->data['submitted'] = 6;
         $this->data['plan_data'] = $result;
         $this->data['feedback'] = $this->model_feedback->getFeedbackByDept($selected_dept);
         $this->render_template('holiday/mydeptplan', $this->data);
     }
     public function mydeptplan_submit(){
         $user_id = $this->session->userdata('user_id');
-        $my_data = $this->model_holiday_manager->getManagerById($user_id);
+        $my_data = $this->model_manager->getManagerById($user_id);
         $dept_set=array();
         $data=array();
         $feedback=array();
@@ -445,8 +441,7 @@ class Holiday extends Admin_Controller
     部门经理
     ==============================================================================
     */
-    public function manager()
-	{
+    public function manager(){
         $this->staff();
     }
 
@@ -456,12 +451,9 @@ class Holiday extends Admin_Controller
     ==============================================================================
     */
 
-    public function staff_plan()
-  {
-        $user_id=$this->session->userdata('user_id');
-        $plan_data = $this->model_plan->getplanById($user_id);
+    public function staff_plan(){
         $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
-        $this->data['plan_data'] = $plan_data;
+        $this->data['plan_data'] = $this->model_plan->getplanById($this->session->userdata('user_id'));
 		$this->render_template('holiday/staff_plan', $this->data);
     }
     /*
@@ -469,8 +461,7 @@ class Holiday extends Admin_Controller
     年假计划提交
     ==============================================================================
     */
-    public function update_plan()
-  {
+    public function update_plan(){
         /*============================================================*/
         /*
             首页必须要的信息，包括身份证，通知信息
@@ -510,22 +501,29 @@ class Holiday extends Admin_Controller
                 
                 if($create == true){
                     $this->session->set_flashdata('success', '提交成功');
-                    $this->staff_plan();
+                    $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
+                    $this->data['plan_data'] = $this->model_plan->getplanById($this->session->userdata('user_id'));
+                    $this->render_template('holiday/staff_plan', $this->data);
                 }
                 else{
                     $this->session->set_flashdata('error', '提交失败');
-                    $this->staff_plan();
+                    $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
+                    $this->data['plan_data'] = $this->model_plan->getplanById($this->session->userdata('user_id'));
+                    $this->render_template('holiday/staff_plan', $this->data);
                 }
             }
-            else
-          {
+            else{
                 $this->session->set_flashdata('error', '提交失败，计划总数必须等于可休假总数');
-                $this->staff_plan();
+                $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
+                $this->data['plan_data'] = $this->model_plan->getplanById($this->session->userdata('user_id'));
+                $this->render_template('holiday/staff_plan', $this->data);
             }
             /**/
         }
         else{
-            $this->staff_plan();
+            $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
+            $this->data['plan_data'] = $this->model_plan->getplanById($this->session->userdata('user_id'));
+            $this->render_template('holiday/staff_plan', $this->data);
         }
     }
     /*
@@ -544,7 +542,7 @@ class Holiday extends Admin_Controller
             $this->data['current_dept']=$selected_dept;
         }
         
-        $admin_data = $this->model_holiday_manager->getManagerById($user_id);
+        $admin_data = $this->model_manager->getManagerById($user_id);
         $admin_result=array();
         array_push($admin_result,$admin_data['dept']);
         $this->data['dept_options']=$admin_result;
@@ -581,7 +579,7 @@ class Holiday extends Admin_Controller
             $this->data['current_dept']=$selected_dept;
             $this->data['submit_status'] = $this->model_feedback->getFeedbackByDept($selected_dept)['submit_status'];
         }
-        $admin_data = $this->model_holiday_manager->getManagerById($user_id);
+        $admin_data = $this->model_manager->getManagerById($user_id);
 
         $admin_result=array();
 
@@ -595,7 +593,7 @@ class Holiday extends Admin_Controller
     }
     public function mydomainplan_submit(){
         $user_id = $this->session->userdata('user_id');
-        $my_data = $this->model_holiday_manager->getManagerById($user_id);
+        $my_data = $this->model_manager->getManagerById($user_id);
         $feedback=array();
         $feedback[$my_data['dept']]=$this->model_feedback->getFeedbackByDept($my_data['dept']);
         $this->data['feedback'] = $feedback;
@@ -619,30 +617,6 @@ class Holiday extends Admin_Controller
     超级管理员，综合管理员修改年假计划编辑权限
     ==============================================================================
     */
-    public function change_submit(){
-        if($_POST){
-            if($_POST['submit_auth']==1){
-                $data = array(
-                    'submit_tag' => 0
-                );
-                
-            }
-            if($_POST['submit_revolt']==1){
-                $data = array(
-                    'submit_tag' => 1
-                );
-            }
-            $update = $this->model_plan->update($data,$_POST['user_id']);
-            if($update == true){
-                $this->session->set_flashdata('success', '授权完成');
-                $this->plan_set();
-            }
-        }
-        else{
-            $this->plan_set();
-        }
-
-    }
     public function change_submit_mydeptplan(){
         if($_POST){
             if($_POST['submit_auth']==1){
@@ -739,7 +713,7 @@ class Holiday extends Admin_Controller
             $this->data['feedback_status'] =$feedback['feedback_status'];
         }
 
-        $admin_data = $this->model_holiday_manager->getManagerById($user_id);
+        $admin_data = $this->model_manager->getManagerById($user_id);
 
         $admin_result=array();
         $admin_result=explode('/',$admin_data['dept']);
@@ -754,7 +728,7 @@ class Holiday extends Admin_Controller
     public function audit_result(){
         $user_id=$this->session->userdata('user_id');
         
-        $my_data = $this->model_holiday_manager->getManagerById($user_id);
+        $my_data = $this->model_manager->getManagerById($user_id);
 
         $dept_set=array();
         $data=array();

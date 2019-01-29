@@ -110,8 +110,7 @@ class Auth extends Admin_Controller {
 			}
         }
         else{
-			// false case
-			$this->data['errors'] = '账户或密码错误';
+			// 打开登录界面
             $this->load->view('login',$this->data);
         }	
 	}
@@ -407,87 +406,4 @@ class Auth extends Admin_Controller {
 	        }
 		}
 	}
-	/*
-	public function holiday_setting(){
-		$this->setting('holiday');
-	}
-	public function wage_setting(){
-		$this->setting('wage');
-	}
-	
-	public function setting($type){
-		$id = $this->session->userdata('user_id');
-		$this->data['user_name'] = $this->session->userdata('user_name');
-		if($id){
-			$this->form_validation->set_rules('username', 'username', 'trim|max_length[12]');
-			if ($this->form_validation->run() == TRUE){
-	            // true case
-		        if(empty($this->input->post('opassword'))){
-					$this->session->set_flashdata('error', '修改失败，原密码不能为空');
-					if($type=='holiday')
-						redirect('auth/holiday_setting', 'refresh');
-					if($type=='wage')
-						redirect('auth/wage_setting', 'refresh');
-				}
-				elseif(empty($this->input->post('npassword')) && empty($this->input->post('cpassword'))){
-					$this->session->set_flashdata('error', '修改失败，新密码不能为空');
-					if($type=='holiday')
-						redirect('auth/holiday_setting', 'refresh');
-					if($type=='wage')
-						redirect('auth/wage_setting', 'refresh');
-				}
-		        else{
-					$this->form_validation->set_rules('opassword', 'Password', 'trim|required');
-					$this->form_validation->set_rules('npassword', 'Password', 'trim|required');
-					$this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|required|matches[npassword]');
-					if($this->form_validation->run() == TRUE){
-						$compare = $this->model_auth->wage_login($id, $this->input->post('opassword'));
-						if($compare){
-							$password = md5($this->input->post('npassword'));
-							$data = array(
-								'username' => $this->input->post('username'),
-								'password' => $password,
-							);
-							if($type=='holiday')
-								$update = $this->model_holiday_users->edit($data, $id);
-							if($type=='wage')
-								$update = $this->model_wage_users->edit($data, $id);	
-							if($update == true){
-								$this->session->set_flashdata('success', '修改成功！');
-								$this->render_template('users/setting', $this->data);
-							}
-							else{
-								$this->session->set_flashdata('error', '遇到未知错误!!');
-								$this->render_template('users/setting', $this->data);
-								
-							}
-						}
-						else{
-							$this->session->set_flashdata('error', '原密码错误');
-							if($type=='holiday')
-								redirect('auth/holiday_setting', 'refresh');
-							if($type=='wage')
-								redirect('auth/wage_setting', 'refresh');
-						}
-						
-					}
-			        else{
-						// false case
-						redirect('auth/'.$type.'_setting', 'refresh');
-						#$this->render_template('users/setting', $this->data);	
-			        }
-		        }
-	        }
-	        else{
-				// false case
-				if($type=='holiday')
-	        		$user_data = $this->model_holiday_users->getUserData($id);
-				if($type=='wage')
-					$user_data = $this->model_wage_users->getUserData($id);
-				$this->data['user_data'] = $user_data;
-				$this->render_template('users/setting', $this->data);	
-	        }
-		}
-	}
-	*/
 }
