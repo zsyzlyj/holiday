@@ -79,6 +79,11 @@
             <i class="fa fa-cloud-upload"></i><span>薪酬信息导入</span>
           </a>
         </li>
+        <li id="showWageImportNav">
+          <a href="<?php echo base_url('super_wage/show_import_list') ?>">
+            <i class="fa fa-list"></i><span>薪酬记录汇总</span>
+          </a>
+        </li>
         <li id="downloadWageNav">
           <a href="<?php echo base_url('super_wage/download_page') ?>">
             <i class="fa fa-cloud-download"></i><span>薪酬信息导出</span>

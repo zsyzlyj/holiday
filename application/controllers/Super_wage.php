@@ -979,7 +979,7 @@ class Super_wage extends Admin_Controller
                                 $this->data['wage_data']='';
                                 $this->data['attr_data']='';
                                 $this->data['chosen_month']='';
-                                $this->render_super_template('super/wage_search',$this->data);
+                                $this->render_super_template('super/wage_import_list',$this->data);
                             }
                         }
                     }
@@ -993,6 +993,16 @@ class Super_wage extends Admin_Controller
         else{
             $this->render_super_template('super/wage_import',$this->data);
         }
+    }
+    public function show_import_list(){
+        $date_tag=$this->model_wage_tag->getDatetag();
+        $import_list=array();
+        #echo var_dump($date_tag);
+        foreach($date_tag as $k => $v){
+            array_push($import_list,array('name' => $v['date_tag'],'url' => 'uploads/wage/'.$v['date_tag'].'.xlsx'));
+        }
+        $this->data['import_list']=$import_list;
+        $this->render_super_template('super/wage_import_list',$this->data);
     }
     public function wage_temp_put(){
         $this->load->library('phpexcel');//ci框架中引入excel类
