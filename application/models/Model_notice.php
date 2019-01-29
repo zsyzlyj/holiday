@@ -36,7 +36,7 @@ class Model_notice extends CI_Model{
 
 	public function remove($id){
 		if($id){
-			$this->db->where('date', $id);
+			$this->db->where('pubtime', $id);
 			$delete = $this->db->delete('notice');
 			return ($delete == true) ? true : false;
 		}

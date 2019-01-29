@@ -7,9 +7,6 @@
       <h1>
         公告历史
       </h1>
-
-
-      
     </section>
 
     <!-- Main content -->
@@ -34,7 +31,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              <table id="holidayTable" class="table table-bordered table-striped table-hover" style="overflow:scroll;" width="120%">
+              <table id="holidayTable" class="table table-bordered table-striped table-hover" style="overflow:scroll;" width="100%">
                 <thead>
                 <tr>
                   <th>发布时间</th>
@@ -42,6 +39,7 @@
                   <th>标题</th>
                   <th>内容</th>
                   <th>分类</th>
+                  <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -53,7 +51,27 @@
                         <td><?php echo $v['title']; ?></td>
                         <td><?php echo $v['content']; ?></td>
                         <td><?php echo $v['type']; ?></td>
-
+                        <td>
+                          <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash">删除</i></a>
+                          <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                            <div class="modal-content-month">
+                              <div class="modal-header">
+                                <h4>请确认</h4>
+                              </div>
+                              <div class="modal-body">
+                                <h4 style="text-align:left">确认删除吗？</h4>
+                              </div>
+                              <div class="modal-footer">
+                                
+                                <form action='<?php echo base_url('super_holiday/notification_delete')?>' method='POST'>
+                                <input type='hidden' value="<?php echo $v['pubtime']; ?>" name='time'/>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-success btn-ok">确认删除</a>
+                                </form>
+                              </div>
+                            </div><!-- /.modal-content -->
+                          </div><!-- /.modal -->
+                        </td>
                       </tr>
                     <?php endforeach ?>
                   <?php endif; ?>

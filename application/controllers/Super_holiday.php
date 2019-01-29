@@ -820,5 +820,11 @@ class Super_holiday extends Admin_Controller
             // false case
             $this->render_super_template('super/holiday_publish_plan', $this->data);
         }
-	}
+    }
+    public function notification_delete(){
+        $pubtime=$_POST['time'];
+        $this->model_notice->remove($pubtime);
+        $this->session->set_flashdata('success', '公告发布成功！');
+        redirect('super_holiday/notification', 'refresh');
+    }
 }
