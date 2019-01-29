@@ -56,15 +56,24 @@
                   <label for="password">原密码</label>
                   <input type="password" class="form-control" id="opassword" name="opassword" placeholder="密码" autocomplete="off">
                 </div>
-                <div class="form-group">
+                <div class="form-group">  
                   <label for="password">新密码</label>
-                  <input type="password" class="form-control" id="npassword" name="npassword" placeholder="" autocomplete="off" />
-                  <span style="display:inline-block;" class="fa fa-eye form-control-feedback"></span>
+                  <div class="input-icon-group">
+                    <div class="input-group">
+                      <input type="password" class="form-control" id="npassword" name="npassword" placeholder="" autocomplete="off" />
+                      <span class="input-group-addon" style="cursor:pointer;" onclick="hideShowPswn()"><i id="eyen" class="fa fa-eye-slash"></i></span>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="form-group">
                   <label for="cpassword">确认新密码</label>
-                  <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="" autocomplete="off">
+                  <div class="input-icon-group">
+                    <div class="input-group">
+                      <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="" autocomplete="off">
+                      <span class="input-group-addon" style="cursor:pointer;" onclick="hideShowPswc()"><i id="eyec" class="fa fa-eye-slash"></i></span>
+                    </div>
+                  </div>
                 </div>
                 </div>
               </div>
@@ -102,8 +111,6 @@
        
       </div>
       <!-- /.row -->
-      
-
     </section>
     <!-- /.content -->
   </div>
@@ -114,6 +121,28 @@
 
       $("#settingMenu").addClass('active');
     });
+    function hideShowPswn() {
+      var eyen = document.getElementById("eyen");
+      var npassword = document.getElementById("npassword");
+      if (npassword.type == "password") {
+        npassword.type = "text";
+        eyen.className="fa fa-eye";
+      } else {
+        npassword.type = "password";
+        eyen.className="fa fa-eye-slash";
+      }
+    }
+    function hideShowPswc() {
+      var eyec = document.getElementById("eyec");
+      var cpassword = document.getElementById("cpassword");
+      if (cpassword.type == "password") {
+        cpassword.type = "text";
+        eyec.className="fa fa-eye";
+      } else {
+        cpassword.type = "password";
+        eyec.className="fa fa-eye-slash";
+      }
+    }
   </script>
 
  

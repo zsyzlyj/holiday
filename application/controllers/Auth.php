@@ -111,6 +111,7 @@ class Auth extends Admin_Controller {
         }
         else{
 			// false case
+			$this->data['errors'] = '账户或密码错误';
             $this->load->view('login',$this->data);
         }	
 	}
