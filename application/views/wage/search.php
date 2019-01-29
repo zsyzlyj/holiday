@@ -101,8 +101,6 @@
                   <?php endif;$counter++;?>
                   <?php endforeach; ?>
                   </tr>
-                  
-                    
                   <?php endif; ?>
                 </thead>
                 <tbody>
@@ -115,11 +113,8 @@
                       <?php endif;$counter++;?>
                     <?php endforeach; ?>
                     </tr>
-                  <?php else: ?>
-                    <?php if($chosen_month!=""):?>
-
+                  <?php elseif($chosen_month!=""): ?>
                       无当月工资记录
-                    <?php endif; ?>
                   <?php endif; ?>
                 </tbody>
               </table>
