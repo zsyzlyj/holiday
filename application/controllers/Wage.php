@@ -77,8 +77,10 @@ class Wage extends Admin_Controller{
             4 => '在职证明（积分入户2）',
             5 => '在职证明（居住证）',
             6 => '在职证明（购房补贴）',
+            /*
             7 => '计生证明',
             8 => '子女户口非在注册证明'
+            */
         );
         $status=array();
         $submit_status=array();
@@ -155,6 +157,7 @@ class Wage extends Admin_Controller{
                         else $status[6]=false;
                     }
                     break;
+                /*
                 case '计生证明':
                     $submit_status[7]=$v['submit_status'];
                     $feedback_status[7]=$v['feedback_status'];
@@ -173,6 +176,8 @@ class Wage extends Admin_Controller{
                         else $status[8]=false;
                     }
                     break;
+                */
+                default:break;
             }
         }
         $this->data['submit_status']=$submit_status;
@@ -187,8 +192,10 @@ class Wage extends Admin_Controller{
             4 => 'wage/show_on_post_4_proof',
             5 => 'wage/show_on_post_5_proof',
             6 => 'wage/show_on_post_6_proof',
+            /*
             7 => 'wage/show_child_1_proof',
             8 => 'wage/show_child_2_proof',
+            */
         );
         $this->render_template('wage/apply_on_post', $this->data);
     }
@@ -327,9 +334,12 @@ class Wage extends Admin_Controller{
             $str="证            明\r\n";
         }elseif(strstr($type,'royal')){
             $str="现 实 表 现 证 明\r\n";
-        }elseif(strstr($type,'child_1')){
+        }
+        /*
+        elseif(strstr($type,'child_1')){
             $str="计 生 证 明\r\n";
         }
+        */
         $pdf->SetFont('kozminproregular','B',24);
         $pdf->Write(0,$str,'', 0, 'C', false, 0, false, false, 0);
 
@@ -401,6 +411,7 @@ class Wage extends Admin_Controller{
                 $pdf->SetFont('kozminproregular','',14);
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
+            /*
             case 'child_1':
                 $str="\r\n          （姓名）（身份证号：111111111111111111），为中国联合网络通信有限公司中山市分公司在编员工，于20xx年xx月与xxx登记结婚，属初婚已育壹孩，没有违反计划生育政策。其在我司工作期间的计划生育工作由我司负责管理。\r\n          特此证明。";
                 $pdf->SetFont('kozminproregular','',14);
@@ -417,6 +428,7 @@ class Wage extends Admin_Controller{
                 $pdf->SetFont('kozminproregular','',14);
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
+            */
             default:break;
         }
 

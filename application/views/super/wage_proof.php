@@ -39,7 +39,7 @@
                     <td><?php echo $v['name'];?></td>
                     <td><?php echo $v['type'];?></td>
                     <td><?php echo $v['submit_status'];?></td>
-                    <td><?php echo $v['feedback_status'];?><?php echo $url[$k];?></td>
+                    <td><?php echo $v['feedback_status'];?></td>
                     <td>
                       <?php if(strstr($v['feedback_status'],'已')):?>
                       <a disabled href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $k;?>"><i class="fa fa-check-circle"></i></a>

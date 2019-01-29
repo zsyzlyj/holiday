@@ -431,7 +431,7 @@ class Super_wage extends Admin_Controller
         }elseif(strstr($type,'计生')){
             $str="计 生 证 明\r\n";
         }
-        $pdf->SetFont('songti','B',24);
+        $pdf->SetFont('kozminproregular','B',24);
         $pdf->Write(0,$str,'', 0, 'C', true, 0, false, false, 0);
         $rmb=$this->num_to_rmb($avg);
         switch($type){
@@ -502,6 +502,7 @@ class Super_wage extends Admin_Controller
                 $pdf->SetFont('kozminproregular','',14);
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
+            /*
             case '计生证明':
                 $str="\r\n          ".$username."（身份证号：".$user_id."），为中国联合网络通信有限公司中山市分公司在编员工，于20xx年xx月与xxx登记结婚，属初婚已育壹孩，没有违反计划生育政策。其在我司工作期间的计划生育工作由我司负责管理。\r\n          特此证明。";
                 $pdf->SetFont('kozminproregular','',14);
@@ -518,17 +519,18 @@ class Super_wage extends Admin_Controller
                 $pdf->SetFont('kozminproregular','',14);
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
+                */
             default:break;
         }
 
         if(strstr($type,'收入')){
-            $pdf->SetFont('songti','',14);
+            $pdf->SetFont('kozminproregular','',14);
             $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
             $str="\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n单位（盖章）\r\n".date('Y年m月d日')."\r\n\r\n\r\n";
             $pdf->setCellHeightRatio(1.7); 
             $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
             $pdf->setCellHeightRatio(1.5); 
-            $pdf->SetFont('songti', '', 9);
+            $pdf->SetFont('kozminproregular', '', 9);
             $str="\r\n\r\n联系地址：中山市长江北路6号联通大厦\r\n联系人：甘先生\r\n联系电话：0760-23692312";
             $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false);
         }
