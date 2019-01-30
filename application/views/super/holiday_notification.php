@@ -66,7 +66,7 @@
                                 <form action='<?php echo base_url('super_holiday/notification_delete')?>' method='POST'>
                                 <input type='hidden' value="<?php echo $v['pubtime']; ?>" name='time'/>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                <button type="submit" class="btn btn-success btn-ok">确认删除</a>
+                                <button type="submit" class="btn btn-danger btn-ok">确认删除</a>
                                 </form>
                               </div>
                             </div><!-- /.modal-content -->

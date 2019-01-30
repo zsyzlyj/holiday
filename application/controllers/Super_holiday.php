@@ -125,165 +125,152 @@ class Super_holiday extends Admin_Controller
         $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
         $highestRow = $sheet->getHighestRow(); // 取得总行数
         $highestColumm = $sheet->getHighestColumn(); // 取得总列数
-        $data = array();
-        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-            for ($colIndex = 'A'; $colIndex <= $highestColumm; $colIndex++){
-                $addr = $colIndex . $rowIndex;
-                $cell = $sheet->getCell($addr)->getValue();
-                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
-                    $cell = $cell->__toString();
-                }
-                $data[$rowIndex][$colIndex] = $cell;
-            }
-        }
-        $column=array();
-        $column_name=array();
-        $attribute_data=array();
-        $first=true;
-        $flag=false;
-        $counter=0;
-        $name="";
-        $dept="";
-        $Initdate=gmdate("Y-m-d");
-        $Indate=gmdate("Y-m-d");
-        $Totalage=0;
-        $Comage=0;
-        $Totalday=0;
-        $Lastyear=0;
-        $Thisyear=0;
-        $Bonus=0;
-        $Used=0;
-        $Rest=0;
-        $Jan=0;
-        $Feb=0;
-        $Mar=0;
-        $Apr=0;
-        $May=0;
-        $Jun=0;
-        $Jul=0;
-        $Aug=0;
-        $Sep=0;
-        $Oct=0;
-        $Nov=0;
-        $Dece=0;
-        $User_id="";
-        foreach($data as $k => $v){
-            if($first){
-                $first=false;
-                foreach($v as $a =>$b){
-                    array_push($column_name,$b);
-                }
-            }
-            else{
-                array_push($column,$v);
-            }
-        }
         //删除所有假期信息，计划，用户   
         $this->model_holiday->deleteAll();
         $this->model_plan->deleteAll();
-        #$this->model_holiday_users->deleteAll();        
-
-        /* excel导入时间的方法！ */
         $holiday_set=array();
         $plan_set=array();
-        $user_set=array();
-        foreach($column as $k => $v){
-            foreach($v as $a => $b){
-                if($b==NULL){
-                    $b=0;
+        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            $temp = array();
+            for ($colIndex = 'A'; $colIndex <= $highestColumm; $colIndex++){
+                $addr = $colIndex . $rowIndex;
+                $cell = $sheet->getCell($addr);#->getValue();
+                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                    $cell = $cell->__toString();
                 }
-                switch($a){
-                    case 'A':$name=$b;break;
-                    case 'B':$dept=$b;break;
-                    case 'C':$Initdate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
-                    case 'D':$Indate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
-                    case 'E':$Totalage=$b;break;
-                    case 'F':$Comage=$b;break;
-                    case 'G':$Totalday=$b;break;
-                    case 'H':$Lastyear=$b;break;
-                    case 'I':$Thisyear=$b;break;
-                    case 'J':$Bonus=$b;break;
-                    case 'K':$Used=$b;break;
-                    case 'L':$Rest=$b;break;
-                    case 'M':$Jan=$b;break;
-                    case 'N':$Feb=$b;break;
-                    case 'O':$Mar=$b;break;
-                    case 'P':$Apr=$b;break;
-                    case 'Q':$May=$b;break;
-                    case 'R':$Jun=$b;break;
-                    case 'S':$Jul=$b;break;
-                    case 'T':$Aug=$b;break;
-                    case 'U':$Sep=$b;break;
-                    case 'V':$Oct=$b;break;
-                    case 'W':$Nov=$b;break;
-                    case 'X':$Dece=$b;break;
-                    case 'Y':$User_id=$b;break;
+                $temp[$colIndex] = $cell;
+            }
+            if($rowIndex>1){
+                $counter=0;
+                $name="";
+                $dept="";
+                $Initdate=gmdate("Y-m-d");
+                $Indate=gmdate("Y-m-d");
+                $Totalage=0;
+                $Comage=0;
+                $Totalday=0;
+                $Lastyear=0;
+                $Thisyear=0;
+                $Bonus=0;
+                $Used=0;
+                $Rest=0;
+                $Jan=0;
+                $Feb=0;
+                $Mar=0;
+                $Apr=0;
+                $May=0;
+                $Jun=0;
+                $Jul=0;
+                $Aug=0;
+                $Sep=0;
+                $Oct=0;
+                $Nov=0;
+                $Dece=0;
+                $User_id="";
+                /* excel导入时间的方法！ */
+                foreach($temp as $k => $v){
+                    foreach($v as $a => $b){
+                        if($b==NULL){
+                            $b=0;
+                        }
+                        switch($a){
+                            case 'A':$name=$b;break;
+                            case 'B':$dept=$b;break;
+                            case 'C':$Initdate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
+                            case 'D':$Indate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
+                            case 'E':$Totalage=$b;break;
+                            case 'F':$Comage=$b;break;
+                            case 'G':$Totalday=$b;break;
+                            case 'H':$Lastyear=$b;break;
+                            case 'I':$Thisyear=$b;break;
+                            case 'J':$Bonus=$b;break;
+                            case 'K':$Used=$b;break;
+                            case 'L':$Rest=$b;break;
+                            case 'M':$Jan=$b;break;
+                            case 'N':$Feb=$b;break;
+                            case 'O':$Mar=$b;break;
+                            case 'P':$Apr=$b;break;
+                            case 'Q':$May=$b;break;
+                            case 'R':$Jun=$b;break;
+                            case 'S':$Jul=$b;break;
+                            case 'T':$Aug=$b;break;
+                            case 'U':$Sep=$b;break;
+                            case 'V':$Oct=$b;break;
+                            case 'W':$Nov=$b;break;
+                            case 'X':$Dece=$b;break;
+                            case 'Y':$User_id=$b;break;
+                        }
+                    }
+                    $Update_data=array(
+                        'name' => $name,
+                        'department' => $dept,
+                        'initdate' => $Initdate,
+                        'indate' => $Indate,
+                        'Companyage' => $Comage,
+                        'Totalage' => $Totalage,
+                        'Totalday' => $Totalday,
+                        'Lastyear' => $Lastyear,
+                        'Thisyear' => $Thisyear,
+                        'Bonus' => $Bonus,
+                        'Used' => $Used,
+                        'Rest' => $Rest,
+                        'Jan' => $Jan,
+                        'Feb' => $Feb,
+                        'Mar' => $Mar,
+                        'Apr' => $Apr,
+                        'May' => $May,
+                        'Jun' => $Jun,
+                        'Jul' => $Jul,
+                        'Aug' => $Aug,
+                        'Sep' => $Sep,
+                        'Oct' => $Oct,
+                        'Nov' => $Nov,
+                        'Dece' => $Dece,
+                        'User_id' => $User_id
+                    );
+                    $update_user=true;
+                    //如果假期表中没有这个人，那么就假期信息初始化，计划初始化，用户初始化，
+                    //holiday,plan
+                    //初始化假期信息，每个人新建一条假期的记录
+                    $Update_data['Companyage']=floor((strtotime(date("Y-m-d"))-strtotime($Update_data['indate']))/86400/365);
+                    $Update_data['Totalage']=floor((strtotime(date("Y-m-d"))-strtotime($Update_data['initdate']))/86400/365);
+        
+                    if($Update_data['Companyage']>=1 and $Update_data['Companyage']<10){
+                        $Update_data['Thisyear']=5;
+                    }
+                    else if($Update_data['Companyage']>=10 and $Update_data['Companyage']<20){
+                        $Update_data['Thisyear']=10;
+                    }
+                    else if($Update_data['Companyage']>=20){
+                        $Update_data['Thisyear']=15;
+                    }
+                    $Update_data['Totalday']=$Update_data['Thisyear']+$Update_data['Lastyear']+$Update_data['Bonus'];
+                    $Update_data['Rest']=$Update_data['Totalday'];
+                    $Update_data['Used']=$Update_data['Jan']+$Update_data['Feb']+$Update_data['Mar']+$Update_data['Apr']+$Update_data['May']+$Update_data['Jun']+$Update_data['Jul']+$Update_data['Aug']+$Update_data['Sep']+$Update_data['Oct']+$Update_data['Nov']+$Update_data['Dece'];
+                    array_push($holiday_set,$Update_data);
+                    //初始化假期计划信息，每个人新建一条假期的记录
+                    $plan_data=array(
+                        'user_id' => $Update_data['User_id'],
+                        'name' => $Update_data['name'],
+                        'department' => $Update_data['department'],
+                        'Thisyear' => $Update_data['Thisyear'],
+                        'Lastyear' => $Update_data['Lastyear'],
+                        'Bonus' => $Update_data['Bonus'],
+                        'Totalday' => $Update_data['Totalday'],
+                        'firstquater' => 0,
+                        'secondquater' => 0,
+                        'thirdquater' => 0,
+                        'fourthquater' => 0,
+                        'submit_tag' => 0
+                    );
+                    array_push($plan_set,$plan_data);
+                    unset($plan_data);
+                    unset($Update_data);
                 }
             }
-            $Update_data=array(
-                'name' => $name,
-                'department' => $dept,
-                'initdate' => $Initdate,
-                'indate' => $Indate,
-                'Companyage' => $Comage,
-                'Totalage' => $Totalage,
-                'Totalday' => $Totalday,
-                'Lastyear' => $Lastyear,
-                'Thisyear' => $Thisyear,
-                'Bonus' => $Bonus,
-                'Used' => $Used,
-                'Rest' => $Rest,
-                'Jan' => $Jan,
-                'Feb' => $Feb,
-                'Mar' => $Mar,
-                'Apr' => $Apr,
-                'May' => $May,
-                'Jun' => $Jun,
-                'Jul' => $Jul,
-                'Aug' => $Aug,
-                'Sep' => $Sep,
-                'Oct' => $Oct,
-                'Nov' => $Nov,
-                'Dece' => $Dece,
-                'User_id' => $User_id
-            );
-            $update_user=true;
-            //如果假期表中没有这个人，那么就假期信息初始化，计划初始化，用户初始化，
-            //holiday,plan
-            //初始化假期信息，每个人新建一条假期的记录
-            $Update_data['Companyage']=floor((strtotime(date("Y-m-d"))-strtotime($Update_data['indate']))/86400/365);
-            $Update_data['Totalage']=floor((strtotime(date("Y-m-d"))-strtotime($Update_data['initdate']))/86400/365);
-
-            if($Update_data['Companyage']>=1 and $Update_data['Companyage']<10){
-                $Update_data['Thisyear']=5;
-            }
-            else if($Update_data['Companyage']>=10 and $Update_data['Companyage']<20){
-                $Update_data['Thisyear']=10;
-            }
-            else if($Update_data['Companyage']>=20){
-                $Update_data['Thisyear']=15;
-            }
-            $Update_data['Totalday']=$Update_data['Thisyear']+$Update_data['Lastyear']+$Update_data['Bonus'];
-            $Update_data['Rest']=$Update_data['Totalday'];
-            $Update_data['Used']=$Update_data['Jan']+$Update_data['Feb']+$Update_data['Mar']+$Update_data['Apr']+$Update_data['May']+$Update_data['Jun']+$Update_data['Jul']+$Update_data['Aug']+$Update_data['Sep']+$Update_data['Oct']+$Update_data['Nov']+$Update_data['Dece'];
-            array_push($holiday_set,$Update_data);
-            //初始化假期计划信息，每个人新建一条假期的记录
-            $plan_data=array(
-                'user_id' => $Update_data['User_id'],
-                'name' => $Update_data['name'],
-                'department' => $Update_data['department'],
-                'Thisyear' => $Update_data['Thisyear'],
-                'Lastyear' => $Update_data['Lastyear'],
-                'Bonus' => $Update_data['Bonus'],
-                'Totalday' => $Update_data['Totalday'],
-                'firstquater' => 0,
-                'secondquater' => 0,
-                'thirdquater' => 0,
-                'fourthquater' => 0,
-                'submit_tag' => 0
-            );
-            array_push($plan_set,$plan_data);
+            unset($temp); 
         }
+        
         $this->model_holiday->createbatch($holiday_set);
         $this->model_plan->createbatch($plan_set);
     }
@@ -824,7 +811,7 @@ class Super_holiday extends Admin_Controller
     public function notification_delete(){
         $pubtime=$_POST['time'];
         $this->model_notice->remove($pubtime);
-        $this->session->set_flashdata('success', '公告发布成功！');
+        $this->session->set_flashdata('success', '公告删除成功！');
         redirect('super_holiday/notification', 'refresh');
     }
 }

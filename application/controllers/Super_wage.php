@@ -1544,19 +1544,15 @@ class Super_wage extends Admin_Controller
             $this->render_super_template('super/wage_publish_wage', $this->data);
         }
     }
-    
-    public function tax_counter(){
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $this->data['result']=10;
-            $this->render_super_template('super/tax_result',$this->data);    
-        }
-        else{
-            $this->render_super_template('super/tax',$this->data);
-        }
+    public function notification_delete(){
+        $pubtime=$_POST['time'];
+        $this->model_notice->remove($pubtime);
+        $this->session->set_flashdata('success', '公告删除成功！');
+        redirect('super_wage/notification', 'refresh');
     }
+
     public function log_show(){
         $this->data['log']=$this->model_log_action->getLogData();
-        #print_r($this->data['log']);
         $this->render_super_template('super/wage_log',$this->data);
     }
     public function reset_pass(){
