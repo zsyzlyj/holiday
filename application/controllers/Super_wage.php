@@ -2,11 +2,8 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Super_wage extends Admin_Controller 
-{
-
-	public function __construct()
-	{
+class Super_wage extends Admin_Controller {
+	public function __construct(){
         parent::__construct();
         $this->data['page_title'] = 'Super';
         $this->load->model('model_plan');
@@ -36,51 +33,6 @@ class Super_wage extends Admin_Controller
     ============================================================
     */ 
     public function index(){
-        /*
-        $this->data['wage_total']=$this->model_wage_attr->getWageTotalData()['total'];
-        $this->data['wage_data']=$this->model_wage->getWageData();
-        $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
-        $counter=0;
-        if($this->data['attr_data']){
-            foreach($this->data['attr_data'] as $k => $v){
-                
-                if($v=='月度绩效工资小计'){
-                    $this->data['yuedustart']=$counter;
-                }
-                if($v=='省核专项奖励小计'){
-                    $this->data['yueduend']=$counter-1;
-                    $this->data['shengzhuanstart']=$counter;
-                }
-                if($v=='分公司专项奖励小计'){
-                    $this->data['shengzhuanend']=$counter-1;
-                    $this->data['fengongsistart']=$counter;
-                }
-                if($v=='其他小计'){
-                    $this->data['fengongsiend']=$counter-1;
-                    $this->data['qitastart']=$counter;
-                }
-                if($v=='教育经费小计'){
-                    $this->data['qitaend']=$counter-1;
-                    $this->data['jiaoyustart']=$counter;
-                }
-                if($v=='福利费小计'){
-                    $this->data['jiaoyuend']=$counter-1;
-                    $this->data['fulistart']=$counter;
-                }
-                if($v=='当月月应收合计'){
-                    $this->data['fuliend']=$counter-1;
-                    $this->data['koufeistart']=$counter+1;
-                    
-                }
-                if($v=='扣款小计'){
-                    $this->data['koufeiend']=$counter;
-                    break;
-                }
-                $counter++;
-            }
-        }
-        $this->render_super_template('super/wage',$this->data);
-        */
         $this->search();
     }
     public function this_month(){
@@ -716,7 +668,7 @@ class Super_wage extends Admin_Controller
         unset($user_set);
     }
     public function wage_tag_import($filename=NULL){
-        $this->data['path'] = 'uploads/standard/人员信息大表模板.xlsx';
+        $this->data['path'] = 'uploads/standard/人员信息表（本地系统用）.xlsx';
         if($_FILES){
             if($_FILES['file']){
                 if($_FILES['file']['error'] > 0){
@@ -1395,7 +1347,6 @@ class Super_wage extends Admin_Controller
         $this->data['path'] = 'uploads/standard/人员导入模板.xlsx';
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if($_POST['end_month']!='单击选择月份' and !strstr($_POST['end_month'],'1899') and $_POST['start_month']!='单击选择月份' and !strstr($_POST['start_month'],'1899')){
-                $this->data['path'] = 'uploads/standard/人员导入模板.xlsx';
                 $this->excel($_POST['start_month'],$_POST['end_month'],$_POST['selected_dept']);
                 /*
                 $this->data['path'] = 'uploads/standard/wage_sample.xlsx';

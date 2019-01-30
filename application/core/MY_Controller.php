@@ -54,60 +54,27 @@ class Admin_Controller extends MY_Controller
 			redirect('auth/login', 'refresh');
 		}
 	}
-	public function holiday_logged_in(){
-		$session_data = $this->session->userdata();
-		if($session_data['logged_in_holiday'] == TRUE){
-			redirect('holiday/staff', 'refresh');
-		}
-	}
-
-	public function holiday_not_logged_in(){
-		$session_data = $this->session->userdata();
-		if($session_data['logged_in_holiday'] == FALSE){
-			redirect('auth/holiady_login', 'refresh');
-		}
-	}
-	public function wage_logged_in()
-	{
-		$session_data = $this->session->userdata();
-		if($session_data['logged_in_wage'] == TRUE){
-			redirect('wage/index', 'refresh');
-		}
-	}
-
-	public function wage_not_logged_in()
-	{
-		$session_data = $this->session->userdata();
-		if($session_data['logged_in_wage'] == FALSE){
-			redirect('auth/wage_login', 'refresh');
-		}
-	}
-	public function logged_in_super()
-	{
+	public function logged_in_super(){
 		$session_data = $this->session->userdata();
 		if($session_data['logged_in_super'] == TRUE){
 			redirect('super_wage/index', 'refresh');
 		}
 	}
-	public function not_logged_in_super()
-	{
+	public function not_logged_in_super(){
 		$session_data = $this->session->userdata();
 		if($session_data['logged_in_super'] == FALSE){
 			redirect('super_auth/login', 'refresh');
 		}
 	}
 
-	public function render_template($page = null, $data = array())
-	{
-
+	public function render_template($page = null, $data = array()){
 		$this->load->view('templates/header',$data);
 		$this->load->view('templates/header_menu',$data);
 		$this->load->view('templates/side_menubar',$data);
 		$this->load->view($page, $data);
 		$this->load->view('templates/footer',$data);
 	}
-	public function render_super_template($page = null, $data = array())
-	{
+	public function render_super_template($page = null, $data = array()){
 
 		$this->load->view('templates/super_header',$data);
 		$this->load->view('templates/super_header_menu',$data);
@@ -115,8 +82,7 @@ class Admin_Controller extends MY_Controller
 		$this->load->view($page, $data);
 		$this->load->view('templates/super_footer',$data);
 	}
-	public function render_dashboard_template($page = null, $data = array())
-	{
+	public function render_dashboard_template($page = null, $data = array()){
 
 		$this->load->view('templates/dashboard_header',$data);
 		#$this->load->view('templates/header',$data);

@@ -32,7 +32,7 @@
             <div class="box-body">
               <div style="overflow:scroll;">
               
-              <table id="wageTable" class="table table-bordered table-striped" style="overflow:scroll;" width="100%">
+              <table id="wageTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed" width="100%">
                 <thead>
                 <tr>
                   <th>发布时间</th>

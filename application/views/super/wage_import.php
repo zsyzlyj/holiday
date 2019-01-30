@@ -59,11 +59,6 @@
                       </div>
                     </div>
                   </fieldset>
-                  <fieldset>
-                  <div class="form-group">
-                    
-                  </div>
-                  </fieldset>
               </form>
             </div>
           </div>

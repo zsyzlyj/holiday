@@ -18,6 +18,8 @@
         
         <li id="uploadHolidayNav"><a href="<?php echo base_url('super_holiday/holiday_import') ?>"><i class="fa fa-cloud-upload"></i> 上传年假信息</a></li>
         <li id="downloadHolidayNav"><a href="<?php echo base_url('super_holiday/download_page') ?>"><i class="fa fa-cloud-download"></i> 下载年假计划汇总表</a></li>
+        <li id="progressHolidayNav"><a href="<?php echo base_url('super_holiday/progress') ?>"><i class="fa fa-list"></i> 进度</a></li>
+        
         <li class="treeview" id="uploadHolidayDoc">
           <a href="#">
             <i class="fa fa-cloud"></i>

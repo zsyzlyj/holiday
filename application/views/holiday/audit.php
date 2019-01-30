@@ -61,7 +61,7 @@
             </div>
             <?php else:?>
             <?php if($plan_data): ?>   
-            <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptholiday') ?>' method='post'>
+            <form style="margin:0px;display:inline;" action='<?php echo base_url('super_holiday/export_mydeptholiday') ?>' method='post'>
               <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
               <button class="btn btn-warning">导出</button>
             </form>
@@ -72,7 +72,7 @@
             <div class="box-body">
               <div style="overflow:scroll;">
               
-              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;" width="100%">
+              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed" width="100%">
                 <thead>
                 <tr>
                   <th>姓名</th>

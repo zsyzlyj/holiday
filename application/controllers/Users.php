@@ -16,7 +16,7 @@ class Users extends Admin_Controller{
 	}
 	
 	public function index(){
-		$user_data = $this->model_holiday_users->getUserData();
+		$user_data = $this->model_users->getUserData();
 
 		$holiday = $this->model_holiday->getHolidayData();
 
@@ -68,7 +68,7 @@ class Users extends Admin_Controller{
 		if($id){
 			if($this->input->post('confirm')){
 
-					$delete = $this->model_holiday_users->delete($id);
+					$delete = $this->model_users->delete($id);
 					
 					if($delete == true){
 		        		$this->session->set_flashdata('success', '用户删除成功');

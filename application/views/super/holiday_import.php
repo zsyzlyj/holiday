@@ -33,7 +33,7 @@
                 <button type="submit" id="submit" name="import" class="btn btn-warning" >导入</button>
                 <h3>年假模板</h3>
                 <br />
-                <a href="<?php echo base_url('super_holiday/export_holiday') ?>" class="btn btn-info">下载</a>
+                <a href="<?php echo base_url($url); ?>" class="btn btn-info">下载</a>
             </div>
         </form>
       </div>

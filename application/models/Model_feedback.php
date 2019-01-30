@@ -21,6 +21,11 @@ class Model_feedback extends CI_Model{
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+	public function getFeedbackStatus(){		
+		$sql = "SELECT department,feedback_status,submit_status,confirm_status FROM feedback";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 	public function exportFeedbackData($dept = null){
 		$sql = "SELECT * FROM feedback";
 		return $this->db->query($sql);

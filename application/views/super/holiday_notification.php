@@ -31,7 +31,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              <table id="holidayTable" class="table table-bordered table-striped table-hover" style="overflow:scroll;" width="100%">
+              <table id="holidayTable" class="table table-bordered table-striped table-hover" style="overflow:scroll;table-layout:fixed" width="100%">
                 <thead>
                 <tr>
                   <th>发布时间</th>

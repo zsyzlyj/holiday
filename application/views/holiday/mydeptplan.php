@@ -78,9 +78,9 @@
                 <?php endif; ?>
 
                 
-                <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptplan') ?>' method='post'>
+                <form style="margin:0px;display:inline;" action='<?php echo base_url('super_holiday/export_mydeptplan') ?>' method='post'>
                   <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
-                  <?php if(!strstr($feedback['confirm_status'],'不')):?>
+                  <?php if(strstr($feedback['confirm_status'],'同意')):?>
                   <button class="btn btn-warning">导出</button>
                   <?php else:?>
                   <button disabled class="btn btn-warning">导出</button>
@@ -109,10 +109,10 @@
                 <button disabled class="btn btn-success">提交</button>
                 <?php endif; ?>
 
-                <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptplan') ?>' method='post'>
+                <form style="margin:0px;display:inline;" action='<?php echo base_url('super_holiday/export_mydeptplan') ?>' method='post'>
                   <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
-                  <?php if(!strstr($feedback['confirm_status'],'不')):?>
-                  <button disabled class="btn btn-warning">导出</button>
+                  <?php if(strstr($feedback['confirm_status'],'同意')):?>
+                  <button class="btn btn-warning">导出</button>
                   <?php else:?>
                   <button disabled class="btn btn-warning">导出</button>
                   <?php endif; ?>
@@ -126,7 +126,7 @@
             <div class="box-body">
               <div style="overflow:scroll;">
               <?php if($current_dept=='营业中心'):?>
-              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;">
+              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed">
                 <thead>
                 <tr>
                   <th>部门</th>
@@ -155,7 +155,7 @@
               </table>
               <?php else: ?>
               <?php if($plan_data):?>
-              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;">
+              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed">
                 <thead>
                 <tr>
                   <th>姓名</th>

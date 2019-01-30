@@ -50,7 +50,7 @@
             <br />
             </form>
             <?php if($holiday_data): ?>  
-            <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptholiday') ?>' method='post'>
+            <form style="margin:0px;display:inline;" action='<?php echo base_url('super_holiday/export_mydeptholiday') ?>' method='post'>
               <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
               <button class="btn btn-warning">导出</button>
             </form>

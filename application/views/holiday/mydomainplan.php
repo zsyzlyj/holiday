@@ -121,7 +121,7 @@
             <div class="box-body">
               <div style="overflow:scroll;">
               <?php if($current_dept=='营业中心'):?>
-              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;">
+              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed">
                 <thead>
                 <tr>
                   <th>部门</th>
@@ -150,7 +150,7 @@
               </table>
               <?php else: ?>
               <?php if($plan_data):?>
-              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;">
+              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed">
                 <thead>
                 <tr>
                   <th>姓名</th>

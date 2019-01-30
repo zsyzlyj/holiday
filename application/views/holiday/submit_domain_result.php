@@ -42,11 +42,12 @@
             <div class="box-body">
               <div style="overflow:scroll;">
               
-              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;" width="100%">
+              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed" width="100%">
                 <thead>
                 <tr>
                   <th>部门</th>
                   <th>提交状态</th>
+                  <th>审核结果</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,6 +62,32 @@
                         <font color='red'><?php echo $v['submit_status'];?></font>
                         <?php endif; ?>
                         </td>
+                        <td>
+                        <?php if(strstr($v['feedback_status'],'已')):?>
+                        <font color='green'><?php echo $v['feedback_status'];?></font>
+                        <!-- 打开弹窗按钮 -->
+                        <a href="javascript:void(0)" id="myBtn" data-toggle="modal" data-target="#myModal"><font color='orange'>反馈意见</font></a>
+                        <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                          <div class="modal-content-month">
+                            <div class="modal-header">
+                              <h4>反馈意见</h4>
+                            </div>
+                            <div class="modal-body">
+                                <?php if($feedback[$v['department']]['content']==""):?>
+                                <h3>无</h3>
+                                <?php else: ?>
+                                <?php echo $feedback[$v['department']]['content'];?>
+                                <?php endif;?>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            </div>
+                          </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+
+                        <?php else: ?>
+                        <font color='red'><?php echo $v['feedback_status'];?></font>
+                        <?php endif; ?>
                       </tr>
                     <?php endforeach ?>
                     </tbody>

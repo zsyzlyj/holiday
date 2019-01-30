@@ -25,7 +25,7 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>   
-          <div class="box" style="overflow:scroll;">
+          <div class="box" style="overflow:scroll;table-layout:fixed">
             <div class="box-header">
 
             </div>

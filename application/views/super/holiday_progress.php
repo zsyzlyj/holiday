@@ -5,16 +5,15 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        年假计划审核结果
-      </h1>
+        部门年假计划
+      </h1>   
     </section>
-
+    
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-md-12 col-xs-12">
-
           <?php if($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -26,64 +25,72 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
-          
-
-
-          <div class="box">
+          <div class="box">  
             <div class="box-header">
-
+              <br/>
+            </div>
+            <div>
             </div>
             
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              
-              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed" width="100%">
+              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed" width="100%">
                 <thead>
-                <tr>
-                  <th>部门</th>
-                  <th>提交状态</th>
-                  <th>审核状态</th>
-                </tr>
+                  <tr>
+                    <th>部门</th>
+                    <th>提交状态</th>
+                    <th>审核状态</th>
+                    <th>进度</th>
+                  </tr>
                 </thead>
                 <tbody>
-                  <?php if($feedback_data): ?>                  
-                    <?php foreach ($feedback_data as $k => $v): ?>
-                      <tr>
-                        <td><?php echo $v['department']; ?></td>
-                        <td>
-                        <?php if(strstr($v['submit_status'],'未')):?>
-                        <font color='red'><?php echo $v['submit_status'];?></font>
-                        <?php else: ?>
-                        <font color='green'><?php echo $v['submit_status'];?></font>
-                        <?php endif; ?>
-                        </td>
-                        <td>
-                        <?php if(strstr($v['submit_status'],'未')):?>
-                        无
-                        <?php else: ?>
-                        <?php if(strstr($v['feedback_status'],'未')):?>
-                        <font color='orange'><?php echo $v['feedback_status'];?></font>
-                        <?php else: ?>
-                        <?php if(strstr($v['confirm_status'],'不')):?>
-                        <font color='blue'><?php echo $v['feedback_status']?></font>
-                        <font color='red'><?php echo '/'.$v['confirm_status']?></font>
-                        <?php else: ?>
-                        <font color='blue'><?php echo $v['feedback_status']?></font>
-                        <font color='green'><?php echo '/'.$v['confirm_status']?></font>
-                        <?php endif; ?>
-                        <?php endif; ?>
-                        <?php endif; ?>
-                        </td>
-                      </tr>
-                    <?php endforeach ?>
-                    </tbody>
-                  <?php endif; ?>
-                  </table>
-                
+                  <?php foreach($progress as $k => $v):?>  
+                  <tr>
+                    <td>
+                      <?php echo $v['department'];?>
+                    </td>
+                    <td>
+                      <?php if($v['submit_status']=='未提交'):?>
+                      <font color="red"><?php echo $v['submit_status'];?></font>
+                      <?php else:?>
+                      <font color="green"><?php echo $v['submit_status'];?></font>
+                      <?php endif;?>
+                    </td>
+                    <td>
+                      <?php if($v['submit_status']=='未提交'):?>
+                      <font color="red"><?php echo $v['feedback_status'];?></font>
+                      <?php else:?>
+                      <font color="green"><?php echo $v['feedback_status'];?></font>
+                      <?php endif;?>
+                      / 
+                      <?php if($v['confirm_status']=='同意'):?>
+                      <font color="green"><?php echo $v['confirm_status'];?></font>
+                      <?php else:?>
+                      <font color="red"><?php echo $v['confirm_status'];?></font>
+                      <?php endif;?>
+                    </td>
+                      
+                    <td style="align:center">
+                      <div class="progress progress-striped active">
+                        <?php if($v['submit_status']=='未提交'):?>
+                        <div class="progress-bar progress-bar-aqua" style="width:<?php echo '0%';?>">
+                        <?php elseif($v['confirm_status']=='同意'):?>
+                        <div class="progress-bar progress-bar-success" style="width:<?php echo '100%';?>">
+                        <?php else:?>
+                        <div class="progress-bar progress-bar-info" style="width:<?php echo '50%';?>">
+                        <?php endif;?>
+                        </div>
+                      </div>
+                    </td>
+                  
+                  </tr>
+                  <?php endforeach;?>
+                </tbody>
+              </table>
+
               </div>
               <!-- /.overflow:scroll -->
-              
             </div>
             <!-- /.box-body -->
           </div>
@@ -104,9 +111,8 @@
 
   <script type="text/javascript">
     $(document).ready(function(){
-      $("#AuditMainMenu").addClass('active');
-      $("#AuditGatherNav").addClass('active');
-      $('#holidayTable').DataTable({
+      $('#progressHolidayNav').addClass('active');
+      $('#planTable').DataTable({
         language:{
             "sProcessing": "处理中...",
             "sLengthMenu": "显示 _MENU_ 项",
@@ -120,19 +126,22 @@
             "sEmptyTable": "表中数据为空",
             "sLoadingRecords": "载入中...",
             "sInfoThousands": ",",
-            "oPaginate":{
+            "oPaginate": 
+           {
                 "sFirst": "首页",
                 "sPrevious": "上页",
                 "sNext": "下页",
                 "sLast": "末页"
             },
-            "oAria":{
+            "oAria": 
+           {
                 "sSortAscending": ": 以升序排列此列",
                 "sSortDescending": ": 以降序排列此列"
             }
-        }
+        }      
       });
     });
+    
     function submitForm(){
     //获取form表单对象
         var form = document.getElementById("selected_dept_form");
