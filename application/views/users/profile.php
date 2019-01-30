@@ -48,6 +48,7 @@
                   <td style="width:300px">生育状况：<?php echo $user_info['child'];?></td>
                   <td style="width:300px"></td>
                 </tr>
+                
                 <tr style="height:20px;"></tr>
                 <tr style="height:60px;">
                   <th style="font-size:25px" colspan="3">教育信息</th>
@@ -64,6 +65,18 @@
                 </tr>
                 <tr style="height:20px;"></tr>
                 <tr style="height:60px;">
+                  <th style="font-size:25px" colspan="3">积分信息</th>
+                </tr>
+                <tr style="height:40px;">
+                  <td style="width:300px">职级薪档：<?php echo $user_info['wage_level'];?></td>
+                  <td style="width:300px">职级调整时间：<?php echo $user_info['wage_adjust_stamp'];?></td>
+                  <td style="width:300px">薪酬调整时间：<?php echo $user_info['level_adjust_stamp'];?></td>
+                </tr>
+                <tr>
+                  <td style="border:none;">上年剩余积分：<?php echo $user_info['accumulation'];?></td>
+                </tr>
+                <tr style="height:20px;"></tr>
+                <tr style="height:60px;">
                   <th style="font-size:25px" colspan="3">考核信息</th>
                 </tr>
                 <tr style="height:20px;">
@@ -74,17 +87,22 @@
                 <tr style="height:20px;">
                   <table class="table table-striped table-bordered">
                   <thead>
+                    <tr>
                     <th style="text-align:center;"><?php echo date("Y")-3;?>年年度考核结果</th>
                     <th style="text-align:center;"><?php echo date("Y")-2;?>年年度考核结果</th>
                     <th style="text-align:center;"><?php echo date("Y")-1;?>年年度考核结果</th>
+                    </tr>
                   </thead>
                   <tbody>
+                    <tr>
                     <td style="width:300px;text-align:center;"><?php echo $user_info['qian3'];?></td>
                     <td style="width:300px;text-align:center;"><?php echo $user_info['qian2'];?></td>
                     <td style="width:300px;text-align:center;"><?php echo $user_info['qian1'];?></td>
-                  </table>
+                    </tr>
+                  </tbody>
                   </table>
                 </tr>
+                
               </table>
             </div>
             <!-- /.box-body -->

@@ -608,6 +608,10 @@ class Super_wage extends Admin_Controller {
                         case '用工形式':$service_mode=$b;break;
                         case '加入本企业时间':$indate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
                         case '收入证明标识':$proof_tag=$b;break;
+                        case '职级薪档':$wage_level=$b;break;
+                        case '职级调整时间':$wage_adjust_stamp=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
+                        case '薪档调整时间':$level_adjust_stamp=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
+                        case '剩余积分':$accumulation=$b;break;
                     }
                     if($col==13){
                         $qian3=$b;
@@ -640,7 +644,11 @@ class Super_wage extends Admin_Controller {
                     'proof_tag' => $proof_tag,
                     'qian3' => $qian3,
                     'qian2' => $qian2,
-                    'qian1' => $qian1
+                    'qian1' => $qian1,
+                    'wage_level' => $wage_level,
+                    'wage_adjust_stamp' => $wage_adjust_stamp,
+                    'level_adjust_stamp' => $level_adjust_stamp,
+                    'accumulation' => $accumulation
                 );
                 array_push($wage_set,$row_data);
                 unset($row_data);
