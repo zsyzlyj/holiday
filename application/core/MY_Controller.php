@@ -36,8 +36,8 @@ class Admin_Controller extends MY_Controller
 			$this->data['permission'] = $user_data['permission'];
 		}
 		$this->load->model('model_log_action');
-		$this->session->set_flashdata('success', '');
-		$this->session->set_flashdata('error', '');
+		#$this->session->set_flashdata('success', '');
+		#$this->session->set_flashdata('error', '');
 	}
 
 	

@@ -875,7 +875,7 @@ class Super_wage extends Admin_Controller {
                     );
                     //如果不存在，则创建
                     if(!$this->model_dept->check_dept($dept))
-                        $this->model_dept->update($dept_data,$dept);
+                        $this->model_dept->create($dept_data);
                 }
             }
             unset($temp);
@@ -901,9 +901,12 @@ class Super_wage extends Admin_Controller {
                             }
                             else{
                                 $this->wage_excel_put($doc_name);
-                                $this->data['wage_data']='';
-                                $this->data['attr_data']='';
-                                $this->data['chosen_month']='';
+                                $date_tag=$this->model_wage_tag->getDatetag();
+                                $import_list=array();
+                                foreach($date_tag as $k => $v){
+                                    array_push($import_list,array('name' => $v['date_tag']));
+                                }
+                                $this->data['import_list']=$import_list;
                                 $this->render_super_template('super/wage_import_list',$this->data);
                             }
                         }
@@ -924,7 +927,8 @@ class Super_wage extends Admin_Controller {
         $import_list=array();
         #echo var_dump($date_tag);
         foreach($date_tag as $k => $v){
-            array_push($import_list,array('name' => $v['date_tag'],'url' => 'uploads/wage/'.$v['date_tag'].'.xlsx'));
+            #array_push($import_list,array('name' => $v['date_tag'],'url' => 'uploads/wage/'.$v['date_tag'].'.xlsx'));
+            array_push($import_list,array('name' => $v['date_tag']));
         }
         $this->data['import_list']=$import_list;
         $this->render_super_template('super/wage_import_list',$this->data);
@@ -1194,7 +1198,6 @@ class Super_wage extends Admin_Controller {
         $counter=0;
         if(!empty($attr)){
             if(empty($wage_set)){
-                
                 // Field names in the first row
                 $col=0;
                 $counter=0;
@@ -1324,13 +1327,6 @@ class Super_wage extends Admin_Controller {
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if($_POST['end_month']!='单击选择月份' and !strstr($_POST['end_month'],'1899') and $_POST['start_month']!='单击选择月份' and !strstr($_POST['start_month'],'1899')){
                 $this->excel($_POST['start_month'],$_POST['end_month'],$_POST['selected_dept']);
-                /*
-                $this->data['path'] = 'uploads/standard/wage_sample.xlsx';
-                $start_month=substr($_POST['start_month'],0,4).substr($_POST['start_month'],5,6);
-                $end_month=substr($_POST['end_month'],0,4).substr($_POST['end_month'],5,6);
-                $this->excel($start_month,$end_month,$_POST['selected_dept'],$_POST['selected_user']);
-                */
-                #$this->render_super_template('super/wage_export',$this->data);
             }
             else{
                 $this->session->set_flashdata('error', '请选择月份!!');
