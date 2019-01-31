@@ -35,6 +35,7 @@
             </div>
         </form>
         <hr />
+        <!--
         <form action="<?php echo base_url('super_wage/wage_all_user_import') ?>" method="post"
             name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
             <div>
@@ -46,6 +47,7 @@
                 <button type="submit" id="submit" name="import" class="btn btn-warning" >导入</button>
             </div>
         </form>
+        -->
       </div>
     </div>  
 

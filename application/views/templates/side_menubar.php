@@ -38,6 +38,7 @@
             </a>
           </li>
           <?php endif; ?>
+          <?php if($service_mode=='合同制'):?>
           <li class="treeview" id="applyProofMainMenu">
             <a href="#">
               <i class="fa fa-folder-o"></i>
@@ -61,6 +62,7 @@
               </li>
             </ul>
           </li>
+          <?php endif;?>
         <?php endif ?>
         <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
 

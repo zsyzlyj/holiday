@@ -132,12 +132,14 @@
             <li id="showWageDocNav"><a href="<?php echo base_url('super_wage/wage_doc_list') ?>"><i class="fa fa-circle-o"></i> 薪酬文件汇总</a></li>
           </ul>
         </li>
+        
         <li id="wageProofMainMenu">
           <a href="<?php echo base_url('super_wage/wage_proof') ?>">
             <i class="fa fa-money"></i>
             <span> 收入证明</span>
           </a>
         </li>
+
         <!--
         <li class="treeview" id="taxCounterMenu">
           <a href="#">

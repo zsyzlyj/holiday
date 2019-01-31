@@ -54,4 +54,11 @@ class Model_wage_tag extends CI_Model{
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+	public function getModeById($id){
+		if($id){
+			$sql = "SELECT service_mode FROM wage_tag WHERE user_id = ?";	
+			$query = $this->db->query($sql, array($id));
+			return $query->row_array();
+		}
+	}
 }
