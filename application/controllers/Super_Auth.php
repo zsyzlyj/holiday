@@ -21,8 +21,6 @@ class Super_Auth extends Admin_Controller{
     1、index(),登录界面
     2、login(),登录界面
     3、logout(),返回登录界面
-    4、holiday_setting(),假期超管修改密码页面
-    5、wage_setting(),薪酬超管修改密码页面
     6、setting(),修改密码母板
     ============================================================
 	*/ 

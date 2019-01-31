@@ -167,12 +167,6 @@
             <i class="fa fa-edit"></i> <span>我的年假计划</span>
           </a>
         </li>
-        <!--
-        <li id="changePassword"><a href="<?php echo base_url('auth/holiday_setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
-        -->
-        <!--
-        <li><a href="<?php echo base_url('auth/holiday_logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>退出登录</span></a></li>
-        -->
         <?php endif; ?>
         <li id="changePassword"><a href="<?php echo base_url('auth/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
       </ul>

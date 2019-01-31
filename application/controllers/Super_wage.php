@@ -694,8 +694,10 @@ class Super_wage extends Admin_Controller {
         $highestColumm = $sheet->getHighestColumn(); // 取得总列数
     
         $columnCnt = array_search($highestColumm, $cellName); 
-
-        $data = array();
+        $this->model_all_user->deleteAll();      
+        $all_user_set=array();
+        $user_set=array();
+        $attr = array();
         for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
             for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
                 $cellId = $cellName[$colIndex].$rowIndex;  
@@ -705,27 +707,12 @@ class Super_wage extends Admin_Controller {
                     $cell = $cell->__toString();
                 }
                 $data[$rowIndex][$colIndex] = $cell;
-            }
-        }
-
-        $column=array();
-        $column_name=array();
-        $attribute_data=array();
-        
-        $user_id='';
-        $pwd='';
-        $name='';
-        $dept='';
-        $mobile='';
-        $counter=0;
-        $this->model_all_user->deleteAll();
-        $all_user_set=array();
-        $user_set=array();
-
-        foreach($data as $k => $v){
-            if($counter>1){
-                foreach($v as $a=>$b){
-                    switch($data[1][$a]){
+                if($rowIndex===1){
+                    array_push($attr,$cell);
+                }
+                elseif($rowIndex>1){
+                    $b=$cell;
+                    switch($attr[$colIndex]){
                         case 'id_num':$user_id=$b;break;
                         case 'pwd':$pwd=$b;break;
                         case 'department':$dept=$b;break;
@@ -733,6 +720,8 @@ class Super_wage extends Admin_Controller {
                         case 'staff_name':$name=$b;break;
                     }
                 }
+            }
+            if($rowIndex>1){
                 //新建全用户历史
                 $row_data=array(
                     'id_num' => $user_id,
@@ -754,8 +743,8 @@ class Super_wage extends Admin_Controller {
                     unset($user_data);
                 }
             }
-            $counter++;
         }
+
         $this->model_all_user->createbatch($all_user_set);
         $this->model_users->updatebatch($user_set);
         unset($all_user_set);
@@ -962,27 +951,23 @@ class Super_wage extends Admin_Controller {
         $highestColumm = $sheet->getHighestColumn(); // 取得总列数
     
         $columnCnt = array_search($highestColumm, $cellName); 
+        $result=array();
         $data = array();
         for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
             for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
-                $cellId = $cellName[$colIndex].$rowIndex;  
-                $cell = $sheet->getCell($cellId)->getValue();
-                $cell = $sheet->getCell($cellId)->getCalculatedValue();
-                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
-                    $cell = $cell->__toString();
+                if($rowIndex!=1){
+                    if($colIndex===0){
+                        $cellId = $cellName[$colIndex].$rowIndex;  
+                        $cell = $sheet->getCell($cellId)->getValue();
+                        $cell = $sheet->getCell($cellId)->getCalculatedValue();
+                        if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                            $cell = $cell->__toString();
+                        }
+                        array_push($result,$cell);
+                        break;
+                    }
                 }
-                $data[$rowIndex][$colIndex] = $cell;
             }
-        }
-        $result=array();
-        foreach($data as $k =>$v){
-            if($k!=1){
-                $temp=array(
-                    'user_id' => $v[0]
-                );
-                array_push($result,$v[0]);
-            }
-            #unset($temp);
         }
         return $result;
     }
