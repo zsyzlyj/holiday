@@ -16,13 +16,15 @@ class Wage extends Admin_Controller{
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
         $this->load->model('model_wage_func');
+        $this->load->model('model_notice');
         $this->data['permission'] = $this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
         $this->data['user_id'] = $this->session->userdata('user_id');
         $this->data['wage_doc'] = $this->model_wage_doc->getWageDocData();
         $this->data['wage_func']=$this->model_wage_func->getFuncData();
         $this->data['service_mode']= $this->model_wage_tag->getModeById($this->session->userdata('user_id'))['service_mode'];
-	}
+        $this->data['notice_data'] = $this->model_notice->getNoticeLatestWage();
+    }
     
 	public function index(){
         $this->staff();

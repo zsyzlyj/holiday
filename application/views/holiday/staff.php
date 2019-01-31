@@ -31,26 +31,39 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title" col><font color="red">公告说明：</font></h3>
+              <h3 class="box-title" col><font color="red">公告：</font></h3>
               </br>              </br>
 
               <h4>
+                <p>
                 <?php if($notice_data): ?> 
                 <?php foreach ($notice_data as $notice): ?>
                 <?php echo $notice['content'];?>
                 <?php endforeach;?>
                 <?php endif ?>
+                </p>
               </h4>
-              <h4><font color="blue">点击已休假数可以查看每个月已休明细</font></h4>
               </br>
 
               <h3 class="box-title"><font color="red">年假文件：</font></h3>
-              <h4>
+              <div style="col-md-4">
+              <h3></h3>
+              <table class="table table-striped table-bordered" style="white-space:nowrap;text-align: center;">
+                <thead>
+                  <th style="text-align: center;">序号</th>
+                  <th style="text-align: center;">文件名</th>
+                </thead>
+                <tbody>
                 <?php foreach($holiday_doc as $k => $v):?>
-                  <a href='<?php echo base_url($v['doc_path']);?>' target="_blank"><?php echo $v['doc_name']?></a>
-                  <br /><br />
+                  <tr>
+                  <td style="text-align: center;"><?php echo $k+1;?></td>
+                  <td style="text-align: center;"><a href='<?php echo base_url($v['doc_path']);?>' target="_blank"><?php echo $v['doc_name']?></a>
+                  </tr>
                 <?php endforeach; ?>
-              </h4>
+                </tbody>
+              </table>
+            </div>
+
             </div>
             <br />
             <!-- /.box-header -->
@@ -147,9 +160,13 @@
                   <?php endif; ?>
                 </tbody>
               </table>
-              <br />
-              <br />
-              <br />
+              
+              
+              </div>
+
+              <hr />
+              <div>
+              <h5><font color="red">（温馨提示：点击已休假数可以查看每个月已休明细）</font></h5>
               </div>
               <!-- /.overflow:scroll -->
             </div>

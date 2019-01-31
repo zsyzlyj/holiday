@@ -28,14 +28,16 @@
           <?php endif; ?>
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"><font color="red">公告说明：</font></h3>
+              <h3 class="box-title"><font color="red">公告：</font></h3>
                 </br>              </br>
               <h4>
+              <p>
               <?php if($notice_data): ?> 
               <?php foreach ($notice_data as $notice): ?>
               <?php echo $notice['content'];?>
               <?php endforeach;?>
               <?php endif ?>
+              </p>
               </h4>
             </div>
             <!-- /.box-header -->
@@ -43,7 +45,7 @@
             
               <div style="overflow:scroll;">
               <?php if($plan_data): ?>  
-                <h3>状态：
+                <h4>状态：
                 <?php echo validation_errors(); ?>
                 <?php if(validation_errors()): ?>
                   填写规范有误
@@ -54,7 +56,7 @@
                 <?php if($plan_data['submit_tag']==0):?>
                   <font color='red'>未填写</font>
                 <?php endif ?>
-                </h3>
+                </h4>
                 <br />
                 <br />
                 <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;text-align:center;" width="120%">

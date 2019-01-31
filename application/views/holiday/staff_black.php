@@ -7,10 +7,6 @@
       <h1>
         年假信息
       </h1>
-      
-        
-        
-      
     </section>
 
     <!-- Main content -->
@@ -35,7 +31,7 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title" col><font color="red">公告说明：</font></h3>
+              <h3 class="box-title" col><font color="red">公告：</font></h3>
               </br>              </br>
 
               <h4>
