@@ -989,106 +989,8 @@ class Super_wage extends Admin_Controller {
         if($end-$start==0){
             #echo $end-$start;
             $attr=$this->model_wage_attr->getWageAttrDataByDate($start);
-            foreach($attr as $k => $v){
-                $counter=0;
+            if(!empty($attr)){
                 foreach($attr as $k => $v){
-                    if($v=='月度绩效工资小计'){
-                        $mark['yuedustart']=$counter;
-                    }
-                    if($v=='省核专项奖励小计'){
-                        #$mark['yueduend']=$counter-1;
-                        $mark['shengzhuanstart']=$counter;
-                    }
-                    if($v=='分公司专项奖励小计'){
-                        #$mark['shengzhuanend']=$counter-1;
-                        $mark['fengongsistart']=$counter;
-                    }
-                    if($v=='其他小计'){
-                        #$mark['fengongsiend']=$counter-1;
-                        $mark['qitastart']=$counter;
-                    }
-                    if($v=='教育经费小计'){
-                        #$mark['qitaend']=$counter-1;
-                        $mark['jiaoyustart']=$counter;
-                    }
-                    if($v=='福利费小计'){
-                        #$mark['jiaoyuend']=$counter-1;
-                        $mark['fulistart']=$counter;
-                    }
-                    if($v=='当月月应收合计'){
-                        #$mark['fuliend']=$counter-1;
-                        $mark['yingshou']=$counter;
-                        $mark['koufeistart']=$counter+1;
-                    }
-                    if($v=='扣款小计'){
-                        $mark['koufeiend']=$counter;
-                        break;
-                    }
-                    $counter++;
-                }
-            }
-
-            //all,部门无条件,两种情况，一种是全部，一种是导入名单
-            if($dept=='all'){
-                //无导入名单和有导入名单
-                if($_FILES){
-                    if($_FILES['selected_user']){
-                        if($_FILES['selected_user']['error']==4){
-                            //无导入名单
-                            //all,该部门全部导出
-                            $wage=$this->model_wage->getWageByDate($start);
-                        }
-                        else{
-                            //有导入名单
-                            $user_set=$this->wage_temp_put();
-                            $wage=$this->model_wage->getWageByDateAndIdset($user_set,$start);
-                        }
-                    }
-                    else{
-                        redirect('super_wage/download_page', 'refresh');                        
-                    }
-                }
-                else{
-                    redirect('super_wage/download_page', 'refresh');
-                }
-            }
-            //指定部门,没有选用户
-            elseif($dept!='all'){
-                if($_FILES){
-                    if($_FILES['selected_user']){
-                        //没有上传文件
-                        if($_FILES['selected_user']['error']==4){
-                            //指定部门人员
-                            $wage=$this->model_wage->getWageByDateAndDept($dept,$start);
-                        }
-                        //上传了文件
-                        //异常处理,如果部门指定，同时有名单
-                        else{
-                            $this->session->set_flashdata('error', '不能同时指定部门和上传名单');
-                            redirect('super_wage/download_page', 'refresh');
-                        }
-                    }
-                    else{
-                        redirect('super_wage/download_page', 'refresh');                        
-                    }
-                }
-                else{
-                    redirect('super_wage/download_page', 'refresh');
-                }
-            }
-        }
-        //有日期区间
-        else{
-            $ToStartMonth=strtotime($start_month); //转换一下
-            $ToEndMonth=strtotime($end_month); //一样转换一下
-            $i=false; //开始标示
-            while( $ToStartMonth < $ToEndMonth ) {
-                $NewMonth = !$i ? date('Y-m', strtotime('+0 Month', $ToStartMonth)) : date('Y-m', strtotime('+1 Month', $ToStartMonth));
-                $ToStartMonth = strtotime( $NewMonth );
-                $i = true;
-                $date_tag=substr($NewMonth,0,4).substr($NewMonth,5,6);
-                $attr=$this->model_wage_attr->getWageAttrDataByDate($date_tag);
-                foreach($this->model_wage_attr->getWageAttrDataByDate($start) as $k => $v){
                     $counter=0;
                     foreach($attr as $k => $v){
                         if($v=='月度绩效工资小计'){
@@ -1121,12 +1023,12 @@ class Super_wage extends Admin_Controller {
                         }
                         if($v=='扣款小计'){
                             $mark['koufeiend']=$counter;
-                            array_push($mark_set,$mark);
                             break;
                         }
                         $counter++;
                     }
                 }
+
                 //all,部门无条件,两种情况，一种是全部，一种是导入名单
                 if($dept=='all'){
                     //无导入名单和有导入名单
@@ -1135,12 +1037,12 @@ class Super_wage extends Admin_Controller {
                             if($_FILES['selected_user']['error']==4){
                                 //无导入名单
                                 //all,该部门全部导出
-                                $wage=$this->model_wage->getWageByDate($date_tag);
+                                $wage=$this->model_wage->getWageByDate($start);
                             }
                             else{
                                 //有导入名单
                                 $user_set=$this->wage_temp_put();
-                                $wage=$this->model_wage->getWageByDateAndIdset($user_set,$date_tag);
+                                $wage=$this->model_wage->getWageByDateAndIdset($user_set,$start);
                             }
                         }
                         else{
@@ -1158,7 +1060,7 @@ class Super_wage extends Admin_Controller {
                             //没有上传文件
                             if($_FILES['selected_user']['error']==4){
                                 //指定部门人员
-                                $wage=$this->model_wage->getWageByDateAndDept($dept,$date_tag);
+                                $wage=$this->model_wage->getWageByDateAndDept($dept,$start);
                             }
                             //上传了文件
                             //异常处理,如果部门指定，同时有名单
@@ -1175,12 +1077,114 @@ class Super_wage extends Admin_Controller {
                         redirect('super_wage/download_page', 'refresh');
                     }
                 }
-                $one_month=array(
-                    'attr' => $attr,
-                    'wage' => $wage
-                );
-                array_push($wage_set,$one_month);
-                unset($one_month);
+            }
+        }
+        //有日期区间
+        else{
+            $ToStartMonth=strtotime($start_month); //转换一下
+            $ToEndMonth=strtotime($end_month); //一样转换一下
+            $i=false; //开始标示
+            while( $ToStartMonth < $ToEndMonth ) {
+                $NewMonth = !$i ? date('Y-m', strtotime('+0 Month', $ToStartMonth)) : date('Y-m', strtotime('+1 Month', $ToStartMonth));
+                $ToStartMonth = strtotime( $NewMonth );
+                $i = true;
+                $date_tag=substr($NewMonth,0,4).substr($NewMonth,5,6);
+                $attr=$this->model_wage_attr->getWageAttrDataByDate($date_tag);
+                if(!empty($attr)){
+                    foreach($this->model_wage_attr->getWageAttrDataByDate($start) as $k => $v){
+                        $counter=0;
+                        foreach($attr as $k => $v){
+                            if($v=='月度绩效工资小计'){
+                                $mark['yuedustart']=$counter;
+                            }
+                            if($v=='省核专项奖励小计'){
+                                #$mark['yueduend']=$counter-1;
+                                $mark['shengzhuanstart']=$counter;
+                            }
+                            if($v=='分公司专项奖励小计'){
+                                #$mark['shengzhuanend']=$counter-1;
+                                $mark['fengongsistart']=$counter;
+                            }
+                            if($v=='其他小计'){
+                                #$mark['fengongsiend']=$counter-1;
+                                $mark['qitastart']=$counter;
+                            }
+                            if($v=='教育经费小计'){
+                                #$mark['qitaend']=$counter-1;
+                                $mark['jiaoyustart']=$counter;
+                            }
+                            if($v=='福利费小计'){
+                                #$mark['jiaoyuend']=$counter-1;
+                                $mark['fulistart']=$counter;
+                            }
+                            if($v=='当月月应收合计'){
+                                #$mark['fuliend']=$counter-1;
+                                $mark['yingshou']=$counter;
+                                $mark['koufeistart']=$counter+1;
+                            }
+                            if($v=='扣款小计'){
+                                $mark['koufeiend']=$counter;
+                                array_push($mark_set,$mark);
+                                break;
+                            }
+                            $counter++;
+                        }
+                    }
+                    //all,部门无条件,两种情况，一种是全部，一种是导入名单
+                    if($dept=='all'){
+                        //无导入名单和有导入名单
+                        if($_FILES){
+                            if($_FILES['selected_user']){
+                                if($_FILES['selected_user']['error']==4){
+                                    //无导入名单
+                                    //all,该部门全部导出
+                                    $wage=$this->model_wage->getWageByDate($date_tag);
+                                }
+                                else{
+                                    //有导入名单
+                                    $user_set=$this->wage_temp_put();
+                                    $wage=$this->model_wage->getWageByDateAndIdset($user_set,$date_tag);
+                                }
+                            }
+                            else{
+                                redirect('super_wage/download_page', 'refresh');                        
+                            }
+                        }
+                        else{
+                            redirect('super_wage/download_page', 'refresh');
+                        }
+                    }
+                    //指定部门,没有选用户
+                    elseif($dept!='all'){
+                        if($_FILES){
+                            if($_FILES['selected_user']){
+                                //没有上传文件
+                                if($_FILES['selected_user']['error']==4){
+                                    //指定部门人员
+                                    $wage=$this->model_wage->getWageByDateAndDept($dept,$date_tag);
+                                }
+                                //上传了文件
+                                //异常处理,如果部门指定，同时有名单
+                                else{
+                                    $this->session->set_flashdata('error', '不能同时指定部门和上传名单');
+                                    redirect('super_wage/download_page', 'refresh');
+                                }
+                            }
+                            else{
+                                redirect('super_wage/download_page', 'refresh');                        
+                            }
+                        }
+                        else{
+                            redirect('super_wage/download_page', 'refresh');
+                        }
+                    }
+                    $one_month=array(
+                        'attr' => $attr,
+                        'wage' => $wage
+                    );
+                    array_push($wage_set,$one_month);
+                    unset($one_month);
+                }
             }
         }
         
@@ -1188,86 +1192,34 @@ class Super_wage extends Admin_Controller {
         $col=0;
         #echo var_dump($mark);
         $counter=0;
-        if(empty($wage_set)){
-            // Field names in the first row
-            $col=0;
-            $counter=0;
-            foreach($attr as $k => $v){
-                //如果该项目不为空，同时不是时间戳，同时
-                if($v != '' and $k!='date_tag' and $k!='attr_name1' and in_array($counter,$mark)){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
-                    $col++;
-                }
-                elseif($counter<$mark['yuedustart']){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
-                    $col++;
-                }elseif($k=='date_tag'){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, '时间戳');
-                    $col++;
-                }
+        if(!empty($attr)){
+            if(empty($wage_set)){
                 
-                $counter++;
-            }
-            $col=0;
-            $counter=0;
-            $row++;
-            foreach($wage as $k => $v){
-                foreach($v as $a => $b){
-                    if($b != '' and $a!='date_tag' and $a!='number' and in_array($counter,$mark)){
-                        if($a=='user_id'){
-                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, ' '.$b);
-                        }
-                        else{
-                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
-                        }
+                // Field names in the first row
+                $col=0;
+                $counter=0;
+                foreach($attr as $k => $v){
+                    //如果该项目不为空，同时不是时间戳，同时
+                    if($v != '' and $k!='date_tag' and $k!='attr_name1' and in_array($counter,$mark)){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
                         $col++;
                     }
                     elseif($counter<$mark['yuedustart']){
-                        if($a=='user_id'){
-                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, ' '.$b);
-                        }
-                        else{
-                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
-                        }
-                        $col++;
-                    }elseif($a=='date_tag'){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
-                        $col++;
-                    }   
-                    $counter++;
-                }
-                $col=0;
-                $counter=0;
-                $row++;
-            }
-        }
-        else{
-            #echo var_dump($wage);
-            // Field names in the first row
-            foreach($wage_set as $c => $wtemp){
-                $col = 0;
-                foreach($wtemp['attr'] as $k => $v){
-                    if($v != '' and $k!='date_tag' and $k!='attr_name1' and in_array($counter,$mark_set[$c])){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
-                        $col++;    
-                    }
-                    elseif($counter<$mark_set[$c]['yuedustart']){
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
                         $col++;
-                    }
-                    elseif($k=='date_tag'){
+                    }elseif($k=='date_tag'){
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, '时间戳');
                         $col++;
                     }
+                    
                     $counter++;
                 }
                 $col=0;
                 $counter=0;
                 $row++;
-
-                foreach($wtemp['wage'] as $k => $v){
+                foreach($wage as $k => $v){
                     foreach($v as $a => $b){
-                        if($b != '' and $a!='date_tag' and $a!='number' and in_array($counter,$mark_set[$c])){
+                        if($b != '' and $a!='date_tag' and $a!='number' and in_array($counter,$mark)){
                             if($a=='user_id'){
                                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, ' '.$b);
                             }
@@ -1276,29 +1228,84 @@ class Super_wage extends Admin_Controller {
                             }
                             $col++;
                         }
-                        elseif($counter<$mark_set[$c]['yuedustart']){
+                        elseif($counter<$mark['yuedustart']){
                             if($a=='user_id'){
                                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, ' '.$b);
                             }
-                            
                             else{
                                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
                             }
                             $col++;
-                        }
-                        elseif($a=='date_tag'){
+                        }elseif($a=='date_tag'){
                             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
                             $col++;
-                        }
+                        }   
                         $counter++;
-                        
                     }
                     $col=0;
                     $counter=0;
                     $row++;
                 }
             }
-            
+            else{
+                #echo var_dump($wage);
+                // Field names in the first row
+                foreach($wage_set as $c => $wtemp){
+                    $col = 0;
+                    foreach($wtemp['attr'] as $k => $v){
+                        if($v != '' and $k!='date_tag' and $k!='attr_name1' and in_array($counter,$mark_set[$c])){
+                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
+                            $col++;    
+                        }
+                        elseif($counter<$mark_set[$c]['yuedustart']){
+                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
+                            $col++;
+                        }
+                        elseif($k=='date_tag'){
+                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, '时间戳');
+                            $col++;
+                        }
+                        $counter++;
+                    }
+                    $col=0;
+                    $counter=0;
+                    $row++;
+
+                    foreach($wtemp['wage'] as $k => $v){
+                        foreach($v as $a => $b){
+                            if($b != '' and $a!='date_tag' and $a!='number' and in_array($counter,$mark_set[$c])){
+                                if($a=='user_id'){
+                                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, ' '.$b);
+                                }
+                                else{
+                                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
+                                }
+                                $col++;
+                            }
+                            elseif($counter<$mark_set[$c]['yuedustart']){
+                                if($a=='user_id'){
+                                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, ' '.$b);
+                                }
+                                
+                                else{
+                                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
+                                }
+                                $col++;
+                            }
+                            elseif($a=='date_tag'){
+                                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
+                                $col++;
+                            }
+                            $counter++;
+                            
+                        }
+                        $col=0;
+                        $counter=0;
+                        $row++;
+                    }
+                }
+                
+            }
         }
         $col=0;
         $objPHPExcel->setActiveSheetIndex(0);
