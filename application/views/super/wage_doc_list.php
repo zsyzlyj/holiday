@@ -5,12 +5,8 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      薪资文件汇总
+      薪酬文件汇总
     </h1>
-    
-      
-      
-    
   </section>
   <br />
   <br />

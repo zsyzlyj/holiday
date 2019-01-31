@@ -379,13 +379,13 @@ class Super_wage extends Admin_Controller {
             $str="收 入 证 明\r\n";
         }
         elseif(strstr($type,'在职')){
-            $str="证          明\r\n";
+            $str="证         明\r\n";
         }elseif(strstr($type,'现实表现')){
             $str="现 实 表 现 证 明\r\n";
         }elseif(strstr($type,'计生')){
             $str="计 生 证 明\r\n";
         }
-        $pdf->SetFont('kozminproregular','B',24);
+        $pdf->SetFont('songti','B',24);
         $pdf->Write(0,$str,'', 0, 'C', true, 0, false, false, 0);
         $rmb=$this->num_to_rmb($avg);
         switch($type){
@@ -400,77 +400,77 @@ class Super_wage extends Admin_Controller {
                 break;
             case '现实表现证明':
                 $str="\r\n          ".$username."（男，身份证号：".$user_id."） 同志自".$date."进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n          特此证明!\r\n";
-                $pdf->SetFont('kozminproregular','',14);
+                $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case '在职证明1':
                 $str="\r\n            兹有我单位员工".$username."，身份证号：".$user_id."，该员工于".$date."起至今在我公司工作。\r\n            特此证明。\r\n";
-                $pdf->SetFont('kozminproregular','',14);
+                $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case '在职证明2':
                 $str="\r\n          兹有".$username."（".$gender."，身份证号：".$user_id."），为中国联合网络通信有限公司中山市分公司".$position."，现任中国联合网络通信有限公司中山市分公司".$position."。\r\n            特此证明。\r\n\r\n";
-                $pdf->SetFont('kozminproregular','',14);
+                $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case '在职证明（积分入户1）':
                 $str="\r\n          兹有".$username."（性别".$gender."，身份证号：".$user_id."），为中国联合网络通信有限公司中山市分公司".$position."，现任中国联合网络通信有限公司中山市分公司".$position."。\r\n            特此证明。\r\n";
-                $pdf->SetFont('kozminproregular','',14);
+                $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 $pdf->setCellHeightRatio(1.5); 
-                $pdf->SetFont('kozminproregular', '', 9);
+                $pdf->SetFont('songti', '', 9);
                 $str="单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356";
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 break;
             case '在职证明（积分入户2）':
                 $str="\r\n          兹有我单位".$username."同志，性别：".$gender."，身份证号码：".$user_id."，于".$date."至今在我单位从事".$position."工作。\r\n单位名称：中国联合网络通信有限公司中山市分公司\r\n          联系地址：中山市东区长江北路6号联通大厦\r\n          联系人：徐小姐        联系电话：0760-23771356\r\n          特此证明。\r\n       （此证明仅用于办理流动人员积分制管理使用）\r\n";
-                $pdf->SetFont('kozminproregular','',14);
+                $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case '在职证明（居住证）':
                 $str="\r\n          兹有".$username."（".$gender."，身份证号：".$user_id."），自".$date."进入我公司工作，现任中国联合网络通信有限公司中山市分公司员工".$position."。\r\n          特此证明。\r\n       （此证明仅用于办理居住证使用）";
-                $pdf->SetFont('kozminproregular','',14);
+                $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 $pdf->setCellHeightRatio(1.5); 
-                $pdf->SetFont('kozminproregular', '', 9);
+                $pdf->SetFont('songti', '', 9);
                 $str="单位名称：中国联合网络通信有限公司中山市分公司\r\n联系地址：中山市东区长江北路6号联通大厦\r\n联系人：徐小姐           联系电话：0760-23771356";
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 break;
             case '在职证明（住房补贴）':
                 $str="\r\n          ".$username."同志（".$gender."，身份证号码：".$user_id."），".$date."起在我司工作，在职期间未享受过实物分房及建、购房相关补贴，该证明用于申请住房补贴使用。\r\n          特此证明。";
-                $pdf->SetFont('kozminproregular','',14);
+                $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源部\r\n".date("Y年m月d日");
-                $pdf->SetFont('kozminproregular','',14);
+                $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             /*
             case '计生证明':
                 $str="\r\n          ".$username."（身份证号：".$user_id."），为中国联合网络通信有限公司中山市分公司在编员工，于20xx年xx月与xxx登记结婚，属初婚已育壹孩，没有违反计划生育政策。其在我司工作期间的计划生育工作由我司负责管理。\r\n          特此证明。";
-                $pdf->SetFont('kozminproregular','',14);
+                $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
-                $pdf->SetFont('kozminproregular','',14);
+                $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case '子女户口非在注册证明':
                 $str="\r\n          兹有".$username."（".$gender."，身份证号：".$user_id."）为我司在编员工，户籍迁入我司集体户统一管理，于20xx年xx月xx日与xxx登记结婚，20xx年xx月xx日育有一女，其女xxx非我司在册集体户口。\r\n          特此证明。";
-                $pdf->SetFont('kozminproregular','',14);
+                $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
-                $pdf->SetFont('kozminproregular','',14);
+                $pdf->SetFont('songti','',14);
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
                 */
@@ -478,13 +478,13 @@ class Super_wage extends Admin_Controller {
         }
 
         if(strstr($type,'收入')){
-            $pdf->SetFont('kozminproregular','',14);
+            $pdf->SetFont('songti','',14);
             $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
             $str="\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n单位（盖章）\r\n".date('Y年m月d日')."\r\n\r\n\r\n";
             $pdf->setCellHeightRatio(1.7); 
             $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
             $pdf->setCellHeightRatio(1.5); 
-            $pdf->SetFont('kozminproregular', '', 9);
+            $pdf->SetFont('songti', '', 9);
             $str="\r\n\r\n联系地址：中山市长江北路6号联通大厦\r\n联系人：甘先生\r\n联系电话：0760-23692312";
             $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false);
         }
