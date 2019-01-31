@@ -545,7 +545,14 @@ class Super_wage extends Admin_Controller {
     
         $columnCnt = array_search($highestColumm, $cellName); 
 
-        $data = array();
+        $this->model_wage_tag->deleteAll();
+        #$this->model_users->deleteAll();
+        $this->model_dept->deleteAll();
+        $wage_set=array();
+        $user_set=array();
+        $all_dept=array();
+        $dept_set=array();
+        $attr=array();
         for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
             for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
                 $cellId = $cellName[$colIndex].$rowIndex;  
@@ -554,44 +561,12 @@ class Super_wage extends Admin_Controller {
                 if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
                     $cell = $cell->__toString();
                 }
-                $data[$rowIndex][$colIndex] = $cell;
-            }
-        }
-
-        $column=array();
-        $column_name=array();
-        $attribute_data=array();
-        $name='';
-        $user_id='';
-        $gender='';
-        $dept='';
-        $position='';
-        $company='';
-        $marry='';
-        $child='';
-        $highest_qualification='';
-        $highest_degree='';
-        $ft_highest_degree='';
-        $ft_highest_qualification='';
-        $service_mode='';
-        $indate='';
-        $role='';
-        $proof_tag='';
-        $counter=0;
-
-        $this->model_wage_tag->deleteAll();
-        #$this->model_users->deleteAll();
-        $this->model_dept->deleteAll();
-        $wage_set=array();
-        $user_set=array();
-        $all_dept=array();
-        $dept_set=array();
-        foreach($data as $k => $v){
-            #$row_data=array();
-            if($counter>1){
-                $col=0;
-                foreach($v as $a=>$b){
-                    switch($data[1][$a]){
+                $b=$cell;
+                if($rowIndex==1){
+                    array_push($attr,$b);
+                }
+                elseif($rowIndex>1){
+                    switch($attr[$colIndex]){
                         case '员工姓名':$name=$b;break;
                         case '身份证号':$user_id=$b;break;
                         case '性别':$gender=$b;break;
@@ -613,17 +588,18 @@ class Super_wage extends Admin_Controller {
                         case '薪档调整时间':$level_adjust_stamp=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
                         case '剩余积分':$accumulation=$b;break;
                     }
-                    if($col==13){
+                    if($colIndex==13){
                         $qian3=$b;
                     }
-                    if($col==14){
+                    if($colIndex==14){
                         $qian2=$b;
                     }
-                    if($col==15){
+                    if($colIndex==15){
                         $qian1=$b;
                     }
-                    $col++;
                 }
+            }
+            if($rowIndex>1){
                 //新建用户标识
                 $row_data=array(
                     'name' => $name,
@@ -655,7 +631,6 @@ class Super_wage extends Admin_Controller {
                 //新建登陆用户
                 //如果数据库中没有这个用户，那么就创建记录，否则不做任何事
                 if(!$this->model_users->checkUserById($user_id)){
-                    echo 'new user';
                     #$this->model_users->update();
                     $user_data=array(
                         'username' => $name,
@@ -667,8 +642,9 @@ class Super_wage extends Admin_Controller {
                     unset($user_data);
                 }
             }
-            $counter++;
         }
+            
+        
         $this->model_wage_tag->createbatch($wage_set);
         $this->model_users->createbatch($user_set);
         
