@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        收入证明
+        证明审核
       </h1>  
     </section>
     <hr />
@@ -16,13 +16,13 @@
         <div class="row">
           <div class="box">
             <div class="box-header">
-              <h3>收入证明</h3>
+              <h3>证明审核</h3>
             </div>
             <div class="box-body"> 
               <table id="proofTable" class="table table-bordered table-striped" style="overflow:scroll;text-align:center;">
                 <thead>
                   <tr>
-                    <th>编号</th>
+                    <!--<th>编号</th>-->
                     <th>申请日期</th>
                     <th>申请人</th>
                     <th>申请类型</th>
@@ -32,9 +32,11 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <?php $counter=1;?>
                   <?php foreach($apply_data as $k => $v):?>
+                  
                   <tr>
-                    <td><?php echo $v['id'];?></td>
+                    <!--<td><?php echo $counter++;?></td>-->
                     <td><?php echo $v['submit_time'];?></td>
                     <td><?php echo $v['name'];?></td>
                     <td><?php echo $v['type'];?></td>
@@ -107,7 +109,7 @@
                 "sSortDescending": ": 以降序排列此列"
             }
         },
-        "order":[[1,"desc"]],   
+        "order":[[0,"desc"]],   
       });
     });
     
