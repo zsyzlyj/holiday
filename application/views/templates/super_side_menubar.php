@@ -170,13 +170,7 @@
         <?php endif; ?>
         
         <!-- user permission info -->
-        
-        <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
-        <li id="settingMenu"><a href="<?php echo base_url('super_auth/holiday_setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
-        <?php endif; ?>
-        <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
-        <li id="settingMenu"><a href="<?php echo base_url('super_auth/wage_setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
-        <?php endif; ?>
+        <li id="settingMenu"><a href="<?php echo base_url('super_auth/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
         <!--
         <li><a href="<?php echo base_url('super_auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>退出登录</span></a></li>
         -->

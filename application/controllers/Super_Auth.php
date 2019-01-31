@@ -147,12 +147,6 @@ class Super_Auth extends Admin_Controller{
 		$this->session->sess_destroy();
 		redirect('super_auth/login', 'refresh');
 	}
-	public function holiday_setting(){
-		$this->setting('holiday');
-	}
-	public function wage_setting(){
-		$this->setting('wage');
-	}
 	/*
     ============================================================
     用户密码修改
@@ -166,17 +160,12 @@ class Super_Auth extends Admin_Controller{
 	            // true case
 		        if(empty($this->input->post('opassword'))){
 					$this->session->set_flashdata('error', '修改失败，原密码不能为空');
-					if($type=='holiday')
-						redirect('super_auth/holiday_setting', 'refresh');
-					if($type=='wage')
-						redirect('super_auth/wage_setting', 'refresh');
+					redirect('super_auth/setting', 'refresh');
 				}
 				elseif(empty($this->input->post('npassword')) && empty($this->input->post('cpassword'))){
 					$this->session->set_flashdata('error', '修改失败，新密码不能为空');
-					if($type=='holiday')
-						redirect('super_auth/holiday_setting', 'refresh');
-					if($type=='wage')
-						redirect('super_auth/wage_setting', 'refresh');
+					redirect('super_auth/setting', 'refresh');
+
 				}
 		        else{
 					$this->form_validation->set_rules('opassword', 'Password', 'trim|required');
@@ -199,21 +188,16 @@ class Super_Auth extends Admin_Controller{
 							else{
 								$this->session->set_flashdata('error', '遇到未知错误!!');
 								$this->render_super_template('super/setting', $this->data);
-								
 							}
 						}
 						else{
 							$this->session->set_flashdata('error', '原密码错误');
-							if($type=='holiday')
-								redirect('super_auth/holiday_setting', 'refresh');
-							if($type=='wage')
-								redirect('super_auth/wage_setting', 'refresh');
+							redirect('super_auth/setting', 'refresh');
 						}
-						
 					}
 			        else{
 						// false case
-						redirect('super_auth/'.$type.'_setting', 'refresh');
+						redirect('super_auth/setting', 'refresh');
 			        }
 		        }
 	        }

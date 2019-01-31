@@ -37,12 +37,7 @@
               </div>
             </div>
             <!-- /.box-header -->
-            <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
-            <form role="form" action="<?php base_url('super_auth/wage_setting') ?>" method="post">
-            <?php endif; ?>
-            <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
-            <form role="form" action="<?php base_url('super_auth/holiday_ setting') ?>" method="post">
-            <?php endif; ?>
+            <form role="form" action="<?php base_url('super_auth/setting') ?>" method="post">
               <div class="box-body">
                 <div class="col-md-4 col-md-offset-4">
                 <?php echo validation_errors(); ?>
