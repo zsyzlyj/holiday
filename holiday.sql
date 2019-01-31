@@ -112,3 +112,9 @@ CREATE TABLE `wage_users` (
   `password` varchar(255) NOT NULL,
   `permission` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `holiday_doc` (
+  `number` varchar(12),
+  `doc_name` varchar(50),
+  `doc_path` varchar(100)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

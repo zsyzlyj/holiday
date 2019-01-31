@@ -92,9 +92,9 @@ class Super_holiday extends Admin_Controller
         $this->render_super_template('super/holiday_doc_list',$this->data);
     }
     public function holiday_doc_delete(){
-        $doc_name = $_POST['doc_name'];
-        if($doc_name){
-			$delete = $this->model_holiday_doc->delete($doc_name);
+        $time = $_POST['time'];
+        if($time){
+			$delete = $this->model_holiday_doc->deleteByTime($time);
             if($delete == true){
                 $this->session->set_flashdata('success', '删除成功');
             }

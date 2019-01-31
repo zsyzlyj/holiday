@@ -19,9 +19,9 @@ class Model_holiday_doc extends CI_Model{
 		}
 	}
 	
-	public function delete($doc_name){
-		if($doc_name){
-			$this->db->where('doc_name', $doc_name);
+	public function deleteByTime($time){
+		if($time){
+			$this->db->where('number', $time);
 			$delete = $this->db->delete('holiday_doc');
 			return ($delete == true) ? true : false;
 		}
