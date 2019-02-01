@@ -3,8 +3,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Super_Auth extends Admin_Controller{
-	public function __construct()
-	{
+	public function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->model('model_super_auth');
@@ -13,7 +12,6 @@ class Super_Auth extends Admin_Controller{
 		$this->data['user_id'] = $this->session->userdata('user_id');
 		$this->data['user_name'] = $this->session->userdata('user_id');
 	}
-
 	/*
     ============================================================
     超管登录
@@ -21,36 +19,10 @@ class Super_Auth extends Admin_Controller{
     1、index(),登录界面
     2、login(),登录界面
     3、logout(),返回登录界面
-    6、setting(),修改密码母板
+	4、setting(),修改密码
+	5、get_captcha(),生成验证码
     ============================================================
 	*/ 
-	public function get_captcha(){
-        if ($this->input->is_ajax_request()) {
-			if(array_key_exists('image', $_SESSION)){
-				if(file_exists($_SESSION['image'])){
-					unlink($_SESSION['image']);
-				}
-			}
-            $img = imagecreatetruecolor(90, 40);
-			$black = imagecolorallocate($img, 0x00, 0x00, 0x00);
-			$green = imagecolorallocate($img, 0x00, 0xFF, 0x00);
-			$white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
-			imagefill($img, 0, 0, $white);
-			//生成随机的验证码
-			$words = 'abcdefghijkmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXYZ3456789';
-			$code = substr(str_shuffle($words), 0, 4);
-			imagestring($img, 5, 10, 10, $code, $black);
-			$new_img = "captcha/".date('YmdHis').'-'.$code.".jpg";
-			$created = imagejpeg($img, $new_img);
-			$_SESSION['code']=$code;
-			$_SESSION['image']=$new_img;
-			echo '<a href="javascript:void(0);"  _onclick="get_captcha();"><img src="http://'.$_SERVER['HTTP_HOST'].'/human_resources/'.$new_img.'" style="border:1px solid black"/></a>';
-			//销毁图片
-			imagedestroy($img);
-        } else {
-            show_404();
-        }
-    }
 	
 	public function index(){
 		$this->login();
@@ -206,5 +178,32 @@ class Super_Auth extends Admin_Controller{
 				$this->render_super_template('super/setting', $this->data);	
 	        }
 		}
-    }	
+	}	
+	public function get_captcha(){
+        if ($this->input->is_ajax_request()) {
+			if(array_key_exists('image', $_SESSION)){
+				if(file_exists($_SESSION['image'])){
+					unlink($_SESSION['image']);
+				}
+			}
+            $img = imagecreatetruecolor(90, 40);
+			$black = imagecolorallocate($img, 0x00, 0x00, 0x00);
+			$green = imagecolorallocate($img, 0x00, 0xFF, 0x00);
+			$white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
+			imagefill($img, 0, 0, $white);
+			//生成随机的验证码
+			$words = 'abcdefghijkmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXYZ3456789';
+			$code = substr(str_shuffle($words), 0, 4);
+			imagestring($img, 5, 10, 10, $code, $black);
+			$new_img = "captcha/".date('YmdHis').'-'.$code.".jpg";
+			$created = imagejpeg($img, $new_img);
+			$_SESSION['code']=$code;
+			$_SESSION['image']=$new_img;
+			echo '<a href="javascript:void(0);"  _onclick="get_captcha();"><img src="http://'.$_SERVER['HTTP_HOST'].'/human_resources/'.$new_img.'" style="border:1px solid black"/></a>';
+			//销毁图片
+			imagedestroy($img);
+        } else {
+            show_404();
+        }
+    }
 }

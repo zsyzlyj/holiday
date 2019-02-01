@@ -526,8 +526,7 @@ class Super_wage extends Admin_Controller {
         $path=$_FILES['file'];
         $filePath = 'uploads/wage_user/'.$path['name'];
         move_uploaded_file($path['tmp_name'],$filePath);
-        //根据上传类型做不同处理
-        
+        //根据上传类型做不同处理 
         if(strstr($_FILES['file']['name'],'xlsx')){
             $reader = new PHPExcel_Reader_Excel2007();
         }

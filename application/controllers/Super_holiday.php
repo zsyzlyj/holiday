@@ -2,8 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Super_holiday extends Admin_Controller 
-{
+class Super_holiday extends Admin_Controller{
 	public function __construct(){
         parent::__construct();
         $this->data['page_title'] = 'Super';
@@ -13,7 +12,7 @@ class Super_holiday extends Admin_Controller
         $this->load->model('model_notice');
         $this->load->model('model_manager');
         $this->load->model('model_users');
-        $this->load->model('model_feedback'); 
+        $this->load->model('model_feedback');
         $this->data['permission']=$this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
@@ -200,8 +199,6 @@ class Super_holiday extends Admin_Controller
                 //如果假期表中没有这个人，那么就假期信息初始化，计划初始化，用户初始化，
                 //holiday,plan
                 //初始化假期信息，每个人新建一条假期的记录
-                #$Update_data['Companyage']=floor((strtotime(date("Y-m-d"))-strtotime($Update_data['indate']))/86400/365);
-                #$Update_data['Totalage']=floor((strtotime(date("Y-m-d"))-strtotime($Update_data['initdate']))/86400/365);
                 $Update_data['Companyage']=round((strtotime(date("Y-m-d"))-strtotime($Update_data['indate']))/86400/365);
                 $Update_data['Totalage']=round((strtotime(date("Y-m-d"))-strtotime($Update_data['initdate']))/86400/365);
     
@@ -244,7 +241,6 @@ class Super_holiday extends Admin_Controller
         }
         $this->model_holiday->createbatch($holiday_set);
         $this->model_plan->createbatch($plan_set);
-        
         unset($holiday_set);
         unset($plan_set);
     }
@@ -326,11 +322,6 @@ class Super_holiday extends Admin_Controller
         header('Cache-Control: max-age=0');
         $objWriter->save('php://output');
     }
-    /*
-    public function export_holiday(){
-        $this->excel();
-    }
-    */
     public function excel_plan(){
         $this->load->library('PHPExcel');
         $this->load->library('PHPExcel/IOFactory');
@@ -503,7 +494,6 @@ class Super_holiday extends Admin_Controller
                 $id=$_POST['user_id2'];
 			}
 		}
-
 		if($id){
 			if($this->input->post('confirm')){
                 $delete = $this->model_users->delete($id);
@@ -611,18 +601,9 @@ class Super_holiday extends Admin_Controller
         $manager_set=array();
         $feedback_set=array();
         $all_dept=array();
-        //重置所有用户的权限
-        $User_default=array(
-            'permission' => 3
-        );
-        /*
-        $user=$this->model_users->getUserData();
-        foreach ($user as $c => $d){
-            $this->model_users->update($User_default,$user_id);
-        }
-        */
+        $user_set=array();
         //删除所有的管理人员
-        #$this->model_manager->deleteAll();
+        $this->model_manager->deleteAll();
         //删除所有的反馈信息
         $this->model_feedback->deleteAll();
         foreach($column as $k => $v){
@@ -652,13 +633,14 @@ class Super_holiday extends Admin_Controller
                 $permission=4;
 			}
 			$Update_user=array(
+                'user_id' => $user_id,
 				'permission' => $permission
 			);
-            $update_user=$this->model_users->update($Update_user,$user_id);        
+            #$update_user=$this->model_users->update($Update_user,$user_id);        
+            array_push($user_set,$Update_user);
             unset($Update_data);
             //初始化年假计划反馈，每个部门新建一个反馈记录，部门为主键         
             if(!in_array($dept,$all_dept)){
-
                 array_push($all_dept,$dept);
             }
         }
@@ -669,6 +651,7 @@ class Super_holiday extends Admin_Controller
             array_push($feedback_set,$feedback_data);
             unset($feedback_data);
         }
+        $this->model_users->updatebatch($user_set);
         $this->model_manager->createbatch($manager_set);
         $this->model_feedback->createbatch($feedback_set);
     }

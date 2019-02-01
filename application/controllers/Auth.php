@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Auth extends Admin_Controller {
 	public function __construct(){
 		parent::__construct();
-
 		$this->load->model('model_auth');
 		$this->data['user_name'] = $this->session->userdata('user_name');
         $this->data['user_id'] = $this->session->userdata('user_id');
@@ -14,9 +13,10 @@ class Auth extends Admin_Controller {
     ============================================================
     普通员工登录
     包括：
-    1、login(),薪酬系统登录界面
-    2、logout(),返回年假系统登录界面
-    3、setting(),修改密码母板
+    1、login(),系统登录界面
+    2、logout(),返回登录界面
+	3、setting(),修改密码界面
+	4、get_captcha,生成验证码图片
     ============================================================
     */ 
 	/* 
@@ -27,34 +27,8 @@ class Auth extends Admin_Controller {
 		1——综管员,admin
 		2——部门负责人，manager
 		3——普通员工,staff
+		4——大区负责人,domain
 	*/
-	public function get_captcha(){
-        if ($this->input->is_ajax_request()) {
-			if(array_key_exists('image', $_SESSION)){
-				if(file_exists($_SESSION['image'])){
-					unlink($_SESSION['image']);
-				}
-			}
-            $img = imagecreatetruecolor(90, 40);
-			$black = imagecolorallocate($img, 0x00, 0x00, 0x00);
-			$green = imagecolorallocate($img, 0x00, 0xFF, 0x00);
-			$white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
-			imagefill($img, 0, 0, $white);
-			//生成随机的验证码
-			$words = 'abcdefghijkmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXYZ3456789';
-			$code = substr(str_shuffle($words), 0, 4);
-			imagestring($img, 5, 10, 10, $code, $black);
-			$new_img = "captcha/".date('YmdHis').'-'.$code.".jpg";			
-			$created = imagejpeg($img, $new_img);
-			$_SESSION['code']=$code;
-			$_SESSION['image']=$new_img;
-			echo '<a href="javascript:void(0);"  _onclick="get_captcha();"><img src="http://'.$_SERVER['HTTP_HOST'].'/human_resources/'.$new_img.'" style="border:1px solid black"/></a>';
-			//销毁图片
-			imagedestroy($img);
-        } else {
-            show_404();
-        }
-    }
 	public function login(){
 		$this->logged_in();
 		$this->form_validation->set_rules('user_id', 'user_id', 'required');
@@ -105,8 +79,7 @@ class Auth extends Admin_Controller {
 				$this->load->view('login', $this->data);
 			}
         }
-        else{
-			// 打开登录界面
+        else{// 打开登录界面
             $this->load->view('login',$this->data);
         }	
 	}
@@ -133,7 +106,6 @@ class Auth extends Admin_Controller {
 		$this->session->sess_destroy();
 		redirect('auth/login', 'refresh');
 	}
-
 	public function setting(){
 		$id = $this->session->userdata('user_id');
 		$this->data['user_name'] = $this->session->userdata('user_name');
@@ -190,4 +162,31 @@ class Auth extends Admin_Controller {
 	        }
 		}
 	}
+	public function get_captcha(){
+        if ($this->input->is_ajax_request()) {
+			if(array_key_exists('image', $_SESSION)){
+				if(file_exists($_SESSION['image'])){
+					unlink($_SESSION['image']);
+				}
+			}
+            $img = imagecreatetruecolor(90, 40);
+			$black = imagecolorallocate($img, 0x00, 0x00, 0x00);
+			$green = imagecolorallocate($img, 0x00, 0xFF, 0x00);
+			$white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
+			imagefill($img, 0, 0, $white);
+			//生成随机的验证码
+			$words = 'abcdefghijkmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXYZ3456789';
+			$code = substr(str_shuffle($words), 0, 4);
+			imagestring($img, 5, 10, 10, $code, $black);
+			$new_img = "captcha/".date('YmdHis').'-'.$code.".jpg";			
+			$created = imagejpeg($img, $new_img);
+			$_SESSION['code']=$code;
+			$_SESSION['image']=$new_img;
+			echo '<a href="javascript:void(0);"  _onclick="get_captcha();"><img src="http://'.$_SERVER['HTTP_HOST'].'/human_resources/'.$new_img.'" style="border:1px solid black"/></a>';
+			//销毁图片
+			imagedestroy($img);
+        } else {
+            show_404();
+        }
+    }
 }
