@@ -48,7 +48,8 @@ class Wage extends Admin_Controller{
     ==============================================================================
     */
     public function staff(){
-        $this->search();
+        #$this->search();
+        $this->notice();
     }
     
     public function export_wage_proof(){
@@ -765,5 +766,8 @@ class Wage extends Admin_Controller{
     }
     public function wage_chart(){
         $this->render_template('wage/wage_chart',$this->data);
+    }
+    public function notice(){
+        $this->render_template('wage/wage_notice',$this->data);
     }
 }

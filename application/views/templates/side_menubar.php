@@ -13,6 +13,11 @@
             </a>
           </li>
           -->
+          <li id="wageNoticeMainMenu">
+            <a href="<?php echo base_url('wage/notice') ?>">
+              <i class="fa fa-flag-o"></i> <span>公告</span>
+            </a>
+          </li>
           <li id="searchwageMainMenu">
             <a href="<?php echo base_url('wage/search') ?>">
               <i class="fa fa-search"></i> <span>工资明细查询</span>
