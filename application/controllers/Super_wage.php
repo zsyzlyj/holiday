@@ -15,6 +15,7 @@ class Super_wage extends Admin_Controller {
         $this->load->model('model_wage_attr');
         $this->load->model('model_wage_record');
         $this->load->model('model_wage_apply');
+        $this->load->model('model_wage_notice');
         $this->load->model('model_wage');
         $this->load->model('model_wage_doc'); 
         $this->load->model('model_wage_func');
@@ -815,6 +816,24 @@ class Super_wage extends Admin_Controller {
                     $cell = $cell->__toString();
                 }
                 $temp[$colIndex] = $cell;
+            }
+            if($rowIndex==2){
+                if($this->model_wage_notice->getWageNoticeByDate($filename)){
+                    $notice=array(
+                        'content' => $temp[4]
+                    );
+                    $this->model_wage_notice->update($notice,$filename);
+                    unset($notice);
+                }
+                else{
+                    $notice=array(
+                        'date_tag' => $filename,
+                        'content' => $temp[4]
+                    );
+                    $this->model_wage_notice->create($notice);
+                    unset($notice);
+                }
+                
             }
             if($rowIndex==3){
                 $attr_counter=1;

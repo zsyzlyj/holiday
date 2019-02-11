@@ -50,9 +50,8 @@
             <?php if($chosen_month): ?>
             <h4>中山联通<?php echo date_format(date_create($chosen_month),"Y年m月");?>员工工资单</h4>
             <hr />
-            <h5>注意：</h5>
-            <hr />
-            <br />
+            <h5><?php echo $wage_notice;?></h5>
+
             <?php endif;?>
             <div style="overflow:scroll;">
               <fieldset>

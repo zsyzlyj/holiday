@@ -16,6 +16,7 @@ class Wage extends Admin_Controller{
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
         $this->load->model('model_wage_func');
+        $this->load->model('model_wage_notice');
         $this->load->model('model_notice');
         $this->data['permission'] = $this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
@@ -564,10 +565,9 @@ class Wage extends Admin_Controller{
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strlen($doc_name)<=7 and $doc_name!=""){
                 $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
+                $this->data['wage_notice']=$this->model_wage_notice->getWageNoticeByDate($doc_name)['content'];
                 if(!empty($this->data['attr_data'])){
                     $this->data['wage_data']=$this->model_wage->getWageByDateAndID($this->data['user_id'],$doc_name);
-                    
-                    
                     $counter=0;
                     foreach($this->data['attr_data'] as $k => $v){
                         if($v=='月度绩效工资小计'){
