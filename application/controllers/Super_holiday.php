@@ -688,7 +688,6 @@ class Super_holiday extends Admin_Controller{
 			2 => '综合管理员',
 			3 => '普通员工'
 		);
-
 		$this->data['manager_data'] = $this->model_manager->getManagerData();;
 		$this->data['permission_set']=$permission_set;
 		$this->render_super_template('super/manager', $this->data);
