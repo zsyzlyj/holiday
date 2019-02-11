@@ -34,7 +34,7 @@
                       <legend class=""></legend>
                     </div>
                     <div class="form-group">
-                      <label for="dtp_input1" class="col-md-2 control-label">开始月份</label>
+                      <label for="dtp_input1" class="col-md-1 control-label">开始月份</label>
                       <div class="input-group date form_datetime col-md-2" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm" data-link-field="dtp_input1">
                         <?php if($chosen_month):?>
                         <input class="form-control" id="datetimeStart" name="start_month" size="12" type="text" value="<?php echo $chosen_month;?>" readonly>
@@ -42,7 +42,7 @@
                         <input class="form-control" id="datetimeStart" name="start_month" size="12" type="text" value="单击选择月份" readonly>
                         <?php endif;?>
                       </div>
-                      <label for="dtp_input1" class="col-md-2 control-label">结束月份</label>
+                      <label for="dtp_input1" class="col-md-1 control-label">结束月份</label>
                       <div class="input-group date form_datetime col-md-2" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm" data-link-field="dtp_input1">
                         <?php if($chosen_month):?>
                         <input class="form-control" id="datetimeEnd" name="end_month" size="12" type="text" value="<?php echo $chosen_month;?>" readonly>

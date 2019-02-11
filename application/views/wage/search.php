@@ -31,7 +31,7 @@
                 <fieldset>
                   <legend></legend>
                   <div class="form-group">
-                    <label for="dtp_input1" class="col-md-2 control-label">月份选择</label>
+                    <label for="dtp_input1" class="col-md-1 control-label">月份选择</label>
                     <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm" data-link-field="dtp_input1">
                       <?php if($chosen_month):?>
                       <input class="form-control" name="chosen_month" size="16" type="text" value="<?php echo $chosen_month;?>" readonly>
@@ -47,7 +47,13 @@
                 </fieldset>
               </form>
             </div>
+            <?php if($chosen_month): ?>
+            <h4>中山联通<?php echo date_format(date_create($chosen_month),"Y年m月");?>员工工资单</h4>
             <hr />
+            <h5>注意：</h5>
+            <hr />
+            <br />
+            <?php endif;?>
             <div style="overflow:scroll;">
               <fieldset>
               <table id="wageTable"class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;">
@@ -142,7 +148,8 @@
         startView:3,
         minView:3,
         startDate:"2017-01",
-        autoclose:true
+        autoclose:true,
+        pickerPosition: "-left"
       });
     
     });
