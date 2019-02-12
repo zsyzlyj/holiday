@@ -13,6 +13,7 @@ class Super_holiday extends Admin_Controller{
         $this->load->model('model_manager');
         $this->load->model('model_users');
         $this->load->model('model_feedback');
+        $this->load->model('model_func');
         $this->data['permission']=$this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
@@ -914,5 +915,20 @@ class Super_holiday extends Admin_Controller{
     public function progress(){
         $this->data['progress']=$this->model_feedback->getFeedbackStatus();
         $this->render_super_template('super/holiday_progress', $this->data);
+    }
+    public function switch_function(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            if(array_key_exists('func_name_off', $_POST)){
+                $name=$_POST['func_name_off'];
+                $status='已关闭';
+            }
+            if(array_key_exists('func_name_on', $_POST)){
+                $name=$_POST['func_name_on'];
+                $status='已开启';
+            }
+            $this->model_func->edit(array('name' => $name,'status' => $status),$name);
+        }
+        $this->data['holiday_func']=$this->model_func->getFuncByType('holiday');
+        $this->render_super_template('super/holiday_switch_function',$this->data);
     }
 }

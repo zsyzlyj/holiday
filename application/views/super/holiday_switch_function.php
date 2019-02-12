@@ -1,5 +1,3 @@
-
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -20,7 +18,7 @@
             <div class="box-body">
               <div style="overflow:scroll;">
               
-              <table id="wageTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed" width="100%">
+              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed" width="100%">
                 <thead>
                 <tr>
                   <th>功能</th>
@@ -29,7 +27,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <?php foreach($wage_func as $k => $v):?>
+                  <?php foreach($holiday_func as $k => $v):?>
                   <tr>
                   <?php foreach($v as $a => $b):?>
                     <?php if($a!='id'):?>
@@ -43,11 +41,11 @@
                     <?php endif; ?>
                   <?php endforeach; ?>
                     <td>
-                      <form action="<?php echo base_url('super_wage/switch_function')?>" method="post" style="margin:0px;display:inline;">
+                      <form action="<?php echo base_url('super_holiday/switch_function')?>" method="post" style="margin:0px;display:inline;">
                         <input type="hidden" name="func_name_on" value="<?php echo $v['name'];?>">
                         <button type="submit" class="btn btn-success">开启</button>
                       </form>
-                      <form action="<?php echo base_url('super_wage/switch_function')?>" method="post" style="margin:0px;display:inline;">
+                      <form action="<?php echo base_url('super_holiday/switch_function')?>" method="post" style="margin:0px;display:inline;">
                         <input type="hidden" name="func_name_off" value="<?php echo $v['name'];?>">
                         <button type="submit" class="btn btn-danger">关闭</button>
                       </form>
@@ -74,7 +72,7 @@
  <script type="text/javascript">
     $(document).ready(function(){
       $('#switchMainMenu').addClass('active');
-      $('#wageTable').DataTable({
+      $('#holidayTable').DataTable({
         language:{
             "sProcessing": "处理中...",
             "sLengthMenu": "显示 _MENU_ 项",

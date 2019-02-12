@@ -10,8 +10,10 @@ class Users extends Admin_Controller{
 		$this->load->model('model_wage_tag');
 		$this->load->model('model_manager');
 		$this->load->model('model_holiday');
+		$this->load->model('model_func');
 		$this->data['permission']=$this->session->userdata('permission');
 		$this->data['user_name'] = $this->session->userdata('user_name');
+		$this->data['func']=$this->model_func->getFuncByType('holiday');
 		$this->data['user_id'] = $this->session->userdata('user_id');
 	}
 	

@@ -61,7 +61,12 @@
             <li id="manage_holiday_notice"><a href="<?php echo base_url('super_holiday/notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
           </ul>
         </li>
-        
+        <li id="switchMainMenu">
+          <a href="<?php echo base_url('super_holiday/switch_function') ?>">
+            <i class="fa fa-tasks"></i>
+            <span> 权限开关</span>
+          </a>
+        </li>
         <?php endif; ?>
         <?php if($permission=='工资'):?>
         <!--

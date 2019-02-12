@@ -18,7 +18,7 @@ class Super_wage extends Admin_Controller {
         $this->load->model('model_wage_notice');
         $this->load->model('model_wage');
         $this->load->model('model_wage_doc'); 
-        $this->load->model('model_wage_func');
+        $this->load->model('model_func');
         $this->data['notice_data'] = $this->model_notice->getNoticeLatestWage();
         $this->data['permission']=$this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_id');
@@ -1533,9 +1533,9 @@ class Super_wage extends Admin_Controller {
                 $name=$_POST['func_name_on'];
                 $status='已开启';
             }
-            $this->model_wage_func->edit(array('name' => $name,'status' => $status),$name);
+            $this->model_func->edit(array('name' => $name,'status' => $status),$name);
         }
-        $this->data['wage_func']=$this->model_wage_func->getFuncData();
+        $this->data['wage_func']=$this->model_func->getFuncByType('wage');
         $this->render_super_template('super/wage_switch_function',$this->data);
     }
 }

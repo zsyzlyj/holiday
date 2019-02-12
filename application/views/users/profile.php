@@ -72,11 +72,11 @@
                   <td style="width:300px">职级调整时间：<?php echo $user_info['wage_adjust_stamp'];?></td>
                   <td style="width:300px">薪酬调整时间：<?php echo $user_info['level_adjust_stamp'];?></td>
                 </tr>
-                <!--
+                <?php if(strstr($func[0]['status'],'开启')):?>
                 <tr>
                   <td style="border:none;">上年剩余积分：<?php echo $user_info['accumulation'];?></td>
                 </tr>
-                -->
+                <?php endif;?>
                 <tr style="height:20px;"></tr>
                 <tr style="height:60px;">
                   <th style="font-size:25px" colspan="3">考核信息</th>
