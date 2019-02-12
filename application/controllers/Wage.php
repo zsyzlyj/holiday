@@ -32,6 +32,79 @@ class Wage extends Admin_Controller{
     }
     
     public function wage_doc(){
+        require_once(APPPATH.'libraries\FPDI\src\fpdi.php');
+        $pdf = new \setasign\Fpdi\Fpdi();
+        // get the page count
+        $pageCount = $pdf->setSourceFile('assets/images/1.pdf');
+
+        /*
+        $ori_img = 'assets/images/blank.jpg';    //原图
+        $new_img = 'assets/images/watermarked.jpg';    //生成水印后的图片
+        $original = getimagesize($ori_img);    //得到图片的信息，可以print_r($original)发现它就是一个数组
+        switch($original[2]){
+            case 1 : $s_original = imagecreatefromgif($ori_img);
+                break;
+            case 2 : $s_original = imagecreatefromjpeg($ori_img);
+                break;
+            case 3 : $s_original = imagecreatefrompng($ori_img);
+                break;
+        }
+        $font_size = 22;    //字号
+        $tilt = 45;    //文字的倾斜度
+        $color = imagecolorallocatealpha($s_original,0,0,0,0);// 为一幅图像分配颜色 255,0,0表示红色
+        #$str = $this->session->userdata('user_id');
+        $str='abc';
+        $poxY = 350;    //Y坐标
+        for($posX=200;$posX<$original[0];$posX+=600){
+            imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
+        }
+        $poxY = 650;    //Y坐标
+        for($posX=450;$posX<$original[0];$posX+=600){
+            imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
+        }
+        $poxY = 950;    //Y坐标
+        for($posX=200;$posX<$original[0];$posX+=600){
+            imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
+        }
+        $poxY = 1250;    //Y坐标
+        for($posX=500;$posX<$original[0];$posX+=600){
+            imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
+        }
+        $poxY = 1550;    //Y坐标
+        for($posX=200;$posX<$original[0];$posX+=600){
+            imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
+        }
+        $poxY = 1850;    //Y坐标
+        for($posX=500;$posX<$original[0];$posX+=600){
+            imagettftext($s_original, $font_size, $tilt, $posX, $poxY, $color, 'C:/Windows/Fonts/simfang.ttf', $str);
+        }
+        $loop = imagejpeg($s_original, $new_img);    //生成新的图片(jpg格式)，如果用imagepng可以生成png格式
+        */
+        // iterate through all pages
+        for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++)
+        {
+            // import a page
+            $templateId = $pdf->importPage($pageNo);
+        
+            // get the size of the imported page
+            $size = $pdf->getTemplateSize($templateId);
+            // create a page (landscape or portrait depending on the imported page size)
+            if ($size['width'] > $size['height']) $pdf->AddPage('L', array($size['width'], $size['height']));
+            else $pdf->AddPage('P', array($size['width'], $size['height']));
+        
+            // use the imported page
+            $pdf->useTemplate($templateId);
+            $pdf->SetFont('Arial','B','12');
+            // sign with current date
+            for($i=0;$i<2480;$i+=600){
+                $pdf->SetXY($i, $i); // you should keep testing untill you find out correct x,y values
+                $pdf->Write(7, date('Y-m-d'));
+            }
+            
+        
+        }
+        $pdf->Output('assets\images\word.pdf','F');
+        $wage_doc=$this->data['wage_doc'];
         $this->render_template('wage/wage_doc', $this->data);
     }
     /*
