@@ -25,7 +25,7 @@
               <div class="col-md-6 col-md-offset-3">
                 <?php if($notice_data): ?> 
                 <?php foreach ($notice_data as $notice): ?>
-                <?php echo $notice['content'];?>
+                <p><?php echo $notice['content'];?></p>
                 <?php endforeach;?>
                 <?php endif ?>
               </div>

@@ -28,7 +28,7 @@
                 </fieldset>
               </form>
             </div>
-            <div style="overflow:scroll;col-md-6">
+            <div style="col-md-6">
               <h3></h3>
               <table id="wageTable" class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;">
               <thead>
