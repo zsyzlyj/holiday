@@ -14,7 +14,9 @@ use setasign\Fpdi\PdfParser\Type\PdfStream;
 use setasign\Fpdi\PdfParser\Type\PdfString;
 use setasign\Fpdi\PdfParser\Type\PdfType;
 use setasign\Fpdi\PdfParser\Type\PdfTypeException;
-
+require_once(APPPATH.'libraries\TCPDF\tcpdf.php');
+require_once(APPPATH.'libraries\fpdi\src\autoload.php');
+use setasign\Fpdi\TCPDF;
 /**
  * Class Fpdi
  *
