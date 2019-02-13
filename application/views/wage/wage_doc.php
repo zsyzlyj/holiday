@@ -29,21 +29,28 @@
               </form>
             </div>
             <div style="col-md-6">
-              <h3></h3>
-              <table id="wageTable" class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;">
-              <thead>
-                <th style="text-align: center;">序号</th>
-                <th style="text-align: center;">文件名</th>
-              </thead>
-              <tbody>
-              <?php foreach($wage_doc as $k => $v):?>
-                <tr>
-                  <td style="text-align: center;"><?php echo $k+1;?></td>
-                  <td style="text-align: center;"><a href='<?php echo base_url($v['doc_path']);?>' target="_blank"><?php echo $v['doc_name']?></a></td>
-                </tr>
+              
+              <?php foreach($type_array as $a => $b):?>
+                <h3><?php echo $b['doc_type'];?></h3>
+
+                <table id="wageTable" class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;">
+                <thead>
+                  <th style="text-align: center;">序号</th>
+                  <th style="text-align: center;">文件名</th>
+                </thead>
+                <tbody>
+                <?php $counter=0;?>
+                <?php foreach($wage_doc as $k => $v):?>
+                  <tr>
+                    <?php if($b['doc_type']==$v['doc_type']):?>
+                      <td style="text-align: center;"><?php echo ++$counter;?></td>
+                      <td style="text-align: center;"><a href='<?php echo base_url($v['doc_path']);?>' target="_blank"><?php echo $v['doc_name']?></a></td>
+                    <?php endif;?>
+                  </tr>
+                <?php endforeach;?>
+                </tbody>
+                </table>
               <?php endforeach;?>
-              </tbody>
-              </table>
             </div>
           </div>
       </div>

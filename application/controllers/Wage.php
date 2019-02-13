@@ -51,8 +51,9 @@ class Wage extends Admin_Controller{
                 if ($size['width'] > $size['height']) $pdf->AddPage('L', array($size['width'], $size['height']));
                 else $pdf->AddPage('P', array($size['width'], $size['height']));
                 $pdf->SetFont('','B','12');
-                $pdf->SetFont('songti','',22);
-                $pdf->SetTextColor(255,192,203);
+                $pdf->SetFont('songti','',11);
+                $pdf->SetTextColor(211,211,211);
+                #$pdf->SetTextColor(255,192,203);
                 #$pdf->RotatedText(100,100,'Rina_lyj',45);
                 for($i=20;$i<$size['width'];$i+=70){
                     for($j=50;$j<$size['height'];$j+=140)
@@ -77,6 +78,7 @@ class Wage extends Admin_Controller{
             $wage_doc[$k]['doc_path']=$this->watermark($v['doc_path']);
         }
         $this->data['wage_doc'] = $wage_doc;
+        $this->data['type_array'] = $this->model_wage_doc->getDocType();
         unset($wage_doc);
         $this->render_template('wage/wage_doc', $this->data);
     }

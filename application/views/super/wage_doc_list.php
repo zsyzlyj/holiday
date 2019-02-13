@@ -41,6 +41,7 @@
                   <th>序号</th>
                   <th>文件名</th>
                   <th>文件内容</th>
+                  <th>文件类型</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -50,6 +51,7 @@
                 <tr>
                   <td><?php echo $v['number'];?></td>
                   <td><?php echo $v['doc_name'];?></td>
+                  <td><?php echo $v['doc_type'];?></td>
                   <td><a href='<?php echo base_url($v['doc_path']);?>' target="_blank">浏览</a></td>
                   <td>
                     <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash">删除</i></a>

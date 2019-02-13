@@ -1366,14 +1366,22 @@ class Super_wage extends Admin_Controller {
         $path=$_FILES['file'];
         $filePath = 'uploads/wage_doc/'.$path['name'];
         move_uploaded_file($path['tmp_name'],$filePath);
+        if($_POST['selected_type']==="-1"){
+            $doc_type=$_POST['selected_type_input'];
+        }
+        else{
+            $doc_type=$_POST['selected_type'];
+        }
         $doc_data=array(
             'number' => date('Y-m-d H:i:s'),
             'doc_name' => basename($filePath,'.pdf'),
             'doc_path' => $filePath,
+            'doc_type' => $doc_type
         );
         $this->model_wage_doc->create($doc_data);
     }
     public function wage_doc_import($filename=NULL){
+        $this->data['type_option']=$this->model_wage_doc->getDocType();
         if($_FILES){
             if($_FILES['file']){
                 if($_FILES['file']['error'] > 0){

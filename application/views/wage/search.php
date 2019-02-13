@@ -14,15 +14,7 @@
       <div class="col-md-12 col-xs-12">
         <div class="box">
           <div class="box-header">
-          <h3 class="box-title" col><font color="red">公告：</font></h3>
-          </br>              </br>
-          <h4>
-            <?php if($notice_data): ?> 
-            <?php foreach ($notice_data as $notice): ?>
-            <?php echo $notice['content'];?>
-            <?php endforeach;?>
-            <?php endif ?>
-          </h4>
+          </br>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -50,7 +42,7 @@
             <?php if($chosen_month): ?>
             <h4>中山联通<?php echo date_format(date_create($chosen_month),"Y年m月");?>员工工资单</h4>
             <hr />
-            <h5><?php echo $wage_notice;?></h5>
+            <h5 style="word-wrap:break-word;"><?php echo $wage_notice;?>111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</p></h5>
 
             <?php endif;?>
             <div style="overflow:scroll;">

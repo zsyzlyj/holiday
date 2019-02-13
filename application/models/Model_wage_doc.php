@@ -11,6 +11,11 @@ class Model_wage_doc extends CI_Model{
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+	public function getDocType(){
+		$sql = "SELECT distinct doc_type FROM wage_doc";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 	public function create($data){
 		if($data){
 			$insert = $this->db->insert('wage_doc', $data);
