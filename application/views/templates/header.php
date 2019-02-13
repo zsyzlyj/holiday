@@ -4,10 +4,13 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
-  <title>员工薪酬</title>
+  <title>工资查询</title>
   <?php endif; ?>
   <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
-  <title>员工年假</title>
+  <title>年假查询</title>
+  <?php endif; ?>
+  <?php if(strstr($_SERVER['PHP_SELF'],'profile')):?>
+  <title>个人信息</title>
   <?php endif; ?>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">

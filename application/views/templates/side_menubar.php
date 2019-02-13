@@ -15,7 +15,7 @@
           -->
           <li id="wageNoticeMainMenu">
             <a href="<?php echo base_url('wage/notice') ?>">
-              <i class="fa fa-flag-o"></i> <span>公告</span>
+              <i class="fa fa-flag-o"></i> <span>首页</span>
             </a>
           </li>
           <li id="searchwageMainMenu">
