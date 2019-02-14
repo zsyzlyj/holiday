@@ -23,8 +23,8 @@
         <li><a href="javascript:void(0);" style="cursor:default">
         <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;<?php echo $user_name;?>
         </a></li>
-        <li><a href="<?php echo base_url('dashboard') ?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;返回</a></li>
-        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li><a href="<?php echo base_url('dashboard') ?>"><i class="glyphicon glyphicon-th"></i>&nbsp;返回主页</a></li>
+        <li><a href="<?php echo base_url('auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;退出系统</a></li>
     </ul>
 
     <!-- /.navbar-top-links -->
