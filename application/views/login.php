@@ -24,7 +24,7 @@
             </div>
             <form action="<?php echo base_url('auth/login') ?>" method="post">
                 <div class="form-group has-feedback">
-                    <input class="form-control" type="text" name="user_id" id="user_id" placeholder="用户名" required="required"  autocomplete="off">
+                    <input class="form-control" type="text" name="user_id" id="user_id" placeholder="用户名" required="required" maxlength="18" autocomplete="off">
                 </div>
                 <div class="form-group has-feedback">
                     <input type="password" class="form-control" name="password" id="password" required="required" placeholder="密码" autocomplete="off">
