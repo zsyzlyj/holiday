@@ -45,7 +45,7 @@
                 </tr>
               </thead>
               <tbody>
-                
+                <?php $counter=0;?>
                 <?php foreach($holiday_doc as $k => $v):?>
                 <tr>
                   <td><?php echo $v['number'];?></td>
@@ -53,8 +53,8 @@
                   <td><a href='<?php echo base_url($v['doc_path']);?>' target="_blank">浏览</a></td>  
                   <input type='hidden' value="<?php echo $v['doc_name']; ?>" name='doc_name'/>
                   <td>
-                    <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash">删除</i></a>
-                    <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                    <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal<?php echo $counter;?>"><i class="fa fa-trash">删除</i></a>
+                    <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $counter;?>">
                       <div class="modal-content-month">
                         <div class="modal-header">
                           <h4>请确认</h4>
@@ -74,6 +74,7 @@
                     </div><!-- /.modal -->  
                   </td>
                 </tr>
+                <?php $counter++;?>
                 <?php endforeach;?>
               </tbody>
             </table>

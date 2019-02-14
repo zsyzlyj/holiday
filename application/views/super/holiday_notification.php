@@ -43,7 +43,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <?php if($notice_data): ?>                  
+                  <?php if($notice_data): ?>
+                    <?php $counter=0;?>             
                     <?php foreach ($notice_data as $k => $v): ?>
                       <tr>
                         <td><?php echo $v['pubtime']; ?></td>
@@ -52,8 +53,8 @@
                         <td><?php echo $v['content']; ?></td>
                         <td><?php echo $v['type']; ?></td>
                         <td>
-                          <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash">删除</i></a>
-                          <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                          <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal<?php echo $counter;?>"><i class="fa fa-trash">删除</i></a>
+                          <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $counter;?>">
                             <div class="modal-content-month">
                               <div class="modal-header">
                                 <h4>请确认</h4>
@@ -73,6 +74,7 @@
                           </div><!-- /.modal -->
                         </td>
                       </tr>
+                    <?php $counter++;?>
                     <?php endforeach ?>
                   <?php endif; ?>
                 </tbody>

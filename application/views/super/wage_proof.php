@@ -1,6 +1,3 @@
-
-
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -34,7 +31,6 @@
                 <tbody>
                   <?php $counter=1;?>
                   <?php foreach($apply_data as $k => $v):?>
-                  
                   <tr>
                     <!--<td><?php echo $counter++;?></td>-->
                     <td><?php echo $v['submit_time'];?></td>

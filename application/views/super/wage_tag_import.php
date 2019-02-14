@@ -1,5 +1,3 @@
-
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -57,7 +55,7 @@
 <!-- /.content-wrapper -->
 <script type="text/javascript">
     $(document).ready(function() { 
-      $("#holidayUserNav").addClass('active');
+      $("#holidayUserNav").addClass('active');      
       $("#wageUserNav").addClass('active');
       $("#uploadTagFileNav").addClass('active');
       

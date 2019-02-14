@@ -1,5 +1,3 @@
-
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -17,7 +15,6 @@
     <div class="row">
       <div class="col-md-12 col-xs-12">
       <div id="messages"></div>
-
       <?php if($this->session->flashdata('success')): ?>
         <div class="alert alert-success alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -40,13 +37,13 @@
                 <tr>
                   <th>序号</th>
                   <th>文件名</th>
-                  <th>文件内容</th>
                   <th>文件类型</th>
+                  <th>文件内容</th>
                   <th>操作</th>
                 </tr>
               </thead>
               <tbody>
-                
+                <?php $counter=0;?>
                 <?php foreach($wage_doc as $k => $v):?>
                 <tr>
                   <td><?php echo $v['number'];?></td>
@@ -54,8 +51,8 @@
                   <td><?php echo $v['doc_type'];?></td>
                   <td><a href='<?php echo base_url($v['doc_path']);?>' target="_blank">浏览</a></td>
                   <td>
-                    <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash">删除</i></a>
-                    <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                    <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal<?php echo $counter;?>"><i class="fa fa-trash">删除</i></a>
+                    <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $counter;?>">
                       <div class="modal-content-month">
                         <div class="modal-header">
                           <h4>请确认</h4>
@@ -63,8 +60,7 @@
                         <div class="modal-body">
                           <h4 style="text-align:left">确认删除吗？</h4>
                         </div>
-                        <div class="modal-footer">
-                          
+                        <div class="modal-footer">   
                           <form action='<?php echo base_url('super_wage/wage_doc_delete')?>' method='POST'>
                           <input type='hidden' value="<?php echo $v['number']; ?>" name='time'/>
                           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -75,7 +71,7 @@
                     </div><!-- /.modal -->
                   </td>
                 </tr>
-                
+                <?php $counter++;?>
                 <?php endforeach;?>
               </tbody>
             </table>
