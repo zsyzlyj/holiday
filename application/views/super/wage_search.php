@@ -7,7 +7,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      薪酬汇总查询
+      工资明细汇总查询
     </h1>
   </section>
 

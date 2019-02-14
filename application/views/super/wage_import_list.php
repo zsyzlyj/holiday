@@ -5,7 +5,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      薪资历史记录汇总
+      工资明细历史记录汇总
     </h1>
   </section>
   <br />

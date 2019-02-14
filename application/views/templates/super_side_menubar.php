@@ -43,7 +43,10 @@
           </a>
           <ul class="treeview-menu">
             <!--<li id="UserNav"><a href="<?php echo base_url('super_holiday/users') ?>"><i class="fa fa-circle-o"></i> 用户管理</a></li>-->
+            <li id="uploadTagFileNav"><a href="<?php echo base_url('super_wage/wage_tag_import') ?>"><i class="fa fa-circle-o"></i><span>人员角色导入</span></a></li>
+            <li id="resetWageUserNav"><a href="<?php echo base_url('super_wage/reset_pass') ?>"><i class="fa fa-circle-o"></i><span>人员密码初始化</span></a></li>
             <li id="manageHolidayUserNav"><a href="<?php echo base_url('super_holiday/manager') ?>"><i class="fa fa-circle-o"></i> 综管、部门负责人管理</a></li>
+            <li id="createUserNav"><a href="<?php echo base_url('users/create') ?>"><i class="fa fa-circle-o"></i><span>创建用户</span></a></li>
           </ul>
         </li>
         
@@ -72,28 +75,28 @@
         <!--
         <li id="wageGatherMainMenu">
           <a href="<?php echo base_url('super_wage/this_month') ?>">
-            <i class="fa fa-money"></i><span>本月薪酬汇总</span>
+            <i class="fa fa-money"></i><span>本月工资明细汇总</span>
           </a>
         </li>
         -->
         <li id="searchwageGetherMainMenu">
           <a href="<?php echo base_url('super_wage/search') ?>">
-            <i class="fa fa-file"></i><span>薪酬汇总查询</span>
+            <i class="fa fa-file"></i><span>工资明细汇总查询</span>
           </a>
         </li>
         <li id="uploadWageFileNav">
           <a href="<?php echo base_url('super_wage/wage_import') ?>">
-            <i class="fa fa-cloud-upload"></i><span>薪酬信息导入</span>
+            <i class="fa fa-cloud-upload"></i><span>工资明细导入</span>
           </a>
         </li>
         <li id="showWageImportNav">
           <a href="<?php echo base_url('super_wage/show_import_list') ?>">
-            <i class="fa fa-list"></i><span>薪酬记录汇总</span>
+            <i class="fa fa-list"></i><span>工资明细记录汇总</span>
           </a>
         </li>
         <li id="downloadWageNav">
           <a href="<?php echo base_url('super_wage/download_page') ?>">
-            <i class="fa fa-cloud-download"></i><span>薪酬信息导出</span>
+            <i class="fa fa-cloud-download"></i><span>工资明细导出</span>
           </a>
         </li>
 
@@ -107,7 +110,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="uploadTagFileNav"><a href="<?php echo base_url('super_wage/wage_tag_import') ?>"><i class="fa fa-circle-o"></i><span>人员角色导入</span></a></li>
+            <li id="createUserNav"><a href="<?php echo base_url('users/create') ?>"><i class="fa fa-circle-o"></i><span>创建用户</span></a></li>
             <li id="resetWageUserNav"><a href="<?php echo base_url('super_wage/reset_pass') ?>"><i class="fa fa-circle-o"></i><span>人员密码初始化</span></a></li>
           </ul>
         </li>

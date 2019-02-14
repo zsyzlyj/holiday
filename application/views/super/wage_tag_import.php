@@ -57,6 +57,7 @@
 <!-- /.content-wrapper -->
 <script type="text/javascript">
     $(document).ready(function() { 
+      $("#holidayUserNav").addClass('active');
       $("#wageUserNav").addClass('active');
       $("#uploadTagFileNav").addClass('active');
       

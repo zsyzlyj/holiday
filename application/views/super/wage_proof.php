@@ -44,7 +44,7 @@
                     <td><?php echo $v['feedback_status'];?></td>
                     <td>
                       <?php if(strstr($v['feedback_status'],'已')):?>
-                      <a disabled href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $k;?>"><i class="fa fa-check-circle"></i></a>
+                      <a disabled href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $k;?>">审核</a>
                       <?php else:?>
                       <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $k;?>"><i class="fa fa-check-circle"></i></a>
                       <div class="modal-apply fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $k;?>">
