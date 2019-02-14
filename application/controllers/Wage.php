@@ -488,13 +488,9 @@ class Wage extends Admin_Controller{
         if(strstr($type,'wage')){
             $pdf->SetFont('songti','',14);
             $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-            $str="\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
+            $str="\r\n\r\n\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
             $pdf->setCellHeightRatio(1.7); 
             $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
-            $pdf->setCellHeightRatio(1.5); 
-            $pdf->SetFont('songti', '', 9);
-            $str="\r\n\r\n联系地址：中山市长江北路6号联通大厦\r\n联系人：甘先生\r\n联系电话：0760-23692312";
-            $pdf->Write(0,$str,'', 0, 'L', false, 0, false, false);
         }
 
         $pdf->Output('证明.pdf', 'I');
