@@ -44,6 +44,8 @@
                 </div>
                 <input value="登录" style="width:100%;" type="submit">
             </form>
+            <br />
+            <div><a href="<?php echo base_url('auth/login');?>" class="login_link">返回员工登录首页</a></div>
         </div>
     </div>
     
