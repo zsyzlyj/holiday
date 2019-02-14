@@ -42,7 +42,7 @@
             <?php if($chosen_month): ?>
             <h4>中山联通<?php echo date_format(date_create($chosen_month),"Y年m月");?>员工工资单</h4>
             <hr />
-            <h5 style="word-wrap:break-word;"><?php echo $wage_notice;?>111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</p></h5>
+            <h5 style="word-wrap:break-word;"><?php echo $wage_notice;?></p></h5>
 
             <?php endif;?>
             <div style="overflow:scroll;">
