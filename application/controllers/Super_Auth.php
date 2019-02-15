@@ -75,7 +75,7 @@ class Super_Auth extends Admin_Controller{
 					}
 				}
 				else{
-					$this->data['errors'] = '账户不存在';
+					$this->data['errors'] = '用户不存在，请联系管理员';
 					$this->load->view('super/login', $this->data);
 				}
 			}

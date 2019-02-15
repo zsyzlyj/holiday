@@ -20,7 +20,8 @@
               <p>Total Holiday</p>
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              <i class="ion ion-home"></i>
+              <!--<i class="ion ion-bag"></i>-->
             </div>
           </div>
         </div>

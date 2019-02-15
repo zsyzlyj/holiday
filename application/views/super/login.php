@@ -16,17 +16,18 @@
 
 <body>
 <div class="login_box">
-
     <div class="login_l_img"><img src="<?php echo base_url('assets/dist/img/login-img.png') ?>" /></div>
         <div class="login">
             <div class="login_logo"><a href="<?php echo base_url('super_auth/login'); ?>"><img src="<?php echo base_url('assets/dist/img/login_logo.png') ?>" /></a></div>
             <div class="login_name">
                 <p>超级管理员登录</p>
             </div>
+            <font color="red">
             <?php echo validation_errors(); ?>  
             <?php if(!empty($errors)) {
             echo $errors;
             } ?>
+            </font>
             <form action="<?php echo base_url('super_auth/login') ?>" method="post">
                 <div class="form-group has-feedback">
                     <input class="form-control" type="text" name="user_id" id="user_id" required="required" placeholder="用户名" autocomplete="off">

@@ -22,6 +22,13 @@
             <div class="login_name">
                 <p>中山联通人力资源管理系统</p>
             </div>
+            
+            <font color="red">
+            <?php echo validation_errors(); ?>  
+            <?php if(!empty($errors)) {
+            echo $errors;
+            } ?>
+            </font>
             <form action="<?php echo base_url('auth/login') ?>" method="post">
                 <div class="form-group has-feedback">
                     <input class="form-control" type="text" name="user_id" id="user_id" placeholder="用户名" required="required" maxlength="18" autocomplete="off">
