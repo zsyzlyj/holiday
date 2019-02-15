@@ -31,7 +31,7 @@
             <div class="box-header">
               <h3 class="box-title"> </h3>
             </div>
-            <form role="form" action="<?php base_url('users/create') ?>" method="post">
+            <form role="form" action="<?php base_url('super_wage/create') ?>" method="post">
               <div class="box-body">
                 <div class="col-md-3 col-md-offset-4">
                   <?php echo validation_errors(); ?>

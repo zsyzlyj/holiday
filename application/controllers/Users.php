@@ -3,7 +3,7 @@
 class Users extends Admin_Controller{
 	public function __construct(){
 		parent::__construct();
-		$this->not_logged_in_super();
+		$this->logged_in_super();
 		$this->data['page_title'] = 'Users';
 		$this->load->model('model_wage_tag');
 		$this->load->model('model_manager');
@@ -56,22 +56,6 @@ class Users extends Admin_Controller{
 		$this->data['permission_set']=$permission_set;
 		
 		$this->render_template('users/index', $this->data);
-	}
-	public function create(){
-		if($_SERVER['REQUEST_METHOD'] == 'POST'){
-			$data=array(
-				'user_id' => $_POST['user_id'],
-				'username' => $_POST['username'],
-				'password' => md5(substr($_POST['user_id'],-6)),
-				'permission' => 3
-			);
-			$this->model_users->create($data);
-			#$this->render_super_template('super/wage_reset_pass',$this->data);
-			$this->render_super_template('users/create',$this->data);
-		}
-		else{
-			$this->render_super_template('users/create',$this->data);
-		}
 	}
 
 	public function password_hash($pass = ''){

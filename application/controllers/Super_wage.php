@@ -373,9 +373,11 @@ class Super_wage extends Admin_Controller {
             array_push($date_set,substr($NewMonth,0,4).substr($NewMonth,5,6));
         }
         $avg=$this->model_wage->countAvg($date_set,$user_id)['total'];
+
         $dept=$user_data['dept'];
         $gender=$user_data['gender'];
         $position=$user_data['position'];
+        $period=floor((strtotime(date('Y/m/d'))-strtotime($user_data['indate'])) / 60 / 60 / 24 / 365);
         if(strstr($type,'收入')){
             $str="收 入 证 明\r\n";
         }
@@ -391,13 +393,13 @@ class Super_wage extends Admin_Controller {
         $rmb=$this->num_to_rmb($avg);
         switch($type){
             case '收入证明':
-                $str="\r\n          兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任职综合部 综合文秘室 综合秘书，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n          特此证明！\r\n";
+                $str="\r\n          兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任职".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n          特此证明！\r\n";
                 break;
             case '收入证明（农商银行）':
                 $str="\r\n中山农村商业银行股份有限公司：\r\n          兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任职".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅用于申请贷款之用。\r\n          特此证明！";
                 break;
             case '收入证明（公积金）':
-                $str="\r\n中山市住房公积金管理中心：\r\n          为申请住房公积金贷款事宜，兹证明".$username."，性别：".$gender."，身份证号 ".$user_id."，是我单位职工，已在我单位工作满".""."年，该职工上一年度在我单位总收入约为".$avg."元（大写：".$rmb."）。\r\n\r\n";
+                $str="\r\n中山市住房公积金管理中心：\r\n          为申请住房公积金贷款事宜，兹证明".$username."，性别：".$gender."，身份证号码：".$user_id."，是我单位职工，已在我单位工作满".$period."年，该职工上一年度在我单位总收入约为".$avg."元（大写：".$rmb."）。\r\n\r\n";
                 break;
             case '现实表现证明':
                 $str="\r\n          ".$username."（男，身份证号：".$user_id."） 同志自".$date."进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n          特此证明!\r\n";
@@ -493,6 +495,7 @@ class Super_wage extends Admin_Controller {
         return $url;
     }
     public function wage_proof(){
+        $unread=0;
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $id=$_POST['id'];
             $data=array(
@@ -508,11 +511,13 @@ class Super_wage extends Admin_Controller {
             if(strstr($v['feedback_status'],'未')){
                 $url=$this->proof_Creator($v['user_id'],$v['type']);
                 $temp[$k]=$url;
+                $unread++;
             }
             else{
                 $temp[$k]="";
             }
         }
+        $this->data['unread']=$unread;
         $this->data['url']=$temp;
         $this->render_super_template('super/wage_proof',$this->data);
     }
@@ -1542,4 +1547,20 @@ class Super_wage extends Admin_Controller {
         $this->data['wage_func']=$this->model_func->getFuncByType('wage');
         $this->render_super_template('super/wage_switch_function',$this->data);
     }
+    public function create(){
+		if($_SERVER['REQUEST_METHOD'] == 'POST'){
+			$data=array(
+				'user_id' => $_POST['user_id'],
+				'username' => $_POST['username'],
+				'password' => md5(substr($_POST['user_id'],-6)),
+				'permission' => 3
+			);
+			$this->model_users->create($data);
+			#$this->render_super_template('super/wage_reset_pass',$this->data);
+			$this->render_super_template('users/create',$this->data);
+		}
+		else{
+			$this->render_super_template('users/create',$this->data);
+		}
+	}
 }
