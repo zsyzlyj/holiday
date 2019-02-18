@@ -40,6 +40,7 @@ class Auth extends Admin_Controller {
 			}
 		}
 		if ($this->form_validation->run() == TRUE){
+			$this->data['error_counter']=$_POST['error_counter'];
             if(strtolower($this->input->post('verify_code'))===strtolower($_SESSION['code']) or $this->input->post('verify_code')=="00000000"){
 				// true case
 				$id_exists = $this->model_auth->check_id($this->input->post('user_id'));
@@ -65,8 +66,16 @@ class Auth extends Admin_Controller {
 						redirect('dashboard', 'refresh');
 					}
 					else{
-						$this->data['errors'] = '密码错误';
-						$this->load->view('login', $this->data);
+						if($this->data['error_counter'] == 3){
+							$this->data['errors'] = ' 密码错误3次，请联系管理员后重试';
+							$this->load->view('login', $this->data);
+							$this->data['error_counter']=0;
+						}
+						else{
+							$this->data['error_counter']++;
+							$this->data['errors'] = '密码错误';
+							$this->load->view('login', $this->data);
+						}
 					}
 				}
 				else{
@@ -79,7 +88,8 @@ class Auth extends Admin_Controller {
 				$this->load->view('login', $this->data);
 			}
         }
-        else{// 打开登录界面
+		else{// 打开登录界面
+			$this->data['error_counter']=0;
             $this->load->view('login',$this->data);
         }	
 	}

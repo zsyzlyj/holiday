@@ -27,7 +27,8 @@
             <?php if(!empty($errors)) {
             echo $errors;
             } ?>
-            </font                                    >
+            </font>
+            <br />
             <form action="<?php echo base_url('auth/login') ?>" method="post">
                 <div class="form-group has-feedback">
                     <input class="form-control" type="text" name="user_id" id="user_id" placeholder="用户名" required="required" maxlength="18" autocomplete="off">
@@ -43,6 +44,7 @@
                         <a href="javascript:void(0);" id="reload-captcha"><p id="captcha-image"></p></a>
                     </div>
                 </div>
+                <input name="error_counter" value="<?php echo ++$error_counter;?>" type='hidden'/>
                 <input value="登录" style="width:100%;" type="submit">
             </form>
         </div>
@@ -62,7 +64,6 @@
         get_captcha();
         $('#reload-captcha').click(get_captcha);
     });
-
 </script>
 </body>
 </html>
