@@ -24,7 +24,6 @@
                     <th>申请人</th>
                     <th>申请类型</th>
                     <th>提交状态</th>
-                    <th>审核状态</th>
                     <th>操作</th>
                   </tr>
                 </thead>
@@ -37,12 +36,15 @@
                     <td><?php echo $v['name'];?></td>
                     <td><?php echo $v['type'];?></td>
                     <td><?php echo $v['submit_status'];?></td>
+                    <!--
                     <td><?php echo $v['feedback_status'];?></td>
+                    -->
                     <td>
                       <?php if(strstr($v['feedback_status'],'已')):?>
-                      <a disabled href="javascript:void(0)" class="btn btn-warning" data-toggle="modal" data-target="#myModal<?php echo $k;?>">审核</a>
+                      <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $k;?>">已审核</a>
                       <?php else:?>
-                      <a href="javascript:void(0)" class="btn btn-warning" data-toggle="modal" data-target="#myModal<?php echo $k;?>">审核</a>
+                      <a href="javascript:void(0)" class="btn btn-warning" data-toggle="modal" data-target="#myModal<?php echo $k;?>">待审核</a>
+                      <?php endif;?>
                       <div class="modal-apply fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $k;?>">
                         <div class="modal-content-apply">
                           <div class="modal-header">
@@ -55,12 +57,15 @@
                             <form action="<?php echo base_url('super_wage/wage_proof');?>" method="post">
                             <input name="id" type="hidden" value="<?php echo $v['id'];?>" />
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <?php if(strstr($v['feedback_status'],'已')):?>
+                            <button disabled type="submit" class="btn btn-success btn-ok">确认审核</a>
+                            <?php else:?>
                             <button type="submit" class="btn btn-success btn-ok">确认审核</a>
-                            </form>
+                            
+                            <?php endif;?></form>
                           </div>
                         </div><!-- /.modal-content -->
                       </div><!-- /.modal -->
-                      <?php endif;?>
                     </td>
                   </tr>
                   <?php endforeach;?>

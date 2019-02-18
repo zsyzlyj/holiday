@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        开具收入证明
+        开具在职证明
       </h1>
     </section>
 
@@ -45,6 +45,7 @@
                     <td><?php echo $i+1;?></td>
                     <td><?php echo $name[$i]?></td>
                     <td>
+                      <!--
                       <?php if(!empty($status)):?>
                         <?php if($status[$i]):?>
                         <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal<?php echo $i;?>" class="btn btn-info">浏览</a>
@@ -54,6 +55,8 @@
                       <?php else:?>
                         <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal<?php echo $i;?>" class="btn btn-info">浏览</a>
                       <?php endif;?>
+                      -->
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal<?php echo $i;?>" class="btn btn-info">浏览</a>
                       <!-- 弹窗 -->
                       <div id="myModal<?php echo $i;?>" class="modal-apply fade" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <!-- 弹窗内容 -->
@@ -71,7 +74,15 @@
                             <button class="btn btn-info" data-dismiss="modal" aria-hidden="true">关闭</button>
                             <form action="<?php base_url('wage/apply_wage_proof') ?>" style="margin:0px;display:inline;" method="post">
                               <input type="hidden" name="type" value="<?php echo $name[$i];?>"/>
+                              <?php if(!empty($status)):?>
+                                <?php if($status[$i]):?>
+                                <button type="submit" class="btn btn-success">提交申请</button>
+                                <?php else:?>
+                                <button disabled type="submit" class="btn btn-success">提交申请</button>
+                                <?php endif;?>
+                              <?php else:?>
                               <button type="submit" class="btn btn-success">提交申请</button>
+                              <?php endif;?>
                             </form>
                           </div>
                           <!-- model-footer-apply -->

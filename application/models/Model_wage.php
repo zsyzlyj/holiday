@@ -92,7 +92,7 @@ class Model_wage extends CI_Model{
 	}
 	public function countAvg($date_set,$user_id){
 		#$query=$this->db->where('user_id',$user_id)->where_in('date_tag', $date_set)->select_avg('total')->from('wage')->get();
-		$query=$this->db->from('wage')->where('user_id',$user_id)->where_in('date_tag', $date_set)->get();
+		$query=$this->db->select_avg('total')->where('user_id',$user_id)->where_in('date_tag', $date_set)->get('wage');
 		return $query->row_array();
 	}
 	public function getDeptByDate($date_set){
