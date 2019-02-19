@@ -26,14 +26,10 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
-          
-
-
           <div class="box">
             <div class="box-header">
               <h3 class="box-title" col><font color="red">公告：</font></h3>
               </br>              </br>
-
               <h4>
                 <p>
                 <?php if($notice_data): ?> 

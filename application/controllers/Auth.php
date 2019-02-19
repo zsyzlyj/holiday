@@ -94,6 +94,10 @@ class Auth extends Admin_Controller {
 				$this->load->view('login',$this->data);
 			}
 		}
+		else{// 打开登录界面
+			$this->data['error_counter']=0;
+			$this->load->view('login',$this->data);
+		}
 	}
 	public function logout(){	
 		if(array_key_exists('user_id', $this->data)){

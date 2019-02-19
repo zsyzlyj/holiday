@@ -47,7 +47,7 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showapply.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
   <link href="<?php echo base_url('assets/images/logo-ico.ico');?>" type="image/x-icon" rel="shortcut icon">
-
+  <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap3-editable/css/bootstrap-editable.css') ?>">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -117,6 +117,7 @@
 
   <script src="<?php echo base_url('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') ?>"></script>
   <script src="<?php echo base_url('assets/bower_components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'); ?>"></script>
+  <script src="<?php echo base_url('assets/bootstrap3-editable/js/bootstrap-editable.js'); ?>"></script>
 
 
 

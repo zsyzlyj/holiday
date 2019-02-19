@@ -91,6 +91,10 @@ class Super_Auth extends Admin_Controller{
 				$this->load->view('super/login',$this->data);
 			}
 		}
+		else{// 打开登录界面
+			$this->data['error_counter']=0;
+			$this->load->view('login',$this->data);
+		}
 	}
 	/*
 		清除session，退出
