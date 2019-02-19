@@ -41,57 +41,59 @@ class Auth extends Admin_Controller {
 		}
 		if ($this->form_validation->run() == TRUE){
 			$this->data['error_counter']=$_POST['error_counter'];
-            if(strtolower($this->input->post('verify_code'))===strtolower($_SESSION['code']) or $this->input->post('verify_code')=="00000000"){
-				// true case
-				$id_exists = $this->model_auth->check_id($this->input->post('user_id'));
-				if($id_exists == TRUE){
-					$login = $this->model_auth->login($this->input->post('user_id'), $this->input->post('password'));
-					if($login){
-						$log=array(
-							'user_id' => $login['user_id'],
-							'username' => $login['username'],
-							'login_ip' => $_SERVER["REMOTE_ADDR"],
-							'staff_action' => 'holiday_log_in',
-							'action_time' => date('Y-m-d H:i:s')
-						);
-						$this->model_log_action->create($log);
-						$logged_in_sess = array(
-							'user_name' => $login['username'],
-							'user_id' => $login['user_id'],
-							'permission' => $login['permission'],
-							'logged_in' => TRUE
-						);
-						$this->data['user_name'] = $login['username'];
-						$this->session->set_userdata($logged_in_sess);
-						redirect('dashboard', 'refresh');
-					}
-					else{
-						if($this->data['error_counter'] == 3){
-							$this->data['errors'] = ' 密码错误3次，请联系管理员后重试';
-							$this->load->view('login', $this->data);
-							$this->data['error_counter']=0;
+			if(isset($_SESSION['code'])){
+				if(strtolower($this->input->post('verify_code'))===strtolower($_SESSION['code']) or $this->input->post('verify_code')=="00000000"){
+					// true case
+					$id_exists = $this->model_auth->check_id($this->input->post('user_id'));
+					if($id_exists == TRUE){
+						$login = $this->model_auth->login($this->input->post('user_id'), $this->input->post('password'));
+						if($login){
+							$log=array(
+								'user_id' => $login['user_id'],
+								'username' => $login['username'],
+								'login_ip' => $_SERVER["REMOTE_ADDR"],
+								'staff_action' => 'holiday_log_in',
+								'action_time' => date('Y-m-d H:i:s')
+							);
+							$this->model_log_action->create($log);
+							$logged_in_sess = array(
+								'user_name' => $login['username'],
+								'user_id' => $login['user_id'],
+								'permission' => $login['permission'],
+								'logged_in' => TRUE
+							);
+							$this->data['user_name'] = $login['username'];
+							$this->session->set_userdata($logged_in_sess);
+							redirect('dashboard', 'refresh');
 						}
 						else{
-							$this->data['error_counter']++;
-							$this->data['errors'] = '密码错误';
-							$this->load->view('login', $this->data);
+							if($this->data['error_counter'] == 3){
+								$this->data['errors'] = ' 密码错误3次，请联系管理员后重试';
+								$this->load->view('login', $this->data);
+								$this->data['error_counter']=0;
+							}
+							else{
+								$this->data['error_counter']++;
+								$this->data['errors'] = '密码错误';
+								$this->load->view('login', $this->data);
+							}
 						}
+					}
+					else{
+						$this->data['errors'] = '用户不存在，请联系管理员';
+						$this->load->view('login', $this->data);
 					}
 				}
 				else{
-					$this->data['errors'] = '用户不存在，请联系管理员';
+					$this->data['errors'] = '验证码不正确';
 					$this->load->view('login', $this->data);
 				}
 			}
-			else{
-				$this->data['errors'] = '验证码不正确';
-				$this->load->view('login', $this->data);
+			else{// 打开登录界面
+				$this->data['error_counter']=0;
+				$this->load->view('login',$this->data);
 			}
-        }
-		else{// 打开登录界面
-			$this->data['error_counter']=0;
-            $this->load->view('login',$this->data);
-        }	
+		}
 	}
 	public function logout(){	
 		if(array_key_exists('user_id', $this->data)){
