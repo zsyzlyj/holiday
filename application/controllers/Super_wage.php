@@ -19,12 +19,22 @@ class Super_wage extends Admin_Controller {
         $this->load->model('model_wage');
         $this->load->model('model_wage_doc'); 
         $this->load->model('model_func');
-        $this->data['notice_data'] = $this->model_notice->getNoticeLatestWage();
-        $this->data['permission']=$this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
             redirect('super_auth/login','refresh');
         }
+        $unread=0;
+        
+        $this->data['apply_data']=$this->model_wage_apply->getApplyData();
+        foreach($this->data['apply_data'] as $k => $v){
+            if(strstr($v['feedback_status'],'未')){
+                $unread++;
+            }
+        }
+        $this->data['unread']=$unread;
+        
+        $this->data['notice_data'] = $this->model_notice->getNoticeLatestWage();
+        $this->data['permission']=$this->session->userdata('permission');
     }
     /*
     ============================================================
@@ -139,14 +149,7 @@ class Super_wage extends Admin_Controller {
         $this->data['wage_data']='';
         $this->data['attr_data']='';
         $this->data['chosen_month']='';
-        $this->data['apply_data']=$this->model_wage_apply->getApplyData();
-        $unread=0;
-        foreach($this->data['apply_data'] as $k => $v){
-            if(strstr($v['feedback_status'],'未')){
-                $unread++;
-            }
-        }
-        $this->data['unread']=$unread;
+        
         if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('chosen_month',$_POST)){
             $this->data['chosen_month']=$_POST['chosen_month'];
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
@@ -515,7 +518,6 @@ class Super_wage extends Admin_Controller {
         return $url;
     }
     public function wage_proof(){
-        $unread=0;
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $id=$_POST['id'];
             $data=array(
@@ -528,12 +530,8 @@ class Super_wage extends Admin_Controller {
         $this->data['apply_data']=$this->model_wage_apply->getApplyData();
         $url=array();
         foreach($this->data['apply_data'] as $k => $v){
-            if(strstr($v['feedback_status'],'未')){
-                $unread++;
-            }
             $url[$k]=$this->proof_Creator($v['user_id'],$v['type']);
         }
-        $this->data['unread']=$unread;
         $this->data['url']=$url;
         $this->render_super_template('super/wage_proof',$this->data);
     }
