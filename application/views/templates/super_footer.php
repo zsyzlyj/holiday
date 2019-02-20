@@ -13,4 +13,18 @@
 <!-- ./wrapper -->
 
 </body>
+<script language="javascript">   
+  var myTime = setTimeout("Timeout()", 1800000);   
+  function resetTime() {   
+      clearTimeout(myTime);   
+      myTime = setTimeout('Timeout()', 1800000);   
+  }  
+  function Timeout() {   
+      alert("您的登录已超时, 请点确定后重新登录!");   
+      document.location.href='<?php echo base_url("super_auth/logout");?>';   
+  }   
+  document.documentElement.onkeydown=resetTime;  
+  document.doocumentElement.onclick=resetTime;  
+</script>
+
 </html>
