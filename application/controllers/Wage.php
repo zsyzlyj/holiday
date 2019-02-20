@@ -96,8 +96,8 @@ class Wage extends Admin_Controller{
     ==============================================================================
     */
     public function staff(){
-        #$this->search();
-        $this->notice();
+        $this->search();
+        #$this->notice();
     }
     
     public function export_wage_proof(){
