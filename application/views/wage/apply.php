@@ -64,7 +64,7 @@
                         <div class="modal-content-apply">
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ><font color="black">×</font></button>
-                            <h3><font color="black">样式预览</font></h3>
+                            <h3><font color="black">预览</font></h3>
                           </div>
                           <!-- model-header-apply -->
                           <div class="modal-body">
