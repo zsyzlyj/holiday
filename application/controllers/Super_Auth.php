@@ -8,6 +8,7 @@ class Super_Auth extends Admin_Controller{
 		$this->load->helper('url');
 		$this->load->model('model_super_auth');
 		$this->load->model('model_super_user');
+        $this->load->model('model_wage_apply');
 		$this->data['permission']=$this->session->userdata('permission');
 		$this->data['user_id'] = $this->session->userdata('user_id');
 		$this->data['user_name'] = $this->session->userdata('user_id');
@@ -128,7 +129,15 @@ class Super_Auth extends Admin_Controller{
     用户密码修改
     ============================================================
     */ 
-    public function setting($type=NULL){	
+    public function setting($type=NULL){
+		$unread=0;
+		$this->data['apply_data']=$this->model_wage_apply->getApplyData();
+        foreach($this->data['apply_data'] as $k => $v){
+            if(strstr($v['feedback_status'],'未')){
+                $unread++;
+            }
+        }
+        $this->data['unread']=$unread;
 		$id = $this->session->userdata('user_id');
 		if($id){
 			$this->form_validation->set_rules('username', 'username', 'trim|max_length[12]');

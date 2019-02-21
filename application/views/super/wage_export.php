@@ -1,6 +1,3 @@
-
-
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -9,7 +6,6 @@
         文件下载
       </h1>      
     </section>
-    <hr />
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -55,16 +51,15 @@
                     
                     <p id="dept_options"></p>
                     <!-- Multiple Checkboxes -->
-                    
                     <div class="form-group" id="check_dept">
-                      <label class="control-label col-md-2">选择部门</label>
+                      <label class="control-label col-md-1">选择部门</label>
                       <label class="control-label col-md-2">
                         <input class="input-group" type="checkbox" value="" onclick="checkdeptOnclick(this)">
                       </label>  
                     </div>
                     <div class="form-group" id="select_dept" style="display:none">
                       <!-- Select Basic -->
-                      <label class="control-label col-md-2">选择部门</label>
+                      <label class="control-label col-md-1">选择部门</label>
                       <div class="input-group">
                         <select name="selected_dept" class="form-control">
                           <option value="all">全部部门</option>
@@ -75,21 +70,21 @@
                       </div>
                     </div>
                     <div class="form-group" id="check_user">
-                      <label class="control-label col-md-2">导入人员名单</label>
+                      <label class="control-label col-md-1">导入人员名单</label>
                       <label class="control-label col-md-2">
                         <input class="input-group" type="checkbox" value="" onclick="checkimportOnclick(this)">
                       </label>
                     </div>
                     
                     <div class="form-group" id="select_file" style="display:none">
-                      <label class="control-label col-md-2">选择文件</label>
+                      <label class="control-label col-md-1">选择文件</label>
                       <div class="input-group">
                         <input class="" name="selected_user" id="fileInput" type="file" accept=".xls,.xlsx"/>
                       </div>
                     </div>
                     <hr />
                     <div class="form-group">
-                      <div class="input-group col-md-offset-2">
+                      <div class="input-group">
                         <button class="btn btn-success">下载</button>
                         <a class="btn btn-info" href="<?php echo base_url($path) ?>">人员名单模板下载</a>
                       </div>

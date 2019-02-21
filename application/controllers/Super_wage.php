@@ -24,7 +24,6 @@ class Super_wage extends Admin_Controller {
             redirect('super_auth/login','refresh');
         }
         $unread=0;
-        
         $this->data['apply_data']=$this->model_wage_apply->getApplyData();
         foreach($this->data['apply_data'] as $k => $v){
             if(strstr($v['feedback_status'],'未')){
