@@ -21,13 +21,15 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/skins/_all-skins_dashboard.min.css') ?>">
-  <!-- Morris chart -->
+  <!--
+  <!-- Morris chart 
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/morris.js/morris.css') ?>">
-  <!-- jvectormap -->
+  <!-- jvectormap 
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/jvectormap/jquery-jvectormap.css') ?>">
-  <!-- bootstrap wysihtml5 - text editor -->
+  <!-- bootstrap wysihtml5 - text editor 
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') ?>">
+  -->
   <!-- Select2 -->
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/select2/dist/css/select2.min.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/fileinput/fileinput.min.css') ?>">
@@ -65,23 +67,25 @@
   </script>
   <!-- Bootstrap 3.3.7 -->
   <script src="<?php echo base_url('assets/bower_components/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
-  <!-- Morris.js charts -->
+  <!--
+  <!-- Morris.js charts 
   <script src="<?php echo base_url('assets/bower_components/raphael/raphael.min.js') ?>"></script>
   <script src="<?php echo base_url('assets/bower_components/morris.js/morris.min.js') ?>"></script>
-  <!-- Sparkline -->
+  <!-- Sparkline 
   <script src="<?php echo base_url('assets/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js') ?>"></script>
-  <!-- jvectormap -->
+  <!-- jvectormap 
   <script src="<?php echo base_url('assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') ?>"></script>
   <script src="<?php echo base_url('assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') ?>"></script>
-  <!-- jQuery Knob Chart -->
+  <!-- jQuery Knob Chart 
   <script src="<?php echo base_url('assets/bower_components/jquery-knob/dist/jquery.knob.min.js') ?>"></script>
-  <!-- daterangepicker -->
+  <!-- daterangepicker 
   <script src="<?php echo base_url('assets/bower_components/moment/min/moment.min.js') ?>"></script>
   <script src="<?php echo base_url('assets/bower_components/bootstrap-daterangepicker/daterangepicker.js') ?>"></script>
-  <!-- datepicker -->
+  <!-- datepicker 
   <script src="<?php echo base_url('assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') ?>"></script>
-  <!-- Bootstrap WYSIHTML5 -->
+  <!-- Bootstrap WYSIHTML5 
   <script src="<?php echo base_url('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') ?>"></script>
+  -->
   <!-- Slimscroll -->
   <script src="<?php echo base_url('assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') ?>"></script>
   <!-- FastClick -->
