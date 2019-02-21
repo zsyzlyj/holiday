@@ -72,7 +72,7 @@
                   <?php if($holiday_data): ?>                  
                     <?php foreach ($holiday_data as $k => $v): ?>
                       <tr>
-                        <td><a href="#" id="username<?php echo $k;?>" data-type="text" data-pk="1" data-url="/post" data-title="Enter username"><?php echo $v['name']; ?></a></td>
+                        <td><?php echo $v['name'];?></td>
                         <td><?php echo $v['department']; ?></td>
                         <td><?php echo $v['initdate']; ?></td>
                         
@@ -125,11 +125,7 @@
   <!-- /.content-wrapper -->
 
   <script type="text/javascript">
-  
-    $.fn.editable.defaults.mode = 'inline';
     $(document).ready(function(){
-      
-      $('#username<?php echo $k;?>').editable();
       $("#holidayGatherMainMenu").addClass('active');
       $('#holidayTable').DataTable({
         language:{

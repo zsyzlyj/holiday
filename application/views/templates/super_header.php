@@ -47,7 +47,16 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showapply.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
   <link href="<?php echo base_url('assets/images/logo-ico.ico');?>" type="image/x-icon" rel="shortcut icon">
-  <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap3-editable/css/bootstrap-editable.css') ?>">
+
+  <link type="application/atom+xml" rel="alternate" href="https://quilljs.com/feed.xml" title="Quill - Your powerful rich text editor" />
+    
+    
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" />
+
+  <link rel="stylesheet" href="<?php echo base_url('assets/quill/quill.snow.css') ?>">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -59,10 +68,19 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <style type="text/css">
   
-  #loginBox{
-    display:none;
-  }
-</style>
+    #loginBox{
+      display:none;
+    }
+  </style>
+  <style>
+    body > #standalone-container {
+      margin: 50px auto;
+      max-width: 720px;
+    }
+    #quillArea {
+      height: 350px;
+    }
+  </style>
   
   <!-- jQuery 3 -->
   <script src="<?php echo base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>
@@ -117,10 +135,10 @@
 
   <script src="<?php echo base_url('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') ?>"></script>
   <script src="<?php echo base_url('assets/bower_components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'); ?>"></script>
-  <script src="<?php echo base_url('assets/bootstrap3-editable/js/bootstrap-editable.js'); ?>"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
 
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="<?php echo base_url('assets/quill/quill.min.js') ?>"></script>
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">

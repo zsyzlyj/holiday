@@ -7,10 +7,6 @@
       <h1>
         公告编辑（薪酬）
       </h1>
-      
-        
-
-      
     </section>
 
     <!-- Main content -->
@@ -32,7 +28,7 @@
 
           <div class="box">
             <!-- /.box-header -->
-            <form role="form" action="<?php base_url('super_wage/publish_wage') ?>" method="post">
+            <form role="form" action="<?php base_url('super_wage/publish_wage') ?>" method="post" id="quill_form">
               <div class="box-body">
 
                 <?php echo validation_errors(); ?>
@@ -44,15 +40,76 @@
 
                 <div class="form-group">
                   <label for="content"><h4 class="box-title">公告信息</h4></label>
-                  <textarea class="form-control" rows="10" name="content"></textarea>
-                  
-                </div>
+                  <!--<textarea class="form-control" rows="10" name="content"></textarea>-->
+                  <!-- 创建工具栏组件 -->
+                  <div id="standalone-container">
+                    <div id="toolbar-container">
+                      <!--
+                      <span class="ql-formats">
+                        <select class="ql-font"></select>
+                        <select class="ql-size"></select>
+                      </span>
+                      -->
+                      <span class="ql-formats">
+                        <button class="ql-bold"></button>
+                        <button class="ql-italic"></button>
+                        <button class="ql-underline"></button>
+                        <button class="ql-strike"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <select class="ql-color"></select>
+                        <select class="ql-background"></select>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-header" value="1"></button>
+                        <button class="ql-header" value="2"></button>
+                        <button class="ql-blockquote"></button>
+                        <button class="ql-code-block"></button>
+                      </span>
+                      <!--
+                      <span class="ql-formats">
+                        <button class="ql-script" value="sub"></button>
+                        <button class="ql-script" value="super"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-header" value="1"></button>
+                        <button class="ql-header" value="2"></button>
+                        <button class="ql-blockquote"></button>
+                        <button class="ql-code-block"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-list" value="ordered"></button>
+                        <button class="ql-list" value="bullet"></button>
+                        <button class="ql-indent" value="-1"></button>
+                        <button class="ql-indent" value="+1"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-direction" value="rtl"></button>
+                        <select class="ql-align"></select>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-link"></button>
+                        <button class="ql-image"></button>
+                        <button class="ql-video"></button>
+                        <button class="ql-formula"></button>
+                      </span>
+                      
+                      <span class="ql-formats">
+                        <button class="ql-clean"></button>
+                      </span>
+                      -->
+                    </div>
 
+                    <div id="quillArea"></div>
+                    <textarea name="content" style="display:none" id="hiddenArea"></textarea>
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-success">发布</button>
+                <button type="submit" onclick="t(this)" class="btn btn-success">发布</button>
                 <a href="<?php echo base_url('super_wage/notification') ?>" class="btn btn-warning">返回</a>
               </div>
             </form>
@@ -69,10 +126,23 @@
   </div>
   <!-- /.content-wrapper -->
 
- 
  <script type="text/javascript">
+    
     $(document).ready(function() {
       $("#wageNoticeNav").addClass('active');
       $("#wage_publish_wage").addClass('active');
     });
+    
+    var quill = new Quill("#quillArea", {
+      modules: {
+        formula: true,
+        syntax: true,
+        toolbar: '#toolbar-container'
+      },
+      placeholder: 'Compose an epic...',
+      theme: 'snow'
+    });
+    function t(object){
+      document.getElementById("hiddenArea").value=quill.container.firstChild.innerHTML;
+    }
 </script>
