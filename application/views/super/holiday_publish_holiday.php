@@ -140,7 +140,7 @@
         syntax: true,
         toolbar: '#toolbar-container'
       },
-      placeholder: 'Compose an epic...',
+      placeholder: '请输入公告内容...',
       theme: 'snow'
     });
     function t(object){

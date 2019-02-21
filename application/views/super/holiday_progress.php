@@ -29,8 +29,6 @@
             <div class="box-header">
               <br/>
             </div>
-            <div>
-            </div>
             
             <!-- /.box-header -->
             <div class="box-body">
@@ -70,25 +68,23 @@
                       <font color="red"><?php echo $v['confirm_status'];?></font>
                       <?php endif;?>
                     </td>
-                      
+                    
                     <td style="align:center">
                       <div class="progress progress-striped active">
                         <?php if($v['submit_status']=='未提交'):?>
-                        <div class="progress-bar progress-bar-aqua" style="width:<?php echo '0%';?>">
+                        <div class="progress-bar progress-bar-aqua" style="width:<?php echo '1%';?>"></div>
                         <?php elseif($v['confirm_status']=='同意'):?>
-                        <div class="progress-bar progress-bar-success" style="width:<?php echo '100%';?>">
+                        <div class="progress-bar progress-bar-success" style="width:<?php echo '100%';?>"></div>
                         <?php else:?>
-                        <div class="progress-bar progress-bar-info" style="width:<?php echo '50%';?>">
+                        <div class="progress-bar progress-bar-info" style="width:<?php echo '50%';?>"></div>
                         <?php endif;?>
-                        </div>
                       </div>
                     </td>
-                  
+                    <!---->
                   </tr>
                   <?php endforeach;?>
                 </tbody>
               </table>
-
               </div>
               <!-- /.overflow:scroll -->
             </div>
@@ -126,19 +122,17 @@
             "sEmptyTable": "表中数据为空",
             "sLoadingRecords": "载入中...",
             "sInfoThousands": ",",
-            "oPaginate": 
-           {
+            "oPaginate": {
                 "sFirst": "首页",
                 "sPrevious": "上页",
                 "sNext": "下页",
                 "sLast": "末页"
             },
-            "oAria": 
-           {
+            "oAria": {
                 "sSortAscending": ": 以升序排列此列",
                 "sSortDescending": ": 以降序排列此列"
             }
-        }      
+        },    
       });
     });
     

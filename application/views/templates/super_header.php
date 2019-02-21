@@ -13,7 +13,7 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap/dist/css/bootstrap.min.css') ?>">
-  <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') ?>">
+  
   <!-- Font Awesome -->  
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/font-awesome/css/font-awesome.min.css') ?>">
   <!-- Ionicons -->
@@ -24,6 +24,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/skins/_all-skins.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') ?>">
   <!-- Select2 -->
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/select2/dist/css/select2.min.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/fileinput/fileinput.min.css') ?>">
@@ -37,11 +38,9 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
   <link href="<?php echo base_url('assets/images/logo-ico.ico');?>" type="image/x-icon" rel="shortcut icon">
 
+<!---->
   <link type="application/atom+xml" rel="alternate" href="https://quilljs.com/feed.xml" title="Quill - Your powerful rich text editor" />
-    
-    
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" />
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" />
 
   <link rel="stylesheet" href="<?php echo base_url('assets/quill/quill.snow.css') ?>">
@@ -57,6 +56,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <!--2019.02.21 删除-->
   <!--
+  <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') ?>">
   <!-- Morris chart 
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/morris.js/morris.css') ?>">
   <!-- jvectormap 
@@ -67,7 +67,6 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-daterangepicker/daterangepicker.css') ?>">
   <!-- bootstrap wysihtml5 - text editor 
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') ?>">
-  <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') ?>">
   -->
   <style type="text/css">
   
@@ -113,7 +112,10 @@
   <script src="<?php echo base_url('assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') ?>"></script>
   <!-- Bootstrap WYSIHTML5 
   <script src="<?php echo base_url('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') ?>"></script>
+  
   -->
+  <!-- ChartJS -->
+  <script src="<?php echo base_url('assets/bower_components/Chart.js/Chart.js') ?>"></script>
   <!-- Slimscroll -->
   <script src="<?php echo base_url('assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') ?>"></script>
   <!-- FastClick -->
@@ -129,20 +131,21 @@
   <script src="<?php echo base_url('assets/dist/js/demo.js') ?>"></script>
   <script src="<?php echo base_url('assets/plugins/fileinput/fileinput.min.js') ?>"></script>
 -->
-  <!-- ChartJS -->
-  <script src="<?php echo base_url('assets/bower_components/Chart.js/Chart.js') ?>"></script>
 
   <!-- icheck -->
   <script src="<?php echo base_url('assets/plugins/iCheck/icheck.min.js') ?>"></script>
 
   <!-- DataTables -->
   <script src="<?php echo base_url('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') ?>"></script>
-
   <script src="<?php echo base_url('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') ?>"></script>
+  <!-- Datetimepicker --> 
   <script src="<?php echo base_url('assets/bower_components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'); ?>"></script>
+  
+  <!---->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
   <script src="<?php echo base_url('assets/quill/quill.min.js') ?>"></script>
 
 </head>
