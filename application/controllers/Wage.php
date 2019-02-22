@@ -15,9 +15,11 @@ class Wage extends Admin_Controller{
         $this->load->model('model_wage_apply');
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
+        $this->load->model('model_wage_sp');
         $this->load->model('model_func');
         $this->load->model('model_wage_notice');
         $this->load->model('model_notice');
+        $this->load->model('model_wage_sp_attr');
         $this->data['permission'] = $this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
         $this->data['user_id'] = $this->session->userdata('user_id');
@@ -664,6 +666,23 @@ class Wage extends Admin_Controller{
         }
         else{
             $this->render_template('wage/search', $this->data);
+        }
+    }
+    public function searchsp(){
+        $this->data['wage_sp']="";
+        $this->data['wage_sp_attr']="";
+        $this->data['chosen_month']="";
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $this->data['chosen_month']=$_POST['chosen_month'];
+            $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
+            if(strlen($doc_name)<=7 and $doc_name!=""){
+                $this->data['wage_sp']=$this->model_wage_sp->getWageSpByDateAndId($doc_name,$this->data['user_id']);
+                $this->data['wage_sp_attr']=$this->model_wage_sp_attr->getWageSpByDate($doc_name);
+            }
+            $this->render_template('wage/searchsp', $this->data);        
+        }
+        else{
+            $this->render_template('wage/searchsp', $this->data);
         }
     }
 

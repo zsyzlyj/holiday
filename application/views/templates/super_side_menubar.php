@@ -94,6 +94,16 @@
             <i class="fa fa-list"></i><span>工资明细记录汇总</span>
           </a>
         </li>
+        <li id="uploadWageSpFileNav">
+          <a href="<?php echo base_url('super_wage/wage_sp_import') ?>">
+            <i class="fa fa-cloud-upload"></i><span>专项附件导入</span>
+          </a>
+        </li>
+        <li id="showWageSpImportNav">
+          <a href="<?php echo base_url('super_wage/show_sp_import_list') ?>">
+            <i class="fa fa-list"></i><span>专项附件汇总</span>
+          </a>
+        </li>
         <li id="downloadWageNav">
           <a href="<?php echo base_url('super_wage/download_page') ?>">
             <i class="fa fa-cloud-download"></i><span>工资明细导出</span>

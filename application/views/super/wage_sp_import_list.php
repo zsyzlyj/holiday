@@ -5,7 +5,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      工资明细历史记录汇总
+      专项导入历史记录汇总
     </h1>
   </section>
   <br />
@@ -81,15 +81,14 @@
         </div>
       </div>
       </div>
-    </div>  
-
+    </div>
   </section>
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 <script type="text/javascript">
     $(document).ready(function(){ 
-      $("#showWageImportNav").addClass('active');
+      $("#showWageSpImportNav").addClass('active');
       $('#wageDocTable').DataTable({
         language:{
             "sProcessing": "处理中...",

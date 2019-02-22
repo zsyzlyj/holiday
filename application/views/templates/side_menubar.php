@@ -25,6 +25,12 @@
               <i class="fa fa-search"></i> <span>工资明细查询</span>
             </a>
           </li>
+          <li id="searchspMainMenu">
+            <a href="<?php echo base_url('wage/searchsp') ?>">
+              <i class="fa fa-search"></i> <span>专项附件扣除信息</span>
+            </a>
+          </li>
+          
           <!--
           <li id="wagechartMainMenu">
             <a href="<?php echo base_url('wage/wage_chart') ?>">

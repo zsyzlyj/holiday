@@ -50,7 +50,7 @@
               <table id="wageTable"class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;">
                 <thead>
                   <?php $counter=0;?>
-                  <?php if($attr_data): ?>
+                  <?php if($attr_data and $wage_data): ?>
                   <tr>
                     <?php foreach($attr_data as $k =>$v):?>
                     <?php if($counter<$trueend):?>
