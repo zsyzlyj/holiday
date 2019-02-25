@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Wage extends Admin_Controller{
 	public function __construct(){
 		parent::__construct();
-
 		$this->not_logged_in();
 		$this->data['page_title'] = 'Wage';
         $this->load->model('model_wage');
@@ -71,7 +70,6 @@ class Wage extends Admin_Controller{
             }
             $pdf->Output(dirname(__FILE__,3).'\\'.$name,'F');
         }
-        
         return $name;
     }
     public function wage_doc(){
@@ -99,12 +97,8 @@ class Wage extends Admin_Controller{
     */
     public function staff(){
         $this->search();
-        #$this->notice();
     }
     
-    public function export_wage_proof(){
-        
-    }
     public function apply_on_post_proof(){
         $user_id=$this->session->userdata('user_id');
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -504,49 +498,6 @@ class Wage extends Admin_Controller{
         $pdf->Output('证明.pdf', 'I');
         //输出PDF         
     }
-    //收入证明
-    public function show_wage_proof(){
-        $this->proof_Creator("wage");
-    }
-    //公积金证明
-    public function show_fund_wage_proof(){
-        $this->proof_Creator("fund_wage");
-    }
-
-    //农商银行收入证明
-    public function show_bank_wage_proof(){
-        $this->proof_Creator("bank_wage");
-    }
-    
-    //收入证明
-    public function show_royal_proof(){
-        $this->proof_Creator("royal");
-    }
-    public function show_on_post_1_proof(){
-        $this->proof_Creator("on_post_1");
-    }
-    public function show_on_post_2_proof(){
-        $this->proof_Creator("on_post_2");
-    }
-    public function show_on_post_3_proof(){
-        $this->proof_Creator("on_post_3");
-    }
-    public function show_on_post_4_proof(){
-        $this->proof_Creator("on_post_4");
-    }
-    public function show_on_post_5_proof(){
-        $this->proof_Creator("on_post_5");
-    }
-    public function show_on_post_6_proof(){
-        $this->proof_Creator("on_post_6");
-    }
-    public function show_child_1_proof(){
-        $this->proof_Creator("child_1");
-    }
-    public function show_child_2_proof(){
-        $this->proof_Creator("child_2");
-    }
-
     public function search_excel($doc_name,$user_id){
         $this->load->library("phpexcel");//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
@@ -745,7 +696,6 @@ class Wage extends Admin_Controller{
                                     array_push($data,$temp);
                                     unset($temp);
                                 }
-                                
                             }
                         }
                         break;
@@ -783,7 +733,6 @@ class Wage extends Admin_Controller{
                 $this->data['current_dept']=$_POST['selected_dept'];
                 $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
                 if(strlen($doc_name)<=7 and $doc_name!=""){
-                    #$this->data['wage_data']=$this->search_mydept_excel($doc_name,$_POST['selected_dept']);
                     $this->data['wage_data']=$this->model_wage->getWageByDateAndDept($_POST['selected_dept'],$doc_name);
                     $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
                     $counter=0;

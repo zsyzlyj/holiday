@@ -18,16 +18,12 @@ class Users extends Admin_Controller{
 	
 	public function index(){
 		$user_data = $this->model_users->getUserData();
-
 		$holiday = $this->model_holiday->getHolidayData();
-
 		$result = array();
-		
 		foreach ($user_data as $k => $v){
 			$result[$k] = $v;
 			foreach($holiday as $a => $b){
-				if($b['name'] == $v['username'] )
-				{
+				if($b['name'] == $v['username'] ){
 					$result[$k]['dept']=$b['department'];
 				}
 			}
@@ -49,12 +45,8 @@ class Users extends Admin_Controller{
 			2 => '综合管理员',
 			3 => '普通员工'
 		);
-
-		
-		
 		$this->data['user_data'] = $result;
 		$this->data['permission_set']=$permission_set;
-		
 		$this->render_template('users/index', $this->data);
 	}
 
