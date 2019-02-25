@@ -1,18 +1,51 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: 2018-12-24 16:11:12
--- 服务器版本： 5.7.21
--- PHP Version: 7.2.7
+-- 主机： localhost:3306
+-- 生成日期： 2019-02-25 15:12:17
+-- 服务器版本： 5.7.23
+-- PHP 版本： 7.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
--- Database: `human_resources`
+-- 数据库： `human_resources`
 --
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `all_user`
+--
+
+CREATE TABLE `all_user` (
+  `id` int(11) NOT NULL,
+  `id_num` int(11) NOT NULL,
+  `pwd` int(11) NOT NULL,
+  `name` int(11) NOT NULL,
+  `dept` int(11) NOT NULL,
+  `mobile` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `department`
+--
+
+CREATE TABLE `department` (
+  `dept_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -26,6 +59,19 @@ CREATE TABLE `feedback` (
   `feedback_status` varchar(255) NOT NULL DEFAULT '未审核',
   `submit_status` varchar(255) NOT NULL DEFAULT '未提交',
   `confirm_status` varchar(255) NOT NULL DEFAULT '不同意'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `func`
+--
+
+CREATE TABLE `func` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '已关闭',
+  `func_type` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -47,7 +93,6 @@ CREATE TABLE `holiday` (
   `Bonus` int(11) DEFAULT '0' COMMENT '荣誉休假总天数',
   `Used` int(11) DEFAULT '0' COMMENT '已休假天数',
   `Rest` int(11) DEFAULT '0' COMMENT '未休假天数',
-  `initflag` int(1) NOT NULL DEFAULT '0' COMMENT '初始化标志，1为已初始化，0为未初始化',
   `Jan` int(11) NOT NULL DEFAULT '0' COMMENT '一月休假已天数',
   `Feb` int(11) NOT NULL DEFAULT '0' COMMENT '二月休假已天数',
   `Mar` int(11) NOT NULL DEFAULT '0' COMMENT '三月休假已天数',
@@ -70,24 +115,12 @@ CREATE TABLE `holiday` (
 --
 
 CREATE TABLE `holiday_doc` (
-  `number` varchar(12) DEFAULT NULL,
+  `number` datetime DEFAULT NULL,
   `doc_name` varchar(50) NOT NULL,
   `doc_path` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
--- 表的结构 `holiday_users`
---
-
-CREATE TABLE `holiday_users` (
-  `user_id` varchar(20) NOT NULL COMMENT '身份证号',
-  `username` varchar(6) NOT NULL COMMENT '姓名',
-  `password` varchar(255) NOT NULL COMMENT '初始值为身份证后六位',
-  `permission` int(11) NOT NULL COMMENT '1是综管，2是部门负责人，3是员工'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 --
 -- 表的结构 `log_action`
@@ -101,6 +134,7 @@ CREATE TABLE `log_action` (
   `staff_action` varchar(50) NOT NULL,
   `action_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- --------------------------------------------------------
 
 --
@@ -124,7 +158,7 @@ CREATE TABLE `notice` (
   `pubtime` datetime NOT NULL COMMENT '公告发布时间',
   `username` varchar(255) NOT NULL COMMENT '发布公告人姓名',
   `title` varchar(255) NOT NULL COMMENT '公告标题',
-  `content` varchar(2550) NOT NULL COMMENT '公告内容',
+  `content` varchar(3000) NOT NULL COMMENT '公告内容',
   `type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -152,6 +186,20 @@ CREATE TABLE `plan` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `proof_record`
+--
+
+CREATE TABLE `proof_record` (
+  `id` int(11) NOT NULL,
+  `applicant` varchar(100) NOT NULL,
+  `apply_type` varchar(100) NOT NULL,
+  `submit_status` varchar(100) NOT NULL,
+  `feedback_status` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `super_user`
 --
 
@@ -161,13 +209,18 @@ CREATE TABLE `super_user` (
   `permission` varchar(255) NOT NULL COMMENT '有三类工资，年假，绩效'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- 转存表中的数据 `super_user`
+-- 表的结构 `users`
 --
 
-INSERT INTO `super_user` (`user_id`, `password`, `permission`) VALUES
-('lyjw', md5('hr'), '工资'),
-('lyjh', md5('hr'), '休假');
+CREATE TABLE `users` (
+  `user_id` varchar(20) NOT NULL COMMENT '身份证号',
+  `username` varchar(6) NOT NULL COMMENT '姓名',
+  `password` varchar(255) NOT NULL COMMENT '初始值为身份证后六位',
+  `permission` int(11) NOT NULL COMMENT '1是综管，2是部门负责人，3是员工'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -329,7 +382,26 @@ CREATE TABLE `wage` (
   `content147` varchar(12) DEFAULT NULL,
   `content148` varchar(12) DEFAULT NULL,
   `content149` varchar(12) DEFAULT NULL,
-  `content150` varchar(12) DEFAULT NULL
+  `content150` varchar(12) DEFAULT NULL,
+  `date_tag` varchar(20) NOT NULL,
+  `total` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `wage_apply`
+--
+
+CREATE TABLE `wage_apply` (
+  `id` int(11) NOT NULL,
+  `user_id` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `submit_time` datetime NOT NULL,
+  `feedback_time` datetime NOT NULL,
+  `submit_status` varchar(50) NOT NULL DEFAULT '未提交',
+  `feedback_status` varchar(50) DEFAULT '未审核'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -459,7 +531,7 @@ CREATE TABLE `wage_attr` (
   `attr_name118` varchar(50) DEFAULT NULL,
   `attr_name119` varchar(50) DEFAULT NULL,
   `attr_name120` varchar(50) DEFAULT NULL,
-  `date_tag` varchar(50) DEFAULT NULL,
+  `date_tag` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -471,7 +543,68 @@ CREATE TABLE `wage_attr` (
 CREATE TABLE `wage_doc` (
   `number` datetime NOT NULL,
   `doc_name` varchar(300) DEFAULT NULL,
-  `doc_path` varchar(100) DEFAULT NULL
+  `doc_path` varchar(100) DEFAULT NULL,
+  `doc_type` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `wage_notice`
+--
+
+CREATE TABLE `wage_notice` (
+  `date_tag` varchar(20) NOT NULL,
+  `content` varchar(300) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `wage_sp`
+--
+
+CREATE TABLE `wage_sp` (
+  `user_id` varchar(20) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `attr1` float NOT NULL DEFAULT '0',
+  `attr2` float NOT NULL DEFAULT '0',
+  `attr3` float NOT NULL DEFAULT '0',
+  `attr4` float NOT NULL DEFAULT '0',
+  `attr5` float NOT NULL DEFAULT '0',
+  `date_tag` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `wage_sp_attr`
+--
+
+CREATE TABLE `wage_sp_attr` (
+  `attr1` varchar(50) DEFAULT NULL,
+  `attr2` varchar(50) DEFAULT NULL,
+  `attr3` varchar(50) DEFAULT NULL,
+  `attr4` varchar(50) DEFAULT NULL,
+  `attr5` varchar(50) DEFAULT NULL,
+  `attr6` varchar(50) DEFAULT NULL,
+  `attr7` varchar(50) DEFAULT NULL,
+  `attr8` varchar(50) DEFAULT NULL,
+  `attr9` varchar(50) DEFAULT NULL,
+  `attr10` varchar(50) DEFAULT NULL,
+  `attr11` varchar(50) DEFAULT NULL,
+  `attr12` varchar(50) DEFAULT NULL,
+  `attr13` varchar(50) DEFAULT NULL,
+  `attr14` varchar(50) DEFAULT NULL,
+  `attr15` varchar(50) DEFAULT NULL,
+  `attr16` varchar(50) DEFAULT NULL,
+  `attr17` varchar(50) DEFAULT NULL,
+  `attr18` varchar(50) DEFAULT NULL,
+  `attr19` varchar(50) DEFAULT NULL,
+  `attr20` varchar(50) DEFAULT NULL,
+  `attr21` varchar(50) NOT NULL,
+  `attr22` varchar(50) NOT NULL,
+  `date_tag` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -496,92 +629,96 @@ CREATE TABLE `wage_tag` (
   `ft_highest_degree` varchar(50) DEFAULT NULL,
   `service_mode` varchar(50) DEFAULT NULL,
   `indate` date DEFAULT NULL,
-  `proof_tag` varchar(50) DEFAULT NULL
+  `proof_tag` varchar(50) DEFAULT NULL,
+  `qian3` varchar(10) NOT NULL,
+  `qian2` varchar(10) NOT NULL,
+  `qian1` varchar(10) NOT NULL,
+  `wage_level` varchar(10) NOT NULL,
+  `wage_adjust_stamp` date NOT NULL,
+  `level_adjust_stamp` date NOT NULL,
+  `accumulation` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
 --
--- 表的结构 `wage_total`
---
-
-CREATE TABLE `wage_total` (
-  `total` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `wage_users`
---
-
-CREATE TABLE `wage_users` (
-  `user_id` varchar(20) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL COMMENT '初始值为身份证后六位',
-  `permission` int(11) NOT NULL COMMENT '1是部门负责人，3是员工 '
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `wage_users`
---
-
-CREATE TABLE `wage_record` (
-  `upload_date` varchar(20) NOT NULL,
-  `path` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
---
--- Indexes for dumped tables
+-- 转储表的索引
 --
 
 --
--- Indexes for table `feedback`
+-- 表的索引 `all_user`
+--
+ALTER TABLE `all_user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `feedback`
 --
 ALTER TABLE `feedback`
   ADD PRIMARY KEY (`department`);
 
 --
--- Indexes for table `holiday`
+-- 表的索引 `func`
+--
+ALTER TABLE `func`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `holiday`
 --
 ALTER TABLE `holiday`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexes for table `holiday_doc`
+-- 表的索引 `holiday_doc`
 --
 ALTER TABLE `holiday_doc`
   ADD PRIMARY KEY (`doc_name`);
 
 --
--- Indexes for table `log_action`
+-- 表的索引 `log_action`
 --
 ALTER TABLE `log_action`
   ADD PRIMARY KEY (`log_id`);
 
 --
--- Indexes for table `plan`
+-- 表的索引 `manager`
+--
+ALTER TABLE `manager`
+  ADD PRIMARY KEY (`user_id`,`dept`);
+
+--
+-- 表的索引 `plan`
 --
 ALTER TABLE `plan`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexes for table `super_user`
+-- 表的索引 `super_user`
 --
 ALTER TABLE `super_user`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexes for table `wage_doc`
+-- 表的索引 `wage_apply`
+--
+ALTER TABLE `wage_apply`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `wage_attr`
+--
+ALTER TABLE `wage_attr`
+  ADD PRIMARY KEY (`date_tag`);
+
+--
+-- 表的索引 `wage_doc`
 --
 ALTER TABLE `wage_doc`
   ADD PRIMARY KEY (`number`);
 
 --
--- Indexes for table `wage_tag`
+-- 表的索引 `wage_sp`
 --
-ALTER TABLE `wage_tag`
+ALTER TABLE `wage_sp`
   ADD PRIMARY KEY (`user_id`);
 
 --
@@ -589,7 +726,24 @@ ALTER TABLE `wage_tag`
 --
 
 --
+-- 使用表AUTO_INCREMENT `all_user`
+--
+ALTER TABLE `all_user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- 使用表AUTO_INCREMENT `log_action`
 --
 ALTER TABLE `log_action`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `wage_apply`
+--
+ALTER TABLE `wage_apply`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
