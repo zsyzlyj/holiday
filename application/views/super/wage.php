@@ -33,7 +33,6 @@
           <div class="box">
             <div class="box-header">
             </div>
-
             <div class="box-body">
               <div style="overflow:scroll;">
                 <table id="wageTable" class="table table-striped table-bordered table-hover mytable" style="border-color:black;overflow:scroll;white-space: nowrap;word-break:  keep-all;text-align: center;">
@@ -42,7 +41,7 @@
                   <tr style="border-color:black;">
                   <?php $counter=0;?>
                   <?php foreach($attr_data as $k => $v): ?>
-                  <?php if($counter<$wage_total):?>
+                  <?php if($counter<$trueend):?>
                     <?php if($counter<5 or $counter>$koufeiend):?>
                       <th style="text-align:center;border-color:black;" rowspan="3"><?php echo $v?></th>
                     <?php elseif($counter==5):?>
@@ -57,11 +56,10 @@
                   <?php endif;$counter++;?>
                   <?php endforeach; ?>
                   </tr>
-
                   <tr style="border-color:black;">
                   <?php $counter=0;?>
                   <?php foreach($attr_data as $k => $v): ?>
-                  <?php if($counter<$wage_total):?>
+                  <?php if($counter<$trueend):?>
                     <?php if($counter>=5 and $counter<$yuedustart):?>
                       <th rowspan="2" style="text-align:center;border-color:black;"><?php echo $v?></th>
                     <?php elseif($counter==$yuedustart):?>
@@ -78,34 +76,30 @@
                       <th style="text-align:center;border-color:black;" rowspan="2"><?php echo $v?></th>
                     <?php elseif($counter>=$koufeistart and $counter<=$koufeiend): ?>
                       <th style="text-align:center;border-color:black;" rowspan="2"><?php echo $v?></th>
-                    <?php endif;?>    
-
+                    <?php endif;?>
                   <?php endif;$counter++;?>
                   <?php endforeach; ?>
                   </tr>
                   <tr style="border-color:black;">
                   <?php $counter=0;?>
                   <?php foreach($attr_data as $k => $v): ?>
-                  <?php if($counter<$wage_total):?>
+                  <?php if($counter<$trueend):?>
                     <?php if($counter>=$yuedustart and $counter<=$jiaoyuend):?>
                     <th style="text-align:center;border-color:black;"><?php echo $v;?></th>
                     <?php endif; ?>
                   <?php endif;$counter++;?>
                   <?php endforeach; ?>
-                  </tr>
-                  
+                  </tr>    
                   <?php endif; ?>
                   </thead>
 
                   <tbody> 
-                      
-                  
                   <?php if($wage_data): ?>
                   <?php foreach($wage_data as $k => $v): ?>
                     <tr>
                       <?php $counter=0;?>
                       <?php foreach($v as $a => $b):?>
-                      <?php if($counter<$wage_total):?>
+                      <?php if($counter<$trueend):?>
                       <td style="border-color:black;">
                         <?php echo $b;?>
                       </td>

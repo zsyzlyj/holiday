@@ -32,7 +32,6 @@ class Super_wage extends Admin_Controller {
             }
         }
         $this->data['unread']=$unread;
-        
         $this->data['notice_data'] = $this->model_notice->getNoticeLatestWage();
         $this->data['permission']=$this->session->userdata('permission');
     }
@@ -47,7 +46,6 @@ class Super_wage extends Admin_Controller {
         $this->search();
     }
     public function this_month(){
-        $this->data['wage_total']=$this->model_wage_attr->getWageTotalData()['total'];
         $this->data['wage_data']=$this->model_wage->getWageData();
         $this->data['attr_data']=$this->model_wage_attr->getWageAttrData();
         $counter=0;
@@ -82,6 +80,9 @@ class Super_wage extends Admin_Controller {
                 }
                 if($v=='扣款小计'){
                     $this->data['koufeiend']=$counter;
+                }
+                if($v=='本月工资差异说明'){
+                    $this->data['trueend']=$counter+1;
                     break;
                 }
                 $counter++;
@@ -785,10 +786,8 @@ class Super_wage extends Admin_Controller {
     public function wage_excel_put($filename){
         $this->load->library('phpexcel');//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
- 
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
-        
         //根据上传类型做不同处理
         if(strstr($_FILES['file']['name'],'xlsx')){
             $reader = new PHPExcel_Reader_Excel2007();
@@ -801,7 +800,6 @@ class Super_wage extends Admin_Controller {
             move_uploaded_file($path['tmp_name'],$filePath);
             
         }
-
         $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
         $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
         $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
@@ -852,7 +850,6 @@ class Super_wage extends Admin_Controller {
                 }
                 $attribute['date_tag']=$filename;
                 $attr_counter--;
-                $this->model_wage_attr->create_total(array('date_tag' => $filename,'total' => $attr_counter));
                 if($this->model_wage_attr->getWageAttrDataByDate($filename)){
                     $this->model_wage_attr->update($attribute,$filename);
                 }
@@ -1264,7 +1261,6 @@ class Super_wage extends Admin_Controller {
                 }
             }
             else{
-                #echo var_dump($wage);
                 // Field names in the first row
                 foreach($wage_set as $c => $wtemp){
                     $col = 0;
@@ -1550,7 +1546,6 @@ class Super_wage extends Admin_Controller {
 				'permission' => 3
 			);
 			$this->model_users->create($data);
-			#$this->render_super_template('super/wage_reset_pass',$this->data);
 			$this->render_super_template('users/create',$this->data);
 		}
 		else{

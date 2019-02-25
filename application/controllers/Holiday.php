@@ -21,34 +21,6 @@ class Holiday extends Admin_Controller {
             redirect('super_auth/login','refresh');
         }
 	}
-    /*
-    ============================================================
-    休假管理
-    包括：
-    1、index(),员工个人年假信息展示
-    2、staff(),休假汇总
-    5、excel_plan(),显示所有的假期文件（使用datatable）
-    6、holiday_doc_delete(),删除一个假期文件,后跳转doc_list
-    7、holiday_excel_put(),处理上传文件,把年假信息导入数据库
-    8、holiday_import(),跳转上传假期信息页面
-    9、download_page(),跳转下载页面,下载页面包含年假上传模板和年假计划
-    10、excel(),构建假期模板文档
-    11、export_holiday(),下载假期模板文档的接口
-    12、excel_plan(),构建假期计划文档
-    13、export_plan(),下载假期计划的接口
-    14、plan(),年假计划汇总
-    15、plan_change_submit(),年假修改权限赋予和撤销,综管员和超管都能用
-    16、users(),查看所有用户的权限，同时可以修改用户的权限
-    17、user_delete(),删除单个用户
-    18、user_update(),更新某个用户的权限
-    19、manager_excel_put(),处理上传文件,把综管员、部门经理信息导入数据库
-    20、manager_import(),跳转上传管理人员名单页面
-    21、manager(),管理人员名单汇总
-    22、notification(),公告历史汇总(年假和计划)
-    23、publish_holiday(),发布年假相关公告
-    24、publish_plan(),发布年假计划相关公告
-    ============================================================
-    */ 
 	public function index(){
         $this->staff();
     }

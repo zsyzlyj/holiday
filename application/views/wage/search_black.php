@@ -120,7 +120,7 @@
                     <?php endforeach; ?>
                     </tr>
                   <?php else: ?>
-                    无当月工资记录
+                    <h4>无当月工资记录</h4>
                   <?php endif; ?>
                 </tbody>
               </table>

@@ -565,39 +565,6 @@ class Super_holiday extends Admin_Controller{
         $highestRow = $sheet->getHighestRow(); // 取得总行数
         $highestColumm = $sheet->getHighestColumn(); // 取得总列数
         $data = array();
-        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-            for ($colIndex = 'A'; $colIndex <= $highestColumm; $colIndex++){
-                $addr = $colIndex . $rowIndex;
-                $cell = $sheet->getCell($addr)->getValue();
-                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
-                    $cell = $cell->__toString();
-                }
-                $data[$rowIndex][$colIndex] = $cell;
-            }
-        }
-        $column=array();
-        $column_name=array();
-        $attribute_data=array();
-        $first=true;
-        $flag=false;
-		$counter=0;
-		$user_id="";
-        $name="";
-        $dept="";
-        
-        foreach($data as $k => $v){
-            if($first){
-                $first=false;
-                foreach($v as $a =>$b){
-                    array_push($column_name,$b);
-                }
-            }
-            else{
-                array_push($column,$v);
-            }
-        }
-        $reset=false;
-        $manager_data=$this->model_manager->getManagerData();
         $manager_set=array();
         $feedback_set=array();
         $all_dept=array();
@@ -606,42 +573,51 @@ class Super_holiday extends Admin_Controller{
         $this->model_manager->deleteAll();
         //删除所有的反馈信息
         $this->model_feedback->deleteAll();
-        foreach($column as $k => $v){
-            foreach($v as $a => $b){
-                switch($a){
-                    case 'A':$name=$b;break;
-                    case 'B':$user_id=$b;break;
-					case 'C':$dept=$b;break;
-					case 'D':$role=$b;break;
+        for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            if($rowIndex>1){
+                for ($colIndex = 'A'; $colIndex <= $highestColumm; $colIndex++){
+                    $addr = $colIndex . $rowIndex;
+                    $cell = $sheet->getCell($addr)->getValue();
+                    if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                        $cell = $cell->__toString();
+                    }
+                    $b = $cell;
+                    $a=$colIndex;
+                    switch($a){
+                        case 'A':$name=$b;break;
+                        case 'B':$user_id=$b;break;
+                        case 'C':$dept=$b;break;
+                        case 'D':$role=$b;break;
+                    }
                 }
-			}
-			$Update_data=array(
-				'user_id' => $user_id,
-				'name' => $name,
-				'dept' => $dept,
-				'role' => $role
-            );
-            array_push($manager_set,$Update_data);
-            //创建管理人员			
-			if($Update_data['role']=='综管员'){
-				$permission=1;
-			}
-			if($Update_data['role']=='部门负责人'){
-                $permission=2;
-            }
-            if(strstr($Update_data['dept'],'片区')){
-                $permission=4;
-			}
-			$Update_user=array(
-                'user_id' => $user_id,
-				'permission' => $permission
-			);
-            #$update_user=$this->model_users->update($Update_user,$user_id);        
-            array_push($user_set,$Update_user);
-            unset($Update_data);
-            //初始化年假计划反馈，每个部门新建一个反馈记录，部门为主键         
-            if(!in_array($dept,$all_dept)){
-                array_push($all_dept,$dept);
+                $Update_data=array(
+                    'user_id' => $user_id,
+                    'name' => $name,
+                    'dept' => $dept,
+                    'role' => $role
+                );
+                array_push($manager_set,$Update_data);
+                //创建管理人员			
+                if($Update_data['role']=='综管员'){
+                    $permission=1;
+                }
+                if($Update_data['role']=='部门负责人'){
+                    $permission=2;
+                }
+                if(strstr($Update_data['dept'],'片区')){
+                    $permission=4;
+                }
+                $Update_user=array(
+                    'user_id' => $user_id,
+                    'permission' => $permission
+                );
+                #$update_user=$this->model_users->update($Update_user,$user_id);        
+                array_push($user_set,$Update_user);
+                unset($Update_data);
+                //初始化年假计划反馈，每个部门新建一个反馈记录，部门为主键         
+                if(!in_array($dept,$all_dept)){
+                    array_push($all_dept,$dept);
+                }
             }
         }
         foreach($all_dept as $k => $v){
