@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Super_Auth extends Admin_Controller{
 	public function __construct(){
 		parent::__construct();
-		$this->load->helper('url');
 		$this->load->model('model_super_auth');
 		$this->load->model('model_super_user');
         $this->load->model('model_wage_apply');
@@ -99,7 +98,6 @@ class Super_Auth extends Admin_Controller{
 	}
 	/*
 		清除session，退出
-		
 	*/
 	public function logout()
 	{

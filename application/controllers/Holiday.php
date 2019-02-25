@@ -5,13 +5,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Holiday extends Admin_Controller {
 	public function __construct(){
 		parent::__construct();
-
 		$this->not_logged_in();
-
         $this->data['page_title'] = 'Holiday';
         $this->data['permission'] = $this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
-        
         $this->load->model('model_holiday');
         $this->load->model('model_holiday_doc');
         $this->load->model('model_plan');
@@ -78,31 +75,21 @@ class Holiday extends Admin_Controller {
 
     /*
     ==============================================================================
-    综合管理员
+    综管员
     ==============================================================================
     */
-    public function admin(){
-        $this->staff();
-    }
-
     public function mydeptholiday(){
-        $result=array();
+        $this->data['holiday_data'] = ""; 
         $user_id=$this->session->userdata('user_id');
         $this->data['current_dept']="";
         if($_POST){
-            $holiday_data = $this->model_holiday->getHolidayByDept($_POST['selected_dept']);
-            $result = array();
-            foreach($holiday_data as $k => $v){
-                $result[$k] = $v;
-            }
-            $this->data['holiday_data'] = $result;
+            $this->data['holiday_data'] = $this->model_holiday->getHolidayByDept($_POST['selected_dept']);
             $this->data['current_dept'] = $_POST['selected_dept'];
         }
         $admin_data = $this->model_manager->getManagerById($user_id);
         $admin_result=array();
         $admin_result=explode('/',$admin_data['dept']);
         $this->data['dept_options']=$admin_result;
-        $this->data['holiday_data'] = $result; 
 		$this->render_template('holiday/mydeptholiday', $this->data);
     }
     public function mydeptplan(){
@@ -201,9 +188,7 @@ class Holiday extends Admin_Controller {
     部门经理
     ==============================================================================
     */
-    public function manager(){
-        $this->staff();
-    }
+
     /*
     ==============================================================================
     单个人的年假计划显示
@@ -245,31 +230,27 @@ class Holiday extends Admin_Controller {
                     'fourthquater' => $_POST['fourthquater'],
                     'submit_tag' => 1
                 );
+                
+                $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
                 $create = $this->model_plan->update($data,$user_id);
                 if($create == true){
                     $this->session->set_flashdata('success', '提交成功');
-                    $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
                     $this->data['plan_data'] = $this->model_plan->getplanById($this->session->userdata('user_id'));
                     $this->render_template('holiday/staff_plan', $this->data);
                 }
                 else{
                     $this->session->set_flashdata('error', '提交失败');
-                    $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
-                    $this->data['plan_data'] = $this->model_plan->getplanById($this->session->userdata('user_id'));
                     $this->render_template('holiday/staff_plan', $this->data);
                 }
             }
             else{
                 $this->session->set_flashdata('error', '提交失败，计划总数必须等于可休假总数');
-                $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
-                $this->data['plan_data'] = $this->model_plan->getplanById($this->session->userdata('user_id'));
                 $this->render_template('holiday/staff_plan', $this->data);
             }
             /**/
         }
         else{
             $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
-            $this->data['plan_data'] = $this->model_plan->getplanById($this->session->userdata('user_id'));
             $this->render_template('holiday/staff_plan', $this->data);
         }
     }
@@ -356,7 +337,7 @@ class Holiday extends Admin_Controller {
     }
     /*
     ==============================================================================
-    超级管理员，综合管理员修改年假计划编辑权限
+    综管员修改年假计划编辑权限
     ==============================================================================
     */
     public function change_submit_mydeptplan(){
@@ -435,11 +416,8 @@ class Holiday extends Admin_Controller {
                         $this->model_feedback->update($data,$select_dept);
                     }
                 }
-                $result = $this->model_plan->getPlanByDept($select_dept);
             }
-            else{
-                $result = $this->model_plan->getPlanByDept($select_dept);
-            }
+            $result = $this->model_plan->getPlanByDept($select_dept);
             $feedback=$this->model_feedback->getFeedbackByDept($select_dept);
             $this->data['current_dept']=$select_dept;
             $this->data['submit_status'] =$feedback['submit_status'];

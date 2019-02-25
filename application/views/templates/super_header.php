@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showmonth.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showapply.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
-  <link href="<?php echo base_url('assets/images/logo-ico.ico');?>" type="image/x-icon" rel="shortcut icon">
+  <link href="<?php echo base_url('assets/images/logo-icoblogo-ico.ico');?>" type="image/x-icon" rel="shortcut icon">
 
 <!---->
   <link type="application/atom+xml" rel="alternate" href="https://quilljs.com/feed.xml" title="Quill - Your powerful rich text editor" />

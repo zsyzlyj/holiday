@@ -9,6 +9,5 @@ class dashboard extends Admin_Controller{
     public function index(){
         $this->data['user_name']=$this->session->userdata('user_name');
         $this->render_dashboard_template('dashboard',$this->data);
-        #$this->load->view('dashboard',$this->data);
     }
 }

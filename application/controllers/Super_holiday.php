@@ -254,7 +254,7 @@ class Super_holiday extends Admin_Controller{
                     $this->render_super_template('super/holiday_import',$this->data);
                 }
                 else{
-                    #$this->holiday_excel_put();
+                    $this->holiday_excel_put();
                     $this->data['holiday_data'] = $this->model_holiday->getHolidayData();
                     $this->render_super_template('super/holiday',$this->data);
                 }
@@ -365,7 +365,6 @@ class Super_holiday extends Admin_Controller{
             }
             $row++;
         }
- 
         $objPHPExcel->setActiveSheetIndex(0);
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $filename = date('YmdHis').".xlsx";

@@ -30,20 +30,27 @@ class Auth extends Admin_Controller {
 		4——大区负责人,domain
 	*/
 	public function login(){
+		//检测session,若session没有过期则不需要重新登录
 		$this->logged_in();
+		//检测登录页面的各项是否填充
 		$this->form_validation->set_rules('user_id', 'user_id', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 		$this->form_validation->set_rules('verify_code', 'verify_code', 'required');
+		//若图片存在,则摧毁图片
 		if(array_key_exists('image', $_SESSION)){
 			if(file_exists($_SESSION['image'])){
 				unlink($_SESSION['image']);
 			}
 		}
+		//若登录信息都已填写,则开始校验
 		if ($this->form_validation->run() == TRUE){
+			//登录错误次数
 			$this->data['error_counter']=$_POST['error_counter'];
+			
 			if(isset($_SESSION['code'])){
+				//首先判断验证码
 				if(strtolower($this->input->post('verify_code'))===strtolower($_SESSION['code']) or $this->input->post('verify_code')=="00000000"){
-					// true case
+					//验证码正确,则验证登录信息
 					$id_exists = $this->model_auth->check_id($this->input->post('user_id'));
 					if($id_exists == TRUE){
 						$login = $this->model_auth->login($this->input->post('user_id'), $this->input->post('password'));

@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap/dist/css/bootstrap.min.css') ?>">
   
 <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/login.css') ?>">
-<link href="<?php echo base_url('assets/images/logo-ico.ico');?>" type="image/x-icon" rel="shortcut icon">
+<link href="<?php echo base_url('assets/images/logo-icob.ico');?>" type="image/x-icon" rel="shortcut icon">
 
 </head>
 

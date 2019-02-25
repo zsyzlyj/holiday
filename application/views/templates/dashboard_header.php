@@ -37,7 +37,7 @@
   <!-- icheck -->
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/iCheck/all.css') ?>">
-  <link href="<?php echo base_url('assets/images/logo-ico.ico');?>" type="image/x-icon" rel="shortcut icon">
+  <link href="<?php echo base_url('assets/images/logo-icob.ico');?>" type="image/x-icon" rel="shortcut icon">
 
   <!-- Page level plugin CSS-->
   <link href="<?php echo base_url('assets/dist/vendor/datatables/dataTables.bootstrap4.css') ?>" rel="stylesheet">
