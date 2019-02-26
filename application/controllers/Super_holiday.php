@@ -746,7 +746,7 @@ class Super_holiday extends Admin_Controller{
     }
     public function notification_delete(){
         $pubtime=$_POST['time'];
-        $this->model_notice->remove($pubtime);
+        $this->model_notice->delete($pubtime);
         $this->session->set_flashdata('success', '公告删除成功！');
         redirect('super_holiday/notification', 'refresh');
     }

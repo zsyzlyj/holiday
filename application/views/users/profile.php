@@ -70,7 +70,7 @@
                 <tr style="height:40px;">
                   <td style="width:300px">职级薪档：<?php echo $user_info['wage_level'];?></td>
                   <td style="width:300px">职级调整时间：<?php echo $user_info['wage_adjust_stamp'];?></td>
-                  <td style="width:300px">薪酬调整时间：<?php echo $user_info['level_adjust_stamp'];?></td>
+                  <td style="width:300px">薪档调整时间：<?php echo $user_info['level_adjust_stamp'];?></td>
                 </tr>
                 <?php if(strstr($func[0]['status'],'开启')):?>
                 <tr>

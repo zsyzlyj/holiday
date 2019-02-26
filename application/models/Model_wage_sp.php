@@ -42,5 +42,4 @@ class Model_wage_sp extends CI_Model{
 		$delete = $this->db->query($sql,array($date));
 		return ($delete == true) ? true : false;
 	}
-
 }

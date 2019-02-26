@@ -27,7 +27,7 @@
           </li>
           <li id="searchspMainMenu">
             <a href="<?php echo base_url('wage/searchsp') ?>">
-              <i class="fa fa-search"></i> <span>专项附件扣除信息</span>
+              <i class="fa fa-cny"></i> <span>专项附件扣除信息</span>
             </a>
           </li>
           
@@ -40,7 +40,7 @@
           -->
           <li id="wagedocMainMenu">
             <a href="<?php echo base_url('wage/wage_doc') ?>">
-              <i class="fa fa-money"></i> <span>薪酬文件</span>
+              <i class="fa fa-file-pdf-o"></i> <span>薪酬文件</span>
             </a>
           </li>
           <?php if($permission == 2 and strstr($wage_func[0]['status'],'开启')): ?>

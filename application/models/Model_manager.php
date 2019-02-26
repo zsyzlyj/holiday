@@ -46,20 +46,6 @@ class model_manager extends CI_Model{
 		$update = $this->db->update('manager', $data);
 		return ($update == true) ? true : false;	
 	}
-	public function edit($data = array(), $id = null, $group_id = null){
-		$this->db->where('user_id', $id);
-		$update = $this->db->update('manager', $data);
-
-		if($group_id){
-			// user group
-			$update_user_group = array('group_id' => $group_id);
-			$this->db->where('user_id', $id);
-			$user_group = $this->db->update('user_group', $update_user_group);
-			return ($update == true && $user_group == true) ? true : false;	
-		}
-			
-		return ($update == true) ? true : false;	
-	}
 
 	public function delete($id){
 		$this->db->where('user_id', $id);

@@ -19,12 +19,6 @@ class Model_func extends CI_Model{
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
-	public function createbatch($data = ''){
-		if($data){
-			$create = $this->db->insert_batch('func', $data);
-			return ($create == true) ? true : false;
-		}
-	}
 	public function edit($data = array(), $id = null){
 		$this->db->where('name', $id);
 		$update = $this->db->update('func', $data);

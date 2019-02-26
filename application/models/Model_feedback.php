@@ -35,7 +35,6 @@ class Model_feedback extends CI_Model{
 			$sql = "SELECT * FROM feedback WHERE locate(?,department)";
 			return $this->db->query($sql, array($dept));	
 		}
-
 		$sql = "SELECT * FROM feedback";
 		return $this->db->query($sql);
 	}
@@ -59,7 +58,6 @@ class Model_feedback extends CI_Model{
 			return ($update == true) ? true : false;
 		}
 	}
-
 	public function deleteAll(){
 		$sql='delete from feedback';
 		$delete = $this->db->query($sql);

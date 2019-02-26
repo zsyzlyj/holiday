@@ -58,14 +58,6 @@ class Model_holiday extends CI_Model{
 		}
 	}
 
-	public function update($data, $id){
-		if($data && $id){
-			$this->db->where('user_id', $id);
-			$update = $this->db->update('holiday', $data);
-			return ($update == true) ? true : false;
-		}
-	}
-
 	public function deleteAll(){
 		$sql='delete from holiday';
 		$delete = $this->db->query($sql);

@@ -60,14 +60,6 @@ class Model_plan extends CI_Model{
 		}
 	}
 
-	public function remove($id){
-		if($id){
-			$this->db->where('user_id', $id);
-			$delete = $this->db->delete('plan');
-			return ($delete == true) ? true : false;
-		}
-	}
-
 	public function deleteAll(){
 		$sql='delete from plan';
 		$delete = $this->db->query($sql);

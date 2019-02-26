@@ -32,11 +32,6 @@ class Model_dept extends CI_Model{
 			return ($insert == true) ? true : false;
 		}
 	}
-	public function update($data=array(),$dept){
-		$this->db->where('dept_name',$dept);
-		$update = $this->db->update('department', $data);
-		return ($update == true) ? true : false;	
-	}
 	public function deleteAll(){
 		$sql='delete from department';
 		$delete = $this->db->query($sql);
