@@ -56,8 +56,9 @@
                   <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
                     <div class="modal-content-month">
                       <div class="modal-header">
-                        <h4>请确认</h4>
-                      </div>
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><font color="black">×</font></button>
+                          <h4 class="modal-title">审    核</h4>
+                          </div>
                       <div class="modal-body">
                         <h4 style="text-align:left">确认提交吗？</h4>
                       </div>

@@ -70,6 +70,7 @@
                         <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
                           <div class="modal-content-month">
                             <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>  
                               <h4>反馈意见</h4>
                             </div>
                             <div class="modal-body">

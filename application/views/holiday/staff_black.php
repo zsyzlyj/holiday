@@ -89,7 +89,7 @@
                           <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><font color='red'><u><?php echo $v['Used']; ?></u></font></a>
                           
                           <!-- 弹窗 -->
-                          <div id="myModal" class="modal fade" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div id="myModal" class="modal fade" tabindex="-1" data-backdrop="false" data-keyboard="true" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             
                             <!-- 弹窗内容 -->
                             <div class="modal-content">

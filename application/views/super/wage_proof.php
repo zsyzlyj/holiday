@@ -44,7 +44,8 @@
                       <div class="modal-apply fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $k;?>">
                         <div class="modal-content-apply">
                           <div class="modal-header">
-                            <h4>审核</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><font color="black">×</font></button>
+                          <h4 class="modal-title">审    核</h4>
                           </div>
                           <div class="modal-body">
                             <iframe width="600" height="700" src="<?php echo base_url($url[$k]);?>"></iframe>
