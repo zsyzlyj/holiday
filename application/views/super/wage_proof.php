@@ -2,11 +2,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        证明审核
-      </h1>  
     </section>
-    <hr />
     <!-- Main content -->
     <section class="content">
       <div class="col-md-12 col-xs-12">
@@ -48,7 +44,7 @@
                       <div class="modal-apply fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $k;?>">
                         <div class="modal-content-apply">
                           <div class="modal-header">
-                            <h4>请确认</h4>
+                            <h4>审核</h4>
                           </div>
                           <div class="modal-body">
                             <iframe width="600" height="700" src="<?php echo base_url($url[$k]);?>"></iframe>
