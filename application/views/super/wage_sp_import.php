@@ -5,7 +5,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      专项附件扣除信息导入
+      专项附加扣除信息导入
     </h1>
   </section>
 

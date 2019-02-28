@@ -923,7 +923,7 @@ class Super_wage extends Admin_Controller {
                             }
                             else{
                                 $this->wage_excel_put($doc_name);
-                                $this->data['import_list']=$this->model_wage_tag->getDatetag();
+                                $this->data['import_list']=$this->model_wage->getDatetag();
                                 $this->render_super_template('super/wage_import_list',$this->data);
                             }
                         }
@@ -1373,6 +1373,8 @@ class Super_wage extends Admin_Controller {
     }
     public function wage_doc_import($filename=NULL){
         $this->data['type_option']=$this->model_wage_doc->getDocType();
+        $this->data['wage_doc']=$this->model_wage_doc->getWageDocData();
+        $this->data['wage_doc_order']=$this->model_wage_doc->getWageDocOrder();
         if($_FILES){
             if($_FILES['file']){
                 if($_FILES['file']['error'] > 0){
@@ -1381,9 +1383,8 @@ class Super_wage extends Admin_Controller {
                 }
                 else{
                     $this->wage_doc_put();
-                    $wage_doc=$this->model_wage_doc->getWageDocData();
-                    $this->data['wage_doc']=$wage_doc;
-                    $this->render_super_template('super/wage_doc_list',$this->data);
+                    $this->data['wage_doc']=$this->model_wage_doc->getWageDocData();
+                    $this->render_super_template('super/wage_doc_import',$this->data);
                 }
             }
         }
@@ -1391,10 +1392,17 @@ class Super_wage extends Admin_Controller {
             $this->render_super_template('super/wage_doc_import',$this->data);
         } 
     }
-
+    public function wage_doc_order(){
+        $this->data['type_option']=$this->model_wage_doc->getDocType();
+        $this->data['wage_doc']=$this->model_wage_doc->getWageDocData();
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            #$_POST[];
+            $this->data['wage_doc_order']=$this->model_wage_doc->getWageDocOrder();
+        }
+        $this->render_super_template('super/wage_doc_import',$this->data);
+    }
     public function wage_doc_list(){
-        $wage_doc=$this->model_wage_doc->getWageDocData();
-        $this->data['wage_doc']=$wage_doc;
+        $this->data['wage_doc']=$this->model_wage_doc->getWageDocData();
         $this->render_super_template('super/wage_doc_list',$this->data);
     }
     
@@ -1404,11 +1412,11 @@ class Super_wage extends Admin_Controller {
 			$delete = $this->model_wage_doc->delete($date);
             if($delete == true){
                 $this->session->set_flashdata('success', '薪酬文件删除成功');
-                redirect('super_wage/wage_doc_list', 'refresh');
+                redirect('super_wage/wage_doc_import', 'refresh');
             }
             else{
                 $this->session->set_flashdata('error', '系统发生未知错误!!');
-                redirect('super_wage/wage_doc_list', 'refresh');
+                redirect('super_wage/wage_doc_import', 'refresh');
             }	
 		}
     }
@@ -1665,5 +1673,11 @@ class Super_wage extends Admin_Controller {
     public function show_sp_import_list(){
         $this->data['import_list']=$this->model_wage_sp->getDatetag();
         $this->render_super_template('super/wage_sp_import_list',$this->data);
+    }
+    public function wage_delete(){
+        echo $_POST['time'];
+        $this->model_wage->deleteByDate($_POST['time']);
+        $this->data['import_list']=$this->model_wage->getDatetag();
+        $this->render_super_template('super/wage_import_list',$this->data);
     }
 }

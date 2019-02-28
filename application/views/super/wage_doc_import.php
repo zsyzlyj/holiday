@@ -24,25 +24,125 @@
       <div class="col-md-12 col-xs-12">
         <div class="box">
           <div class="box-body">
-            <form action="<?php echo base_url('super_wage/wage_doc_import') ?>" method="post"
-                name="frmPDFImport" id="frmPDFImport" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-md-6 col-xs-6">
+              <form action="<?php echo base_url('super_wage/wage_doc_import') ?>" method="post"
+                  name="frmPDFImport" id="frmPDFImport" enctype="multipart/form-data">
+                  <div>
+                      <label><h4>选择上传文件</h4></label> 
+                      <hr />
+                      <select id="groups" name="selected_type" onclick="t(this)">
+                        <option value="">选择类别</option>
+                        <?php foreach ($type_option as $k => $v): ?>
+                          <option value="<?php echo $v['doc_type'] ?>"><?php echo $v['doc_type'] ?></option> 
+                        <?php endforeach ?>
+                        <option value="-1">自定义</option>
+                      </select>
+                      <input name="selected_type_input" id="select_custom" style="display:none"/>
+                      <hr />
+                      <h5><input type="file" name="file" id="file" accept=".pdf"/></h5>
+                      <br />
+                      <button type="submit" id="submit" name="import" class="btn btn-warning" >导入</button>
+                  </div>
+              </form>
+              </div>
+              <h4>文件类型列表</h4>
+              <div class="col-md-6 col-xs-6">
+              <hr />
+              <form>
+              <table id="typetable" class="table table-bordered table-striped" style="overflow:scroll;border-color:black;">
+                <thead>
+                  <th style="border-color:black;">序号</th>
+                  <th style="border-color:black;">类别名</th>
+                </thead>
+                <tbody>
+                  <?php if($wage_doc_order):?>
+                  <?php foreach ($wage_doc_order as $k => $v): ?>
+                  <tr style="cursor:move;border-color:black;">
+                    <td style="border-color:black;"><?php echo $k+1;?></td>
+                    <td style="border-color:black;"><?php echo $v['doc_type']; ?></td>
+                    <input name="doc_type<?php echo $k+1;?>" type="hidden"/>
+                  </tr>
+                  <?php endforeach ?>
+                  <?php else:?>
+                  <?php foreach ($type_option as $k => $v): ?>
+                  <tr style="cursor:move;border-color:black;">
+                    <td style="border-color:black;"><?php echo $k+1;?></td>
+                    <td style="border-color:black;"><?php echo $v['doc_type']; ?></td>
+                    <input name="doc_type<?php echo $k+1;?>"  type="hidden"/>
+                  </tr>
+                  <?php endforeach ?>
+                  <?php endif;?>
+
+                </tbody>
+              </table>
+              <input name="doc_total" type="hidden" value="<?php echo $k+1;?>"/>
+              <button name="ajax_submit" onclick="new_order()" class="button button-primary" type="button">ajax提交</button>
+              </form>
+              </div>
+            </div>
+            <hr />
+            <?php foreach ($type_option as $k => $v): ?>
+                <hr />
+                <h3><?php echo $v['doc_type'];?><br/></h3>
+                <hr />
                 <div>
-                    <label><h4>选择上传文件</h4></label> 
-                    <hr />
-                    <select id="groups" name="selected_type" onclick="t(this)">
-                      <option value="">选择类别</option>
-                      <?php foreach ($type_option as $k => $v): ?>
-                        <option value="<?php echo $v['doc_type'] ?>"><?php echo $v['doc_type'] ?></option> 
-                      <?php endforeach ?>
-                      <option value="-1">自定义</option>
-                    </select>
-                    <input name="selected_type_input" id="select_custom" style="display:none"/>
-                    <hr />
-                    <h5><input type="file" name="file" id="file" accept=".pdf"/></h5>
-                    <br />
-                    <button type="submit" id="submit" name="import" class="btn btn-warning" >导入</button>
-                </div>
-            </form>
+                <table id="wageDocTable<?php echo $k;?>" class="table table-bordered table-striped" style="overflow:scroll;" style="border-color:black;">
+                  <thead>
+                    <tr>
+                      <!--
+                      <th style="width:50px">序号</th>
+                      <th style="width:673px">文件名</th>
+                      <th style="width:200px">上传时间</th>
+                      <th>操作</th>
+                      -->
+                      <th class="col-md-1">序号</th>
+                      <th class="col-md-6">文件名</th>
+                      <th class="col-md-3">上传时间</th>
+                      <th class="col-md-2">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $counter=0;?>
+                    <?php $counter1=0;?>
+                    <?php foreach($wage_doc as $a => $b):?>
+                    <?php if($v['doc_type']==$b['doc_type']):?>
+                    <?php $counter1++;?>
+                    <tr>
+                      <td><?php echo $counter1;?></td>
+                      <td><a href='<?php echo base_url($b['doc_path']);?>' target="_blank"><?php echo $b['doc_name'];?></a></td>
+                      <td><?php echo $b['number'];?></td>
+                      <td>
+                        <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal<?php echo $counter;?>"><i class="fa fa-trash">删除</i></a>
+                        <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $counter;?>">
+                          <div class="modal-content-month">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                              <h4>请确认</h4>
+                            </div>
+                            <div class="modal-body">
+                              <h4 style="text-align:left">确认删除吗？</h4>
+                            </div>
+                            <div class="modal-footer">   
+                              <form action='<?php echo base_url('super_wage/wage_doc_delete')?>' method='POST'>
+                              <input type='hidden' value="<?php echo $b['number']; ?>" name='time'/>
+                              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                              <button type="submit" class="btn btn-success btn-ok">确认删除</a>
+                              </form>
+                            </div>
+                          </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                      </td>
+                    </tr>
+                    <?php endif;?>
+                    <?php $counter++;?>
+                  <?php endforeach;?>
+
+                  </tbody>
+                </table>
+              </div>
+            
+              <?php endforeach;?>
           </div>
         </div>
       </div>
@@ -56,11 +156,49 @@
     $(document).ready(function() {
         $("#uploadWageDoc").addClass('active');
         $("#uploadWageDocNav").addClass('active');
+        $('tbody').sortable();
+        $('#typetable').sortable().disableSelection();
+        /*
+          $('#wageDocTable'+$type_option).DataTable({
+          language:{
+              "sProcessing": "处理中...",
+              "sLengthMenu": "显示 _MENU_ 项",
+              "sZeroRecords": "没有匹配结果",
+              "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+              "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+              "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+              "sInfoPostFix": "",
+              "sSearch": "搜索:",
+              "sUrl": "",
+              "sEmptyTable": "表中数据为空",
+              "sLoadingRecords": "载入中...",
+              "sInfoThousands": ",",
+              "oPaginate":{
+                  "sFirst": "首页",
+                  "sPrevious": "上页",
+                  "sNext": "下页",
+                  "sLast": "末页"
+              },
+              "oAria":{
+                  "sSortAscending": ": 以升序排列此列",
+                  "sSortDescending": ": 以降序排列此列"
+              }
+          }      
+        });
+        
+        }*/
+        
     });
     function t(obj){
       if(obj.options[obj.selectedIndex].value == "-1")
         document.getElementById("select_custom").style.display="";
       else 
         document.getElementById("select_custom").style.display="none";
+    }
+    function new_order(obj){
+      for(var i=0;i<<?php echo count($type_option);?>;i++){
+        document.getElementById("");
+      }
+      
     }
   </script>

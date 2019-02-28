@@ -40,7 +40,7 @@
                 <tr>
                   <th>序号</th>
                   <th>日期</th>
-                  <!--<th>操作</th>-->
+                  <th>操作</th>
                 </tr>
               </thead>
               <tbody>
@@ -49,10 +49,10 @@
                 <tr>
                   <td><?php echo $counter++;?></td>
                   <td><?php echo $v['date_tag'];?></td>
-                  <!--
+
                   <td>
-                    <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash">删除</i></a>
-                    <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                    <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal<?php echo $counter;?>"><i class="fa fa-trash">删除</i></a>
+                    <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $counter;?>">
                       <div class="modal-content-month">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -63,16 +63,16 @@
                         </div>
                         <div class="modal-footer">
                           
-                          <form action='<?php echo base_url('super_wage/wage_doc_delete')?>' method='POST'>
-                          <input type='hidden' value="<?php echo $v['number']; ?>" name='time'/>
+                          <form action='<?php echo base_url('super_wage/wage_delete')?>' method='POST'>
+                          <input type='hidden' value="<?php echo $v['date_tag']; ?>" name='time'/>
                           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                          <button type="submit" class="btn btn-success btn-ok">确认删除</a>
+                          <button type="submit" class="btn btn-success btn-danger">确认删除</a>
                           </form>
                         </div>
                       </div>
                     </div>
                   </td>
-                   -->
+                                    <!-- -->
                 </tr>
                 
                 <?php endforeach;?>

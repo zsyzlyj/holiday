@@ -28,15 +28,13 @@
                 </fieldset>
               </form>
             </div>
-            <div style="col-md-6">
-              
+            <div style="col-md-12">
               <?php foreach($type_array as $a => $b):?>
-                <h3><?php echo $b['doc_type'];?></h3>
-
-                <table id="wageTable" class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;">
+                <h3><?php echo $b['doc_type'];?></h3><br />
+                <table id="wageTable" class="table table-striped table-bordered table-responsive" style="white-space:nowrap;">
                 <thead>
-                  <th style="text-align: center;">序号</th>
-                  <th style="text-align: center;">文件名</th>
+                  <th class="col-md-1">序号</th>
+                  <th class="col-md-11">文件名</th>
                 </thead>
                 <tbody>
                 <?php $counter=0;?>
@@ -44,12 +42,13 @@
                   <tr>
                     <?php if($b['doc_type']==$v['doc_type']):?>
                       <td style="text-align: center;"><?php echo ++$counter;?></td>
-                      <td style="text-align: center;"><a href='<?php echo base_url($v['doc_path']);?>' target="_blank"><?php echo $v['doc_name']?></a></td>
+                      <td><a href='<?php echo base_url($v['doc_path']);?>' target="_blank"><?php echo $v['doc_name']?></a></td>
                     <?php endif;?>
                   </tr>
                 <?php endforeach;?>
                 </tbody>
                 </table>
+                <hr />
               <?php endforeach;?>
             </div>
           </div>

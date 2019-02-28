@@ -29,4 +29,9 @@ class Model_wage_doc extends CI_Model{
 			return ($delete == true) ? true : false;
 		}
 	}
+	public function getWageDocOrder(){
+		$sql = "SELECT * from wage_doc_order";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 }

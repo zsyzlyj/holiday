@@ -27,7 +27,7 @@
           </li>
           <li id="searchspMainMenu">
             <a href="<?php echo base_url('wage/searchsp') ?>">
-              <i class="fa fa-cny"></i> <span>专项附件扣除信息</span>
+              <i class="fa fa-cny"></i> <span>专项附加扣除信息</span>
             </a>
           </li>
           

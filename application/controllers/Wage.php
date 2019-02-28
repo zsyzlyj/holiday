@@ -51,9 +51,9 @@ class Wage extends Admin_Controller{
                 // create a page (landscape or portrait depending on the imported page size)
                 if ($size['width'] > $size['height']) $pdf->AddPage('L', array($size['width'], $size['height']));
                 else $pdf->AddPage('P', array($size['width'], $size['height']));
-                $pdf->SetFont('','B','12');
-                $pdf->SetFont('songti','',11);
-                $pdf->SetTextColor(211,211,211);
+                #$pdf->SetFont('','B','12');
+                $pdf->SetFont('songti','','16');
+                $pdf->SetTextColor(250,250,250);
                 #$pdf->SetTextColor(255,192,203);
                 #$pdf->RotatedText(100,100,'Rina_lyj',45);
                 for($i=20;$i<$size['width'];$i+=70){
@@ -497,6 +497,41 @@ class Wage extends Admin_Controller{
 
         $pdf->Output('证明.pdf', 'I');
         //输出PDF         
+    }
+    public function show_wage_proof(){
+        $this->proof_creator('wage');
+    }
+    
+    public function show_bank_wage_proof(){
+        $this->proof_creator('bank_wage');
+    }
+    
+    public function show_fund_wage_proof(){
+        $this->proof_creator('fund_wage');
+    }
+    
+    public function show_royal_proof(){
+        $this->proof_creator('royal');
+    }
+    
+    public function show_on_post_1_proof(){
+        $this->proof_creator('on_post_1');
+    }
+    
+    public function show_on_post_2_proof(){
+        $this->proof_creator('on_post_2');
+    }
+    public function show_on_post_3_proof(){
+        $this->proof_creator('on_post_3');
+    }
+    public function show_on_post_4_proof(){
+        $this->proof_creator('on_post_4');
+    }
+    public function show_on_post_5_proof(){
+        $this->proof_creator('on_post_5');
+    }
+    public function show_on_post_6_proof(){
+        $this->proof_creator('on_post_6');
     }
     public function search_excel($doc_name,$user_id){
         $this->load->library("phpexcel");//ci框架中引入excel类

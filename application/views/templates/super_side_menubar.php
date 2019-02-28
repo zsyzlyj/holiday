@@ -137,6 +137,8 @@
             <li id="manage_wage_notice"><a href="<?php echo base_url('super_wage/notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
           </ul>
         </li>
+        <li id="uploadWageDocNav"><a href="<?php echo base_url('super_wage/wage_doc_import') ?>"><i class="fa fa-cloud"></i> 薪酬文件导入和汇总</a></li>
+        <!--
         <li class="treeview" id="uploadWageDoc">
           <a href="#">
             <i class="fa fa-cloud"></i>
@@ -150,7 +152,7 @@
             <li id="showWageDocNav"><a href="<?php echo base_url('super_wage/wage_doc_list') ?>"><i class="fa fa-circle-o"></i> 薪酬文件汇总</a></li>
           </ul>
         </li>
-        
+        -->
         <li id="wageProofMainMenu">
           <a href="<?php echo base_url('super_wage/wage_proof') ?>">
             <i class="fa fa-money"></i>

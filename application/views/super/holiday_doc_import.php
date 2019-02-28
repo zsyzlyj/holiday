@@ -31,7 +31,6 @@
                 <h5><input type="file" name="file" id="file" accept=".pdf"/></h5>
                 <br />
                 <button type="submit" id="submit" name="import" class="btn btn-warning" >导入</button>
-        
             </div>
         </form>
       </div>

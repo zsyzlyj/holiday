@@ -54,6 +54,7 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap-table/bootstrap-table.min.css') ?>">
   <!--2019.02.21 删除-->
   <!--
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') ?>">
@@ -147,7 +148,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   
   <script src="<?php echo base_url('assets/quill/quill.min.js') ?>"></script>
-
+  <script src="<?php echo base_url('assets/bootstrap-table/bootstrap-table.min.js') ?>"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">

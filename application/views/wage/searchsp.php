@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
       <h1>
-        专项附件扣除信息
+        专项附加扣除信息
       </h1>
     </section>
 
@@ -67,7 +67,7 @@
                 </tbody>
               </table>
               <?php elseif($chosen_month!=""): ?>
-                无当月专项附件扣除记录
+                无当月专项附加扣除记录
               <?php endif; ?>
               </fieldset>
             </div>

@@ -84,7 +84,11 @@ class Model_wage extends CI_Model{
 		$delete = $this->db->query($sql);
 		return ($delete == true) ? true : false;
 	}
-	
+	public function getDatetag(){
+		$sql='select distinct date_tag from wage order by date_tag';
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 	public function deleteByDate($date){
 		$sql='delete from wage where locate(?,date_tag)';
 		$delete = $this->db->query($sql,array($date));

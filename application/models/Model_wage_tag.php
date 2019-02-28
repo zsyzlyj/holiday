@@ -49,11 +49,7 @@ class Model_wage_tag extends CI_Model{
 		$sql='delete from wage_tag';
 		$delete = $this->db->query($sql);
 	}
-	public function getDatetag(){
-		$sql='select distinct date_tag from wage order by date_tag';
-		$query = $this->db->query($sql);
-		return $query->result_array();
-	}
+	
 	public function getModeById($id){
 		if($id){
 			$sql = "SELECT service_mode FROM wage_tag WHERE user_id = ?";	
