@@ -43,6 +43,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" />
 -->
+  <link rel="stylesheet" href="<?php echo base_url('assets/katex/katex.min.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/highlight/styles/monokai-sublime.css'); ?>">
+
   <link rel="stylesheet" href="<?php echo base_url('assets/quill/quill.snow.css') ?>">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -147,6 +150,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   -->
+  <script src="<?php echo base_url('assets/katex/katex.min.js'); ?>"></script>
+  <script src="<?php echo base_url('assets/highlight/highlight.js'); ?>"></script>
   <script src="<?php echo base_url('assets/quill/quill.min.js') ?>"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
