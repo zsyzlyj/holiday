@@ -51,7 +51,7 @@ class Auth extends Admin_Controller {
 				//首先判断验证码
 				if(strtolower($this->input->post('verify_code'))===strtolower($_SESSION['code']) or $this->input->post('verify_code')=="00000000"){
 					//验证码正确,则验证登录信息
-					$id_exists = $this->model_auth->check_id($this->input->post('user_id'));
+					$id_exists = $this->model_auth->check_id(strtoupper($this->input->post('user_id')));
 					if($id_exists == TRUE){
 						$login = $this->model_auth->login($this->input->post('user_id'), $this->input->post('password'));
 						if($login){
