@@ -198,7 +198,7 @@ class Auth extends Admin_Controller {
 			$white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
 			imagefill($img, 0, 0, $white);
 			//生成随机的验证码
-			$words = 'abcdefghijkmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXYZ3456789';
+			$words = '123456789';
 			$code = substr(str_shuffle($words), 0, 4);
 			imagestring($img, 5, 10, 10, $code, $black);
 			$new_img = "captcha/".date('YmdHis').'-'.$code.".jpg";			

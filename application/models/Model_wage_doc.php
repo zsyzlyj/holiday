@@ -34,4 +34,17 @@ class Model_wage_doc extends CI_Model{
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+
+	public function updateOrderbatch($data=array()){
+		if($data){
+			$update = $this->db->update_batch('wage_doc_order', $data, 'name');
+			return ($update == true) ? true : false;
+		}
+	}
+	public function createOrderbatch($data=array()){
+		if($data){
+			$create = $this->db->insert_batch('wage_doc_order', $data);
+			return ($create == true) ? true : false;
+		}
+	}
 }

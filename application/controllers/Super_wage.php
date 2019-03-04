@@ -1395,8 +1395,17 @@ class Super_wage extends Admin_Controller {
     public function wage_doc_order(){
         $this->data['type_option']=$this->model_wage_doc->getDocType();
         $this->data['wage_doc']=$this->model_wage_doc->getWageDocData();
+        $this->data['wage_doc_order']="";
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            #$_POST[];
+            $data=array();
+            foreach($_POST as $k => $v){
+                array_push($data,array('doc_order' => $k,'doc_type' => $v));
+            }
+            if($this->model_wage_doc->getWageDocOrder()){
+                $this->model_wage_doc->updateOrderbatch($data);
+            }
+            else $this->model_wage_doc->createOrderbatch($data);
+            unset($data);
             $this->data['wage_doc_order']=$this->model_wage_doc->getWageDocOrder();
         }
         $this->render_super_template('super/wage_doc_import',$this->data);

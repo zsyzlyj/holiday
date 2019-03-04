@@ -57,12 +57,12 @@ class Wage extends Admin_Controller{
                 #$pdf->SetTextColor(255,192,203);
                 #$pdf->RotatedText(100,100,'Rina_lyj',45);
                 for($i=20;$i<$size['width'];$i+=70){
-                    for($j=50;$j<$size['height'];$j+=140)
+                    for($j=50;$j<$size['height'];$j+=90)
                         $pdf->RotatedText($i,$j,$this->data['user_name'],45);
                 }
     
                 for($i=50;$i<$size['width'];$i+=70){
-                    for($j=120;$j<$size['height'];$j+=140)
+                    for($j=120;$j<$size['height'];$j+=90)
                         $pdf->RotatedText($i,$j,$this->data['user_name'],45);
                 }
                 // use the imported page

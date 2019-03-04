@@ -49,40 +49,33 @@
               <h4>文件类型列表</h4>
               <div class="col-md-6 col-xs-6">
               <hr />
-              <form>
-              <table id="typetable" class="table table-bordered table-striped" style="overflow:scroll;border-color:black;">
+              <?php if($wage_doc_order):?>
+              <?php $option_order=$wage_doc_order;?>
+              <?php else:?>            
+              <?php $option_order=$type_option;?>
+              <?php endif;?>
+              <form id="type_form">
+              <table id="type_table" class="table table-bordered table-striped" style="overflow:scroll;border-color:black;">
                 <thead>
                   <th style="border-color:black;">序号</th>
                   <th style="border-color:black;">类别名</th>
                 </thead>
                 <tbody>
-                  <?php if($wage_doc_order):?>
-                  <?php foreach ($wage_doc_order as $k => $v): ?>
+                  <?php foreach ($option_order as $k => $v): ?>
                   <tr style="cursor:move;border-color:black;">
                     <td style="border-color:black;"><?php echo $k+1;?></td>
-                    <td style="border-color:black;"><?php echo $v['doc_type']; ?></td>
-                    <input name="doc_type<?php echo $k+1;?>" type="hidden"/>
+                    <td id="doc_type<?php echo $k+1;?>" style="border-color:black;"><?php echo $v['doc_type']; ?></td>
                   </tr>
                   <?php endforeach ?>
-                  <?php else:?>
-                  <?php foreach ($type_option as $k => $v): ?>
-                  <tr style="cursor:move;border-color:black;">
-                    <td style="border-color:black;"><?php echo $k+1;?></td>
-                    <td style="border-color:black;"><?php echo $v['doc_type']; ?></td>
-                    <input name="doc_type<?php echo $k+1;?>"  type="hidden"/>
-                  </tr>
-                  <?php endforeach ?>
-                  <?php endif;?>
-
                 </tbody>
               </table>
-              <input name="doc_total" type="hidden" value="<?php echo $k+1;?>"/>
-              <button name="ajax_submit" onclick="new_order()" class="button button-primary" type="button">ajax提交</button>
+              <button name="ajax_submit" onclick="new_order()" class="btn btn-success" type="button">提交新顺序</button>
               </form>
               </div>
             </div>
             <hr />
-            <?php foreach ($type_option as $k => $v): ?>
+            
+            <?php foreach ($option_order as $k => $v): ?>
                 <hr />
                 <h3><?php echo $v['doc_type'];?><br/></h3>
                 <hr />
@@ -90,12 +83,6 @@
                 <table id="wageDocTable<?php echo $k;?>" class="table table-bordered table-striped" style="overflow:scroll;" style="border-color:black;">
                   <thead>
                     <tr>
-                      <!--
-                      <th style="width:50px">序号</th>
-                      <th style="width:673px">文件名</th>
-                      <th style="width:200px">上传时间</th>
-                      <th>操作</th>
-                      -->
                       <th class="col-md-1">序号</th>
                       <th class="col-md-6">文件名</th>
                       <th class="col-md-3">上传时间</th>
@@ -157,7 +144,7 @@
         $("#uploadWageDoc").addClass('active');
         $("#uploadWageDocNav").addClass('active');
         $('tbody').sortable();
-        $('#typetable').sortable().disableSelection();
+        $('.sorted_table').sortable();
         /*
           $('#wageDocTable'+$type_option).DataTable({
           language:{
@@ -195,10 +182,37 @@
       else 
         document.getElementById("select_custom").style.display="none";
     }
+    function post(URL, PARAMS){
+        var temp = document.createElement("form");
+        temp.action = URL;
+        temp.method = "post";
+        temp.style.display = "none";
+        for (var x in PARAMS)
+        {
+            var opt = document.createElement("textarea");
+            opt.name = x;
+            opt.value = PARAMS[x];
+            // alert(opt.name)
+            temp.appendChild(opt);
+        }
+        document.body.appendChild(temp);
+        temp.submit();
+        return temp;
+    } 
     function new_order(obj){
-      for(var i=0;i<<?php echo count($type_option);?>;i++){
-        document.getElementById("");
+      var tb=document.getElementById('type_table');
+      var rows=tb.rows;
+      var type_array=new Array();
+      for(var i=1;i<rows.length;i++){
+        var cells=rows[i].cells;
+        console.log(cells[1].innerHTML);
+        //document.getElementById("type_form").innerHTML="<input name='order"+i+"' value='"+cells[1].innerHTML+"' type='hidden'/>";
+        document.getElementById("type_form").innerHTML+="<input name='order"+i+"' value='"+cells[1].innerHTML+"' type='hidden'/>";
+        //document.getElementById("type_form").innerHTML("<input name='order"+i+"' value='"+cells[1].innerHTML+"' type='hidden'/>");
+        //建一个数组把这些数据存起来，最后放到post中传到后台，完成！
+        type_array[i]=cells[1].innerHTML;
+
       }
-      
+      post('<?php echo base_url("super_wage/wage_doc_order")?>', type_array);
     }
   </script>
