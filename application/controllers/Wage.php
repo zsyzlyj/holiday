@@ -34,28 +34,23 @@ class Wage extends Admin_Controller{
     public function watermark($path){
         $name=str_replace('.pdf',$this->data['user_id'].'.pdf',$path);
         if(!file_exists($name)){
-            require_once(APPPATH.'libraries\FPDI\src\fpdi.php');
-            require_once(APPPATH.'libraries\PDF_rotate.php');
             #$pdf = new \setasign\Fpdi\Fpdi();
             $pdf =new PDF();
             // get the page count
             $pageCount = $pdf->setSourceFile($path);
+            $pdf->SetFont('songti','','16');
+            $pdf->SetTextColor(250,250,250);
             // iterate through all pages
-            for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++)
-            {
+            for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++){
                 // import a page
                 $templateId = $pdf->importPage($pageNo);
                 #$pdf->AddGBFont(); 
                 // get the size of the imported page
                 $size = $pdf->getTemplateSize($templateId);
                 // create a page (landscape or portrait depending on the imported page size)
-                if ($size['width'] > $size['height']) $pdf->AddPage('L', array($size['width'], $size['height']));
+                if ($size['width'] > $size['height']) 
+                    $pdf->AddPage('L', array($size['width'], $size['height']));
                 else $pdf->AddPage('P', array($size['width'], $size['height']));
-                #$pdf->SetFont('','B','12');
-                $pdf->SetFont('songti','','16');
-                $pdf->SetTextColor(250,250,250);
-                #$pdf->SetTextColor(255,192,203);
-                #$pdf->RotatedText(100,100,'Rina_lyj',45);
                 for($i=20;$i<$size['width'];$i+=70){
                     for($j=50;$j<$size['height'];$j+=90)
                         $pdf->RotatedText($i,$j,$this->data['user_name'],45);
@@ -74,6 +69,8 @@ class Wage extends Admin_Controller{
     }
     public function wage_doc(){
         $wage_doc = $this->model_wage_doc->getWageDocData();
+        require_once(APPPATH.'libraries\FPDI\src\fpdi.php');
+        require_once(APPPATH.'libraries\PDF_rotate.php');
         foreach($wage_doc as $k => $v){
             $wage_doc[$k]['doc_path']=$this->watermark($v['doc_path']);
         }
@@ -98,7 +95,6 @@ class Wage extends Admin_Controller{
     public function staff(){
         $this->search();
     }
-    
     public function apply_on_post_proof(){
         $user_id=$this->session->userdata('user_id');
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -696,7 +692,6 @@ class Wage extends Admin_Controller{
                                     $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
                                 }
                             }
-                            
                             $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
                             $PHPExcel = $reader->load($dir.'/'.$child_dir, 'utf-8'); // 载入excel文件
                             $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表

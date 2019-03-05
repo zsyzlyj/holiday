@@ -42,18 +42,18 @@
               </br>
 
               <h3 class="box-title"><font color="red">年假文件：</font></h3>
-              <div style="col-md-4">
+              <div style="col-md-2">
               <h3></h3>
-              <table class="table table-striped table-bordered" style="white-space:nowrap;text-align: center;">
+              <table class="table table-striped table-bordered" style="white-space:nowrap;">
                 <thead>
-                  <th style="text-align: center;">序号</th>
-                  <th style="text-align: center;">文件名</th>
+                  <th style="col-md-2">序号</th>
+                  <th style="col-md-2">文件名</th>
                 </thead>
                 <tbody>
                 <?php foreach($holiday_doc as $k => $v):?>
                   <tr>
                   <td style="text-align: center;"><?php echo $k+1;?></td>
-                  <td style="text-align: center;"><a href='<?php echo base_url($v['doc_path']);?>' target="_blank"><?php echo $v['doc_name']?></a>
+                  <td><a href='<?php echo base_url($v['doc_path']);?>' target="_blank"><?php echo $v['doc_name']?></a>
                   </tr>
                 <?php endforeach; ?>
                 </tbody>
