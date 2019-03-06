@@ -21,7 +21,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <div class="container">
+            <div style="overflow:scroll;">
               <div class="col-md-6 col-md-offset-3">
                 <?php if($notice_data): ?> 
                 <?php foreach ($notice_data as $notice): ?>

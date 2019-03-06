@@ -23,7 +23,7 @@
           <?php endif; ?>
           <div class="box">
             <div class="box-body">
-              <div class="container">
+              <div style="overflow:scroll;">
                 <form class="form-horizontal" action="<?php echo base_url('super_wage/download_page')?>" method="post" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
                   <fieldset>
                     <div id="legend" class="">

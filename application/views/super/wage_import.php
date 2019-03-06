@@ -30,7 +30,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <div class="container">
+            <div style="overflow:scroll;">
               <form action="<?php echo base_url('super_wage/wage_import') ?>" method="post"
                   name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
                   <fieldset>

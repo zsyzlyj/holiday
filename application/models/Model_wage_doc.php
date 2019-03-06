@@ -30,14 +30,14 @@ class Model_wage_doc extends CI_Model{
 		}
 	}
 	public function getWageDocOrder(){
-		$sql = "SELECT * from wage_doc_order";
+		$sql = "SELECT * from wage_doc_order ORDER BY doc_order";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 
 	public function updateOrderbatch($data=array()){
 		if($data){
-			$update = $this->db->update_batch('wage_doc_order', $data, 'name');
+			$update = $this->db->update_batch('wage_doc_order', $data, 'doc_type');
 			return ($update == true) ? true : false;
 		}
 	}

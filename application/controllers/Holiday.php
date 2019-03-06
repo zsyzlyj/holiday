@@ -129,7 +129,7 @@ class Holiday extends Admin_Controller {
 
         $this->data['dept_options']=$admin_result;
         $this->data['submitted'] = $submitted;
-        #$this->data['submitted']=10;        
+        $this->data['submitted']=4;        
         $this->data['plan_data'] = $result;
         $this->data['feedback'] = $this->model_feedback->getFeedbackByDept($selected_dept);
         $this->render_template('holiday/mydeptplan', $this->data);

@@ -81,10 +81,10 @@
                 
                 <form style="margin:0px;display:inline;" action='<?php echo base_url('super_holiday/export_mydeptplan') ?>' method='post'>
                   <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
-                  <?php if(strstr($feedback['confirm_status'],'同意')):?>
-                  <button class="btn btn-warning">导出</button>
-                  <?php else:?>
+                  <?php if(strstr($feedback['confirm_status'],'不同意')):?>
                   <button disabled class="btn btn-warning">导出</button>
+                  <?php else:?>
+                  <button class="btn btn-warning">导出</button>
                   <?php endif; ?>
                 </form>
                 </h3>

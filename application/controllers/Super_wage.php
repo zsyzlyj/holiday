@@ -940,7 +940,7 @@ class Super_wage extends Admin_Controller {
         }
     }
     public function show_import_list(){
-        $this->data['import_list']=$this->model_wage_tag->getDatetag();
+        $this->data['import_list']=$this->model_wage->getDatetag();
         $this->render_super_template('super/wage_import_list',$this->data);
     }
     public function wage_temp_put(){
@@ -1390,7 +1390,7 @@ class Super_wage extends Admin_Controller {
         }
         else{
             $this->render_super_template('super/wage_doc_import',$this->data);
-        } 
+        }
     }
     public function wage_doc_order(){
         $this->data['type_option']=$this->model_wage_doc->getDocType();
@@ -1399,7 +1399,7 @@ class Super_wage extends Admin_Controller {
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data=array();
             foreach($_POST as $k => $v){
-                array_push($data,array('doc_order' => $k,'doc_type' => $v));
+                array_push($data,array('doc_type' => $v,'doc_order' => $k));
             }
             if($this->model_wage_doc->getWageDocOrder()){
                 $this->model_wage_doc->updateOrderbatch($data);

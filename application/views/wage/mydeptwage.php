@@ -33,7 +33,7 @@
             
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="container">
+              <div style="overflow:scroll;">
                 <form action="<?php echo base_url('wage/search_mydept')?>" class="form-horizontal" method="post" role="form">
                   <fieldset>
                     <legend></legend>
