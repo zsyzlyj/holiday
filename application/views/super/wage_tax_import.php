@@ -5,7 +5,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      专项附加扣除信息导入
+      个税信息导入
     </h1>
   </section>
 
@@ -31,7 +31,7 @@
           <!-- /.box-header -->
           <div class="box-body">
             <div>  
-              <form action="<?php echo base_url('super_wage/wage_sp_import') ?>" method="post"
+              <form action="<?php echo base_url('super_wage/wage_tax_import') ?>" method="post"
                   name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
                   <fieldset>
                   <legend></legend>
@@ -56,7 +56,7 @@
                       <div class="controls">
                         <button type="submit" id="submit" name="import" class="btn btn-warning" >上传</button>
                         <a class="btn btn-info" href="<?php echo base_url($path) ?>">下载模板</a>
-                        <a class="btn btn-primary" href="<?php echo base_url('super_wage/searchsp') ?>">返回</a>
+                        <a class="btn btn-primary" href="<?php echo base_url('super_wage/searchtax') ?>">返回</a>
                       </div>
                     </div>
                   </fieldset>
@@ -74,7 +74,7 @@
 <script type="text/javascript">
     $(document).ready(function() { 
       $("#taxInfo").addClass('active');
-      $("#searchwagespMainMenu").addClass('active');
+      $("#searchtaxMainMenu").addClass('active');
       $(".form_datetime").datetimepicker({
         bootcssVer:3,
         format: "yyyy-mm",

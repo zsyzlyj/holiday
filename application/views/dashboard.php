@@ -1,5 +1,6 @@
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="background:url('<?php echo base_url('assets/images/dashboardbg.jpg')?>');background-attachment:fix;background-repeat:norepeat;background-size:cover;);">
+  <!--<div class="content-wrapper" style="background:url('<?php echo base_url('assets/images/dashboardbg.jpg')?>');background-attachment:fix;background-repeat:norepeat;background-size:cover;);">-->
+  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -47,7 +48,6 @@
           <div class="small-box bg-yellow" style="cursor:pointer" onclick="window.open('<?php echo base_url('users/profile');?>','_self')">
             <div class="inner">
               <h3>个人信息</h3>
-
               <p>Personal Information</p>
             </div>
             <div class="icon">

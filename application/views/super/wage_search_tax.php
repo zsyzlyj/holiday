@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
       <h1>
-        专项附加扣除信息
+        个税信息
       </h1>
     </section>
 
@@ -19,7 +19,7 @@
           <!-- /.box-header -->
           <div class="box-body">
             <div>
-              <form action="<?php echo base_url('super_wage/searchsp')?>" class="form-horizontal" method="post" role="form">
+              <form action="<?php echo base_url('super_wage/searchtax')?>" class="form-horizontal" method="post" role="form">
               <fieldset>
                 <legend></legend>
                 <div class="form-group">
@@ -32,7 +32,7 @@
                     <?php endif;?>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                    <span class="input-group-btn"><a href="<?php echo base_url('super_wage/wage_sp_import') ?>" class="btn btn-warning" style="width:80px;margin-left:5px">上传</a></span>
+                    <span class="input-group-btn"><a href="<?php echo base_url('super_wage/wage_tax_import') ?>" class="btn btn-warning" style="width:80px;margin-left:5px">上传</a></span>
                     <span class="input-group-btn"><button class='btn btn-info' style="width:80px;margin-left:5px">查询</button></span>
                     </form>
                     <span class="input-group-btn"><a href="javascript:void(0)" class="btn btn-danger"  style="width:80px;margin-left:5px" data-toggle="modal" data-target="#myModal">删除</a></span>
@@ -46,7 +46,7 @@
                           <h4 style="text-align:left">确认删除吗？</h4>
                         </div>
                         <div class="modal-footer">
-                          <form action='<?php echo base_url('super_wage/wage_sp_delete')?>' method='POST'>
+                          <form action='<?php echo base_url('super_wage/wage_tax_delete')?>' method='POST'>
                           <?php if($chosen_month):?>
                           <input type='hidden' value="<?php echo $chosen_month;?>" name='time'/>
                           <?php else:?>
@@ -64,18 +64,18 @@
             </div>
             <hr />
             <?php if($chosen_month): ?>
-            <h4>中山联通<?php echo date_format(date_create($chosen_month),"Y年m月");?>专项附加扣除明细</h4>
+            <h4>中山联通<?php echo date_format(date_create($chosen_month),"Y年m月");?>个税信息明细</h4>
             <hr />
             <?php endif;?>
             <div style="overflow:scroll;">
               <fieldset>
-              <?php if($wage_sp): ?>
+              <?php if($wage_tax): ?>
               <?php $counter=0;?>
               <table id="wageTable"class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;border-color:silver;">
                 <thead>
                   <tr>
                     <th style="text-align:center;border-color:silver;">序号</th>
-                    <?php foreach($wage_sp_attr as $k => $v):?>
+                    <?php foreach($wage_tax_attr as $k => $v):?>
                     <?php if($v!="" and $k!="date_tag"):?>
                       <th style="text-align:center;border-color:silver;"><?php echo $v;$counter++;?></th>
                     <?php endif;?>
@@ -84,7 +84,7 @@
                 </thead>
                 <tbody>
                   <?php $counterdata=0;$colorcounter=0;?>
-                  <?php foreach($wage_sp as $a => $b): ?>
+                  <?php foreach($wage_tax as $a => $b): ?>
                     <?php if($colorcounter%2==0):?>
                     <tr style="border-color:silver;">
                     <?php elseif($colorcounter%2==1):?>
@@ -102,7 +102,7 @@
                 </tbody>
               </table>
               <?php elseif($chosen_month!=""): ?>
-                无当月专项附加扣除记录
+                无当月个税信息记录
               <?php endif; ?>
               </fieldset>
             </div>
@@ -117,7 +117,7 @@
 <script type="text/javascript">
     $(document).ready(function() { 
       $("#taxInfo").addClass('active');
-      $("#searchwagespMainMenu").addClass('active');
+      $("#searchtaxMainMenu").addClass('active');
       $(".form_datetime").datetimepicker({
         bootcssVer:3,
         format: 'yyyy-mm',

@@ -246,7 +246,7 @@ class Wage extends Admin_Controller{
     }
     public function apply_wage_proof(){
         $user_id=$this->session->userdata('user_id');
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){            
             $apply_data=array(
                 'user_id' => $user_id,
                 'name' => $this->session->userdata('user_name'),
@@ -263,11 +263,16 @@ class Wage extends Admin_Controller{
         //获取数据库中 已提交 状态的这个人证明开具信息
         #$apply_info=$this->model_wage_apply->getApplyByIdAndStatus($user_id,'已提交');
         $apply_info=$this->model_wage_apply->getApplyById($user_id);
+        
         $this->data['name']=array(
             0 => '收入证明',
             1 => '收入证明（农商银行）',
             2 => '收入证明（公积金）',
         );
+        $url_set=array();
+        foreach($this->data['name'] as $k => $v){
+            array_push($url_set,$this->proof_creator($v));
+        }
         $status=array();
         $submit_status=array();
         $feedback_status=array();
@@ -277,7 +282,7 @@ class Wage extends Admin_Controller{
             $submit_status[$i]='';
             $feedback_status[$i]='';
         }
-        //如果已提交则为false，不能浏览
+        //如果已提交则为false，不能再提交
         foreach($apply_info as $k =>$v){
             switch($v['type']){
                 case '收入证明':
@@ -313,11 +318,8 @@ class Wage extends Admin_Controller{
         $this->data['feedback_status']=$feedback_status;
         $this->data['status']=$status;
 
-        $this->data['url']=array(
-            0 => 'wage/show_wage_proof',
-            1 => 'wage/show_bank_wage_proof',
-            2 => 'wage/show_fund_wage_proof'
-        );
+        $this->data['url']=$url_set;
+        unset($url_set);
         $this->render_template('wage/apply', $this->data);
     }
     /**
@@ -424,17 +426,13 @@ class Wage extends Admin_Controller{
         $pdf->setFontStretching(100);
         $pdf->setFontSpacing(0);
         //设置字体 
-        
         #$pdf->setCellHeightRatio(3);
         $pdf->setCellHeightRatio(3.0);
-        
         $pdf->AddPage('P', 'A4'); 
-        
         //设置背景图片
         $img_file = 'assets/images/Unicom.jpg';
         $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
         $user_id=$this->data['user_id'];
-
         $user_data=$this->model_wage_tag->getTagById($user_id);
         #$cage=$holiday_data['Companyage'];
         #$user_id=$user_data['user_id'];
@@ -581,10 +579,10 @@ class Wage extends Admin_Controller{
         }
         //输出PDF
         $date_name=date('YmdHis');
-        $path=dirname(__FILE__,3).'/wageproof/'.$username.'-'.$type.'.pdf';
-        $pdf->Output('证明','I');
-        #$pdf->Output($path, 'F');
-        $url='wageproof/'.$username.'-'.$type.'.pdf';
+        $path=dirname(__FILE__,3).'/wageproof/'.$username.'-'.$type.'-temp.pdf';
+        #$pdf->Output('证明','I');
+        $pdf->Output($path, 'F');
+        $url='wageproof/'.$.$username.'-'.$type.'-temp.pdf';
         return $url;
         /*
         switch($type){

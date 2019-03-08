@@ -20,6 +20,8 @@ class Super_wage extends Admin_Controller {
         $this->load->model('model_func');
         $this->load->model('model_wage_sp');
         $this->load->model('model_wage_sp_attr');
+        $this->load->model('model_wage_tax');
+        $this->load->model('model_wage_tax_attr');
         $this->data['user_name'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
             redirect('super_auth/login','refresh');
@@ -1669,8 +1671,12 @@ class Super_wage extends Admin_Controller {
                             }
                             else{
                                 $this->wage_sp_excel_put($doc_name);
-                                $this->data['import_list']=$this->model_wage_sp->getDatetag();
-                                $this->render_super_template('super/wage_sp_import_list',$this->data);
+                                $this->data['wage_sp']="";
+                                $this->data['wage_sp_attr']="";
+                                $this->data['chosen_month']="";
+                                $this->render_super_template('super/wage_search_sp',$this->data);
+                                #$this->data['import_list']=$this->model_wage_sp->getDatetag();
+                                #$this->render_super_template('super/wage_sp_import_list',$this->data);
                             }
                         }
                     }
@@ -1708,8 +1714,8 @@ class Super_wage extends Admin_Controller {
     }
     public function wage_delete(){
         $this->model_wage->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6));
-        $this->data['wage_sp']="";
-        $this->data['wage_sp_attr']="";
+        $this->data['wage']="";
+        $this->data['wage_attr']="";
         $this->data['chosen_month']="";
         $this->render_super_template('super/wage_search',$this->data);
     }
@@ -1719,5 +1725,140 @@ class Super_wage extends Admin_Controller {
         $this->data['wage_sp_attr']="";
         $this->data['chosen_month']="";
         $this->render_super_template('super/wage_search_sp',$this->data);
+    }
+    public function searchtax(){
+        $this->data['wage_tax']="";
+        $this->data['wage_tax_attr']="";
+        $this->data['chosen_month']="";
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $this->data['chosen_month']=$_POST['chosen_month'];
+            $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
+            if(strlen($doc_name)<=7 and $doc_name!=""){
+                $this->data['wage_tax']=$this->model_wage_tax->getTaxByDate($doc_name);
+                $this->data['wage_tax_attr']=$this->model_wage_tax_attr->getTaxByDate($doc_name);
+            }
+            $this->render_super_template('super/wage_search_tax',$this->data);  
+        }
+        else{
+            $this->render_super_template('super/wage_search_tax',$this->data);
+        }
+    }
+
+    public function wage_tax_excel_put($filename){
+        $this->load->library('phpexcel');//ci框架中引入excel类
+        $this->load->library('PHPExcel/IOFactory');
+ 
+        //先做一个文件上传，保存文件
+        $path=$_FILES['file'];
+        
+        //根据上传类型做不同处理
+        if(strstr($_FILES['file']['name'],'xlsx')){
+            $reader = new PHPExcel_Reader_Excel2007();
+            $filePath = 'uploads/wage/tax'.$filename.'.xlsx';
+            move_uploaded_file($path['tmp_name'],$filePath);
+        }
+        elseif(strstr($_FILES['file']['name'], 'xls')){
+            $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
+            $filePath = 'uploads/wage/tax'.$filename.'.xls';
+            move_uploaded_file($path['tmp_name'],$filePath);
+            
+        }
+        //薪酬文件记录写入
+        
+        $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
+        $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
+        $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+        $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+        $columnCnt = array_search($highestColumm, $cellName); 
+
+        $data = array();
+        $attribute = array();
+        $this->model_wage_tax->deleteByDate($filename);
+        $this->model_wage_tax_attr->deleteByDate($filename);
+        
+        for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            $temp = array();
+            for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
+                $cellId = $cellName[$colIndex].$rowIndex;  
+                $cell = $sheet->getCell($cellId)->getValue();
+                $cell = $sheet->getCell($cellId)->getCalculatedValue();
+                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                    $cell = $cell->__toString();
+                }
+                if($cell===0){
+                    $temp[$colIndex] = 0;    
+                }
+                else $temp[$colIndex] = $cell;
+            }
+            if($rowIndex==1){
+                foreach($temp as $k => $v){
+                    $wage_attr['attr'.($k+1)]=$v;
+                }
+                $wage_attr['date_tag']=$filename;
+            }
+            else{
+                $wage=array();
+                $counter=0;
+                foreach($temp as $k => $v){
+                    switch($k){
+                        case 0:$wage_tax['username']=$v;break;
+                        case 1:$wage_tax['user_id']=$v;break;
+                        default:$wage_tax['attr'.($k-1)]=$v;break;
+                    }
+                }
+                $wage_tax['date_tag']=$filename;
+                array_push($data,$wage_tax);
+                unset($wage_tax);
+            }
+            unset($temp);
+        }
+        
+        $this->model_wage_tax_attr->create($wage_attr);
+        $this->model_wage_tax->createbatch($data);   
+    }
+    
+    public function wage_tax_import(){
+        $this->data['path'] = 'uploads/standard/个税信息模板.xlsx';
+        if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('chosen_month',$_POST)){
+            $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
+            if(strstr($doc_name,'1899')){
+                $this->session->set_flashdata('error', '请选择月份!!');
+                $this->render_super_template('super/wage_tax_import',$this->data);
+            }
+            else{
+                if(strlen($doc_name)<=7 and $doc_name!=''){
+                    if($_FILES){
+                        if($_FILES['file']){
+                            if($_FILES['file']['error'] > 0){
+                                $this->session->set_flashdata('error', '请选择文件!!');
+                                $this->render_super_template('super/wage_tax_import',$this->data);
+                            }
+                            else{
+                                $this->wage_tax_excel_put($doc_name);
+                                $this->data['wage_tax']="";
+                                $this->data['wage_tax_attr']="";
+                                $this->data['chosen_month']="";
+                                $this->render_super_template('super/wage_search_tax',$this->data);
+                            }
+                        }           
+                    }
+                    else{
+                        $this->session->set_flashdata('error', '请选择文件!!');
+                        $this->render_super_template('super/wage_tax_import',$this->data);
+                    }
+                }
+            }
+        }
+        else{
+            $this->render_super_template('super/wage_tax_import',$this->data);
+        }
+    }
+    public function wage_tax_delete(){
+        $this->model_wage_tax->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6));
+        $this->data['wage_tax']="";
+        $this->data['wage_tax_attr']="";
+        $this->data['chosen_month']="";
+        $this->render_super_template('super/wage_search_tax',$this->data);
     }
 }
