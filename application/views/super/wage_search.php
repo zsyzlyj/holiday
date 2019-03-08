@@ -3,33 +3,24 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      工资明细汇总查询
+      工资明细信息
     </h1>
   </section>
-
-  <!-- Main content -->
+ <!-- Main content -->
   <section class="content">
     <!-- Small boxes (Stat box) -->
+    <br />  <br />
     <div class="row">
+      
       <div class="col-md-12 col-xs-12">
         <div class="box">
           <div class="box-header">
-            <!--
-            <h3 class="box-title" col><font color="red">公告：</font></h3>
-            </br>              </br>
-            <h4>
-              <?php if($notice_data): ?> 
-              <?php foreach ($notice_data as $notice): ?>
-              <?php echo $notice['content'];?>
-              <?php endforeach;?>
-              <?php endif ?>
-            </h4>
-            -->
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <div style="overflow:scroll;">
-              <form action="<?php echo base_url('super_wage/search')?>" class="form-horizontal" method="post" role="form">
+            <div class="col-md-12">
+              <div>
+                <form action="<?php echo base_url('super_wage/search')?>" class="form-horizontal" method="post" role="form">   
                 <fieldset>
                   <legend></legend>
                   <div class="form-group">
@@ -42,33 +33,66 @@
                       <?php endif;?>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                      <button type='submit' class='btn-info form-control'>查询</button>
+                      <span class="input-group-btn"><a href="<?php echo base_url('super_wage/wage_import') ?>" class="btn btn-warning" style="width:80px;margin-left:5px">上传</a></span>
+                      <span class="input-group-btn"><button class='btn btn-info' style="width:80px;margin-left:5px">查询</button></span>
+                      </form>
+                      
+                      <span class="input-group-btn"><a href="javascript:void(0)" class="btn btn-danger"  style="width:80px;margin-left:5px" data-toggle="modal" data-target="#myModal">删除</a></span>
+                      <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                        <div class="modal-content-month">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4>请确认</h4>
+                          </div>
+                          <div class="modal-body">
+                            <h4 style="text-align:left">确认删除吗？</h4>
+                          </div>
+                          <div class="modal-footer">
+                            <form action='<?php echo base_url('super_wage/wage_delete')?>' method='POST'>
+                            <?php if($chosen_month):?>
+                            <input type='hidden' value="<?php echo $chosen_month;?>" name='time'/>
+                            <?php else:?>
+                            <input type='hidden' value="" name='time'/>
+                            <?php endif;?>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="submit" class="btn btn-success btn-danger">确认删除</a>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <!-- /.input-group -->               
                   </div>
                   <!-- /.form-group -->
                 </fieldset>
-              </form>
+              </div>
               <hr />
+              <?php if($chosen_month): ?>
+              <h4>中山联通<?php echo date_format(date_create($chosen_month),"Y年m月");?>员工工资单</h4>
+              <hr />
+              <h5 style="word-wrap:break-word;"><?php echo $wage_notice;?></p></h5>
+              <hr />
+              <?php endif;?>
+              
               <?php if($attr_data and $wage_data): ?>
               <div style="overflow:scroll;">
                 <fieldset>
-                <table id="wageTable"class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;">
+                <table id="wageTable"class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align:center;border-color:silver;">
                   <thead>
                     <?php $counter=0;?>
                     <tr>
                       <?php foreach($attr_data as $k =>$v):?>
                       <?php if($counter<$trueend):?>
                         <?php if($counter<5 or $counter>$koufeiend):?>
-                          <th style="text-align:center;vertical-align:middle;" rowspan="3"><?php echo $v?></th>
+                          <th style="text-align:center;vertical-align:middle;border-color:silver;" rowspan="3"><?php echo $v?></th>
                         <?php elseif($counter==5):?>
-                          <th style="text-align:center;" colspan="<?php echo $jiaoyuend-4;?>">应发</th>
+                          <th style="text-align:center;border-color:silver;" colspan="<?php echo $jiaoyuend-4;?>">应发</th>
                         <?php elseif($counter==$fulistart): ?>
-                          <th style="text-align:center;" colspan="<?php echo $fuliend-$fulistart+1;?>">福利费</th>
+                          <th style="text-align:center;border-color:silver;" colspan="<?php echo $fuliend-$fulistart+1;?>">福利费</th>
                         <?php elseif($counter==$koufeistart-1): ?>
-                        <th style="text-align:center;vertical-align:middle;" rowspan="3">当月月应收合计</th>
+                        <th style="text-align:center;vertical-align:middle;border-color:silver;" rowspan="3">当月月应收合计</th>
                         <?php elseif($counter==$koufeistart): ?>
-                        <th style="text-align:center;" colspan="<?php echo $koufeiend-$koufeistart+1;?>">各项扣款</th>
+                        <th style="text-align:center;border-color:silver;" colspan="<?php echo $koufeiend-$koufeistart+1;?>">各项扣款</th>
                         <?php endif;?>
                       <?php endif;$counter++;?>
                       <?php endforeach; ?>
@@ -78,21 +102,21 @@
                     <?php foreach($attr_data as $k => $v): ?>
                     <?php if($counter<$trueend):?>
                       <?php if($counter>=5 and $counter<$yuedustart):?>
-                        <th rowspan="2" style="text-align:center;vertical-align:middle;"><?php echo $v?></th>
+                        <th rowspan="2" style="text-align:center;border-color:silver;vertical-align:middle;"><?php echo $v?></th>
                       <?php elseif($counter==$yuedustart):?>
-                        <th style="text-align:center;" colspan="<?php echo $yueduend-$yuedustart+1;?>">月度绩效</th>
+                        <th style="text-align:center;border-color:silver;" colspan="<?php echo $yueduend-$yuedustart+1;?>">月度绩效</th>
                       <?php elseif($counter==$shengzhuanstart): ?>
-                        <th style="text-align:center;" colspan="<?php echo $shengzhuanend-$shengzhuanstart+1;?>">省核专项奖励</th>
+                        <th style="text-align:center;border-color:silver;" colspan="<?php echo $shengzhuanend-$shengzhuanstart+1;?>">省核专项奖励</th>
                       <?php elseif($counter==$fengongsistart): ?>
-                        <th style="text-align:center;" colspan="<?php echo $fengongsiend-$fengongsistart+1;?>">分公司专项奖励</th>
+                        <th style="text-align:center;border-color:silver;" colspan="<?php echo $fengongsiend-$fengongsistart+1;?>">分公司专项奖励</th>
                       <?php elseif($counter==$qitastart): ?>
-                        <th style="text-align:center;" colspan="<?php echo $qitaend-$qitastart+1;?>">其他</th>
+                        <th style="text-align:center;border-color:silver;" colspan="<?php echo $qitaend-$qitastart+1;?>">其他</th>
                       <?php elseif($counter==$jiaoyustart): ?>
-                        <th style="text-align:center;" colspan="<?php echo $jiaoyuend-$jiaoyustart+1;?>">教育经费</th>
+                        <th style="text-align:center;border-color:silver;" colspan="<?php echo $jiaoyuend-$jiaoyustart+1;?>">教育经费</th>
                       <?php elseif($counter>=$fulistart and $counter<=$fuliend): ?>
-                        <th style="text-align:center;vertical-align:middle;" rowspan="2"><?php echo $v?></th>
+                        <th style="text-align:center;border-color:silver;vertical-align:middle;" rowspan="2"><?php echo $v?></th>
                       <?php elseif($counter>=$koufeistart and $counter<=$koufeiend): ?>
-                        <th style="text-align:center;vertical-align:middle;" rowspan="2"><?php echo $v?></th>
+                        <th style="text-align:center;border-color:silver;vertical-align:middle;" rowspan="2"><?php echo $v?></th>
                       <?php endif;?>    
 
                     <?php endif;$counter++;?>
@@ -103,21 +127,25 @@
                     <?php foreach($attr_data as $k => $v): ?>
                     <?php if($counter<$trueend):?>
                       <?php if($counter>=$yuedustart and $counter<=$jiaoyuend):?>
-                      <th style="text-align:center;"><?php echo $v;?></th>
+                      <th style="text-align:center;border-color:silver;"><?php echo $v;?></th>
                       <?php endif; ?>
                     <?php endif;$counter++;?>
                     <?php endforeach; ?>
                     </tr>
                   </thead>
                   <tbody>
+                    <?php $counter=0;$colorcounter=0;?>
                     <?php foreach($wage_data as $k => $v): ?>
-                      <tr>
-                      <?php $counter=0;?>
+                      <?php if($colorcounter%2==0):?>
+                      <tr style="border-color:silver;">
+                      <?php elseif($colorcounter%2==1):?>
+                      <tr style="border-color:silver;" class="info">
+                      <?php endif;$colorcounter++;?>
                       <?php foreach($v as $a => $b): ?>
                         <?php if($counter<$trueend):?>
-                        <td style=""><?php echo $b?></td>
+                        <td style="border-color:silver;"><?php echo $b?></td>
                         <?php endif;$counter++;?>
-                      <?php endforeach; ?>
+                      <?php endforeach;$counter=0;?>
                       </tr>
                     <?php endforeach; ?>
                   </tbody>

@@ -1,5 +1,5 @@
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="background:url('<?php echo base_url('assets/images/dashboardbg.jpg')?>');background-attachment:fix;background-repeat:norepeat;background-size:cover;);">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -23,6 +23,9 @@
             </div>
           </div>
         </div>
+
+      </div>
+      <div class="row">
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
@@ -35,8 +38,9 @@
               <i class="ion ion-stats-bars"></i>
             </div>
           </div>
-         
         </div>
+      </div>
+      <div class="row">
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
@@ -51,6 +55,7 @@
             </div>
           </div>
         </div>
+      </div>
 <!--    
         <div class="col-lg-3 col-xs-6">
 

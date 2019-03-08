@@ -6,7 +6,6 @@
         工资明细查询
       </h1>
     </section>
-
   <!-- Main content -->
   <section class="content">
     <!-- Small boxes (Stat box) -->
@@ -18,7 +17,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <div style="overflow:scroll;">
+            <div>
               <form action="<?php echo base_url('wage/search')?>" class="form-horizontal" method="post" role="form">
                 <fieldset>
                   <legend></legend>
@@ -39,11 +38,12 @@
                 </fieldset>
               </form>
             </div>
+            <hr />
             <?php if($chosen_month): ?>
             <h4>中山联通<?php echo date_format(date_create($chosen_month),"Y年m月");?>员工工资单</h4>
             <hr />
             <h5 style="word-wrap:break-word;"><?php echo $wage_notice;?></p></h5>
-
+            <hr />
             <?php endif;?>
             <div style="overflow:scroll;">
               <fieldset>

@@ -30,7 +30,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <div style="overflow:scroll;">
+            <div>
               <form action="<?php echo base_url('super_wage/wage_import') ?>" method="post"
                   name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
                   <fieldset>
@@ -56,6 +56,7 @@
                       <div class="controls">
                         <button type="submit" id="submit" name="import" class="btn btn-warning" >上传</button>
                         <a class="btn btn-info" href="<?php echo base_url($path) ?>">下载模板</a>
+                        <a class="btn btn-primary" href="<?php echo base_url('super_wage/search') ?>">返回</a>
                       </div>
                     </div>
                   </fieldset>
@@ -72,7 +73,8 @@
 <!-- /.content-wrapper -->
 <script type="text/javascript">
     $(document).ready(function() { 
-      $("#uploadWageFileNav").addClass('active');
+      //$("#uploadWageFileNav").addClass('active');
+      $("#searchwageGetherMainMenu").addClass('active');
       $(".form_datetime").datetimepicker({
         bootcssVer:3,
         format: "yyyy-mm",

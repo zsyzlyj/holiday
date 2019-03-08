@@ -25,7 +25,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <div style="overflow:scroll;">
+            <div>
               <form action="<?php echo base_url('wage/search')?>" class="form-horizontal" method="post" role="form">
                 <fieldset>
                   <legend></legend>

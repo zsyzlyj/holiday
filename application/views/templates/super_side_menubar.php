@@ -81,9 +81,10 @@
         -->
         <li id="searchwageGetherMainMenu">
           <a href="<?php echo base_url('super_wage/search') ?>">
-            <i class="fa fa-file"></i><span>工资明细汇总查询</span>
+            <i class="fa fa-file"></i><span>工资明细信息</span>
           </a>
         </li>
+        <!--
         <li id="uploadWageFileNav">
           <a href="<?php echo base_url('super_wage/wage_import') ?>">
             <i class="fa fa-cloud-upload"></i><span>工资明细导入</span>
@@ -94,6 +95,13 @@
             <i class="fa fa-list"></i><span>工资明细记录汇总</span>
           </a>
         </li>
+-->
+        <li id="searchwagespMainMenu">
+          <a href="<?php echo base_url('super_wage/searchsp') ?>">
+            <i class="fa fa-file"></i><span>专项附加扣除信息</span>
+          </a>
+        </li>
+        <!--
         <li id="uploadWageSpFileNav">
           <a href="<?php echo base_url('super_wage/wage_sp_import') ?>">
             <i class="fa fa-cloud-upload"></i><span>专项附件导入</span>
@@ -104,6 +112,7 @@
             <i class="fa fa-list"></i><span>专项附件汇总</span>
           </a>
         </li>
+-->
         <li id="downloadWageNav">
           <a href="<?php echo base_url('super_wage/download_page') ?>">
             <i class="fa fa-cloud-download"></i><span>工资明细导出</span>

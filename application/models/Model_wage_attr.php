@@ -36,4 +36,9 @@ class Model_wage_attr extends CI_Model{
 		$sql='delete from wage_attr';
 		$delete = $this->db->query($sql);
 	}
+	public function deleteByDate($date){
+		$sql='delete from wage_attr where locate(?,date_tag)';
+		$delete = $this->db->query($sql,array($date));
+		return ($delete == true) ? true : false;
+	}
 }

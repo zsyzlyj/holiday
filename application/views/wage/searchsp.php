@@ -18,7 +18,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <div style="overflow:scroll;">
+            <div>
               <form action="<?php echo base_url('wage/searchsp')?>" class="form-horizontal" method="post" role="form">
                 <fieldset>
                   <legend></legend>
@@ -40,28 +40,30 @@
               </form>
             </div>
             <?php if($chosen_month): ?>
-            <h4>中山联通<?php echo date_format(date_create($chosen_month),"Y年m月");?>专项扣除明细</h4>
+            <h4>中山联通<?php echo date_format(date_create($chosen_month),"Y年m月");?>专项附加扣除明细</h4>
             <hr />
             <?php endif;?>
             <div style="overflow:scroll;">
               <fieldset>
               <?php if($wage_sp): ?>
+              <?php $counter=0;?>
               <table id="wageTable"class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align: center;">
-                <thead>             
+                <thead>
                   <tr>
                     <?php foreach($wage_sp_attr as $k => $v):?>
                     <?php if($v!="" and $k!="date_tag"):?>
-                      <th><?php echo $v;?></th>
+                      <th style="text-align: center;"><?php echo $v;$counter++;?></th>
                     <?php endif;?>
                     <?php endforeach;?>
                   </tr>
                 </thead>
                 <tbody>
+                  <?php $counterdata=0;?>
                   <tr>
                   <?php foreach($wage_sp as $k => $v): ?>
-                    <?php if($k!='date_tag'):?>
-                    <td><?php echo $v;?></td>
-                    <?php endif;?>
+                    <?php if($k!='date_tag' and $counterdata<$counter):?>
+                      <td><?php echo $v;$counterdata++;?></td>
+                      <?php endif;?>
                   <?php endforeach; ?>
                   </tr>
                 </tbody>

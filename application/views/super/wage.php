@@ -7,10 +7,6 @@
       <h1>
         工资信息汇总
       </h1>
-      
-        
-        
-      
     </section>
 
     <!-- Main content -->
@@ -34,11 +30,11 @@
             <div class="box-header">
             </div>
             <div class="box-body">
-              <div style="overflow:scroll;">
+              <div>
                 <table id="wageTable" class="table table-striped table-bordered table-hover mytable" style="border-color:black;overflow:scroll;white-space: nowrap;word-break:  keep-all;text-align: center;">
                   <thead>
                   <?php if($attr_data):?>
-                  <tr style="border-color:black;">
+                  <tr style="border-color:gray">
                   <?php $counter=0;?>
                   <?php foreach($attr_data as $k => $v): ?>
                   <?php if($counter<$trueend):?>

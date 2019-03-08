@@ -27,7 +27,9 @@ class Model_wage_sp extends CI_Model{
 	}
 	public function getWageSpByDateAndId($date = null,$id=null){
 		if($date){
-			$query=$this->db->get_where('wage_sp',array('date_tag' => $date, 'user_id' => $id));
+			$sql="select * from wage_sp where locate(?,user_id) and locate(?,date_tag)";
+			$query = $this->db->query($sql,array($id,$date));
+			#$query=$this->db->where_in('user_id', $id)->get_where('wage_sp',array('date_tag'=>$date));
 			return $query->row_array();
 		}
 	}

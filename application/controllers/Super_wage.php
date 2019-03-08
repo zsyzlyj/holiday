@@ -156,6 +156,7 @@ class Super_wage extends Admin_Controller {
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strlen($doc_name)<=7 and $doc_name!=''){
                 $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
+                $this->data['wage_notice']=$this->model_wage_notice->getWageNoticeByDate($doc_name)['content'];
                 if(!empty($this->data['attr_data'])){
                     $this->data['wage_data']=$this->model_wage->getWageByDate($doc_name);
                     $counter=0;
@@ -807,9 +808,11 @@ class Super_wage extends Admin_Controller {
         $highestColumm = $sheet->getHighestColumn(); // 取得总列数
         $columnCnt = array_search($highestColumm, $cellName); 
 
+        $batch_counter=0;
         $data = array();
         $attribute = array();
         $this->model_wage->deleteByDate($filename);
+        $this->model_wage_attr->deleteByDate($filename);
         
         for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
             $temp = array();
@@ -866,7 +869,7 @@ class Super_wage extends Admin_Controller {
                             $wage['content'.($counter-3)]=$v;
                         }
                         else{
-                            $wage['content'.($counter-3)]='';
+                            $wage['content'.($counter-3)]="";
                         }
                         $wage['date_tag']=$filename;
                         break;
@@ -877,18 +880,20 @@ class Super_wage extends Admin_Controller {
                             case 1:$wage['department']=$v;break;
                             case 2:$wage['user_id']=$v;break;
                             case 3:$wage['name']=$v;break;
-                            default:$wage['content'.($counter-3)]=$v;break;
+                            default:$wage['content'.($counter-3)]=number_format(round((float)$v,2),2,".","");break;
                         }
                         $counter++;
                     }
                     elseif(strlen($v)==1 and $v==0){
-                        $wage['content'.($counter-3)]='0';
+                        $wage['content'.($counter-3)]='0.00';
                         $counter++;
                     }
                 }
                 $dept=$wage['department'];
                 $wage['total']=$wage['content'.(count($wage)-6)];
+                #echo count($wage).'<br />';
                 array_push($data,$wage);
+                #$this->model_wage->create($wage);
                 unset($wage);
                 //如果不是多部门，不包含/，那么就记录下来
                 if(strpos($dept,'/') != true){
@@ -902,7 +907,7 @@ class Super_wage extends Admin_Controller {
             }
             unset($temp);
         }
-        $this->model_wage->createbatch($data);   
+        $this->model_wage->createbatch($data);
     }
     
     public function wage_import(){
@@ -922,15 +927,16 @@ class Super_wage extends Admin_Controller {
                                 $this->render_super_template('super/wage_import',$this->data);
                             }
                             else{
+                                #echo $doc_name;
                                 $this->wage_excel_put($doc_name);
                                 $this->data['import_list']=$this->model_wage->getDatetag();
-                                $this->render_super_template('super/wage_import_list',$this->data);
+                                $this->render_super_template('super/wage_search',$this->data);
                             }
                         }
                     }
                     else{
                         $this->session->set_flashdata('error', '请选择文件!!');
-                        $this->render_super_template('super/wage_import',$this->data);
+                        $this->render_super_template('super/wage_search',$this->data);
                     }
                 }
             }
@@ -1683,10 +1689,35 @@ class Super_wage extends Admin_Controller {
         $this->data['import_list']=$this->model_wage_sp->getDatetag();
         $this->render_super_template('super/wage_sp_import_list',$this->data);
     }
+    public function searchsp(){
+        $this->data['wage_sp']="";
+        $this->data['wage_sp_attr']="";
+        $this->data['chosen_month']="";
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $this->data['chosen_month']=$_POST['chosen_month'];
+            $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
+            if(strlen($doc_name)<=7 and $doc_name!=""){
+                $this->data['wage_sp']=$this->model_wage_sp->getWageSpByDate($doc_name);
+                $this->data['wage_sp_attr']=$this->model_wage_sp_attr->getWageSpByDate($doc_name);
+            }
+            $this->render_super_template('super/wage_search_sp', $this->data);        
+        }
+        else{
+            $this->render_super_template('super/wage_search_sp', $this->data);
+        }
+    }
     public function wage_delete(){
-        echo $_POST['time'];
-        $this->model_wage->deleteByDate($_POST['time']);
-        $this->data['import_list']=$this->model_wage->getDatetag();
-        $this->render_super_template('super/wage_import_list',$this->data);
+        $this->model_wage->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6));
+        $this->data['wage_sp']="";
+        $this->data['wage_sp_attr']="";
+        $this->data['chosen_month']="";
+        $this->render_super_template('super/wage_search',$this->data);
+    }
+    public function wage_sp_delete(){
+        $this->model_wage_sp->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6));
+        $this->data['wage_sp']="";
+        $this->data['wage_sp_attr']="";
+        $this->data['chosen_month']="";
+        $this->render_super_template('super/wage_search_sp',$this->data);
     }
 }
