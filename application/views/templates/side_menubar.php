@@ -30,6 +30,11 @@
               <i class="fa fa-cny"></i> <span>专项附加扣除信息</span>
             </a>
           </li>
+          <li id="searchtaxMainMenu">
+            <a href="<?php echo base_url('wage/searchtax') ?>">
+              <i class="fa fa-bank"></i> <span>个税信息</span>
+            </a>
+          </li>
           
           <!--
           <li id="wagechartMainMenu">

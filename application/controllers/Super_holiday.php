@@ -669,7 +669,7 @@ class Super_holiday extends Admin_Controller{
 		$this->render_super_template('super/manager', $this->data);
     }
     public function notification(){
-        $notice_data = $this->model_notice->getNoticeData();
+        $notice_data = $this->model_notice->getHolidayNoticeData();
 		$result = array();		
 		foreach ($notice_data as $k => $v){
             if($v['type']=='holiday'){

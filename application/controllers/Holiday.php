@@ -15,7 +15,7 @@ class Holiday extends Admin_Controller {
         $this->load->model('model_notice');
         $this->load->model('model_manager');
         $this->load->model('model_feedback');
-        $this->data['notice_data'] = $this->model_notice->getNoticeLatestHoliday();
+        $this->data['notice'] = $this->model_notice->getNoticeLatestHoliday();
         $this->data['holiday_doc'] = $this->model_holiday_doc->getHolidayDocData();
         if($this->data['user_name']==NULL){
             redirect('super_auth/login','refresh');
@@ -167,7 +167,7 @@ class Holiday extends Admin_Controller {
     ==============================================================================
     */
     public function staff_plan(){
-        $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
+        $this->data['notice'] = $this->model_notice->getNoticeLatestPlan();
         $this->data['plan_data'] = $this->model_plan->getplanById($this->session->userdata('user_id'));
 		$this->render_template('holiday/staff_plan', $this->data);
     }
@@ -203,7 +203,7 @@ class Holiday extends Admin_Controller {
                     'submit_tag' => 1
                 );
                 
-                $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
+                $this->data['notice'] = $this->model_notice->getNoticeLatestPlan();
                 $create = $this->model_plan->update($data,$user_id);
                 if($create == true){
                     $this->session->set_flashdata('success', '提交成功');
@@ -222,7 +222,7 @@ class Holiday extends Admin_Controller {
             /**/
         }
         else{
-            $this->data['notice_data'] = $this->model_notice->getNoticeLatestPlan();
+            $this->data['notice'] = $this->model_notice->getNoticeLatestPlan();
             $this->render_template('holiday/staff_plan', $this->data);
         }
     }

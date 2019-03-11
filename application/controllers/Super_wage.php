@@ -34,7 +34,7 @@ class Super_wage extends Admin_Controller {
             }
         }
         $this->data['unread']=$unread;
-        $this->data['notice_data'] = $this->model_notice->getNoticeLatestWage();
+        $this->data['notice'] = $this->model_notice->getNoticeLatestWage();
         $this->data['permission']=$this->session->userdata('permission');
     }
     /*
@@ -414,10 +414,10 @@ class Super_wage extends Admin_Controller {
         $pdf->SetFont('songti','',15);
         switch($type){
             case '收入证明':
-                $str="\r\n    兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任职".$dept.$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！\r\n";
+                $str="\r\n    兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！\r\n";
                 break;
             case '收入证明（农商银行）':
-                $str="\r\n中山农村商业银行股份有限公司：\r\n    兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任职".$dept.$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅用于申请贷款之用。\r\n    特此证明！";
+                $str="\r\n中山农村商业银行股份有限公司：\r\n    兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅用于申请贷款之用。\r\n    特此证明！";
                 break;
             case '收入证明（公积金）':
                 $str="\r\n中山市住房公积金管理中心：\r\n    为申请住房公积金贷款事宜，兹证明".$username."，性别：".$gender."，身份证号码：".$user_id."，是我单位职工，已在我单位工作满".$period."年，该职工上一年度在我单位总收入约为".$avg."元（大写：".$rmb."）。\r\n\r\n";
@@ -1460,16 +1460,21 @@ class Super_wage extends Admin_Controller {
 		$this->render_super_template('super/wage_reset_pass', $this->data);
     }
     public function notification(){
-        $notice_data = $this->model_notice->getNoticeData();
+        $notice_data = $this->model_notice->getWageNoticeData();
 		$result = array();
 		foreach($notice_data as $k => $v){
             if($v['type']=='wage'){
                 $v['type']='薪酬';
                 $result[$k] = $v;
             }
-		}
+            if($v['type']=='tax'){
+                $v['type']='个税';
+                $result[$k] = $v;
+            }
+        }
 		$this->data['notice_data'] = $result;
 		unset($result);
+		
         $this->render_super_template('super/wage_notification', $this->data);
     }
     public function publish_wage(){
@@ -1860,5 +1865,42 @@ class Super_wage extends Admin_Controller {
         $this->data['wage_tax_attr']="";
         $this->data['chosen_month']="";
         $this->render_super_template('super/wage_search_tax',$this->data);
+    }
+    public function publish_tax(){
+        $this->form_validation->set_rules('title', 'title', 'required');
+		$this->form_validation->set_rules('content', 'content', 'required');
+		
+        if($this->form_validation->run() == TRUE){
+            // true case
+			$title=$this->input->post('title');
+			$content=$this->input->post('content');
+        	$data = array(
+				'pubtime' => date('Y-m-d H:i:s'),
+				'username' => $this->session->userdata('user_id'),
+        		'title' => $this->input->post('title'),
+				'content' => $this->input->post('content'),
+				'type' => 'tax'
+			);
+			$create = $this->model_notice->create($data);
+        	if($create == true){
+        		$this->session->set_flashdata('success', '公告发布成功');
+        		redirect('super_wage/notification', 'refresh');
+        	}
+        	else{
+        		$this->session->set_flashdata('error', '系统发生未知错误!!');
+        		redirect('super_wage/publish_tax', 'refresh');
+        	}
+
+        }
+        else{
+            // false case
+			$notice_data = $this->model_notice->getWageNoticeData();
+			$result = array();
+			foreach($notice_data as $k => $v){
+				$result[$k] = $v;
+			}
+			$this->data['notice_data'] = $result;
+            $this->render_super_template('super/wage_publish_tax', $this->data);
+        }
     }
 }

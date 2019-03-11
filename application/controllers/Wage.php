@@ -12,19 +12,24 @@ class Wage extends Admin_Controller{
         $this->load->model('model_users');
         $this->load->model('model_wage_doc');
         $this->load->model('model_wage_apply');
+        $this->load->model('model_wage_apply_status');
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
-        $this->load->model('model_wage_sp');
+        
         $this->load->model('model_func');
         $this->load->model('model_wage_notice');
         $this->load->model('model_notice');
+        $this->load->model('model_wage_sp');
         $this->load->model('model_wage_sp_attr');
+        
+        $this->load->model('model_wage_tax');
+        $this->load->model('model_wage_tax_attr');
         $this->data['permission'] = $this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
         $this->data['user_id'] = $this->session->userdata('user_id');
         $this->data['wage_func']=$this->model_func->getFuncByType('wage');
         $this->data['service_mode']= $this->model_wage_tag->getModeById($this->session->userdata('user_id'))['service_mode'];
-        $this->data['notice_data'] = $this->model_notice->getNoticeLatestWage();
+        $this->data['notice'] = $this->model_notice->getNoticeLatestWage();
     }
     
 	public function index(){
@@ -127,6 +132,11 @@ class Wage extends Admin_Controller{
             8 => '子女户口非在注册证明'
             */
         );
+        $url_set=array();
+        foreach($this->data['name'] as $k => $v){
+            $url=$this->proof_creator($v,false);
+            array_push($url_set,$url);
+        }
         $status=array();
         $submit_status=array();
         $feedback_status=array();
@@ -229,19 +239,7 @@ class Wage extends Admin_Controller{
         $this->data['feedback_status']=$feedback_status;
         $this->data['status']=$status;
 
-        $this->data['url']=array(
-            0 => 'wage/show_royal_proof',
-            1 => 'wage/show_on_post_1_proof',
-            2 => 'wage/show_on_post_2_proof',
-            3 => 'wage/show_on_post_3_proof',
-            4 => 'wage/show_on_post_4_proof',
-            5 => 'wage/show_on_post_5_proof',
-            6 => 'wage/show_on_post_6_proof',
-            /*
-            7 => 'wage/show_child_1_proof',
-            8 => 'wage/show_child_2_proof',
-            */
-        );
+        $this->data['url']=$url_set;
         $this->render_template('wage/apply_on_post', $this->data);
     }
     public function apply_wage_proof(){
@@ -253,16 +251,30 @@ class Wage extends Admin_Controller{
                 'type' => $_POST['type'],
                 'submit_time' => date('Y-m-d H:i:s'),
                 'submit_status' => '已提交',
-                'feedback_status' => '未审核'
+                'feedback_status' => '未审核',
+                'url' => $this->proof_creator($_POST['type'],true)
             );
+            $apply_status=array(
+                'user_id' => $user_id,
+                'name' => $this->session->userdata('user_name'),
+                'type' => $_POST['type'],
+                'submit_status' => '已提交',
+                'feedback_status' => '未审核',
+            );
+            //更新状态这里没有主键，需要匹配user_id和type
+            if($this->model_wage_apply_status->getApplyByIdAndStatus($user_id,$_POST['type'])){
+                $this->model_wage_apply_status->update($apply_status,$user_id,$_POST['type']);
+            }
+            else $this->model_wage_apply_status->create($apply_status);
             if($this->model_wage_apply->getApplyByIdAndStatus($user_id,$_POST['type'])){
                 $this->model_wage_apply->update($apply_data,$user_id);
             }
             else $this->model_wage_apply->create($apply_data);
+            //这里一整段需要需要重写
         }
         //获取数据库中 已提交 状态的这个人证明开具信息
         #$apply_info=$this->model_wage_apply->getApplyByIdAndStatus($user_id,'已提交');
-        $apply_info=$this->model_wage_apply->getApplyById($user_id);
+        $apply_status=$this->model_wage_apply_status->getApplyById($user_id);
         
         $this->data['name']=array(
             0 => '收入证明',
@@ -271,7 +283,8 @@ class Wage extends Admin_Controller{
         );
         $url_set=array();
         foreach($this->data['name'] as $k => $v){
-            array_push($url_set,$this->proof_creator($v));
+            $url=$this->proof_creator($v,false);
+            array_push($url_set,$url);
         }
         $status=array();
         $submit_status=array();
@@ -282,36 +295,45 @@ class Wage extends Admin_Controller{
             $submit_status[$i]='';
             $feedback_status[$i]='';
         }
-        //如果已提交则为false，不能再提交
-        foreach($apply_info as $k =>$v){
-            switch($v['type']){
-                case '收入证明':
-                    $submit_status[0]=$v['submit_status'];
-                    $feedback_status[0]=$v['feedback_status'];
-                    if(strstr($v['submit_status'],'已')){
-                        if(strstr($v['feedback_status'],'已'))
-                            $status[0]=true;
-                        else $status[0]=false;
-                    }
-                    break;
-                case '收入证明（农商银行）':
-                    $submit_status[1]=$v['submit_status'];
-                    $feedback_status[1]=$v['feedback_status'];
-                    if(strstr($v['submit_status'],'已')){
-                        if(strstr($v['feedback_status'],'已'))
-                            $status[1]=true;
-                        else $status[1]=false;
-                    }
-                    break;
-                case '收入证明（公积金）':
-                    $submit_status[2]=$v['submit_status'];
-                    $feedback_status[2]=$v['feedback_status'];
-                    if(strstr($v['submit_status'],'已')){
-                        if(strstr($v['feedback_status'],'已'))
-                            $status[2]=true;
-                        else $status[2]=false;
-                    }
-                    break;
+        if($apply_status){
+            //如果已提交则为false，不能再提交
+            foreach($apply_status as $k =>$v){
+                switch($v['type']){
+                    case '收入证明':
+                        $submit_status[0]=$v['submit_status'];
+                        $feedback_status[0]=$v['feedback_status'];
+                        if(strstr($v['submit_status'],'已')){
+                            if(strstr($v['feedback_status'],'已'))
+                                $status[0]=true;
+                            else $status[0]=false;
+                        }
+                        break;
+                    case '收入证明（农商银行）':
+                        $submit_status[1]=$v['submit_status'];
+                        $feedback_status[1]=$v['feedback_status'];
+                        if(strstr($v['submit_status'],'已')){
+                            if(strstr($v['feedback_status'],'已'))
+                                $status[1]=true;
+                            else $status[1]=false;
+                        }
+                        break;
+                    case '收入证明（公积金）':
+                        $submit_status[2]=$v['submit_status'];
+                        $feedback_status[2]=$v['feedback_status'];
+                        if(strstr($v['submit_status'],'已')){
+                            if(strstr($v['feedback_status'],'已'))
+                                $status[2]=true;
+                            else $status[2]=false;
+                        }
+                        break;
+                }
+            }
+        }
+        else{
+            for($i=0;$i<3;$i++){
+                $submit_status[$i]=false;
+                $feedback_status[$i]=false;
+                $status[$i]=false;
             }
         }
         $this->data['submit_status']=$submit_status;
@@ -332,7 +354,9 @@ class Wage extends Admin_Controller{
         $c1 = "零壹贰叁肆伍陆柒捌玖";
         $c2 = "分角圓拾佰仟萬拾佰仟億";
         //精确到分后面就不要了，所以只留两个小数位
-        $num = round($num, 2); 
+        #$num = round($num, 2);
+        $num = round($num, 0);
+         
         //将数字转化为整数
         $num = $num * 100;
         if (strlen($num) > 10) {
@@ -390,7 +414,7 @@ class Wage extends Admin_Controller{
             return $c . "整";
         }
     }
-    public function proof_Creator($type){
+    public function proof_Creator($type,$apply_flag){
         $this->load->library('tcpdf.php');
         //实例化 
         $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false); 
@@ -457,31 +481,30 @@ class Wage extends Admin_Controller{
         $position=$user_data['position'];
         $period=floor((strtotime(date('Y/m/d'))-strtotime($user_data['indate'])) / 60 / 60 / 24 / 365);
         
-        if(strstr($type,'wage')){
-            $str="收 入 证 明\r\n";
+        if(strstr($type,'收入')){
+            $str="收 入 证 明";
         }
-        elseif(strstr($type,'post') or strstr($type,'child_2')){
-            $str="证         明\r\n";
-        }elseif(strstr($type,'royal')){
-            $str="现 实 表 现 证 明\r\n";
+        elseif(strstr($type,'在职')){
+            $str="证         明";
+        }elseif(strstr($type,'现实表现')){
+            $str="现 实 表 现 证 明";
+        }elseif(strstr($type,'计生')){
+            $str="计 生 证 明";
         }
-        /*
-        elseif(strstr($type,'child_1')){
-            $str="计 生 证 明\r\n";
-        }
-        */
+        
         $pdf->SetFont('songti','B',24);
-        $pdf->Write(0,$str,'', 0, 'C', false, 0, false, false, 0);
+        #$pdf->Write(0,$str,'', 0, 'C', false, 0, false, false, 0);
         $pdf->writeHTML($str, true, false, true, false, 'C');
         $rmb=$this->num_to_rmb($avg);
+        $avg=number_format($avg,0,"","");
         $html="";
         $pdf->SetFont('songti','',15);
         switch($type){
             case '收入证明':
-                $str="\r\n    兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任职".$dept.$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！\r\n";
+                $str="\r\n    兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！\r\n";
                 break;
             case '收入证明（农商银行）':
-                $str="\r\n中山农村商业银行股份有限公司：\r\n    兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任职".$dept.$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅用于申请贷款之用。\r\n    特此证明！";
+                $str="\r\n中山农村商业银行股份有限公司：\r\n    兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅用于申请贷款之用。\r\n    特此证明！";
                 break;
             case '收入证明（公积金）':
                 $str="\r\n中山市住房公积金管理中心：\r\n    为申请住房公积金贷款事宜，兹证明".$username."，性别：".$gender."，身份证号码：".$user_id."，是我单位职工，已在我单位工作满".$period."年，该职工上一年度在我单位总收入约为".$avg."元（大写：".$rmb."）。\r\n\r\n";
@@ -579,18 +602,24 @@ class Wage extends Admin_Controller{
         }
         //输出PDF
         $date_name=date('YmdHis');
-        $path=dirname(__FILE__,3).'/wageproof/'.$username.'-'.$type.'-temp.pdf';
-        #$pdf->Output('证明','I');
+        //如果是查看，则生成临时文件，如果是申请，则生成正式文件，后面打印这一份
+        if($apply_flag){
+            $path=dirname(__FILE__,3).'/wageproof/'.$date_name.'-'.$username.'-'.$type.'.pdf';
+            $url='wageproof/'.$date_name.' '.$username.'-'.$type.'.pdf';
+        }
+        else{
+            $path=dirname(__FILE__,3).'/wageproof/'.$username.'-'.$type.'-temp.pdf';
+            $url='wageproof/'.$username.'-'.$type.'-temp.pdf';
+        }
         $pdf->Output($path, 'F');
-        $url='wageproof/'.$.$username.'-'.$type.'-temp.pdf';
         return $url;
         /*
         switch($type){
             case 'wage':
-                $str="\r\n    兹证明（姓名），身份证号码：111111111111111111为中国联合网络通信有限公司中山市分公司正式员工，自1971年1月1日起为我司工作，现于我单位任职部门+职位，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟圆整），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！\r\n";
+                $str="\r\n    兹证明（姓名），身份证号码：111111111111111111为中国联合网络通信有限公司中山市分公司正式员工，自1971年1月1日起为我司工作，现于我单位任部门+职位，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟圆整），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！\r\n";
                 break;
             case 'bank_wage':
-                $str="\r\n中山农村商业银行股份有限公司：\r\n    兹证明（姓名）（身份证号码： 111111111111111111）为我单位正式员工，自1971年1月1日起为我单位工作，现于我单位任职部门+职位，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟伍佰圆整），以上情况属实。此证明仅用于申请贷款之用。\r\n    特此证明！";
+                $str="\r\n中山农村商业银行股份有限公司：\r\n    兹证明（姓名）（身份证号码： 111111111111111111）为我单位正式员工，自1971年1月1日起为我单位工作，现于我单位任部门+职位，其月收入（税前）包括工资、奖金、津贴约XXX元（大写：壹萬贰仟伍佰圆整），以上情况属实。此证明仅用于申请贷款之用。\r\n    特此证明！";
                 break;
             case 'fund_wage':
                 $str="\r\n中山市住房公积金管理中心：\r\n    为申请住房公积金贷款事宜，兹证明（姓名），（性别）：，身份证号：111111111111111111，是我单位职工，已在我单位工作满50年，该职工上一年度在我单位总收入约为XXXX元（大写：拾壹萬伍仟圆整 ）。\r\n\r\n";
@@ -688,41 +717,6 @@ class Wage extends Admin_Controller{
         $pdf->Output('证明.pdf', 'I');
         //输出PDF         
         */
-    }
-    public function show_wage_proof(){
-        $this->proof_creator('wage');
-    }
-    
-    public function show_bank_wage_proof(){
-        $this->proof_creator('bank_wage');
-    }
-    
-    public function show_fund_wage_proof(){
-        $this->proof_creator('fund_wage');
-    }
-    
-    public function show_royal_proof(){
-        $this->proof_creator('royal');
-    }
-    
-    public function show_on_post_1_proof(){
-        $this->proof_creator('on_post_1');
-    }
-    
-    public function show_on_post_2_proof(){
-        $this->proof_creator('on_post_2');
-    }
-    public function show_on_post_3_proof(){
-        $this->proof_creator('on_post_3');
-    }
-    public function show_on_post_4_proof(){
-        $this->proof_creator('on_post_4');
-    }
-    public function show_on_post_5_proof(){
-        $this->proof_creator('on_post_5');
-    }
-    public function show_on_post_6_proof(){
-        $this->proof_creator('on_post_6');
     }
     public function search_excel($doc_name,$user_id){
         $this->load->library("phpexcel");//ci框架中引入excel类
@@ -861,6 +855,24 @@ class Wage extends Admin_Controller{
         }
         else{
             $this->render_template('wage/searchsp', $this->data);
+        }
+    }
+    public function searchtax(){
+        $this->data['wage_tax']="";
+        $this->data['wage_tax_attr']="";
+        $this->data['chosen_month']="";
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $this->data['chosen_month']=$_POST['chosen_month'];
+            $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
+            if(strlen($doc_name)<=7 and $doc_name!=""){
+                $this->data['wage_tax']=$this->model_wage_tax->getTaxByDateAndId($doc_name,$this->data['user_id']);
+                $this->data['wage_tax_attr']=$this->model_wage_tax_attr->getTaxByDate($doc_name);   
+            }
+            $this->data['notice']=$this->model_notice->getNoticeLatestTax();
+            $this->render_template('wage/searchtax', $this->data);        
+        }
+        else{
+            $this->render_template('wage/searchtax', $this->data);
         }
     }
 

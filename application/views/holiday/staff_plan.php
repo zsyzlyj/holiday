@@ -32,11 +32,7 @@
                 </br>              </br>
               <h4>
               <p>
-              <?php if($notice_data): ?> 
-              <?php foreach ($notice_data as $notice): ?>
               <?php echo $notice['content'];?>
-              <?php endforeach;?>
-              <?php endif ?>
               </p>
               </h4>
             </div>

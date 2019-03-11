@@ -165,7 +165,9 @@
           </a>
           <ul class="treeview-menu">
             <li id="wage_publish_wage"><a href="<?php echo base_url('super_wage/publish_wage') ?>"><i class="fa fa-circle-o"></i> 发布薪酬公告</a></li>        
+            <li id="wage_publish_tax"><a href="<?php echo base_url('super_wage/publish_tax') ?>"><i class="fa fa-circle-o"></i> 发布个税说明</a></li>
             <li id="manage_wage_notice"><a href="<?php echo base_url('super_wage/notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
+
           </ul>
         </li>
         <li id="uploadWageDocNav"><a href="<?php echo base_url('super_wage/wage_doc_import') ?>"><i class="fa fa-cloud"></i> 薪酬文件导入和汇总</a></li>
