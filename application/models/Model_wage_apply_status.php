@@ -18,12 +18,12 @@ class Model_wage_apply_status extends CI_Model{
 			return $query->result_array();
 		}
 	}
-	public function getApplyByIdAndStatus($id,$status){
-		if($status and $id){
+	public function getStatusByIdAndType($id,$type){
+		if($type and $id){
 			#$query=$this->db->where_in('user_id', $id)->get_where('wage',array('date_tag'=>$date));
-			$sql = "SELECT * FROM (select * from wage_apply_status where locate(?,user_id)) as t WHERE locate(?,submit_status)";	
-			$query = $this->db->query($sql, array($id,$status));
-			return $query->result_array();
+			$sql = "SELECT * FROM (select * from wage_apply_status where locate(?,user_id)) as t WHERE locate(?,t.type)";	
+			$query = $this->db->query($sql, array($id,$type));
+			return $query->row_array();
 		}
 	}
 	
@@ -35,7 +35,12 @@ class Model_wage_apply_status extends CI_Model{
 	}
 
 	public function update($data=array(),$id){
-		$this->db->where('id',$id);
+		$this->db->where('user_id',$id);
+		$update = $this->db->update('wage_apply_status', $data);
+		return ($update == true) ? true : false;	
+	}
+	public function updateByIdAndType($data=array(),$id,$type){
+		$this->db->where('user_id',$id)->where('type',$type);
 		$update = $this->db->update('wage_apply_status', $data);
 		return ($update == true) ? true : false;	
 	}

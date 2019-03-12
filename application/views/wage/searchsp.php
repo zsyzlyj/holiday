@@ -83,13 +83,15 @@
 <!-- /.content-wrapper -->
 <script type="text/javascript">
     $(document).ready(function() { 
+      $("#TaxMainMenu").addClass('active');
+      
       $("#searchspMainMenu").addClass('active');
       $(".form_datetime").datetimepicker({
         bootcssVer:3,
         format: 'yyyy-mm',
         startView:3,
         minView:3,
-        startDate:"2017-01",
+        startDate:"2019-01",
         autoclose:true,
         pickerPosition: "-left"
       });

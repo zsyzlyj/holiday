@@ -105,15 +105,16 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li id="searchtaxMainMenu">
+              <a href="<?php echo base_url('super_wage/searchtax') ?>">
+                <i class="fa fa-rocket"></i>月度个税信息</a>
+            </li>
             <li id="searchwagespMainMenu">
               <a href="<?php echo base_url('super_wage/searchsp') ?>">
                 <i class="fa fa-file"></i><span>专项附加扣除信息</span>
               </a>
             </li>
-            <li id="searchtaxMainMenu">
-              <a href="<?php echo base_url('super_wage/searchtax') ?>">
-                <i class="fa fa-rocket"></i>个税信息</a>
-            </li>
+            
           </ul>
         </li>
         <!--

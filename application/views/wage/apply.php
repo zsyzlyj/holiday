@@ -68,7 +68,7 @@
                           </div>
                           <!-- model-header-apply -->
                           <div class="modal-body">
-                            <iframe width="600" height="700" src="<?php echo base_url($url[$i]);?>"></iframe>
+                            <iframe width="450" height="600" src="<?php echo base_url($url[$i]);?>"></iframe>
                           </div>
                           <!-- model-body-apply -->
                           <div class="modal-footer">
@@ -83,8 +83,7 @@
                                 <?php endif;?>
                               <?php else:?>
                               <button type="submit" class="btn btn-success">提交申请</button>
-                              <?php endif;?>
-                              
+                              <?php endif;?>          
                             </form>
                           </div>
                           <!-- model-footer-apply -->

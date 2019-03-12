@@ -25,17 +25,28 @@
               <i class="fa fa-search"></i> <span>工资明细查询</span>
             </a>
           </li>
-          <li id="searchspMainMenu">
-            <a href="<?php echo base_url('wage/searchsp') ?>">
-              <i class="fa fa-cny"></i> <span>专项附加扣除信息</span>
+          <li class="treeview" id="TaxMainMenu">
+            <a href="#">
+              <i class="fa fa-star"></i>
+              <span>个人所得税信息</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
             </a>
-          </li>
-          <li id="searchtaxMainMenu">
-            <a href="<?php echo base_url('wage/searchtax') ?>">
-              <i class="fa fa-bank"></i> <span>个税信息</span>
-            </a>
-          </li>
           
+            <ul class="treeview-menu">
+              <li id="searchtaxMainMenu">
+                <a href="<?php echo base_url('wage/searchtax') ?>">
+                  <i class="fa fa-rocket"></i> <span>月度个税信息</span>
+                </a>
+              </li>
+              <li id="searchspMainMenu">
+                <a href="<?php echo base_url('wage/searchsp') ?>">
+                  <i class="fa fa-file"></i> <span>专项附加扣除信息</span>
+                </a>
+              </li>
+            </ul>
+          </li>
           <!--
           <li id="wagechartMainMenu">
             <a href="<?php echo base_url('wage/wage_chart') ?>">

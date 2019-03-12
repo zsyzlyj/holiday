@@ -48,11 +48,19 @@
                           <h4 class="modal-title">审    核</h4>
                           </div>
                           <div class="modal-body">
-                            <iframe width="600" height="700" src="<?php echo base_url($url[$k]);?>"></iframe>
+                            <!--<iframe width="600" height="700" src="<?php echo base_url($url[$k]);?>"></iframe>-->
+                            <?php if($v['url']):?>
+                            <iframe width="450" height="600" src="<?php echo base_url($v['url']);?>"></iframe>
+                            <?php else:?>
+                            无记录
+                            <?php endif;?>
+                          
                           </div>
                           <div class="modal-footer">
                             <form action="<?php echo base_url('super_wage/wage_proof');?>" method="post">
                             <input name="id" type="hidden" value="<?php echo $v['id'];?>" />
+                            <input name="user_id" type="hidden" value="<?php echo $v['user_id'];?>" />
+                            <input name="type" type="hidden" value="<?php echo $v['type'];?>" />
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                             <?php if(strstr($v['feedback_status'],'已')):?>
                             <button disabled type="submit" class="btn btn-success btn-ok">确认审核</a>

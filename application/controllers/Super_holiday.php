@@ -121,20 +121,47 @@ class Super_holiday extends Admin_Controller{
                 $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
             }
         }
+        $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
         $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
         $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
         $highestRow = $sheet->getHighestRow(); // 取得总行数
         $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+        $columnCnt = array_search($highestColumm, $cellName); 
         //删除所有假期信息，计划，用户   
         $this->model_holiday->deleteAll();
         $this->model_plan->deleteAll();
         $holiday_set=array();
         $plan_set=array();
+        $dept="";
+        $Initdate=0;
+        $Indate=0;
+        $Totalage=0;
+        $Comage=0;
+        $Totalday=0;
+        $Lastyear=0;
+        $Thisyear=0;
+        $Bonus=0;
+        $Used=0;
+        $Rest=0;
+        $Jan=0;
+        $Feb=0;
+        $Mar=0;
+        $Apr=0;
+        $May=0;
+        $Jun=0;
+        $Jul=0;
+        $Aug=0;
+        $Sep=0;
+        $Oct=0;
+        $Nov=0;
+        $Dece=0;
+        $User_id="";
         for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){
             if($rowIndex>1){
-                for ($colIndex = 'A'; $colIndex <= $highestColumm; $colIndex++){
-                    $addr = $colIndex . $rowIndex;
-                    $cell = $sheet->getCell($addr)->getValue();
+                for ($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
+                    $cellId = $cellName[$colIndex].$rowIndex;  
+                    $cell = $sheet->getCell($cellId)->getValue();
+                    $cell = $sheet->getCell($cellId)->getCalculatedValue();
                     if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
                         $cell = $cell->__toString();
                     }
@@ -143,32 +170,33 @@ class Super_holiday extends Admin_Controller{
                         $b=0;
                     }
                     switch($colIndex){
-                        case 'A':$name=$b;break;
-                        case 'B':$dept=$b;break;
-                        case 'C':$Initdate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
-                        case 'D':$Indate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
-                        case 'E':$Totalage=$b;break;
-                        case 'F':$Comage=$b;break;
-                        case 'G':$Totalday=$b;break;
-                        case 'H':$Lastyear=$b;break;
-                        case 'I':$Thisyear=$b;break;
-                        case 'J':$Bonus=$b;break;
-                        case 'K':$Used=$b;break;
-                        case 'L':$Rest=$b;break;
-                        case 'M':$Jan=$b;break;
-                        case 'N':$Feb=$b;break;
-                        case 'O':$Mar=$b;break;
-                        case 'P':$Apr=$b;break;
-                        case 'Q':$May=$b;break;
-                        case 'R':$Jun=$b;break;
-                        case 'S':$Jul=$b;break;
-                        case 'T':$Aug=$b;break;
-                        case 'U':$Sep=$b;break;
-                        case 'V':$Oct=$b;break;
-                        case 'W':$Nov=$b;break;
-                        case 'X':$Dece=$b;break;
-                        case 'Y':$User_id=$b;break;
+                        case 0:$name=$b;break;
+                        case 1:$dept=$b;break;
+                        case 2:$Initdate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
+                        case 3:$Indate=gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($b));break;
+                        case 4:$Totalage=$b;break;
+                        case 5:$Comage=$b;break;
+                        case 6:$Totalday=$b;break;
+                        case 7:$Lastyear=$b;break;
+                        case 8:$Thisyear=$b;break;
+                        case 9:$Bonus=$b;break;
+                        case 10:$Used=$b;break;
+                        case 11:$Rest=$b;break;
+                        case 12:$Jan=$b;break;
+                        case 13:$Feb=$b;break;
+                        case 14:$Mar=$b;break;
+                        case 15:$Apr=$b;break;
+                        case 16:$May=$b;break;
+                        case 17:$Jun=$b;break;
+                        case 18:$Jul=$b;break;
+                        case 19:$Aug=$b;break;
+                        case 20:$Sep=$b;break;
+                        case 21:$Oct=$b;break;
+                        case 22:$Nov=$b;break;
+                        case 23:$Dece=$b;break;
+                        case 24:$User_id=$b;break;
                     }
+                    
                 }
                 $Update_data=array(
                     'name' => $name,

@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
       <h1>
-        个税信息
+        月度个税信息
       </h1>
     </section>
 
@@ -70,7 +70,7 @@
               </table>
               <hr />
               <div>
-              <h5><font color="red"><?php echo $notice['content'];?></font></h5>
+              <h5><?php echo $notice['content'];?></h5>
               </div>
               <?php elseif($chosen_month!=""): ?>
                 无当月个税记录
@@ -87,13 +87,14 @@
 <!-- /.content-wrapper -->
 <script type="text/javascript">
     $(document).ready(function() { 
+      $("#TaxMainMenu").addClass('active');
       $("#searchtaxMainMenu").addClass('active');
       $(".form_datetime").datetimepicker({
         bootcssVer:3,
         format: 'yyyy-mm',
         startView:3,
         minView:3,
-        startDate:"2017-01",
+        startDate:"2019-01",
         autoclose:true,
         pickerPosition: "-left"
       });

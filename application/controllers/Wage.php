@@ -109,16 +109,27 @@ class Wage extends Admin_Controller{
                 'type' => $_POST['type'],
                 'submit_time' => date('Y-m-d H:i:s'),
                 'submit_status' => '已提交',
-                'feedback_status' => '未审核'
+                'feedback_status' => '未审核',
+                'url' => $this->proof_creator($_POST['type'],true)
             );
-            if($this->model_wage_apply->getApplyByIdAndStatus($user_id,$_POST['type'])){
-                $this->model_wage_apply->update($apply_data,$user_id);
+            $apply_status=array(
+                'user_id' => $user_id,
+                'username' => $this->session->userdata('user_name'),
+                'type' => $_POST['type'],
+                'submit_status' => '已提交',
+                'feedback_status' => '未审核',
+            );
+            //更新状态这里没有主键，需要匹配user_id和type，更新或生成申请状态
+            if($this->model_wage_apply_status->getStatusByIdAndType($user_id,$_POST['type'])){
+                $this->model_wage_apply_status->update($apply_status,$user_id,$_POST['type']);
             }
-            else $this->model_wage_apply->create($apply_data);
+            else $this->model_wage_apply_status->create($apply_status);
+            //生成一条申请记录
+            $this->model_wage_apply->create($apply_data);
         }
         //获取数据库中 已提交 状态的这个人证明开具信息
         #$apply_info=$this->model_wage_apply->getApplyByIdAndStatus($user_id,'已提交');
-        $apply_info=$this->model_wage_apply->getApplyById($user_id);
+        #$apply_info=$this->model_wage_apply->getApplyById($user_id);
         $this->data['name']=array(
             0 => '现实表现证明',
             1 => '在职证明1',
@@ -256,31 +267,30 @@ class Wage extends Admin_Controller{
             );
             $apply_status=array(
                 'user_id' => $user_id,
-                'name' => $this->session->userdata('user_name'),
+                'username' => $this->session->userdata('user_name'),
                 'type' => $_POST['type'],
                 'submit_status' => '已提交',
                 'feedback_status' => '未审核',
             );
-            //更新状态这里没有主键，需要匹配user_id和type
-            if($this->model_wage_apply_status->getApplyByIdAndStatus($user_id,$_POST['type'])){
+            //更新状态这里没有主键，需要匹配user_id和type，更新或生成申请状态
+            if($this->model_wage_apply_status->getStatusByIdAndType($user_id,$_POST['type'])){
                 $this->model_wage_apply_status->update($apply_status,$user_id,$_POST['type']);
             }
             else $this->model_wage_apply_status->create($apply_status);
-            if($this->model_wage_apply->getApplyByIdAndStatus($user_id,$_POST['type'])){
-                $this->model_wage_apply->update($apply_data,$user_id);
-            }
-            else $this->model_wage_apply->create($apply_data);
-            //这里一整段需要需要重写
+            //生成一条申请记录
+            $this->model_wage_apply->create($apply_data);
+            //2019.03.08这里一整段需要需要重写
+            //2019.03.11 12:00 重写完毕，准备测试
         }
         //获取数据库中 已提交 状态的这个人证明开具信息
         #$apply_info=$this->model_wage_apply->getApplyByIdAndStatus($user_id,'已提交');
-        $apply_status=$this->model_wage_apply_status->getApplyById($user_id);
+        #$apply_status=$this->model_wage_apply_status->getApplyById($user_id);
         
         $this->data['name']=array(
             0 => '收入证明',
             1 => '收入证明（农商银行）',
             2 => '收入证明（公积金）',
-        );
+        ); 
         $url_set=array();
         foreach($this->data['name'] as $k => $v){
             $url=$this->proof_creator($v,false);
@@ -295,51 +305,27 @@ class Wage extends Admin_Controller{
             $submit_status[$i]='';
             $feedback_status[$i]='';
         }
-        if($apply_status){
-            //如果已提交则为false，不能再提交
-            foreach($apply_status as $k =>$v){
-                switch($v['type']){
-                    case '收入证明':
-                        $submit_status[0]=$v['submit_status'];
-                        $feedback_status[0]=$v['feedback_status'];
-                        if(strstr($v['submit_status'],'已')){
-                            if(strstr($v['feedback_status'],'已'))
-                                $status[0]=true;
-                            else $status[0]=false;
-                        }
-                        break;
-                    case '收入证明（农商银行）':
-                        $submit_status[1]=$v['submit_status'];
-                        $feedback_status[1]=$v['feedback_status'];
-                        if(strstr($v['submit_status'],'已')){
-                            if(strstr($v['feedback_status'],'已'))
-                                $status[1]=true;
-                            else $status[1]=false;
-                        }
-                        break;
-                    case '收入证明（公积金）':
-                        $submit_status[2]=$v['submit_status'];
-                        $feedback_status[2]=$v['feedback_status'];
-                        if(strstr($v['submit_status'],'已')){
-                            if(strstr($v['feedback_status'],'已'))
-                                $status[2]=true;
-                            else $status[2]=false;
-                        }
-                        break;
+        //查询每个类别的是否存在
+        foreach($this->data['name'] as $k => $v){
+            $apply_status=$this->model_wage_apply_status->getStatusByIdAndType($user_id,$v);
+            if($apply_status){
+                $submit_status[$k]=$apply_status['submit_status'];
+                $feedback_status[$k]=$apply_status['feedback_status'];
+                if(strstr($apply_status['submit_status'],'已')){
+                    if(strstr($apply_status['feedback_status'],'已'))
+                        $status[$k]=true;
+                    else $status[$k]=false;
                 }
             }
-        }
-        else{
-            for($i=0;$i<3;$i++){
-                $submit_status[$i]=false;
-                $feedback_status[$i]=false;
-                $status[$i]=false;
+            else{
+                $submit_status[$k]=false;
+                $feedback_status[$k]=false;
+                $status[$k]=true;
             }
         }
         $this->data['submit_status']=$submit_status;
         $this->data['feedback_status']=$feedback_status;
         $this->data['status']=$status;
-
         $this->data['url']=$url_set;
         unset($url_set);
         $this->render_template('wage/apply', $this->data);
@@ -605,7 +591,7 @@ class Wage extends Admin_Controller{
         //如果是查看，则生成临时文件，如果是申请，则生成正式文件，后面打印这一份
         if($apply_flag){
             $path=dirname(__FILE__,3).'/wageproof/'.$date_name.'-'.$username.'-'.$type.'.pdf';
-            $url='wageproof/'.$date_name.' '.$username.'-'.$type.'.pdf';
+            $url='wageproof/'.$date_name.'-'.$username.'-'.$type.'.pdf';
         }
         else{
             $path=dirname(__FILE__,3).'/wageproof/'.$username.'-'.$type.'-temp.pdf';

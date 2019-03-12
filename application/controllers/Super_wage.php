@@ -14,6 +14,7 @@ class Super_wage extends Admin_Controller {
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
         $this->load->model('model_wage_apply');
+        $this->load->model('model_wage_apply_status');
         $this->load->model('model_wage_notice');
         $this->load->model('model_wage');
         $this->load->model('model_wage_doc'); 
@@ -414,10 +415,10 @@ class Super_wage extends Admin_Controller {
         $pdf->SetFont('songti','',15);
         switch($type){
             case '收入证明':
-                $str="\r\n    兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！\r\n";
+                $str="\r\n    兹证明".$username."（身份证号码：".$user_id."）为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！\r\n";
                 break;
             case '收入证明（农商银行）':
-                $str="\r\n中山农村商业银行股份有限公司：\r\n    兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅用于申请贷款之用。\r\n    特此证明！";
+                $str="\r\n中山农村商业银行股份有限公司：\r\n    兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！";
                 break;
             case '收入证明（公积金）':
                 $str="\r\n中山市住房公积金管理中心：\r\n    为申请住房公积金贷款事宜，兹证明".$username."，性别：".$gender."，身份证号码：".$user_id."，是我单位职工，已在我单位工作满".$period."年，该职工上一年度在我单位总收入约为".$avg."元（大写：".$rmb."）。\r\n\r\n";
@@ -510,7 +511,7 @@ class Super_wage extends Admin_Controller {
             $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
             $pdf->setCellHeightRatio(1.0); 
             $pdf->SetFont('songti','',11);
-            $str="\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0176-23666666 传真：076023666888\r\n网址：http://www.10010.com/";
+            $str="\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
             $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
         }
         //输出PDF
@@ -523,20 +524,26 @@ class Super_wage extends Admin_Controller {
     }
     public function wage_proof(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $id=$_POST['id'];
-            $data=array(
+            $apply=array(
                 'submit_status' => '未提交',
                 'feedback_status' => '已审阅',
                 'feedback_time' => date('Y-m-d H:i:s')
             );
-            $this->model_wage_apply->update($data,$id);
+            $status=array(
+                'submit_status' => '未提交',
+                'feedback_status' => '已审阅',
+            );
+            $this->model_wage_apply->update($apply,$_POST['id']);
+            $this->model_wage_apply_status->updateByIdAndType($status,$_POST['user_id'],$_POST['type']);
         }
         $this->data['apply_data']=$this->model_wage_apply->getApplyData();
+        /*
         $url=array();
         foreach($this->data['apply_data'] as $k => $v){
             $url[$k]=$this->proof_Creator($v['user_id'],$v['type']);
         }
         $this->data['url']=$url;
+        */
         $this->render_super_template('super/wage_proof',$this->data);
     }
     public function wage_tag_excel_put(){
@@ -882,7 +889,7 @@ class Super_wage extends Admin_Controller {
                             case 1:$wage['department']=$v;break;
                             case 2:$wage['user_id']=$v;break;
                             case 3:$wage['name']=$v;break;
-                            default:$wage['content'.($counter-3)]=number_format(round((float)$v,2),2,".","");break;
+                            default:if(is_numeric($v)) $wage['content'.($counter-3)]=number_format(round((float)$v,2),2,".",""); else $wage['content'.($counter-3)]=$v;break;
                         }
                         $counter++;
                     }
@@ -914,6 +921,9 @@ class Super_wage extends Admin_Controller {
     
     public function wage_import(){
         $this->data['path'] = 'uploads/standard/薪酬导入模板.xlsx';
+        $this->data['chosen_month']='';
+        $this->data['wage_data']='';
+        $this->data['attr_data']='';
         if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('chosen_month',$_POST)){
             $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
             if(strstr($doc_name,'1899')){
@@ -1742,6 +1752,7 @@ class Super_wage extends Admin_Controller {
                 $this->data['wage_tax']=$this->model_wage_tax->getTaxByDate($doc_name);
                 $this->data['wage_tax_attr']=$this->model_wage_tax_attr->getTaxByDate($doc_name);
             }
+            $this->data['notice']=$this->model_notice->getNoticeLatestTax();
             $this->render_super_template('super/wage_search_tax',$this->data);  
         }
         else{

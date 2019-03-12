@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
       <h1>
-        个税信息
+        月度个税信息
       </h1>
     </section>
 
@@ -101,6 +101,10 @@
                   
                 </tbody>
               </table>
+              <hr />
+              <div>
+              <h5><?php echo $notice['content'];?></h5>
+              </div>
               <?php elseif($chosen_month!=""): ?>
                 无当月个税信息记录
               <?php endif; ?>
