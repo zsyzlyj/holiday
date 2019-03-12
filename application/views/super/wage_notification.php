@@ -31,29 +31,28 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              
-              <table id="wageTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed" width="100%">
+              <table id="wageTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed;border-color:silver;" width="100%">
                 <thead>
-                <tr>
-                  <th>发布时间</th>
-                  <th>发布者</th>                
-                  <th>标题</th>
-                  <th>内容</th>
-                  <th>分类</th>
-                  <th>操作</th>
+                <tr style="border-color:silver;">
+                  <th style="border-color:silver;" class="col-md-1">发布时间</th>
+                  <th style="border-color:silver;" class="col-md-1">发布者</th>                
+                  <th style="border-color:silver;" class="col-md-1">标题</th>
+                  <th style="border-color:silver;">内容</th>
+                  <th style="border-color:silver;" class="col-md-1">分类</th>
+                  <th style="border-color:silver;" class="col-md-1">操作</th>
                 </tr>
                 </thead>
                 <tbody>
                   <?php if($notice_data): ?>
                     <?php $counter=0;?>         
                     <?php foreach ($notice_data as $k => $v): ?>
-                      <tr>
-                        <td><?php echo $v['pubtime']; ?></td>
-                        <td><?php echo $v['username']; ?></td>
-                        <td><?php echo $v['title']; ?></td>
-                        <td><?php echo $v['content']; ?></td>
-                        <td><?php echo $v['type']; ?></td>
-                        <td>
+                      <tr style="border-color:silver;">
+                        <td style="border-color:silver;"><?php echo $v['pubtime']; ?></td>
+                        <td style="border-color:silver;"><?php echo $v['username']; ?></td>
+                        <td style="border-color:silver;"><?php echo $v['title']; ?></td>
+                        <td style="border-color:silver;"><?php echo $v['content']; ?></td>
+                        <td style="border-color:silver;"><?php echo $v['type']; ?></td>
+                        <td style="border-color:silver;">
                           <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal<?php echo $counter;?>"><i class="fa fa-trash">删除</i></a>
                           <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $counter;?>">
                             <div class="modal-content-month">

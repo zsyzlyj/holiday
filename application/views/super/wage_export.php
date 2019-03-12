@@ -23,7 +23,7 @@
           <?php endif; ?>
           <div class="box">
             <div class="box-body">
-              <div style="overflow:scroll;">
+              <div>
                 <form class="form-horizontal" action="<?php echo base_url('super_wage/download_page')?>" method="post" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
                   <fieldset>
                     <div id="legend" class="">
@@ -83,7 +83,7 @@
                       </div>
                     </div>
                     <hr />
-                    <div class="form-group">
+                    <div>
                       <div class="input-group">
                         <button class="btn btn-success">下载</button>
                         <a class="btn btn-info" href="<?php echo base_url($path) ?>">人员名单模板下载</a>

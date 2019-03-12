@@ -939,7 +939,7 @@ class Super_wage extends Admin_Controller {
                                 $this->render_super_template('super/wage_import',$this->data);
                             }
                             else{
-                                #echo $doc_name;
+                                $this->session->set_flashdata('success', '工资导入成功！');
                                 $this->wage_excel_put($doc_name);
                                 $this->data['import_list']=$this->model_wage->getDatetag();
                                 $this->render_super_template('super/wage_search',$this->data);
@@ -1685,6 +1685,7 @@ class Super_wage extends Admin_Controller {
                                 $this->render_super_template('super/wage_sp_import',$this->data);
                             }
                             else{
+                                $this->session->set_flashdata('success', '工资导入成功！');
                                 $this->wage_sp_excel_put($doc_name);
                                 $this->data['wage_sp']="";
                                 $this->data['wage_sp_attr']="";
@@ -1728,9 +1729,9 @@ class Super_wage extends Admin_Controller {
         }
     }
     public function wage_delete(){
-        $this->model_wage->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6));
-        $this->data['wage']="";
-        $this->data['wage_attr']="";
+        $this->model_wage->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6));       
+        $this->data['wage_data']="";
+        $this->data['attr_data']="";
         $this->data['chosen_month']="";
         $this->render_super_template('super/wage_search',$this->data);
     }
@@ -1851,6 +1852,7 @@ class Super_wage extends Admin_Controller {
                                 $this->render_super_template('super/wage_tax_import',$this->data);
                             }
                             else{
+                                $this->session->set_flashdata('success', '工资导入成功！');
                                 $this->wage_tax_excel_put($doc_name);
                                 $this->data['wage_tax']="";
                                 $this->data['wage_tax_attr']="";
