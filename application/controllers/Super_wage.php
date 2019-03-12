@@ -1729,14 +1729,24 @@ class Super_wage extends Admin_Controller {
         }
     }
     public function wage_delete(){
-        $this->model_wage->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6));       
+        if($this->model_wage->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6))){
+            $this->session->set_flashdata('success', '删除成功');
+        }
+        else{
+            $this->session->set_flashdata('error', '删除失败，无记录');
+        }
         $this->data['wage_data']="";
         $this->data['attr_data']="";
         $this->data['chosen_month']="";
         $this->render_super_template('super/wage_search',$this->data);
     }
     public function wage_sp_delete(){
-        $this->model_wage_sp->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6));
+        if($this->model_wage_sp->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6))){
+            $this->session->set_flashdata('success', '删除成功');
+        }
+        else{
+            $this->session->set_flashdata('error', '删除失败，无记录');
+        }
         $this->data['wage_sp']="";
         $this->data['wage_sp_attr']="";
         $this->data['chosen_month']="";
@@ -1873,7 +1883,12 @@ class Super_wage extends Admin_Controller {
         }
     }
     public function wage_tax_delete(){
-        $this->model_wage_tax->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6));
+        if($this->model_wage_tax->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6))){
+            $this->session->set_flashdata('success', '删除成功');
+        }
+        else{
+            $this->session->set_flashdata('error', '删除失败，无记录');
+        }
         $this->data['wage_tax']="";
         $this->data['wage_tax_attr']="";
         $this->data['chosen_month']="";
