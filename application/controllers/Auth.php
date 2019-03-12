@@ -59,7 +59,7 @@ class Auth extends Admin_Controller {
 								'user_id' => $login['user_id'],
 								'username' => $login['username'],
 								'login_ip' => $_SERVER["REMOTE_ADDR"],
-								'staff_action' => 'holiday_log_in',
+								'staff_action' => '员工登录',
 								'action_time' => date('Y-m-d H:i:s')
 							);
 							$this->model_log_action->create($log);
@@ -121,7 +121,7 @@ class Auth extends Admin_Controller {
 			'user_id' => $this->data['user_id'],
 			'username' => $this->data['user_name'],
 			'login_ip' => $_SERVER["REMOTE_ADDR"],
-			'staff_action' => 'log_out',
+			'staff_action' => '员工登出',
 			'action_time' => date('Y-m-d H:i:s')
 		);
 		$this->model_log_action->create($log);

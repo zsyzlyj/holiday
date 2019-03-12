@@ -49,7 +49,7 @@ class Super_Auth extends Admin_Controller{
 								'user_id' => $login['user_id'],
 								'username' => $login['user_id'],
 								'login_ip' => $_SERVER["REMOTE_ADDR"],
-								'staff_action' => 'super_log_in',
+								'staff_action' => '超管登录',
 								'action_time' => date('Y-m-d H:i:s')
 							);
 							$this->model_log_action->create($log);
@@ -115,7 +115,7 @@ class Super_Auth extends Admin_Controller{
 			'user_id' => $this->data['user_id'],
 			'username' => $this->data['user_id'],
 			'login_ip' => $_SERVER["REMOTE_ADDR"],
-			'staff_action' => 'super_log_out',
+			'staff_action' => '超管登出',
 			'action_time' => date('Y-m-d H:i:s')
 		);
 		$this->model_log_action->create($log);

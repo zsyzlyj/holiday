@@ -38,7 +38,7 @@ class Holiday extends Admin_Controller {
             'user_id' => $this->data['holiday_data']['user_id'],
             'username' => $this->data['holiday_data']['name'],
             'login_ip' => $_SERVER["REMOTE_ADDR"],
-            'staff_action' => 'holiday_staff_get',
+            'staff_action' => '查看年假',
             'action_time' => date('Y-m-d H:i:s')
         );
         $this->model_log_action->create($log);
