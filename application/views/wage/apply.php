@@ -68,7 +68,11 @@
                           </div>
                           <!-- model-header-apply -->
                           <div class="modal-body">
+                            <!--
                             <iframe width="450" height="600" src="<?php echo base_url($url[$i]);?>"></iframe>
+                            -->
+                            
+                            <iframe width="600" height="700" src="<?php echo base_url($url[$i]);?>"></iframe>
                           </div>
                           <!-- model-body-apply -->
                           <div class="modal-footer">
