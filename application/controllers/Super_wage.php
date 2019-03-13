@@ -24,6 +24,7 @@ class Super_wage extends Admin_Controller {
         $this->load->model('model_wage_tax');
         $this->load->model('model_wage_tax_attr');
         $this->data['user_name'] = $this->session->userdata('user_id');
+        $this->data['user_id'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
             redirect('super_auth/login','refresh');
         }
