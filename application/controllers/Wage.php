@@ -442,9 +442,10 @@ class Wage extends Admin_Controller{
         $pdf->setCellHeightRatio(3.0);
         $pdf->AddPage('P', 'A4'); 
         //设置背景图片
-        $img_file = 'assets/images/Unicom.jpg';
-        
-        $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
+        if(!$apply_flag){
+            $img_file = 'assets/images/Unicom.jpg';    
+            $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
+        }
         $user_id=$this->data['user_id'];
         $user_data=$this->model_wage_tag->getTagById($user_id);
         #$cage=$holiday_data['Companyage'];
