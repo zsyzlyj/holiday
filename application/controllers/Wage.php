@@ -491,6 +491,7 @@ class Wage extends Admin_Controller{
         #$pdf->Write(0,$str,'', 0, 'C', false, 0, false, false, 0);
         $pdf->writeHTML($str, true, false, true, false, 'C');
         $rmb=$this->num_to_rmb($avg);
+        $rmb_sum=$this->num_to_rmb($sum);
         $avg=number_format($avg,0,"","");
         $sum=number_format($sum,0,"","");
         $html="";
@@ -523,7 +524,7 @@ class Wage extends Admin_Controller{
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
                 break;
             case '收入证明（公积金）':
-                $str="\r\n中山市住房公积金管理中心：\r\n    为申请住房公积金贷款事宜，兹证明".$username."，性别：".$gender."，身份证号码：".$user_id."，是我单位职工，已在我单位工作满".$period."年，该职工上一年度在我单位总收入约为".$sum."元（大写：".$rmb."）。\r\n\r\n";
+                $str="\r\n中山市住房公积金管理中心：\r\n    为申请住房公积金贷款事宜，兹证明".$username."，性别：".$gender."，身份证号码：".$user_id."，是我单位职工，已在我单位工作满".$period."年，该职工上一年度在我单位总收入约为".$sum."元（大写：".$rmb_sum."）。\r\n\r\n";
                 $pdf->setCellHeightRatio(2.5); 
                 $pdf->SetFont('songti','',15);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);

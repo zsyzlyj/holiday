@@ -116,7 +116,7 @@
               <div>
               <h3><?php echo $notice['title'];?></h3>
               <br />
-              <h5><p style="line-height:300px;"><?php echo $notice['content'];?></p></h5>
+              <div style="font-size:15"><?php echo str_replace('class="ql-align-justify"','class="ql-align-justify" style="line-height:150%"',$notice['content']);?></div>
               </div>
               <?php elseif($chosen_month!=""): ?>
                 无当月个税信息记录
