@@ -207,7 +207,7 @@ class Super_wage extends Admin_Controller {
                 'user_id' => $this->data['user_id'],
                 'username' => $this->data['user_name'],
                 'login_ip' => $_SERVER["REMOTE_ADDR"],
-                'staff_action' => '查询'.$this->data['chosen_month'].'工资',
+                'staff_action' => '查看'.$this->data['chosen_month'].'工资',
                 'action_time' => date('Y-m-d H:i:s')
             );
             $this->model_log_action->create($log);
@@ -1740,6 +1740,7 @@ class Super_wage extends Admin_Controller {
     }
     public function wage_delete(){
         if($this->model_wage->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6))){
+            $this->model_wage_notice->deleteByDate(substr($_POST['time'],0,4).substr($_POST['time'],5,6));
             $this->session->set_flashdata('success', '删除成功');
         }
         else{

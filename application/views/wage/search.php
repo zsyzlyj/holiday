@@ -140,7 +140,8 @@
         minView:3,
         startDate:"2017-01",
         autoclose:true,
-        pickerPosition: "-left"
+        pickerPosition: "-left",
+        initialDate: new Date('Y-m')
       });
     
     });

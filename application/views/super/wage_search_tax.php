@@ -114,7 +114,9 @@
               </table>
               <hr />
               <div>
-              <h5><?php echo $notice['content'];?></h5>
+              <h3><?php echo $notice['title'];?></h3>
+              <br />
+              <h5><p style="line-height:300px;"><?php echo $notice['content'];?></p></h5>
               </div>
               <?php elseif($chosen_month!=""): ?>
                 无当月个税信息记录

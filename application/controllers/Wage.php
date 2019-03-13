@@ -157,6 +157,7 @@ class Wage extends Admin_Controller{
             $submit_status[$i]='';
             $feedback_status[$i]='';
         }
+        /*
         //如果已提交则为false，不能浏览
         foreach($apply_info as $k =>$v){
             switch($v['type']){
@@ -242,10 +243,11 @@ class Wage extends Admin_Controller{
                         else $status[8]=false;
                     }
                     break;
-                */
+                
                 default:break;
             }
         }
+        */
         $this->data['submit_status']=$submit_status;
         $this->data['feedback_status']=$feedback_status;
         $this->data['status']=$status;
@@ -441,6 +443,7 @@ class Wage extends Admin_Controller{
         $pdf->AddPage('P', 'A4'); 
         //设置背景图片
         $img_file = 'assets/images/Unicom.jpg';
+        
         $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
         $user_id=$this->data['user_id'];
         $user_data=$this->model_wage_tag->getTagById($user_id);
@@ -576,6 +579,7 @@ class Wage extends Admin_Controller{
         
         #$pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
         if(strstr($type,'收入')){
+            $pdf->setCellHeightRatio(2.5); 
             $pdf->SetFont('songti','',15);
             $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
             $str="\r\n\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n";

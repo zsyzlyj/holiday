@@ -7,10 +7,6 @@
       <h1>
         工资信息
       </h1>
-      
-        
-        
-      
     </section>
 
     <!-- Main content -->
@@ -29,7 +25,7 @@
                   <?php endforeach; ?>
                 </h4>
             </div>
-              <!-- /.box-header -->
+            <!-- /.box-header -->
 
             <div class="box-body">
               <div style="overflow:scroll;">
@@ -90,8 +86,6 @@
                   <?php endif;$counter++;?>
                   <?php endforeach; ?>
                   </tr>
-                  
-                    
                   <?php endif; ?>
                   </thead>
                   <tbody>

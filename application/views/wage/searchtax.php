@@ -70,6 +70,8 @@
               </table>
               <hr />
               <div>
+              <h3><?php echo $notice['title'];?></h3>
+              <br />
               <h5><?php echo $notice['content'];?></h5>
               </div>
               <?php elseif($chosen_month!=""): ?>

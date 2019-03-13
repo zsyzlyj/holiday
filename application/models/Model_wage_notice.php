@@ -27,9 +27,16 @@ class Model_wage_notice extends CI_Model{
 		$query = $this->db->query($sql,array($date));
 		return $query->row_array();
 	}
+	public function deleteByDate($date){
+		if($date){
+			$this->db->where('date_tag', $date);
+			$delete = $this->db->delete('wage_notice');
+			return ($delete == true) ? true : false;
+		}
+	}
 	public function delete($date){
 		if($date){
-			$this->db->where('number', $date);
+			$this->db->where('date_tag', $date);
 			$delete = $this->db->delete('wage_notice');
 			return ($delete == true) ? true : false;
 		}
