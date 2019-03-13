@@ -14,7 +14,6 @@
       </a>
     
     <ul class="nav navbar-nav navbar-right">
-
         <li><a href="javascript:void(0);">
         <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;<?php echo $user_name;?>
         </a></li>

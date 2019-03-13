@@ -1,7 +1,7 @@
 <header class="main-header">
     <!-- Logo -->
     <a href="<?php echo base_url('dashboard') ?>" class="logo">
-      
+    <span><b style="text-align:left">主功能面板</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="mylogo navbar navbar-static-top">

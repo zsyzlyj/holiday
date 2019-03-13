@@ -22,7 +22,7 @@ class Super_wage extends Admin_Controller {
         $this->load->model('model_wage_sp');
         $this->load->model('model_wage_sp_attr');
         $this->load->model('model_wage_tax');
-        $this->load->model('model_wage_tax_attr');
+        $this->load->model('model_wage_tax_attr'); 
         $this->data['user_name'] = $this->session->userdata('user_id');
         $this->data['user_id'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
@@ -1088,11 +1088,11 @@ class Super_wage extends Admin_Controller {
                             }
                         }
                         else{
-                            redirect('super_wage/download_page', 'refresh');                        
+                            redirect('super_wage/wage_export', 'refresh');                        
                         }
                     }
                     else{
-                        redirect('super_wage/download_page', 'refresh');
+                        redirect('super_wage/wage_export', 'refresh');
                     }
                 }
                 //指定部门,没有选用户
@@ -1108,15 +1108,15 @@ class Super_wage extends Admin_Controller {
                             //异常处理,如果部门指定，同时有名单
                             else{
                                 $this->session->set_flashdata('error', '不能同时指定部门和上传名单');
-                                redirect('super_wage/download_page', 'refresh');
+                                redirect('super_wage/wage_export', 'refresh');
                             }
                         }
                         else{
-                            redirect('super_wage/download_page', 'refresh');                        
+                            redirect('super_wage/wage_export', 'refresh');                        
                         }
                     }
                     else{
-                        redirect('super_wage/download_page', 'refresh');
+                        redirect('super_wage/wage_export', 'refresh');
                     }
                 }
             }
@@ -1189,11 +1189,11 @@ class Super_wage extends Admin_Controller {
                                 }
                             }
                             else{
-                                redirect('super_wage/download_page', 'refresh');                        
+                                redirect('super_wage/wage_export', 'refresh');                        
                             }
                         }
                         else{
-                            redirect('super_wage/download_page', 'refresh');
+                            redirect('super_wage/wage_export', 'refresh');
                         }
                     }
                     //指定部门,没有选用户
@@ -1209,15 +1209,15 @@ class Super_wage extends Admin_Controller {
                                 //异常处理,如果部门指定，同时有名单
                                 else{
                                     $this->session->set_flashdata('error', '不能同时指定部门和上传名单');
-                                    redirect('super_wage/download_page', 'refresh');
+                                    redirect('super_wage/wage_export', 'refresh');
                                 }
                             }
                             else{
-                                redirect('super_wage/download_page', 'refresh');                        
+                                redirect('super_wage/wage_export', 'refresh');                        
                             }
                         }
                         else{
-                            redirect('super_wage/download_page', 'refresh');
+                            redirect('super_wage/wage_export', 'refresh');
                         }
                     }
                     $one_month=array(
@@ -1359,7 +1359,7 @@ class Super_wage extends Admin_Controller {
         header('Cache-Control: max-age=0');
         $objWriter->save('php://output');
     }
-    public function download_page(){
+    public function wage_export(){
         $this->data['path'] = 'uploads/standard/人员导入模板.xlsx';
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if($_POST['end_month']!='单击选择月份' and !strstr($_POST['end_month'],'1899') and $_POST['start_month']!='单击选择月份' and !strstr($_POST['start_month'],'1899')){
@@ -1367,11 +1367,10 @@ class Super_wage extends Admin_Controller {
             }
             else{
                 $this->session->set_flashdata('error', '请选择月份!!');
-                redirect('super_wage/download_page', 'refresh');
+                redirect('super_wage/wage_export', 'refresh');
             }
         }
         else{
-            $this->data['user_name'] = $this->session->userdata('user_name');
             $this->data['wage_data']='';
             $this->data['attr_data']='';
             $this->data['chosen_month']='';

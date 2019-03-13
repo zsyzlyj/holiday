@@ -137,7 +137,7 @@
         </li>
 -->
         <li id="downloadWageNav">
-          <a href="<?php echo base_url('super_wage/download_page') ?>">
+          <a href="<?php echo base_url('super_wage/wage_export') ?>">
             <i class="fa fa-cloud-download"></i><span>工资明细导出</span>
           </a>
         </li>
