@@ -463,8 +463,13 @@ class Wage extends Admin_Controller{
             array_push($date_set,substr($NewMonth,0,4).substr($NewMonth,5,6));
         }
         $avg=$this->model_wage->countAvg($date_set,$user_id)['total'];
+        $sum=$this->model_wage->countSum($date_set,$user_id)['total'];
+        
         if($avg===NULL){
             $avg=0;
+        }
+        if($sum===NULL){
+            $sum=0;
         }
         $dept=$user_data['dept'];
         $gender=$user_data['gender'];
@@ -487,17 +492,48 @@ class Wage extends Admin_Controller{
         $pdf->writeHTML($str, true, false, true, false, 'C');
         $rmb=$this->num_to_rmb($avg);
         $avg=number_format($avg,0,"","");
+        $sum=number_format($sum,0,"","");
         $html="";
         $pdf->SetFont('songti','',15);
         switch($type){
             case '收入证明':
                 $str="\r\n    兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！\r\n";
+                $pdf->setCellHeightRatio(2.5); 
+                $pdf->SetFont('songti','',15);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                $str="\r\n\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n";
+                $pdf->setCellHeightRatio(1.7); 
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
+                $pdf->setCellHeightRatio(1.0); 
+                $pdf->SetFont('songti','',11);
+                $str="\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0176-23666666 传真：076023666888\r\n网址：http://www.10010.com/";
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
                 break;
             case '收入证明（农商银行）':
                 $str="\r\n中山农村商业银行股份有限公司：\r\n    兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅用于申请贷款之用。\r\n    特此证明！";
+                $pdf->setCellHeightRatio(2.5); 
+                $pdf->SetFont('songti','',15);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                $str="\r\n\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n";
+                $pdf->setCellHeightRatio(1.7); 
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
+                $pdf->setCellHeightRatio(1.0); 
+                $pdf->SetFont('songti','',11);
+                $str="\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0176-23666666 传真：076023666888\r\n网址：http://www.10010.com/";
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
                 break;
             case '收入证明（公积金）':
-                $str="\r\n中山市住房公积金管理中心：\r\n    为申请住房公积金贷款事宜，兹证明".$username."，性别：".$gender."，身份证号码：".$user_id."，是我单位职工，已在我单位工作满".$period."年，该职工上一年度在我单位总收入约为".$avg."元（大写：".$rmb."）。\r\n\r\n";
+                $str="\r\n中山市住房公积金管理中心：\r\n    为申请住房公积金贷款事宜，兹证明".$username."，性别：".$gender."，身份证号码：".$user_id."，是我单位职工，已在我单位工作满".$period."年，该职工上一年度在我单位总收入约为".$sum."元（大写：".$rmb."）。\r\n\r\n";
+                $pdf->setCellHeightRatio(2.5); 
+                $pdf->SetFont('songti','',15);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+                $str="\r\n\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n";
+                $pdf->setCellHeightRatio(1.7); 
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
+                $pdf->setCellHeightRatio(1.0); 
+                $pdf->SetFont('songti','',11);
+                $str="\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0176-23666666 传真：076023666888\r\n网址：http://www.10010.com/";
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
                 break;
             case '现实表现证明':
                 $str="\r\n    ".$username."（男，身份证号：".$user_id."）同志自".$date."进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n    特此证明!\r\n";
@@ -579,6 +615,7 @@ class Wage extends Admin_Controller{
         }
         
         #$pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
+        /*
         if(strstr($type,'收入')){
             $pdf->setCellHeightRatio(2.5); 
             $pdf->SetFont('songti','',15);
@@ -591,6 +628,7 @@ class Wage extends Admin_Controller{
             $str="\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0176-23666666 传真：076023666888\r\n网址：http://www.10010.com/";
             $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
         }
+        */
         //输出PDF
         $date_name=date('YmdHis');
         //如果是查看，则生成临时文件，如果是申请，则生成正式文件，后面打印这一份
