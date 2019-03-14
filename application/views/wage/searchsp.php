@@ -95,7 +95,8 @@
         autoclose:true,
         pickerPosition: "-left"
       });
-    
+      if(new Date().getFullYear()-2>2019)
+        $('#datetimepicker').datetimepicker('setStartDate', (new Date().getFullYear()-2).toString()+'-'+new Date().getMonth().toString());
     });
     
     

@@ -145,7 +145,7 @@
         format: 'yyyy-mm',
         startView:3,
         minView:3,
-        startDate:"2017-01",
+        startDate:(new Date().getFullYear()-2).toString()+'-'+new Date().getMonth().toString(),
         autoclose:true,
         pickerPosition: "-left",
         initialDate: new Date('Y-m')

@@ -96,12 +96,13 @@
         format: 'yyyy-mm',
         startView:3,
         minView:3,
-        startDate:"2019-01",
+        startDate: "2019-01",
         autoclose:true,
         pickerPosition: "-left",
         showCurrentAtPos:1
       });
+      if(new Date().getFullYear()-2>2019)
+        $('#datetimepicker').datetimepicker('setStartDate', (new Date().getFullYear()-2).toString()+'-'+new Date().getMonth().toString());
     });
-    
-    
+
   </script>

@@ -508,7 +508,7 @@ class Wage extends Admin_Controller{
                 if(!$apply_flag){
                     $pdf->setCellHeightRatio(1.0); 
                     $pdf->SetFont('songti','',11);
-                    $str="\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
+                    $str="\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
                     $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
                 }
                 break;
@@ -523,7 +523,7 @@ class Wage extends Admin_Controller{
                 if(!$apply_flag){
                     $pdf->setCellHeightRatio(1.0); 
                     $pdf->SetFont('songti','',11);
-                    $str="\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
+                    $str="\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
                     $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
                 }
                 break;
@@ -538,7 +538,7 @@ class Wage extends Admin_Controller{
                 if(!$apply_flag){
                     $pdf->setCellHeightRatio(1.0); 
                     $pdf->SetFont('songti','',11);
-                    $str="\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
+                    $str="\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
                     $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
                 }
                 break;
