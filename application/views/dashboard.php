@@ -4,7 +4,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        主功能面板
+        <!--主功能面板-->
       </h1>
     </section>
     <!-- Main content -->

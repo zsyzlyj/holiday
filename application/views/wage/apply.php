@@ -31,13 +31,13 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table class="table">
+              <table class="table table-striped table-responsive table-hover table-bordered">
                 <thead>
                   <th>序号</th>
                   <th>名称</th>
                   <th>详情</th>
                   <th>提交状态</th>
-                  <th>审核状态</th>
+                  <th>领取时间</th>
                 </thead>
                 <tbody>
                   <?php for($i=0;$i<count($name);$i++):?>
@@ -63,18 +63,32 @@
                         <!-- 弹窗内容 -->
                         <div class="modal-content-apply">
                           <div class="modal-header">
+                            <!--
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ><font color="black">×</font></button>
-                            <h3><font color="black">预览</font></h3>
+                            -->
+                            <div style="text-align:right">
+                            <form action="<?php base_url('wage/apply_wage_proof') ?>" style="margin:0px;display:inline;" method="post">
+                              <input type="hidden" name="type" value="<?php echo $name[$i];?>"/>
+                              <?php if(!empty($status)):?>
+                                <?php if($status[$i]):?>
+                                <button type="submit" class="btn btn-success">提交申请</button>
+                                <?php else:?>
+                                <button disabled type="submit" class="btn btn-success">提交申请</button>
+                                <?php endif;?>
+                              <?php else:?>
+                              <button type="submit" class="btn btn-success">提交申请</button>
+                              <?php endif;?>          
+                            </form>
+                            <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">关闭</button>
+                            </div>
+                            <!--<h4><font color="black">预览</font></h4>-->
                           </div>
                           <!-- model-header-apply -->
                           <div class="modal-body">
-                            <!--
-                            <iframe width="450" height="600" src="<?php echo base_url($url[$i]);?>"></iframe>
-                            -->
-                            
-                            <iframe width="600" height="700" src="<?php echo base_url($url[$i]);?>"></iframe>
+                            <iframe width="600" height="800" src="<?php echo base_url($url[$i]);?>"></iframe>
                           </div>
                           <!-- model-body-apply -->
+                          <!--
                           <div class="modal-footer">
                             <button class="btn btn-info" data-dismiss="modal" aria-hidden="true">关闭</button>
                             <form action="<?php base_url('wage/apply_wage_proof') ?>" style="margin:0px;display:inline;" method="post">
@@ -90,6 +104,7 @@
                               <?php endif;?>          
                             </form>
                           </div>
+                          -->
                           <!-- model-footer-apply -->
                         </div>
                         <!-- model-content-apply -->
@@ -104,11 +119,11 @@
                       <td>未提交</td>
                     <?php endif;?>
                     <?php if(strstr($feedback_status[$i],'已')):?>
-                    <td><font color="green"><?php echo $feedback_status[$i]?></font></td>
+                    <td><!--<font color="green"><?php echo $feedback_status[$i]?></font>--></td>
                     <?php elseif(strstr($feedback_status[$i],'未')):?>
-                    <td><font color="black"><?php echo $feedback_status[$i]?></font></td>
+                    <td><font color="black">请于周三或周五下午前往人力部领取</font></td>
                     <?php else:?>
-                      <td>未审核</td>
+                      <td></td>
                     <?php endif;?>
                     
                   </tr>

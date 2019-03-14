@@ -13,6 +13,13 @@
       <div class="col-md-12 col-xs-12">
         <div class="box">
           <div class="box-header">
+          <h3 class="box-title"><font color="red">公告：</font></h3>
+            </br>              </br>
+          <h4>
+          <p>
+          <?php echo str_replace('class="ql-align-justify"','class="ql-align-justify" style="line-height:150%"',$notice['content']);?>
+          </p>
+          </h4>
           </br>
           </div>
           <!-- /.box-header -->

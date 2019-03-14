@@ -498,7 +498,7 @@ class Wage extends Admin_Controller{
         $pdf->SetFont('songti','',15);
         switch($type){
             case '收入证明':
-                $str="\r\n    兹证明".$username."，身份证号码：".$user_id."为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！\r\n";
+                $str="\r\n    兹证明".$username."(身份证号码：".$user_id.")为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！\r\n";
                 $pdf->setCellHeightRatio(2.5); 
                 $pdf->SetFont('songti','',15);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
@@ -508,7 +508,7 @@ class Wage extends Admin_Controller{
                 if(!$apply_flag){
                     $pdf->setCellHeightRatio(1.0); 
                     $pdf->SetFont('songti','',11);
-                    $str="\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
+                    $str="\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
                     $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
                 }
                 break;
@@ -543,7 +543,7 @@ class Wage extends Admin_Controller{
                 }
                 break;
             case '现实表现证明':
-                $str="\r\n    ".$username."（男，身份证号：".$user_id."）同志自".$date."进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n    特此证明!\r\n";
+                $str="\r\n    ".$username."(男，身份证号:".$user_id.")同志自".$date."进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n    特此证明!\r\n";
                 $pdf->SetFont('songti','',15);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");

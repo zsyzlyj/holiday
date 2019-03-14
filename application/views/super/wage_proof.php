@@ -44,30 +44,28 @@
                       <div class="modal-apply fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal<?php echo $k;?>">
                         <div class="modal-content-apply">
                           <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><font color="black">×</font></button>
-                          <h4 class="modal-title">审    核</h4>
+                          <div style="text-align:right">
+                          <form action="<?php echo base_url('super_wage/wage_proof');?>" style="margin:0px;display:inline;" method="post">
+                            <input name="id" type="hidden" value="<?php echo $v['id'];?>" />
+                            <input name="user_id" type="hidden" value="<?php echo $v['user_id'];?>" />
+                            <input name="type" type="hidden" value="<?php echo $v['type'];?>" />
+                            <?php if(strstr($v['feedback_status'],'已')):?>
+                            <button disabled type="submit" class="btn btn-success">确认审核</a>
+                            <?php else:?>
+                            <button type="submit" class="btn btn-green">确认审核</a>
+                            <?php endif;?>
+                          </form>
+                          <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">关闭</button>
+                          </div>
                           </div>
                           <div class="modal-body">
                             <!--<iframe width="600" height="700" src="<?php echo base_url($url[$k]);?>"></iframe>-->
                             <?php if($v['url']):?>
-                            <iframe width="450" height="600" src="<?php echo base_url($v['url']);?>"></iframe>
+                            <iframe width="600" height="800" src="<?php echo base_url($v['url']);?>"></iframe>
                             <?php else:?>
                             无记录
                             <?php endif;?>
                           
-                          </div>
-                          <div class="modal-footer">
-                            <form action="<?php echo base_url('super_wage/wage_proof');?>" method="post">
-                            <input name="id" type="hidden" value="<?php echo $v['id'];?>" />
-                            <input name="user_id" type="hidden" value="<?php echo $v['user_id'];?>" />
-                            <input name="type" type="hidden" value="<?php echo $v['type'];?>" />
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <?php if(strstr($v['feedback_status'],'已')):?>
-                            <button disabled type="submit" class="btn btn-success btn-ok">确认审核</a>
-                            <?php else:?>
-                            <button type="submit" class="btn btn-success btn-ok">确认审核</a>
-                            
-                            <?php endif;?></form>
                           </div>
                         </div><!-- /.modal-content -->
                       </div><!-- /.modal -->

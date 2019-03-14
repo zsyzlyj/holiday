@@ -48,8 +48,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <?php if($plan_data): ?>    
-              
+                  <?php if($plan_data): ?>
                     <?php foreach($plan_data as $k => $v): ?>
                       <tr>
                         <td><?php echo $v['name']; ?></td>
