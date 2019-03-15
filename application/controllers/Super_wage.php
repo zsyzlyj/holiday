@@ -868,6 +868,10 @@ class Super_wage extends Admin_Controller {
                     if($v!=''){
                         $attribute['attr_name'.$attr_counter]=$v;
                         $attr_counter++;
+                        
+                        if($v=='当月月应收合计'){
+                            $sum_mark=$attr_counter-5;
+                        }
                     }
                 }
                 $attribute['date_tag']=$filename;
@@ -909,7 +913,7 @@ class Super_wage extends Admin_Controller {
                     }
                 }
                 $dept=$wage['department'];
-                $wage['total']=$wage['content'.(count($wage)-6)];
+                $wage['total']=$wage['content'.$sum_mark];
                 #echo count($wage).'<br />';
                 array_push($data,$wage);
                 #$this->model_wage->create($wage);

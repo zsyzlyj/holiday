@@ -55,7 +55,15 @@ class Admin_Controller extends MY_Controller
 	public function logged_in_super(){
 		$session_data = $this->session->userdata();
 		if($session_data['logged_in_super'] == TRUE){
-			redirect('super_wage/index', 'refresh');
+			if($session_data['permission'] == '工资'){              
+				redirect('super_wage/index', 'refresh');
+			}
+			elseif($session_data['permission'] == '休假'){              
+				redirect('super_holiday/index', 'refresh');
+			}
+			elseif($session_data['permission'] == '人员'){              
+				redirect('super_hr/index', 'refresh');
+			}
 		}
 	}
 	public function not_logged_in_super(){

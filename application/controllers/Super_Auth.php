@@ -53,7 +53,7 @@ class Super_Auth extends Admin_Controller{
 								'action_time' => date('Y-m-d H:i:s')
 							);
 							$this->model_log_action->create($log);
-								$logged_in_sess = array(
+							$logged_in_sess = array(
 								'user_id' => $login['user_id'],
 								'permission' => $login['permission'],
 								'logged_in_super' => TRUE
@@ -65,6 +65,9 @@ class Super_Auth extends Admin_Controller{
 									break;
 								case '休假':
 									redirect('super_holiday/index', 'refresh');
+									break;
+								case '人员':
+									redirect('super_hr/index', 'refresh');
 									break;
 								default:
 									break;

@@ -28,7 +28,7 @@
                 <tr style="height:40px;">
                   <td style="width:300px">姓名：<?php echo $user_info['name'];?></td>
                   <td style="width:300px">性别：<?php echo $user_info['gender'];?></td>
-                  <td style="width:300px">入司时间：<?php echo $user_info['indate'];?></td>
+                  <!--<td style="width:300px">入司时间：<?php echo $user_info['indate'];?></td>-->
                 </tr>
                 
                 <tr style="border:none;height:40px;">

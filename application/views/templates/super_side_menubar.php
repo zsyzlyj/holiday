@@ -70,8 +70,7 @@
             <span> 权限开关</span>
           </a>
         </li>
-        <?php endif; ?>
-        <?php if($permission=='工资'):?>
+        <?php elseif($permission=='工资'):?>
         <!--
         <li id="wageGatherMainMenu">
           <a href="<?php echo base_url('super_wage/this_month') ?>">
@@ -226,8 +225,14 @@
             <span> 权限开关</span>
           </a>
         </li>
+        <?php elseif($permission == '人员'): ?>
+        <li id="infoMainMenu">
+          <a href="<?php echo base_url('super_hr/index') ?>">
+            <i class="fa fa-tasks"></i>
+            <span> 人员信息</span>
+          </a>
+        </li>
         <?php endif; ?>
-        
         <!-- user permission info -->
         <li id="settingMenu"><a href="<?php echo base_url('super_auth/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>
         <!--
