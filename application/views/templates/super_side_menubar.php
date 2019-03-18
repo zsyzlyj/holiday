@@ -46,7 +46,7 @@
             <li id="uploadTagFileNav"><a href="<?php echo base_url('super_wage/wage_tag_import') ?>"><i class="fa fa-circle-o"></i><span>人员角色导入（大表）</span></a></li>
             <li id="resetWageUserNav"><a href="<?php echo base_url('super_wage/reset_pass') ?>"><i class="fa fa-circle-o"></i><span>人员密码初始化</span></a></li>
             <li id="manageHolidayUserNav"><a href="<?php echo base_url('super_holiday/manager') ?>"><i class="fa fa-circle-o"></i> 综管、部门负责人管理</a></li>
-            <li id="createUserNav"><a href="<?php echo base_url('super_wage/create') ?>"><i class="fa fa-circle-o"></i><span>创建用户</span></a></li>
+            <li id="createUserNav"><a href="<?php echo base_url('super_wage/create') ?>"><i class="fa fa-circle-o"></i><span> 创建用户</span></a></li>
           </ul>
         </li>
         
@@ -151,7 +151,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="createUserNav"><a href="<?php echo base_url('super_wage/create') ?>"><i class="fa fa-circle-o"></i><span>创建用户</span></a></li>
+            <li id="createUserNav"><a href="<?php echo base_url('super_wage/create') ?>"><i class="fa fa-circle-o"></i><span> 创建用户</span></a></li>
             <li id="resetWageUserNav"><a href="<?php echo base_url('super_wage/reset_pass') ?>"><i class="fa fa-circle-o"></i><span>人员密码初始化</span></a></li>
           </ul>
         </li>

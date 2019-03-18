@@ -41,20 +41,16 @@ class super_hr extends Admin_Controller {
         $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
         $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
         $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
-        echo $sheet->getTitle();
-        /*
+        
         $highestRow = $sheet->getHighestRow(); // 取得总行数
         $highestColumm = $sheet->getHighestColumn(); // 取得总列数
         $columnCnt = array_search($highestColumm, $cellName); 
 
         $batch_counter=0;
         $data = array();
-        $attribute = array();
-        $this->model_wage->deleteByDate($filename);
-        $this->model_wage_attr->deleteByDate($filename);
-        
+        $attr = array();
         for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-            $temp = array();
+            $tmp = array();
             for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
                 $cellId = $cellName[$colIndex].$rowIndex;  
                 $cell = $sheet->getCell($cellId)->getValue();
@@ -62,96 +58,19 @@ class super_hr extends Admin_Controller {
                 if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
                     $cell = $cell->__toString();
                 }
-                $temp[$colIndex] = $cell;
-            }
-            if($rowIndex==2){
-                if($this->model_wage_notice->getWageNoticeByDate($filename)){
-                    $notice=array(
-                        'content' => $temp[4]
-                    );
-                    $this->model_wage_notice->update($notice,$filename);
-                    unset($notice);
+                if($rowIndex==1){
+                    array_push($attr,$cell);
                 }
                 else{
-                    $notice=array(
-                        'date_tag' => $filename,
-                        'content' => $temp[4]
-                    );
-                    $this->model_wage_notice->create($notice);
-                    unset($notice);
+                    array_push($tmp,$cell);
                 }
-                
+                //$temp[$colIndex] = $cell;
             }
-            if($rowIndex==3){
-                $attr_counter=1;
-                foreach($temp as $k => $v){
-                    if($v!=''){
-                        $attribute['attr_name'.$attr_counter]=$v;
-                        $attr_counter++;
-                        
-                        if($v=='当月月应收合计'){
-                            $sum_mark=$attr_counter-5;
-                        }
-                    }
-                }
-                $attribute['date_tag']=$filename;
-                $attr_counter--;
-                if($this->model_wage_attr->getWageAttrDataByDate($filename)){
-                    $this->model_wage_attr->update($attribute,$filename);
-                }
-                else{
-                    $this->model_wage_attr->create_attr($attribute);
-                }
-            }
-            if($rowIndex>3){
-                $wage=array();
-                $counter=0;
-                foreach($temp as $k => $v){
-                    if($counter==$attr_counter-1){
-                        if($v!=''){
-                            $wage['content'.($counter-3)]=$v;
-                        }
-                        else{
-                            $wage['content'.($counter-3)]="";
-                        }
-                        $wage['date_tag']=$filename;
-                        break;
-                    }
-                    if($v!=''){
-                        switch($k){
-                            case 0:$wage['number']=$v;break;
-                            case 1:$wage['department']=$v;break;
-                            case 2:$wage['user_id']=$v;break;
-                            case 3:$wage['name']=$v;break;
-                            default:if(is_numeric($v)) $wage['content'.($counter-3)]=number_format(round((float)$v,2),2,".",""); else $wage['content'.($counter-3)]=$v;break;
-                        }
-                        $counter++;
-                    }
-                    elseif(strlen($v)==1 and $v==0){
-                        $wage['content'.($counter-3)]='0.00';
-                        $counter++;
-                    }
-                }
-                $dept=$wage['department'];
-                $wage['total']=$wage['content'.$sum_mark];
-                #echo count($wage).'<br />';
-                array_push($data,$wage);
-                #$this->model_wage->create($wage);
-                unset($wage);
-                //如果不是多部门，不包含/，那么就记录下来
-                if(strpos($dept,'/') != true){
-                    $dept_data=array(
-                        'dept_name' => $dept,
-                    );
-                    //如果不存在，则创建
-                    if(!$this->model_dept->check_dept($dept))
-                        $this->model_dept->create($dept_data);
-                }
-            }
-            unset($temp);
+            array_push($data,$tmp);
+            unset($tmp);
         }
-        $this->model_wage->createbatch($data);
-        */
+        $this->model_hr_attr->create($attr);
+        $this->model_hr->createbatch($data); 
     }
 
     public function hr_import(){
@@ -175,6 +94,33 @@ class super_hr extends Admin_Controller {
         }
         else{
             $this->render_super_template('super/hr_import',$this->data);
+        }
+    }
+    public function search(){
+        $this->data['wage_data']='';
+        $this->data['attr_data']='';
+        $this->data['chosen_month']='';
+        
+        if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('chosen_month',$_POST)){
+            $this->data['chosen_month']=$_POST['chosen_month'];
+            $doc_name=substr($_POST['chosen_month'],0,4).substr($_POST['chosen_month'],5,6);
+            if(strlen($doc_name)<=7 and $doc_name!=''){
+                $this->data['attr_data']=$this->model_wage_attr->getWageAttrDataByDate($doc_name);
+                $this->data['wage_notice']=$this->model_wage_notice->getWageNoticeByDate($doc_name)['content'];
+            }
+            $log=array(
+                'user_id' => $this->data['user_id'],
+                'username' => $this->data['user_name'],
+                'login_ip' => $_SERVER["REMOTE_ADDR"],
+                'staff_action' => '查看'.$this->data['chosen_month'].'工资',
+                'action_time' => date('Y-m-d H:i:s')
+            );
+            $this->model_log_action->create($log);
+            unset($log);
+            $this->render_super_template('super/hr_search',$this->data);
+        }
+        else{
+            $this->render_super_template('super/hr_search',$this->data);
         }
     }
 }

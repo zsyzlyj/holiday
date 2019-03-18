@@ -45,7 +45,9 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/bootstrap-datetimepicker.min.css')?>">
 
   <!-- Page level plugin CSS-->
-  <link href="<?php echo base_url('assets/dist/vendor/datatables/dataTables.bootstrap4.css') ?>" rel="stylesheet">
+  <!--2019.03.15 删除
+    <link href="<?php echo base_url('assets/dist/vendor/datatables/dataTables.bootstrap4.css') ?>" rel="stylesheet">
+  -->
   <link href="<?php echo base_url('assets/images/logo-icob.ico');?>" type="image/x-icon" rel="shortcut icon">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -56,7 +58,9 @@
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- 2019.03.15 删除
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  -->
   <!--2019.02.21 删除-->
   <!--
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') ?>">

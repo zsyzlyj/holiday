@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showmonth.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/showapply.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
-  <link href="<?php echo base_url('assets/images/logo-icoblogo-ico.ico');?>" type="image/x-icon" rel="shortcut icon">
+  <link href="<?php echo base_url('assets/images/logo-icob.ico');?>" type="image/x-icon" rel="shortcut icon">
 
 <!--
   <link type="application/atom+xml" rel="alternate" href="https://quilljs.com/feed.xml" title="Quill - Your powerful rich text editor" />
@@ -56,8 +56,11 @@
   <![endif]-->
 
   <!-- Google Font -->
+  <!--2019.03.15 删除
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  
   <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap-table/bootstrap-table.min.css') ?>">
+  -->
   <!--2019.02.21 删除-->
   <!--
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') ?>">
