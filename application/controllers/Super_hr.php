@@ -6,7 +6,8 @@ class super_hr extends Admin_Controller {
 	public function __construct(){
         parent::__construct();
         $this->data['page_title'] = 'Super';
-        //$this->load->model('model_human_info');
+        $this->load->model('model_hr_attr');
+        $this->load->model('model_hr_content');
         $this->data['user_name'] = $this->session->userdata('user_id');
         $this->data['user_id'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
@@ -15,8 +16,9 @@ class super_hr extends Admin_Controller {
         $this->data['permission']=$this->session->userdata('permission');
     }
     public function index(){
-        $this->data['column_name']="";
-        $this->data['hr_data']="";
+        $this->data['column_name']=$this->model_hr_attr->getData();
+        $this->data['hr_data']=$this->model_hr_content->getData();
+        $this->data['trueend']=(int)str_replace('attr','',array_search(NULL,$this->data['column_name']))-1;
         $this->render_super_template('super/hr',$this->data);
     }
 
@@ -46,11 +48,10 @@ class super_hr extends Admin_Controller {
         $highestColumm = $sheet->getHighestColumn(); // 取得总列数
         $columnCnt = array_search($highestColumm, $cellName); 
 
-        $batch_counter=0;
         $data = array();
         $attr = array();
         for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-            $tmp = array();
+            $tmp=array();
             for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
                 $cellId = $cellName[$colIndex].$rowIndex;  
                 $cell = $sheet->getCell($cellId)->getValue();
@@ -59,18 +60,24 @@ class super_hr extends Admin_Controller {
                     $cell = $cell->__toString();
                 }
                 if($rowIndex==1){
-                    array_push($attr,$cell);
+                    $attr['attr'.($colIndex+1)] = $cell;
                 }
                 else{
-                    array_push($tmp,$cell);
+                    $tmp['content'.($colIndex+1)] = $cell;
                 }
                 //$temp[$colIndex] = $cell;
             }
-            array_push($data,$tmp);
+            #$this->model_hr_content->create($tmp);
+            if($rowIndex!=1){
+                array_push($data,$tmp);
+            }
             unset($tmp);
         }
+        #echo var_dump($attr);
+        $this->model_hr_attr->delete();
+        $this->model_hr_content->delete();
         $this->model_hr_attr->create($attr);
-        $this->model_hr->createbatch($data); 
+        $this->model_hr_content->createbatch($data); 
     }
 
     public function hr_import(){
@@ -88,7 +95,7 @@ class super_hr extends Admin_Controller {
                     }
                     */
                     $this->hr_excel_put();
-                    //$this->index();
+                    $this->index();
                 }
             }
         }
@@ -122,5 +129,32 @@ class super_hr extends Admin_Controller {
         else{
             $this->render_super_template('super/hr_search',$this->data);
         }
+    }
+    public function hr_dept(){
+        #$this->model_hr_content->getDataByDept();
+        $this->data['dept_options']=$this->model_hr_content->getDept();
+        $this->data['column_name']="";
+        $this->data['hr_data']="";
+        $this->data['current_dept']="";
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            if(array_key_exists('selected_dept', $_POST)){
+                $selected_dept=$_POST['selected_dept'];
+            }
+            elseif(array_key_exists('current_dept', $_POST)){
+                $selected_dept=$_POST['current_dept'];
+            }
+            $str="";
+            foreach($selected_dept as $k => $v){
+                $str.=$v.', ';
+            }
+            $str=substr($str,0,strlen($str)-2);
+            #$this->data['current_dept']=$selected_dept;
+            $this->data['current_dept']=$str;
+            $this->data['column_name'] = $this->model_hr_attr->getData();
+            $this->data['trueend']=(int)str_replace('attr','',array_search(NULL,$this->data['column_name']))-1;
+            $this->data['hr_data'] = $this->model_hr_content->getDataByDept($selected_dept);
+            /**/
+        }
+        $this->render_super_template('super/hr_dept',$this->data);
     }
 }

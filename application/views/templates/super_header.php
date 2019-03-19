@@ -47,7 +47,8 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/highlight/styles/monokai-sublime.css'); ?>">
 
   <link rel="stylesheet" href="<?php echo base_url('assets/quill/quill.snow.css') ?>">
-
+  <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap-select/css/bootstrap-select.css') ?>">
+  
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -156,6 +157,9 @@
   <script src="<?php echo base_url('assets/katex/katex.min.js'); ?>"></script>
   <script src="<?php echo base_url('assets/highlight/highlight.js'); ?>"></script>
   <script src="<?php echo base_url('assets/quill/quill.min.js') ?>"></script>
+  
+  <script src="<?php echo base_url('assets/bootstrap-select/js/bootstrap-select.js') ?>"></script>
+  <script src="<?php echo base_url('assets/bootstrap-select/defaults-zh_CN.js') ?>"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">

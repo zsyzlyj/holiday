@@ -54,7 +54,7 @@ class Holiday extends Admin_Controller {
         $this->data['holiday_data'] = ""; 
         $user_id=$this->session->userdata('user_id');
         $this->data['current_dept']="";
-        if($_POST){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $this->data['holiday_data'] = $this->model_holiday->getHolidayByDept($_POST['selected_dept']);
             $this->data['current_dept'] = $_POST['selected_dept'];
         }
@@ -72,7 +72,7 @@ class Holiday extends Admin_Controller {
         $this->data['submit_status'] ="";
         $selected_dept="";
         $domain=array();
-        if($_POST){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if(array_key_exists('selected_dept', $_POST)){
                 $selected_dept=$_POST['selected_dept'];
             }
@@ -129,7 +129,7 @@ class Holiday extends Admin_Controller {
 
         $this->data['dept_options']=$admin_result;
         $this->data['submitted'] = $submitted;
-        $this->data['submitted']=4;        
+        #$this->data['submitted']=4;        
         $this->data['plan_data'] = $result;
         $this->data['feedback'] = $this->model_feedback->getFeedbackByDept($selected_dept);
         $this->render_template('holiday/mydeptplan', $this->data);
@@ -236,7 +236,7 @@ class Holiday extends Admin_Controller {
         $user_id=$this->session->userdata('user_id');
         $selected_dept="";
         $this->data['current_dept']="";
-        if($_POST){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $selected_dept=$_POST['selected_dept'];
             $holiday_data = $this->model_holiday->getHolidayByDept($selected_dept);
             $this->data['current_dept']=$selected_dept;
@@ -257,7 +257,7 @@ class Holiday extends Admin_Controller {
         $this->data['submit_status'] ="";
         $selected_dept="";
         $domain=array();
-        if($_POST){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if(array_key_exists('selected_dept', $_POST)){
                 $selected_dept=$_POST['selected_dept'];
             }
@@ -313,7 +313,7 @@ class Holiday extends Admin_Controller {
     ==============================================================================
     */
     public function change_submit_mydeptplan(){
-        if($_POST){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if($_POST['submit_auth']==1){
                 $data = array(
                     'submit_tag' => 0
@@ -360,7 +360,7 @@ class Holiday extends Admin_Controller {
         $this->data['current_dept']="";
         $this->data['submit_status'] = "";
             $this->data['feedback_status'] = "";
-        if($_POST){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $select_dept=$_POST['selected_dept'];
             //如果有反馈内容的话，那么就检验是否选了同意和不同意
             //如果没有反馈内容，那就是普通的查看，直接去显示提交过来的计划表

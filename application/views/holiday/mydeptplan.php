@@ -250,14 +250,14 @@
             "sLoadingRecords": "载入中...",
             "sInfoThousands": ",",
             "oPaginate": 
-           {
+            {
                 "sFirst": "首页",
                 "sPrevious": "上页",
                 "sNext": "下页",
                 "sLast": "末页"
             },
             "oAria": 
-           {
+            {
                 "sSortAscending": ": 以升序排列此列",
                 "sSortDescending": ": 以降序排列此列"
             }
