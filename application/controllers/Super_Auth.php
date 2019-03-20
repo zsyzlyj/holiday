@@ -67,7 +67,7 @@ class Super_Auth extends Admin_Controller{
 									redirect('super_holiday/index', 'refresh');
 									break;
 								case '人员':
-									redirect('super_hr/index', 'refresh');
+									redirect('super_hr/hr_search', 'refresh');
 									break;
 								default:
 									break;

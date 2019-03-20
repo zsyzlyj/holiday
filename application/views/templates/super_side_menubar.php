@@ -226,6 +226,7 @@
           </a>
         </li>
         <?php elseif($permission == '人员'): ?>
+        <!--
         <li id="infoMainMenu">
           <a href="<?php echo base_url('super_hr/index') ?>">
             <i class="fa fa-tasks"></i>
@@ -236,6 +237,19 @@
           <a href="<?php echo base_url('super_hr/hr_dept') ?>">
             <i class="fa fa-tasks"></i>
             <span> 部门信息</span>
+          </a>
+        </li>
+        -->
+        <li id="hrsearchMainMenu">
+          <a href="<?php echo base_url('super_hr/hr_search') ?>">
+            <i class="fa fa-tasks"></i>
+            <span> 条件搜索</span>
+          </a>
+        </li>
+        <li id="scoreMainMenu">
+          <a href="<?php echo base_url('super_hr/hr_score') ?>">
+            <i class="fa fa-tasks"></i>
+            <span> 积点确认</span>
           </a>
         </li>
         <?php endif; ?>

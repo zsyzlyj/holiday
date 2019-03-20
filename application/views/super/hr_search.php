@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      人员明细查询
+      人员信息高级搜索
     </h1>
   </section>
  <!-- Main content -->
@@ -11,60 +11,184 @@
     <!-- Small boxes (Stat box) -->
     <div class="row">
       <div class="col-md-12 col-xs-12">
-        <?php if($this->session->flashdata('success')): ?>
-            <div class="alert alert-success alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <?php echo $this->session->flashdata('success'); ?>
-            </div>
-        <?php elseif($this->session->flashdata('error')): ?>
-          <div class="alert alert-error alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <?php echo $this->session->flashdata('error'); ?>
-          </div>
-        <?php endif; ?>
         <div class="box">
           <div class="box-header">
           </div>
           <!-- /.box-header -->
           <div class="box-body">
+            <p style="font-size:25px"><b>高级搜索</b></p>
+            <hr />
+            <form action="<?php echo base_url('super_hr/hr_search')?>" method="post">
             <div class="col-md-12">
-              <div>
-                <form action="<?php echo base_url('super_wage/search')?>" class="form-horizontal" method="post" role="form">   
-                  <input type="">
-                </form>
+              <div class="row">
+                <div class="col-md-4">姓名：
+                  <input name="name" value="" />
+                </div>
+                <div class="col-md-4">性别：
+                  <select class="selectpicker show-tick" multiple name="selected_gender" data-max-options="1">
+                    <?php if($current_gender!=""):?>
+                    <option value="<?php $current_gender;?>" selected="selected"><?php echo $current_gender;?></option>
+                    <?php endif;?>
+                    <?php foreach($gender_options as $k => $v):?>
+                    <?php if($current_gender!=$v):?>
+                      <option value="<?php echo $v['content6'];?>"><?php echo $v['content6'];?></option>
+                    <?php endif;?>
+                    <?php endforeach;?>
+                  </select> 
+                </div>
+                <div class="col-md-4">部门：
+                  <select id="selected_dept" name="selected_dept[]" class="selectpicker show-tick" multiple data-live-search="true" data-actions-box="true">
+                  <?php if($current_dept!=""):?>
+                  <option value="<?php $current_dept;?>" selected="selected"><?php echo $current_dept;?></option>
+                  <?php endif;?>
+                  <?php foreach($dept_options as $k => $v):?>
+                  <?php if($current_dept!=$v):?>
+                    <option value="<?php echo $v['content13'];?>"><?php echo $v['content13'];?></option>
+                  <?php endif;?>
+                  <?php endforeach;?>
+                  </select>
+                </div>
               </div>
-              <hr />
-              <?php if($attr_data and $wage_data): ?>
-              <div style="overflow:scroll;">
-                <fieldset>
-                <table id="wageTable"class="table table-striped table-bordered table-responsive" style="white-space:nowrap;text-align:center;border-color:silver;">
-                  <thead>
-                    <?php $counter=0;?>
-                    <tr>
-                      <?php foreach($attr_data as $k =>$v):?>
-
-                      <?php endforeach; ?>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php $counter=0;$colorcounter=0;?>
-                    <?php foreach($wage_data as $k => $v): ?>
-                      <?php if($colorcounter%2==0):?>
-                      <tr style="border-color:silver;">
-                      <?php elseif($colorcounter%2==1):?>
-                      <tr style="border-color:silver;" class="info">
-                      <?php endif;$colorcounter++;?>
-                      </tr>
-                    <?php endforeach; ?>
-                  </tbody>
-                </table>
-                </fieldset>
+              <br />
+              <div class="row">
+                <div class="col-md-4">科室：
+                  <select id="selected_sect" name="selected_sect[]" class="selectpicker show-tick" multiple data-live-search="true" data-actions-box="true">
+                  <?php if($current_sect!=""):?>
+                  <option value="<?php $current_sect;?>" selected="selected"><?php echo $current_sect;?></option>
+                  <?php endif;?>
+                  <?php foreach($section_options as $k => $v):?>
+                  <?php if($current_sect!=$v):?>
+                    <option value="<?php echo $v['content14'];?>"><?php echo $v['content14'];?></option>
+                  <?php endif;?>
+                  <?php endforeach;?>
+                  </select>
+                </div>
+                
+                <div class="col-md-4">岗位：
+                  <select id="selected_post" name="selected_post[]" class="selectpicker show-tick" multiple data-live-search="true" data-actions-box="true">
+                  <?php if($current_post!=""):?>
+                  <option value="<?php $current_post;?>" selected="selected"><?php echo $current_post;?></option>
+                  <?php endif;?>
+                  <?php foreach($post_options as $k => $v):?>
+                  <?php if($current_post!=$v):?>
+                    <option value="<?php echo $v['content15'];?>"><?php echo $v['content15'];?></option>
+                  <?php endif;?>
+                  <?php endforeach;?>
+                  </select>
+                </div>
+                
+                <div class="col-md-4">婚育信息：
+                  <select id="selected_marry" name="selected_marry" class="selectpicker show-tick" multiple data-max-options="1">
+                    <?php if($current_marry!=""):?>
+                    <option value="<?php $current_marry;?>" selected="selected"><?php echo $current_marry;?></option>
+                    <?php endif;?>
+                    <?php foreach($marry_options as $k => $v):?>
+                    <?php if($current_marry!=$v):?>
+                      <option value="<?php echo $v['content11'];?>"><?php echo $v['content11'];?></option>
+                    <?php endif;?>
+                    <?php endforeach;?>
+                  </select>
+                </div>
               </div>
-              <?php endif; ?>
+              <!-- /.row -->
+               
+              <br />
+              <div class="row">
+                <div class="col-md-4">学历：
+                  <select id="selected_degree" name="selected_degree[]" class="selectpicker show-tick" multiple data-live-search="true" data-actions-box="true">
+                  <?php if($current_degree!=""):?>
+                  <option value="<?php $current_degree;?>" selected="selected"><?php echo $current_degree;?></option>
+                  <?php endif;?>
+                  <?php foreach($degree_options as $k => $v):?>
+                  <?php if($current_degree!=$v):?>
+                    <option value="<?php echo $v['content44'];?>"><?php echo $v['content44'];?></option>
+                  <?php endif;?>
+                  <?php endforeach;?>
+                  </select>
+                </div>
+                <div class="col-md-4">在职学历：
+                  <select id="selected_equ_degree" name="selected_equ_degree[]" class="selectpicker show-tick" multiple data-live-search="true" data-actions-box="true">
+                  <?php if($current_equ_degree!=""):?>
+                  <option value="<?php echo $current_equ_degree;?>" selected="selected"><?php echo $current_equ_degree;?></option>
+                  <?php endif;?>
+                  <?php foreach($equ_degree_options as $k => $v):?>
+                  <?php if($current_equ_degree!=$v):?>
+                    <option value="<?php echo $v['content51'];?>"><?php echo $v['content51'];?></option>
+                  <?php endif;?>
+                  <?php endforeach;?>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                <select id="selected_equ_degree" name="selected_equ_degree[]" class="selectpicker show-tick" multiple data-live-search="true" data-actions-box="true">
+                  <?php if($current_equ_degree!=""):?>
+                  <option value="<?php echo $current_equ_degree;?>"><?php echo $current_equ_degree;?></option>
+                  <?php endif;?>
+                  <?php foreach($equ_degree_options as $k => $v):?>
+                  <?php if($current_equ_degree!=$v):?>
+                    <option value="<?php echo $v['content51'];?>"><?php echo $v['content51'];?></option>
+                  <?php endif;?>
+                  <?php endforeach;?>
+                  </select></div>
+              </div>   
+              <!-- /.col-md-12 -->
+            <hr />
+            <div class="row">
+            <div class="col-md-12">
+              <button class="btn btn-primary">搜索</button>
             </div>
-            <!-- /.container -->
+            </div>
+            </form>           
+            </div>
+            
           </div>
           <!-- /.box-body -->
+        </div>
+        <div class="box">
+          <div class="box-header">
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+          <?php if($current_dept!=""):?>
+          <h3><?php echo $current_dept;?>信息汇总表</h3>
+              <hr />
+              <div class="col-md-12 col-xs-12">
+                <div style="overflow:scroll;">
+                <table id="hrTable" class="table table-bordered table-striped" style="overflow:scroll;word-break:  keep-all;border-color:silver;">
+                <thead>
+                  <tr style="border-color:silver;">
+                    <?php $counter=0;?>
+                    <?php if($column_name): ?>
+                      <?php foreach ($column_name as $k => $v): ?>
+                      <?php if($counter<$trueend):?>
+                        <th style="border-color:silver;"><?php echo $v;$counter++;?></th>
+                      <?php endif; ?>
+                      <?php endforeach ?>
+                    <?php endif;?>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <?php if($hr_data): ?>                  
+                      <?php foreach ($hr_data as $k => $v): ?>
+                        <tr style="border-color:silver;">
+                        <?php $counter=0;?>
+                        <?php foreach($v as $a => $b):?>
+                        <?php if($counter<$trueend):?>
+                        <td style="border-color:silver;"><?php echo $b;$counter++;?></td>
+                        <?php endif; ?>
+                        <?php endforeach ?>
+                        </tr>
+                      <?php endforeach ?>
+                    <?php endif; ?>
+                  <!---->
+                  </tbody>
+                </table>
+                </div>
+                <!-- /.overflow:scroll -->
+              </div>
+              <?php endif;?>
+              <hr />
+            </div>
+          </div>
         </div>
         <!-- /.box -->
       </div>
@@ -75,9 +199,15 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<!-- /.row --><!--
+
+              <!-- /.row -->
+
 <script type="text/javascript">
     $(document).ready(function(){ 
-      $("#searchwageGetherMainMenu").addClass('active');
+      $("#hrsearchMainMenu").addClass('active');
+      
+      $('.selectpicker').selectpicker();
       $(".form_datetime").datetimepicker({
         bootcssVer:3,
         format: "yyyy-mm",
@@ -86,7 +216,7 @@
         startDate:"2017-01",
         autoclose:true  
       });
-      $('#wageTable').DataTable({
+      $('#hrTable').DataTable({
         language:{
             "sProcessing": "处理中...",
             "sLengthMenu": "显示 _MENU_ 项",
@@ -112,6 +242,5 @@
             }
         }      
       });
-    
     }); 
   </script>

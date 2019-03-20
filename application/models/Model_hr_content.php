@@ -16,6 +16,54 @@ class Model_hr_content extends CI_Model{
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+	public function getGender(){
+		$sql = "SELECT distinct(content6) FROM hr_content";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	public function getSection(){
+		$sql = "SELECT distinct(content14) FROM hr_content";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	public function getPost(){
+		$sql = "SELECT distinct(content15) FROM hr_content";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getMarry(){
+		$sql = "SELECT distinct(content11) FROM hr_content";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	public function getDegree(){
+		$sql = "SELECT distinct(content44) FROM hr_content";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	public function getEquDegree(){
+		$sql = "SELECT distinct(content51) FROM hr_content";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	/*
+	public function getGender(){
+		$sql = "SELECT distinct(content6) FROM hr_content";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	public function getGender(){
+		$sql = "SELECT distinct(content6) FROM hr_content";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	public function getGender(){
+		$sql = "SELECT distinct(content6) FROM hr_content";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	*/
 	public function getDataByDept($dept = null){
 		if($dept){
 			$query=$this->db->where_in('content13', $dept)->from('hr_content')->get();

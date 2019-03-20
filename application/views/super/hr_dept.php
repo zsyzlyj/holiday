@@ -11,17 +11,6 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-md-12 col-xs-12">
-          <?php if($this->session->flashdata('success')): ?>
-            <div class="alert alert-success alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <?php echo $this->session->flashdata('success'); ?>
-            </div>
-          <?php elseif($this->session->flashdata('error')): ?>
-            <div class="alert alert-error alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <?php echo $this->session->flashdata('error'); ?>
-            </div>
-          <?php endif; ?>
           <br />
           <div class="box">
             <div class="box-header"></div>
@@ -41,7 +30,9 @@
                 <button class="btn btn-primary" style="margin:10px">查询</button>
               </form>
               <hr />
+              <?php if($current_dept!=""):?>
               <h3><?php echo $current_dept;?>信息汇总表</h3>
+              
               <hr />
               <div class="col-md-12 col-xs-12">
                 <div style="overflow:scroll;">
@@ -77,6 +68,7 @@
                 </div>
                 <!-- /.overflow:scroll -->
               </div>
+              <?php endif;?>
               <hr />
             </div>
             <!-- /.box-body -->
