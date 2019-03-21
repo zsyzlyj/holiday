@@ -47,6 +47,33 @@ class Model_hr_content extends CI_Model{
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+	public function getParty(){
+		$sql = "SELECT distinct(content33) FROM hr_content";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	public function getPostType(){
+		$sql = "SELECT distinct(content18) FROM hr_content";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	public function search($name,$dept,$gender,$section,$post,$marry,$degree,$equ_degree,$party,$post_type){
+		#echo var_dump($this->db->where_in('content13', $dept)->from('hr_content')->get()->result_array());
+		return array_merge(
+			$this->db->where('content4', $name)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('content13', $dept)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('content14', $section)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('content15', $post)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('content11', $marry)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('content44', $degree)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('content51', $equ_degree)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('content6', $gender)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('content33', $party)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('content18', $post_type)->from('hr_content')->get()->result_array()
+		);
+		#$query=$this->db->where_in('content13', $dept)->where_in('content6', $gender)->where_in('content14', $section)->where_in('content15', $post)->where_in('content11', $marry)->where_in('content44', $degree)->where_in('content51', $equ_degree)->from('hr_content')->get();//->where_in('content13', $dept)->where_in('content13', $dept)->from('hr_content')->get();
+		#return $query->result_array();
+	}
 	/*
 	public function getGender(){
 		$sql = "SELECT distinct(content6) FROM hr_content";

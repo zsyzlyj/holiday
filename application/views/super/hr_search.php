@@ -22,17 +22,15 @@
             <div class="col-md-12">
               <div class="row">
                 <div class="col-md-4">姓名：
-                  <input name="name" value="" />
+                  <input name="name" type="text"/>
                 </div>
                 <div class="col-md-4">性别：
-                  <select class="selectpicker show-tick" multiple name="selected_gender" data-max-options="1">
+                  <select class="selectpicker show-tick" multiple name="selected_gender[]"  data-actions-box="true" data-max-options="1">
                     <?php if($current_gender!=""):?>
                     <option value="<?php $current_gender;?>" selected="selected"><?php echo $current_gender;?></option>
                     <?php endif;?>
                     <?php foreach($gender_options as $k => $v):?>
-                    <?php if($current_gender!=$v):?>
-                      <option value="<?php echo $v['content6'];?>"><?php echo $v['content6'];?></option>
-                    <?php endif;?>
+                    <option value="<?php echo $v['content6'];?>"><?php echo $v['content6'];?></option>
                     <?php endforeach;?>
                   </select> 
                 </div>
@@ -42,9 +40,7 @@
                   <option value="<?php $current_dept;?>" selected="selected"><?php echo $current_dept;?></option>
                   <?php endif;?>
                   <?php foreach($dept_options as $k => $v):?>
-                  <?php if($current_dept!=$v):?>
                     <option value="<?php echo $v['content13'];?>"><?php echo $v['content13'];?></option>
-                  <?php endif;?>
                   <?php endforeach;?>
                   </select>
                 </div>
@@ -57,9 +53,7 @@
                   <option value="<?php $current_sect;?>" selected="selected"><?php echo $current_sect;?></option>
                   <?php endif;?>
                   <?php foreach($section_options as $k => $v):?>
-                  <?php if($current_sect!=$v):?>
                     <option value="<?php echo $v['content14'];?>"><?php echo $v['content14'];?></option>
-                  <?php endif;?>
                   <?php endforeach;?>
                   </select>
                 </div>
@@ -70,22 +64,18 @@
                   <option value="<?php $current_post;?>" selected="selected"><?php echo $current_post;?></option>
                   <?php endif;?>
                   <?php foreach($post_options as $k => $v):?>
-                  <?php if($current_post!=$v):?>
                     <option value="<?php echo $v['content15'];?>"><?php echo $v['content15'];?></option>
-                  <?php endif;?>
                   <?php endforeach;?>
                   </select>
                 </div>
                 
                 <div class="col-md-4">婚育信息：
-                  <select id="selected_marry" name="selected_marry" class="selectpicker show-tick" multiple data-max-options="1">
+                  <select id="selected_marry" name="selected_marry[]" class="selectpicker show-tick" multiple data-actions-box="true" data-max-options="1">
                     <?php if($current_marry!=""):?>
                     <option value="<?php $current_marry;?>" selected="selected"><?php echo $current_marry;?></option>
                     <?php endif;?>
                     <?php foreach($marry_options as $k => $v):?>
-                    <?php if($current_marry!=$v):?>
                       <option value="<?php echo $v['content11'];?>"><?php echo $v['content11'];?></option>
-                    <?php endif;?>
                     <?php endforeach;?>
                   </select>
                 </div>
@@ -100,9 +90,7 @@
                   <option value="<?php $current_degree;?>" selected="selected"><?php echo $current_degree;?></option>
                   <?php endif;?>
                   <?php foreach($degree_options as $k => $v):?>
-                  <?php if($current_degree!=$v):?>
                     <option value="<?php echo $v['content44'];?>"><?php echo $v['content44'];?></option>
-                  <?php endif;?>
                   <?php endforeach;?>
                   </select>
                 </div>
@@ -112,25 +100,58 @@
                   <option value="<?php echo $current_equ_degree;?>" selected="selected"><?php echo $current_equ_degree;?></option>
                   <?php endif;?>
                   <?php foreach($equ_degree_options as $k => $v):?>
-                  <?php if($current_equ_degree!=$v):?>
                     <option value="<?php echo $v['content51'];?>"><?php echo $v['content51'];?></option>
-                  <?php endif;?>
                   <?php endforeach;?>
                   </select>
                 </div>
-                <div class="col-md-4">
-                <select id="selected_equ_degree" name="selected_equ_degree[]" class="selectpicker show-tick" multiple data-live-search="true" data-actions-box="true">
+                <div class="col-md-4">政治面貌：
+                  <select id="selected_party" name="selected_party[]" class="selectpicker show-tick" multiple data-live-search="true" data-actions-box="true">
+                    <?php if($current_party!=""):?>
+                    <option value="<?php echo $current_party;?>"><?php echo $current_party;?></option>
+                    <?php endif;?>
+                    <?php foreach($party_options as $k => $v):?>
+                      <option value="<?php echo $v['content33'];?>"><?php echo $v['content33'];?></option>
+                    <?php endforeach;?>
+                  </select>
+                </div>
+              </div>   
+              <!-- /.row -->
+              <br />
+              <div class="row">
+                <div class="col-md-4">岗位分类：
+                  <select id="selected_post_type" name="selected_post_type[]" class="selectpicker show-tick" multiple data-live-search="true" data-actions-box="true">
+                  <?php if($current_post_type!=""):?>
+                  <option value="<?php $current_post_type;?>" selected="selected"><?php echo $current_post_type;?></option>
+                  <?php endif;?>
+                  <?php foreach($post_type_options as $k => $v):?>
+                    <option value="<?php echo $v['content18'];?>"><?php echo $v['content18'];?></option>
+                  <?php endforeach;?>
+                  </select>
+                </div>
+                <!--
+                <div class="col-md-4">在职学历：
+                  <select id="selected_equ_degree" name="selected_equ_degree[]" class="selectpicker show-tick" multiple data-live-search="true" data-actions-box="true">
                   <?php if($current_equ_degree!=""):?>
-                  <option value="<?php echo $current_equ_degree;?>"><?php echo $current_equ_degree;?></option>
+                  <option value="<?php echo $current_equ_degree;?>" selected="selected"><?php echo $current_equ_degree;?></option>
                   <?php endif;?>
                   <?php foreach($equ_degree_options as $k => $v):?>
-                  <?php if($current_equ_degree!=$v):?>
                     <option value="<?php echo $v['content51'];?>"><?php echo $v['content51'];?></option>
-                  <?php endif;?>
                   <?php endforeach;?>
-                  </select></div>
-              </div>   
-              <!-- /.col-md-12 -->
+                  </select>
+                </div>
+                <div class="col-md-4">政治面貌
+                  <select id="selected_party" name="selected_party[]" class="selectpicker show-tick" multiple data-live-search="true" data-actions-box="true">
+                    <?php if($current_party!=""):?>
+                    <option value="<?php echo $current_party;?>"><?php echo $current_party;?></option>
+                    <?php endif;?>
+                    <?php foreach($party_options as $k => $v):?>
+                      <option value="<?php echo $v['content33'];?>"><?php echo $v['content33'];?></option>
+                    <?php endforeach;?>
+                  </select>
+                </div>
+                -->
+              </div>
+              <!-- /.row -->
             <hr />
             <div class="row">
             <div class="col-md-12">
@@ -148,11 +169,9 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-          <?php if($current_dept!=""):?>
-          <h3><?php echo $current_dept;?>信息汇总表</h3>
-              <hr />
-              <div class="col-md-12 col-xs-12">
-                <div style="overflow:scroll;">
+            <hr />
+            <div class="col-md-12 col-xs-12">
+              <div style="overflow:scroll;">
                 <table id="hrTable" class="table table-bordered table-striped" style="overflow:scroll;word-break:  keep-all;border-color:silver;">
                 <thead>
                   <tr style="border-color:silver;">
@@ -182,10 +201,9 @@
                   <!---->
                   </tbody>
                 </table>
-                </div>
+              </div>
                 <!-- /.overflow:scroll -->
               </div>
-              <?php endif;?>
               <hr />
             </div>
           </div>

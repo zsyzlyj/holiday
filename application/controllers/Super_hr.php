@@ -160,35 +160,14 @@ class super_hr extends Admin_Controller {
     public function hr_search(){
         $this->data['dept_options']=$this->model_hr_content->getDept();
         $this->data['gender_options']=$this->model_hr_content->getGender();
-        
         $this->data['section_options']=$this->model_hr_content->getSection();
-        
         $this->data['post_options']=$this->model_hr_content->getPost();
-        
         $this->data['marry_options']=$this->model_hr_content->getMarry();
-        
         $this->data['degree_options']=$this->model_hr_content->getDegree();
-        
         $this->data['equ_degree_options']=$this->model_hr_content->getEquDegree();
-        /*
-        $this->data['dept_options']=$this->model_hr_content->getGender();
-        
-        $this->data['dept_options']=$this->model_hr_content->getGender();
-        
-        $this->data['dept_options']=$this->model_hr_content->getGender();
-        
-        $this->data['dept_options']=$this->model_hr_content->getGender();
-        
-        $this->data['dept_options']=$this->model_hr_content->getGender();
-        
-        $this->data['dept_options']=$this->model_hr_content->getGender();
-        
-        $this->data['dept_options']=$this->model_hr_content->getGender();
-        
-        $this->data['dept_options']=$this->model_hr_content->getGender();
-        
-        $this->data['dept_options']=$this->model_hr_content->getGender();
-*/
+        $this->data['party_options']=$this->model_hr_content->getParty();
+        $this->data['post_type_options']=$this->model_hr_content->getPostType();
+
         $this->data['column_name']="";
         $this->data['hr_data']="";
         $this->data['current_dept']="";
@@ -198,6 +177,8 @@ class super_hr extends Admin_Controller {
         $this->data['current_marry']="";
         $this->data['current_degree']="";
         $this->data['current_equ_degree']="";
+        $this->data['current_party']="";
+        $this->data['current_post_type']="";
         $selected_dept="";
         $selected_gender="";
         $selected_section="";
@@ -205,6 +186,8 @@ class super_hr extends Admin_Controller {
         $selected_marry="";
         $selected_degree="";
         $selected_equ_degree="";
+        $selected_party="";
+        $selected_post_type="";
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if(array_key_exists('selected_dept', $_POST)){
                 $selected_dept=$_POST['selected_dept'];
@@ -243,24 +226,38 @@ class super_hr extends Admin_Controller {
                 $selected_degree=$_POST['current_degree'];
             }
             if(array_key_exists('selected_equ_degree', $_POST)){
-                $selected_qeu_degree=$_POST['selected_equ_degree'];
+                $selected_equ_degree=$_POST['selected_equ_degree'];
             }
             elseif(array_key_exists('current_equ_degree', $_POST)){
                 $selected_equ_degree=$_POST['current_equ_degree'];
             }
-            $this->data['current_dept']=$selected_dept;
-            $this->data['current_gender']=$selected_gender;
-            $this->data['current_section']=$selected_section;
-            $this->data['current_post']=$selected_post;
-            $this->data['current_marry']=$selected_marry;
-            $this->data['current_degree']=$selected_degree;
-            $this->data['current_equ_degree']=$selected_equ_degree;
+            if(array_key_exists('selected_party', $_POST)){
+                $selected_party=$_POST['selected_party'];
+            }
+            elseif(array_key_exists('current_party', $_POST)){
+                $selected_party=$_POST['current_party'];
+            }
+            if(array_key_exists('selected_post_type', $_POST)){
+                $selected_post_type=$_POST['selected_post_type'];
+            }
+            elseif(array_key_exists('current_post_type', $_POST)){
+                $selected_post_type=$_POST['current_post_type'];
+            }
+            $this->data['current_dept']=empty($selected_dept)?$selected_dept:implode(",", $selected_dept);
+            $this->data['current_gender']=empty($selected_gender)?$selected_gender:implode(",", $selected_gender);
+            $this->data['current_section']=empty($selected_section)?$selected_section:implode(",", $selected_section);
+            $this->data['current_post']=empty($selected_post)?$selected_post:implode(",", $selected_post);
+            $this->data['current_marry']=empty($selected_marry)?$selected_marry:implode(",", $selected_marry);
+            $this->data['current_degree']=empty($selected_degree)?$selected_degree:implode(",", $selected_degree);
+            $this->data['current_equ_degree']=empty($selected_equ_degree)?$selected_equ_degree:implode(",", $selected_equ_degree);
+            $this->data['current_party']=empty($selected_party)?$selected_party:implode(",", $selected_party);
+            $this->data['current_post_type']=empty($selected_post_type)?$selected_post_type:implode(",", $selected_post_type);
 
             //$this->data['current_dept']=$select_dept;
             //$this->data['current_dept']=$select_dept;
             $this->data['column_name'] = $this->model_hr_attr->getData();
             $this->data['trueend']=(int)str_replace('attr','',array_search(NULL,$this->data['column_name']))-1;
-            $this->data['hr_data'] = $this->model_hr_content->getDataByDept($selected_dept);
+            $this->data['hr_data'] = $this->model_hr_content->search($_POST['name'],$selected_dept,$selected_gender,$selected_section,$selected_post,$selected_marry,$selected_degree,$selected_equ_degree,$selected_party,$selected_post_type);
             /**/
         }
         $this->render_super_template('super/hr_search',$this->data);
