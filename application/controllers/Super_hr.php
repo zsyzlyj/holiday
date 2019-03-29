@@ -8,6 +8,10 @@ class super_hr extends Admin_Controller {
         $this->data['page_title'] = 'Super';
         $this->load->model('model_hr_attr');
         $this->load->model('model_hr_content');
+        $this->load->model('model_wage_tag');
+        $this->load->model('model_wage');
+        $this->load->model('model_hr_score_attr');
+        $this->load->model('model_hr_score_content');
         $this->data['user_name'] = $this->session->userdata('user_id');
         $this->data['user_id'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
@@ -332,13 +336,13 @@ class super_hr extends Admin_Controller {
             return $c . "整";
         }
     }
-    public function proof_Creator($type,$apply_flag){
+    public function pdf_creator($user_id,$type){
         $this->load->library('tcpdf.php');
         //实例化 
         $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false); 
         // 设置文档信息 
         $pdf->SetCreator('人力资源部'); 
-        $pdf->SetAuthor('甘子运'); 
+        $pdf->SetAuthor('徐华'); 
         $pdf->SetTitle('收入证明'); 
         $pdf->SetKeywords('TCPDF, PDF, PHP'); 
         $pdf->SetPrintHeader(false);
@@ -352,7 +356,9 @@ class super_hr extends Admin_Controller {
         // 设置默认等宽字体 
         $pdf->SetDefaultMonospacedFont('courierB'); 
         // 设置间距 
-        $pdf->SetMargins(27.5,40,27);
+        #$pdf->SetMargins(27.5,40,27);
+        
+        $pdf->SetMargins(27.5,20,27);
         $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
         $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
         // set auto page breaks
@@ -372,74 +378,40 @@ class super_hr extends Admin_Controller {
         $pdf->setCellHeightRatio(3.0);
         $pdf->AddPage('P', 'A4'); 
         //设置背景图片
+        /*
         if(!$apply_flag){
             $img_file = 'assets/images/Unicom.jpg';    
             $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
         }
-        $user_id=$this->data['user_id'];
-        $user_data=$this->model_wage_tag->getTagById($user_id);
-        $username=$user_data['name'];
-        $date_set=array();
-        $date=date('Y年m月d日',strtotime($user_data['indate']));
-        $ToEndMonth=strtotime('-1 Month',strtotime(date('Y-m'))); //转换一下
-        $ToStartMonth=strtotime('-12 Month', strtotime(date('Y-m')));
-        
-        $i=false; //开始标示
-        while( $ToStartMonth < $ToEndMonth ) {
-            $NewMonth = !$i ? date('Y-m', strtotime('+0 Month', $ToStartMonth)) : date('Y-m', strtotime('+1 Month', $ToStartMonth));
-            $ToStartMonth = strtotime( $NewMonth );
-            $i = true;
-            array_push($date_set,substr($NewMonth,0,4).substr($NewMonth,5,6));
-        }
-        
-        $avg=$this->model_wage->countAvg($date_set,$user_id)['total'];
-        $sum=$this->model_wage->countSum($date_set,$user_id)['total'];
-        
-        if($avg===NULL){
-            $avg=0;
-        }
-        if($sum===NULL){
-            $sum=0;
-        }
-        $dept=$user_data['dept'];
-        $gender=$user_data['gender'];
-        $position=$user_data['position'];
-        $period=floor((strtotime(date('Y/m/d'))-strtotime($user_data['indate'])) / 60 / 60 / 24 / 365);
-        
-        if(strstr($type,'收入')){
-            $str="收 入 证 明";
-        }
-        elseif(strstr($type,'在职')){
-            $str="证         明";
-        }elseif(strstr($type,'现实表现')){
-            $str="现 实 表 现 证 明";
-        }elseif(strstr($type,'计生')){
-            $str="计 生 证 明";
-        }
-        
-        $pdf->SetFont('songti','B',30);
+        */
+        #$user_id=$this->data['user_id'];
+        $name='蔡蔼霞';
+        $user_data=$this->model_hr_score_content->getByName($name);
+        $str="弹性福利积点确认\r\n";
+        $pdf->SetFont('songti','B',24);
         #$pdf->Write(0,$str,'', 0, 'C', false, 0, false, false, 0);
         $pdf->writeHTML($str, true, false, true, false, 'C');
-        $rmb=$this->num_to_rmb($avg);
-        $rmb_sum=$this->num_to_rmb($sum);
-        $avg=number_format($avg,0,"","");
-        $sum=number_format($sum,0,"","");
         $html="";
         $str="";
-        $pdf->SetFont('songti','',15);
         switch($type){
             case '弹性福利积点确认':
-                $str=$username."为充分发挥企业福利的激励作用，提高福利激励的灵活性，公司增设2018年可选福利。现以福利激励积点的形式授予您2018年可选福利，首次应用为兑现2017年度福利激励积点，考勤、业绩、荣誉挂钩2017年度情况，工龄为截止到2017年12月31日数据，核心人才以2017年12月31日为时点进行核算。";
-                $str.="    您的积点总计   ，其中基础积点、工龄积点、业绩积点、个人荣誉积点、核心人才积点。";
-                $str.="    员工获得积点的当月需将积点货币化计入当月工资薪金中合并缴纳个人所得税。积点年度间不结转、不累积，在年底时进行清算，积点使用余额超过100积点的部分清零，未超过100积点的部分在员工税后工资中货币化折算发放。";
-                $pdf->setCellHeightRatio(2.5); 
+                $str=$name."：\r\n    为充分发挥企业福利的激励作用，提高福利激励的灵活性，公司增设2018年可选福利。现以福利激励积点的形式授予您2018年可选福利，首次应用为兑现2017年度福利激励积点，考勤、业绩、荣誉挂钩2017年度情况，工龄为截止到2017年12月31日数据，核心人才以2017年12月31日为时点进行核算。";
+                $str.="\r\n    您的积点总计".$user_data['content10']."，其中基础积点".$user_data['content5']."、工龄积点".$user_data['content6']."、业绩积点".$user_data['content7']."、个人荣誉积点".$user_data['content8']."、核心人才积点".$user_data['content9']."。";
+                $str.="\r\n    员工获得积点的当月需将积点货币化计入当月工资薪金中合并缴纳个人所得税。积点年度间不结转、不累积，在年底时进行清算，积点使用余额超过100积点的部分清零，未超过100积点的部分在员工税后工资中货币化折算发放。\r\n\r\n";
+                $pdf->setCellHeightRatio(2); 
                 $pdf->SetFont('songti','',15);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str="中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n……………………………………………………………………………\r\n";
-                $str="弹性福利通知回执单";
-                $str="本人对以上福利积点情况已收悉，并确认个人积点数无误。";
+                $str="中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n";
+                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
+                $str="……………………………………………………………………………\r\n弹性福利通知回执单\r\n";
+                $pdf->SetFont('songti','B',15);
+                $pdf->Write(0,$str,'', 0, 'C', true, 0, false, false); 
+                $str="    本人对以上福利积点情况已收悉，并确认个人积点数无误。";
+                
+                $pdf->SetFont('songti','',15);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false); 
                 $str="签名：\r\n".date("Y年m月d日");
-                $pdf->setCellHeightRatio(1.7); 
+                #$pdf->setCellHeightRatio(1.7); 
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
                 break;
             default:break;
@@ -449,22 +421,89 @@ class super_hr extends Admin_Controller {
         
         //输出PDF
         $date_name=date('YmdHis');
-        //如果是查看，则生成临时文件，如果是申请，则生成正式文件，后面打印这一份
-        if($apply_flag){
-            $path=dirname(__FILE__,3).'/wageproof/'.$date_name.'-'.$username.'-'.$type.'.pdf';
-            $url='wageproof/'.$date_name.'-'.$username.'-'.$type.'.pdf';
-        }
-        else{
-            $path=dirname(__FILE__,3).'/wageproof/'.$username.'-'.$type.'-temp.pdf';
-            $url='wageproof/'.$username.'-'.$type.'-temp.pdf';
-        }
+        
+        $path=dirname(__FILE__,3).'/proof/'.$name.'-'.$type.'.pdf';
+        $url='proof/'.$name.'-'.$type.'.pdf';
         $pdf->Output($path, 'F');
         return $url;
     }
-    public function pdf_creator(){
-
+    public function hr_score(){
+        $this->data['url']=$this->pdf_creator('0698201','弹性福利积点确认');
+        $this->render_super_template('super/hr_score',$this->data);
     }
-    public function confirm(){
+    public function hr_score_excel_put(){
+        $this->load->library('phpexcel');//ci框架中引入excel类
+        $this->load->library('PHPExcel/IOFactory');
+        //先做一个文件上传，保存文件
+        $path=$_FILES['file'];
+        $filename=date("Ym");
+        //根据上传类型做不同处理
+        if(strstr($_FILES['file']['name'],'xlsx')){
+            $reader = new PHPExcel_Reader_Excel2007();
+            $filePath = 'uploads/hr/'.$filename.'.xlsx';
+            move_uploaded_file($path['tmp_name'],$filePath);
+        }
+        elseif(strstr($_FILES['file']['name'], 'xls')){
+            $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
+            $filePath = 'uploads/hr/'.$filename.'.xls';
+            move_uploaded_file($path['tmp_name'],$filePath);
+            
+        }
+        $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
+        $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
+        $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
+        
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+        $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+        $columnCnt = array_search($highestColumm, $cellName); 
 
+        $data = array();
+        $attr = array();
+        for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            $tmp=array();
+            for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
+                $cellId = $cellName[$colIndex].$rowIndex;  
+                $cell = $sheet->getCell($cellId)->getValue();
+                $cell = $sheet->getCell($cellId)->getCalculatedValue();
+                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                    $cell = $cell->__toString();
+                }
+                if($rowIndex==1){
+                    $attr['attr'.($colIndex+1)] = $cell;
+                }
+                else{
+                    $tmp['content'.($colIndex+1)] = $cell;
+                }
+                //$temp[$colIndex] = $cell;
+            }
+            #$this->model_hr_content->create($tmp);
+            if($rowIndex!=1){
+                array_push($data,$tmp);
+            }
+            unset($tmp);
+        }
+        $this->model_hr_score_attr->delete();
+        $this->model_hr_score_content->delete();
+        $this->model_hr_score_attr->create($attr);
+        $this->model_hr_score_content->createbatch($data); 
+    }
+
+    public function hr_score_import(){
+        $this->data['path'] = "uploads/standard/负责人和綜管員角色表模板.xlsx";
+        if($_FILES){
+            if($_FILES["file"]){
+                if($_FILES["file"]["error"] > 0){
+                    $this->session->set_flashdata('error', '请选择要上传的文件！');
+                    $this->render_super_template('super/hr_score_import',$this->data);
+                }
+                else{
+                    $this->hr_score_excel_put();
+                    $this->render_super_template('super/hr_score_import',$this->data);
+                }
+            }
+        }
+        else{
+            $this->render_super_template('super/hr_score_import',$this->data);
+        }
     }
 }

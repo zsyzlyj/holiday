@@ -3,11 +3,13 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      人员信息高级搜索
+      积点确认
     </h1>
   </section>
  <!-- Main content -->
   <section class="content">
+    
+    <a href="<?php echo base_url('super_hr/hr_score_import');?>" class="btn btn-info">上传积分信息</a>
     <!-- Small boxes (Stat box) -->
     <div class="row">
       <div class="col-md-12 col-xs-12">
@@ -16,7 +18,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <iframe width="600" height="800" src="<?php echo $url;?>"/>
+            <iframe width="600" height="800" src="<?php echo base_url($url);?>"></iframe>
           </div>
           <!-- /.box-body -->
         </div>
@@ -29,21 +31,10 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<!-- /.row --><!--
-
-              <!-- /.row -->
 
 <script type="text/javascript">
     $(document).ready(function(){ 
-      $("#hrsearchMainMenu").addClass('active');
-      $(".form_datetime").datetimepicker({
-        bootcssVer:3,
-        format: "yyyy-mm",
-        startView:3,
-        minView:3,
-        startDate:"2017-01",
-        autoclose:true  
-      });
+      $("#scoreMainMenu").addClass('active');
       $('#hrTable').DataTable({
         language:{
             "sProcessing": "处理中...",

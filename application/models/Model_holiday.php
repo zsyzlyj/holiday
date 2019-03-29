@@ -17,9 +17,12 @@ class Model_holiday extends CI_Model{
 			$query = $this->db->query($sql, array($userId));
 			return $query->row_array();
 		}
+		else return null;
+		/*
 		$sql = "SELECT * FROM holiday";
 		$query = $this->db->query($sql);
 		return $query->result();
+		*/
 	}
 	public function getHolidayByDept($dept = null){	
 		if($dept){	

@@ -54,12 +54,12 @@
                 </tr>
                 <tr style="height:40px;">
                   <td style="width:300px">全日制最高学历：<?php echo $user_info['ft_highest_qualification'];?></td>
-                  <td style="width:300px">学位：<?php echo $user_info['ft_highest_degree'];?></td>
+                  <td style="width:300px">全日制最高学位：<?php echo $user_info['ft_highest_degree'];?></td>
                   <td style="width:300px"></td>
                 </tr>
                 <tr style="border:none;height:40px;">
                   <td style="border:none;">最高学历：<?php echo $user_info['highest_qualification'];?></td>
-                  <td style="border:none;">学位：<?php echo $user_info['highest_degree'];?></td>
+                  <td style="border:none;">最高学位：<?php echo $user_info['highest_degree'];?></td>
                   <td style="border:none;"></td>
                 </tr>
                 <tr style="height:20px;"></tr>

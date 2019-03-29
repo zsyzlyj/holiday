@@ -512,12 +512,12 @@ class Wage extends Admin_Controller{
                 if(!$apply_flag){
                     $pdf->setCellHeightRatio(1.0); 
                     $pdf->SetFont('songti','',11);
-                    $str="\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
+                    $str="\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
                     $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
                 }
                 break;
             case '收入证明（农商银行）':
-                $str="\r\n中山农村商业银行股份有限公司：\r\n    兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅用于申请贷款之用。\r\n    特此证明！";
+                $str="\r\n中山农村商业银行股份有限公司：\r\n    兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！";
                 $pdf->setCellHeightRatio(2.5); 
                 $pdf->SetFont('songti','',15);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
@@ -527,7 +527,7 @@ class Wage extends Admin_Controller{
                 if(!$apply_flag){
                     $pdf->setCellHeightRatio(1.0); 
                     $pdf->SetFont('songti','',11);
-                    $str="\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
+                    $str="\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
                     $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
                 }
                 break;
@@ -542,7 +542,7 @@ class Wage extends Admin_Controller{
                 if(!$apply_flag){
                     $pdf->setCellHeightRatio(1.0); 
                     $pdf->SetFont('songti','',11);
-                    $str="\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
+                    $str="\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
                     $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
                 }
                 break;
@@ -579,14 +579,14 @@ class Wage extends Admin_Controller{
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 break;
             case '在职证明（积分入户2）':
-                $str="\r\n    兹有我单位".$username."同志，性别：".$gender."，身份证号码：".$user_id."，于".$date."至今在我单位从事".$dept.$position."工作。\r\n单位名称：中国联合网络通信有限公司中山市分公司\r\n    联系地址：中山市东区长江北路6号联通大厦\r\n    联系人：徐小姐        联系电话：0760-23771356\r\n    特此证明。\r\n    （此证明仅用于办理流动人员积分制管理使用）\r\n";
+                $str="\r\n    兹有我单位".$username."同志，性别：".$gender."，身份证号码：".$user_id."，于".$date."至今在我单位从事".$dept.$position."工作。\r\n单位名称：中国联合网络通信有限公司中山市分公司\r\n    联系地址：中山市东区长江北路6号联通大厦\r\n    联系人：徐小姐        联系电话：0760-23771356\r\n    特此证明。\r\n    （此证明仅限于流动人员积分制管理使用）\r\n";
                 $pdf->SetFont('songti','',15);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case '在职证明（居住证）':
-                $str="\r\n    兹有".$username."（".$gender."，身份证号：".$user_id."），自".$date."进入我公司工作，现任中国联合网络通信有限公司中山市分公司员工".$dept.$position."。\r\n    特此证明。\r\n    （此证明仅用于办理居住证使用）";
+                $str="\r\n    兹有".$username."（".$gender."，身份证号：".$user_id."），自".$date."进入我公司工作，现任中国联合网络通信有限公司中山市分公司员工".$dept.$position."。\r\n    特此证明。\r\n    （此证明仅限于办理居住证使用）";
                 $pdf->SetFont('songti','',15);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
                 $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日")."\r\n\r\n\r\n\r\n";
@@ -614,12 +614,12 @@ class Wage extends Admin_Controller{
         $date_name=date('YmdHis');
         //如果是查看，则生成临时文件，如果是申请，则生成正式文件，后面打印这一份
         if($apply_flag){
-            $path=dirname(__FILE__,3).'/wageproof/'.$date_name.'-'.$username.'-'.$type.'.pdf';
-            $url='wageproof/'.$date_name.'-'.$username.'-'.$type.'.pdf';
+            $path=dirname(__FILE__,3).'/proof/'.$date_name.'-'.$username.'-'.$type.'.pdf';
+            $url='proof/'.$date_name.'-'.$username.'-'.$type.'.pdf';
         }
         else{
-            $path=dirname(__FILE__,3).'/wageproof/'.$username.'-'.$type.'-temp.pdf';
-            $url='wageproof/'.$username.'-'.$type.'-temp.pdf';
+            $path=dirname(__FILE__,3).'/proof/'.$username.'-'.$type.'-temp.pdf';
+            $url='proof/'.$username.'-'.$type.'-temp.pdf';
         }
         $pdf->Output($path, 'F');
         return $url;
@@ -633,7 +633,7 @@ class Wage extends Admin_Controller{
             $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
             $pdf->setCellHeightRatio(1.0); 
             $pdf->SetFont('songti','',11);
-            $str="\r\n\r\n\r\n中国联合网络通信有限公司中山分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：076023666888\r\n网址：http://www.10010.com/";
+            $str="\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：076023666888\r\n网址：http://www.10010.com/";
             $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
         }
         */

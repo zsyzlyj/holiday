@@ -7,7 +7,6 @@ class Model_plan extends CI_Model{
 
 	/* get the brand data */
 	public function getPlanData(){
-
 		$sql = "SELECT * FROM plan";
 		$query = $this->db->query($sql);
 		return $query->result_array();
@@ -18,6 +17,7 @@ class Model_plan extends CI_Model{
 			$query = $this->db->query($sql, array($userId));
 			return $query->row_array();
 		}
+		else return null;
 	}
 	public function getPlanByDept($dept = null){		
 		if($dept){	

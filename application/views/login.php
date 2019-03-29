@@ -5,7 +5,7 @@
 <meta http-equiv="Pragma" content="no-cache"> 
 <meta http-equiv="Cache-Control" content="no-cache"> 
 <meta http-equiv="Expires" content="0"> 
-<title>中山联通人力资源管理系统</title>
+<title>中山联通人力资源信息查询系统</title>
 
 <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap/dist/css/bootstrap.min.css') ?>">
   
@@ -20,7 +20,7 @@
         <div class="login">
             <div class="login_logo"><a href="<?php echo base_url('auth/login'); ?>"><img src="<?php echo base_url('assets/dist/img/login_logo.png') ?>" /></a></div>
             <div class="login_name">
-                <p>中山联通人力资源管理系统</p>
+                <p>中山联通人力资源信息查询系统</p>
             </div>      
             <font color="red">
             <?php echo validation_errors(); ?>  
@@ -50,7 +50,7 @@
         </div>
     </div>
     
-    <div class="copyright">请使用火狐浏览器(Firefox)或谷歌浏览器(Chrome)登录人力资源管理系统</div>
+    <div class="copyright">请使用火狐浏览器(Firefox)或谷歌浏览器(Chrome)登录人力资源信息查询系统</div>
     <div class="copyright"></div>
 </div>
 <script src="<?php echo base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>
