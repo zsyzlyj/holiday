@@ -68,29 +68,7 @@
           </li>
           <?php endif; ?>
           <?php if($service_mode=='合同制'):?>
-          <li class="treeview" id="applyProofMainMenu">
-            <a href="#">
-              <i class="fa fa-folder-o"></i>
-              <span>开具证明申请</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li id="applyWageProof">
-                <a href="<?php echo base_url('wage/apply_wage_proof') ?>">
-                <i class="fa fa-circle-o"></i>
-                <span>收入证明</span>
-                </a>
-              </li>
-              <li id="applyOnPostProof">
-                <a href="<?php echo base_url('wage/apply_on_post_proof') ?>">
-                <i class="fa fa-circle-o"></i>
-                <span>在职证明</span>
-                </a>
-              </li>
-            </ul>
-          </li>
+          <li id="applyWageProof"><a href="<?php echo base_url('wage/apply_wage_proof') ?>"><i class="fa fa-list"></i><span>收入证明申请</span></a></li>
           <?php endif;?>
         <?php endif ?>
         <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
@@ -199,11 +177,12 @@
           </a>
         </li>
         <?php endif; ?>
-        <?php if(strstr($_SERVER['PHP_SELF'],'setting')):?>
+        <?php if(strstr($_SERVER['PHP_SELF'],'setting')):?> 
           <li id="changePassword"><a href="<?php echo base_url('auth/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>-->
         <?php endif; ?>
-        <?php if(strstr($_SERVER['PHP_SELF'],'profile')):?>
-          <li id="userProfile"><a href="<?php echo base_url('users/profile') ?>"><i class="fa fa-address-book-o"></i> <span>个人信息</span></a></li>-->
+        <?php if(strstr($_SERVER['PHP_SELF'],'users')):?>
+          <li id="userProfile"><a href="<?php echo base_url('users/profile') ?>"><i class="fa fa-address-book-o"></i> <span>个人信息</span></a></li>
+          <li id="applyOnPostProof"><a href="<?php echo base_url('users/apply_on_post_proof') ?>"><i class="fa fa-list"></i><span>在职证明申请</span></a></li>
         <?php endif; ?>
       </ul>
     </section>

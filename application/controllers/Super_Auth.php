@@ -215,7 +215,7 @@ class Super_Auth extends Admin_Controller{
 			$created = imagejpeg($img, $new_img);
 			$_SESSION['code']=$code;
 			$_SESSION['image']=$new_img;
-			echo '<a href="javascript:void(0);"  _onclick="get_captcha();"><img src="http://'.$_SERVER['HTTP_HOST'].'/hr/'.$new_img.'" style="border:1px solid black"/></a>';
+			echo '<a href="javascript:void(0);" _onclick="get_captcha();"><img src="http://'.$_SERVER['HTTP_HOST'].'/hr/'.$new_img.'" style="border:1px solid black"/></a>';
 			//销毁图片
 			imagedestroy($img);
         } else {
