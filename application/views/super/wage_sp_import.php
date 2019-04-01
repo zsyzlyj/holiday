@@ -37,7 +37,7 @@
                   <legend></legend>
                     <div class="form-group">
                       <div class="input-group date form_datetime col-md-2" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm" data-link-field="dtp_input1">
-                        <input class="form-control" name="chosen_month" size="14" type="text" value="请选择月份" readonly>
+                        <input class="form-control" name="chosen_month" size="14" type="text" value="<?php echo date('Y-m');?>" readonly>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                       </div>

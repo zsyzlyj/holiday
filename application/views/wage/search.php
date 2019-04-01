@@ -34,7 +34,7 @@
                       <?php if($chosen_month):?>
                       <input class="form-control" name="chosen_month" size="16" type="text" value="<?php echo $chosen_month;?>" readonly>
                       <?php else:?>
-                      <input class="form-control" name="chosen_month" size="16" type="text" value="单击选择月份" readonly>
+                      <input class="form-control" name="chosen_month" size="16" type="text" value="<?php echo date('Y-m');?>" readonly>
                       <?php endif;?>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
@@ -147,8 +147,7 @@
         minView:3,
         startDate:(new Date().getFullYear()-2).toString()+'-'+new Date().getMonth().toString(),
         autoclose:true,
-        pickerPosition: "-left",
-        initialDate: new Date('Y-m')
+        pickerPosition: "-left"
       });
     
     });

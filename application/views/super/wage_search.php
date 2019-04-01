@@ -34,11 +34,11 @@
                   <legend></legend>
                   <div class="form-group">
                     <label for="dtp_input1" class="col-md-1 control-label">月份选择</label>
-                    <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm" data-link-field="dtp_input1">
+                    <div id="start-date" class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm" data-link-field="dtp_input1">
                       <?php if($chosen_month):?>
                       <input class="form-control" name="chosen_month" size="16" type="text" value="<?php echo $chosen_month;?>" readonly>
                       <?php else:?>
-                      <input class="form-control" name="chosen_month" size="16" type="text" value="单击选择月份" readonly>
+                      <input class="form-control" name="chosen_month" size="16" type="text" value="<?php echo date('Y-m');?>" readonly>
                       <?php endif;?>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
@@ -187,8 +187,9 @@
         startView:3,
         minView:3,
         startDate:"2017-01",
-        autoclose:true  
+        autoclose:true
       });
+
       $('#wageTable').DataTable({
         language:{
             "sProcessing": "处理中...",
@@ -215,6 +216,6 @@
             }
         }      
       });
-    
+      
     }); 
   </script>

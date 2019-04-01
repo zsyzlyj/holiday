@@ -28,7 +28,7 @@
                       <?php if($chosen_month):?>
                       <input id="chosen_month" class="form-control" name="chosen_month" size="16" type="text" value="<?php echo $chosen_month;?>" readonly>
                       <?php else:?>
-                      <input id="chosen_month" class="form-control" name="chosen_month" size="16" type="text" value="单击选择月份" readonly>
+                      <input id="chosen_month" class="form-control" name="chosen_month" size="16" type="text" value="<?php echo date('Y-m');?>" readonly>
                       <?php endif;?>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
