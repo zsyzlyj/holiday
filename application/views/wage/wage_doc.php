@@ -42,7 +42,8 @@
                   <tr>
                     <?php if($b['doc_type']==$v['doc_type']):?>
                       <td style="text-align: center;"><?php echo ++$counter;?></td>
-                      <td><a href='<?php echo base_url($v['doc_path']);?>' target="_blank"><?php echo $v['doc_name']?></a></td>
+                      <!--<td><a id="load_pdf" href='<?php echo base_url($v['doc_path']);?>' target="_blank" value="<?php echo $v['doc_path'];?>"><p id="doc_path"><?php echo $v['doc_name']?></p></a></td>-->
+                      <td><a id="load_pdf" href="javascript:void(0);"><p id="doc_path" value="<?php echo $v['doc_path'];?>"><?php echo $v['doc_name']?></p></a></td>
                     <?php endif;?>
                   </tr>
                 <?php endforeach;?>
@@ -60,6 +61,14 @@
 </div>
 <!-- /.content-wrapper -->
 <script type="text/javascript">
+    function get_pdf() {
+      console.log(document.getElementById('doc_path').value);
+      /*
+      window.location.href=$.get("<?php echo base_url('wage/watermark');?>",{'doc_path':document.getElementById('load_pdf')}, function(data){
+        alert(data);
+      });
+      */
+    }
     $(document).ready(function() { 
       $("#wagedocMainMenu").addClass('active');
       $(".form_datetime").datetimepicker({
@@ -70,8 +79,7 @@
         startDate:"2017-12",
         autoclose:true
       });
-    
+      $('#load_pdf').click(get_pdf);
     });
-    
-    
+
   </script>

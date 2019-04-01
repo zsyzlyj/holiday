@@ -70,13 +70,15 @@ class Wage extends Admin_Controller{
             }
             $pdf->Output(dirname(__FILE__,3).'\\'.$name,'F');
         }
-        return $name;
+        #return $name;
+        #echo $name;
     }
     public function wage_doc(){
         $wage_doc = $this->model_wage_doc->getWageDocData();
-        /*
+        /**/
         require_once(APPPATH.'libraries\FPDI\src\fpdi.php');
         require_once(APPPATH.'libraries\PDF_rotate.php');
+        /*
         foreach($wage_doc as $k => $v){
             $wage_doc[$k]['doc_path']=$this->watermark($v['doc_path']);
         }

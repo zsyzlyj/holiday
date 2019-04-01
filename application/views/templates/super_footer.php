@@ -24,7 +24,7 @@
       document.location.href='<?php echo base_url("super_auth/logout");?>';   
   }   
   document.documentElement.onkeydown=resetTime;  
-  document.doocumentElement.onclick=resetTime;  
+  document.documentElement.onclick=resetTime;  
 </script>
 
 </html>
