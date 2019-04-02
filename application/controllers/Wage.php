@@ -36,48 +36,46 @@ class Wage extends Admin_Controller{
         $this->staff();
     }
     
-    public function watermark($path){
-        $name=str_replace('.pdf',$this->data['user_id'].'.pdf',$path);
-        if(!file_exists($name)){
-            #$pdf = new \setasign\Fpdi\Fpdi();
-            $pdf =new PDF();
-            // get the page count
-            $pageCount = $pdf->setSourceFile($path);
-            $pdf->SetFont('songti','','16');
-            $pdf->SetTextColor(250,250,250);
-            // iterate through all pages
-            for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++){
-                // import a page
-                $templateId = $pdf->importPage($pageNo);
-                #$pdf->AddGBFont(); 
-                // get the size of the imported page
-                $size = $pdf->getTemplateSize($templateId);
-                // create a page (landscape or portrait depending on the imported page size)
-                if ($size['width'] > $size['height']) 
-                    $pdf->AddPage('L', array($size['width'], $size['height']));
-                else $pdf->AddPage('P', array($size['width'], $size['height']));
-                for($i=20;$i<$size['width'];$i+=70){
-                    for($j=50;$j<$size['height'];$j+=90)
-                        $pdf->RotatedText($i,$j,$this->data['user_name'],45);
-                }
-    
-                for($i=50;$i<$size['width'];$i+=70){
-                    for($j=120;$j<$size['height'];$j+=90)
-                        $pdf->RotatedText($i,$j,$this->data['user_name'],45);
-                }
-                // use the imported page
-                $pdf->useTemplate($templateId);
+    public function watermark(){
+        require_once(APPPATH.'libraries\FPDI\src\fpdi.php');
+        require_once(APPPATH.'libraries\PDF_rotate.php');
+        $path=$_POST['doc_path'];
+        $name=$this->data['user_id'].'.pdf';
+        $pdf =new PDF();
+        // get the page count
+        $pageCount = $pdf->setSourceFile($path);
+        
+        $pdf->SetFont('songti','','16');
+        $pdf->SetTextColor(250,250,250);
+        // iterate through all pages
+        for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++){
+            // import a page
+            $templateId = $pdf->importPage($pageNo);
+            #$pdf->AddGBFont(); 
+            // get the size of the imported page
+            $size = $pdf->getTemplateSize($templateId);
+            // create a page (landscape or portrait depending on the imported page size)
+            if ($size['width'] > $size['height']) 
+                $pdf->AddPage('L', array($size['width'], $size['height']));
+            else $pdf->AddPage('P', array($size['width'], $size['height']));
+            for($i=20;$i<$size['width'];$i+=70){
+                for($j=50;$j<$size['height'];$j+=90)
+                    $pdf->RotatedText($i,$j,$this->data['user_name'],45);
             }
-            $pdf->Output(dirname(__FILE__,3).'\\'.$name,'F');
+
+            for($i=50;$i<$size['width'];$i+=70){
+                for($j=120;$j<$size['height'];$j+=90)
+                    $pdf->RotatedText($i,$j,$this->data['user_name'],45);
+            }
+            // use the imported page
+            $pdf->useTemplate($templateId);
         }
-        #return $name;
-        #echo $name;
+        $pdf->Output(dirname(__FILE__,3).'\\watermark\\'.$name,'F');
+        redirect('http://10.210.193.234/hr/watermark/'.$name,'refresh');
     }
     public function wage_doc(){
         $wage_doc = $this->model_wage_doc->getWageDocData();
-        /**/
-        require_once(APPPATH.'libraries\FPDI\src\fpdi.php');
-        require_once(APPPATH.'libraries\PDF_rotate.php');
+        
         /*
         foreach($wage_doc as $k => $v){
             $wage_doc[$k]['doc_path']=$this->watermark($v['doc_path']);
@@ -252,7 +250,7 @@ class Wage extends Admin_Controller{
             return $c . "整";
         }
     }
-    public function proof_Creator($type,$apply_flag){
+    public function proof_creator($type,$apply_flag){
         $this->load->library('tcpdf.php');
         //实例化 
         $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false); 

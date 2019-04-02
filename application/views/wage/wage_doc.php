@@ -42,8 +42,14 @@
                   <tr>
                     <?php if($b['doc_type']==$v['doc_type']):?>
                       <td style="text-align: center;"><?php echo ++$counter;?></td>
-                      <!--<td><a id="load_pdf" href='<?php echo base_url($v['doc_path']);?>' target="_blank" value="<?php echo $v['doc_path'];?>"><p id="doc_path"><?php echo $v['doc_name']?></p></a></td>-->
-                      <td><a id="load_pdf" href="javascript:void(0);"><p id="doc_path" value="<?php echo $v['doc_path'];?>"><?php echo $v['doc_name']?></p></a></td>
+                      <!--<td><a id="load_pdf" href="javascript:void(0);" onclick="get_pdf('<?php echo $v['doc_path'];?>')" value="<?php echo $v['doc_path'];?>"><p id="doc_path<?php echo $counter;?>"><?php echo $v['doc_name']?></p></a></td>-->
+                      <form id="form<?php echo $counter;?>" action="<?php echo base_url('wage/watermark');?>" method="POST" target="_blank">
+                      <input name="doc_path" type="hidden" value="<?php echo $v['doc_path'];?>">
+                      <!--<td><a href="javascript:void(0);" onclick="document.getElementById('form<?php echo $counter;?>').submit();"><p id="doc_path<?php echo $counter;?>"><?php echo $v['doc_name']?></p></a></td>
+                      -->
+                      <td><a href="javascript:void(0);" onclick="document.getElementById('form<?php echo $counter;?>').submit()"><p id="doc_path<?php echo $counter;?>"><?php echo $v['doc_name']?></p></a></td>
+                      
+                      </form>
                     <?php endif;?>
                   </tr>
                 <?php endforeach;?>
@@ -61,25 +67,8 @@
 </div>
 <!-- /.content-wrapper -->
 <script type="text/javascript">
-    function get_pdf() {
-      console.log(document.getElementById('doc_path').value);
-      /*
-      window.location.href=$.get("<?php echo base_url('wage/watermark');?>",{'doc_path':document.getElementById('load_pdf')}, function(data){
-        alert(data);
-      });
-      */
-    }
     $(document).ready(function() { 
       $("#wagedocMainMenu").addClass('active');
-      $(".form_datetime").datetimepicker({
-        //language: 'cn',
-        format: 'yyyy-mm',
-        startView:3,
-        minView:3,
-        startDate:"2017-12",
-        autoclose:true
-      });
-      $('#load_pdf').click(get_pdf);
     });
 
   </script>
