@@ -18,7 +18,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <embed width="600" height="800" src="<?php echo base_url($url);?>">
+            <iframe width="600" height="800" src="<?php echo base_url($url);?>"></iframe>
           </div>
           <!-- /.box-body -->
         </div>

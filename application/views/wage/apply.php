@@ -85,7 +85,7 @@
                           </div>
                           <!-- model-header-apply -->
                           <div class="modal-body">
-                            <embed width="600" height="800" src="<?php echo base_url($url[$i]);?>">
+                            <iframe width="600" height="800" src="<?php echo base_url($url[$i]);?>"></iframe>
                           </div>
                           <!-- model-body-apply -->
                           <!--

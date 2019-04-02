@@ -61,7 +61,7 @@
                           <div class="modal-body">
                             <!--<iframe width="600" height="700" src="<?php echo base_url($url[$k]);?>"></iframe>-->
                             <?php if($v['url']):?>
-                            <embed width="600" height="800" src="<?php echo base_url($v['url']);?>">
+                            <iframe width="600" height="800" src="<?php echo base_url($v['url']);?>"></iframe>
                             <?php else:?>
                             无记录
                             <?php endif;?>
