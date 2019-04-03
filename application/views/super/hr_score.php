@@ -10,6 +10,24 @@
   <section class="content">
     
     <a href="<?php echo base_url('super_hr/hr_score_import');?>" class="btn btn-info">上传积分信息</a>
+    <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal">重置确认信息</a>
+    <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+      <div class="modal-content-month">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4>请确认</h4>
+        </div>
+        <div class="modal-body">
+          <h4 style="text-align:left">确认重置？</h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <form action="<?php echo base_url('super_hr/reset_confirm');?>" style="display:inline" method="POST">
+            <button type="submit" class="btn btn-danger">确认提交</a>
+          </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
     <!-- Small boxes (Stat box) -->
     <div class="row">
       <div class="col-md-12 col-xs-12">
@@ -18,7 +36,28 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <iframe width="600" height="800" src="<?php echo base_url($url);?>"></iframe>
+            <table id="hrTable" class="table table-bordered table-striped table-hover" style="table-layout:fixed;border-color:silver;">
+              <thead>
+                <tr style="border-color:silver;">
+                  <th style="border-color:silver;">序号</th>
+                  <th style="border-color:silver;">身份证</th>
+                  <th style="border-color:silver;">姓名</th>
+                  <th style="border-color:silver;">状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php $counter=1;?>
+                <?php foreach($score_list as $k => $v):?>
+                <tr style="border-color:silver;">
+                
+                <td style="border-color:silver;"><?php echo $counter++;?></td>
+                <?php foreach($v as $a => $b):?>
+                <td style="border-color:silver;"><?php echo $b;?></td>
+                <?php endforeach;?>
+                </tr>
+                <?php endforeach;?>
+              </tbody>
+            </table>
           </div>
           <!-- /.box-body -->
         </div>

@@ -12,6 +12,7 @@ class super_hr extends Admin_Controller {
         $this->load->model('model_wage');
         $this->load->model('model_hr_score_attr');
         $this->load->model('model_hr_score_content');
+        $this->load->model('model_hr_confirm_status');
         $this->data['user_name'] = $this->session->userdata('user_id');
         $this->data['user_id'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
@@ -428,7 +429,27 @@ class super_hr extends Admin_Controller {
         return $url;
     }
     public function hr_score(){
-        $this->data['url']=$this->pdf_creator('0698201','弹性福利积点确认');
+        $score_content=$this->model_hr_score_content->getName();
+        $score_status=$this->model_hr_confirm_status->getData();
+        $score_list=array();
+        $found=false;
+        foreach($score_content as $a =>$b){
+            foreach($score_status as $k => $v){
+                if($b['content2']==$v['name']){
+                    array_push($score_list,array('user_id' => '1','name'=>$b['content2'],'status' => $v['status']));
+                    $found=true;
+                }
+            }
+            if(!$found){
+                array_push($score_list,array('user_id' => '1','name'=>$b['content2'],'status' => '未确认'));
+                $found=false;
+            }
+            $found=false;             
+        }
+        $this->data['score_list']=$score_list;
+        unset($score_content);
+        unset($score_status);
+        unset($score_list);
         $this->render_super_template('super/hr_score',$this->data);
     }
     public function hr_score_excel_put(){
@@ -505,5 +526,9 @@ class super_hr extends Admin_Controller {
         else{
             $this->render_super_template('super/hr_score_import',$this->data);
         }
+    }
+    public function reset_confirm(){
+        $this->model_hr_confirm_status->reset();
+        $this->hr_score();
     }
 }

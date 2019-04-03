@@ -183,8 +183,8 @@
           <li id="userProfile"><a href="<?php echo base_url('users/profile') ?>"><i class="fa fa-address-book-o"></i> <span>个人信息</span></a></li>
           <li id="applyOnPostProof"><a href="<?php echo base_url('users/apply_on_post_proof') ?>"><i class="fa fa-list"></i><span>在职证明申请</span></a></li>
         <?php endif; ?>
-        <?php if(strstr($_SERVER['PHP_SELF'],'hr')):?>
-          <li id="checkscore"><a href="<?php echo base_url('hr/index') ?>"><i class="fa fa-address-book-o"></i> <span>积分确认</span></a></li>
+        <?php if(strstr($_SERVER['PHP_SELF'],'confirm')):?>
+          <li id="checkscore"><a href="<?php echo base_url('hr/confirm') ?>"><i class="fa fa-address-book-o"></i> <span>积分确认</span></a></li>
         <?php endif; ?>
       </ul>
     </section>

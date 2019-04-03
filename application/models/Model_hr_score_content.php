@@ -11,6 +11,11 @@ class Model_hr_score_content extends CI_Model{
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+	public function getName(){
+		$sql = "SELECT content2 FROM hr_score_content";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 	public function getByName($id){
 		$sql = "SELECT * FROM hr_score_content where content2=?";
 		$query = $this->db->query($sql,array($id));

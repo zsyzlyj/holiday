@@ -54,7 +54,7 @@
               <span class="mu-event-counter-block div1 enlargeMe1 bg-aqua" style="margin-right:70px;cursor:pointer" onclick="window.open('<?php echo base_url('holiday/staff');?>','_self')"><span><font size="10px"><i class="fa fa-calendar"></i></font></span><span><p>年假查询</p></span></span>
               <span class="mu-event-counter-block div2 enlargeMe2 bg-green" style="margin-right:70px;cursor:pointer;" onclick="window.open('<?php echo base_url('wage/staff');?>','_self')"><span><font size="10px"><i class="fa fa-calculator"></i></font></span><span><p>工资查询</p></span></span>
               <span class="mu-event-counter-block div3 enlargeMe3 bg-orange" style="margin-right:70px;cursor:pointer" onclick="window.open('<?php echo base_url('users/profile');?>','_self')"><span><font size="10px"><i class="fa fa-users"></i></font></span><span><p>个人信息</p></span></span>
-              <span class="mu-event-counter-block div4 enlargeMe4 bg-purple" style="cursor:pointer" onclick="window.open('<?php echo base_url('hr/index');?>','_self')"><span><font size="10px"><i class="fa fa-check-square-o"></i></font></span><span><p>xxxx</p></span></span>
+              <span class="mu-event-counter-block div4 enlargeMe4 bg-purple" style="cursor:pointer" onclick="window.open('<?php echo base_url('hr/confirm');?>','_self')"><span><font size="10px"><i class="fa fa-check-square-o"></i></font></span><span><p>xxxx</p></span></span>
             </div>
           </div>
       </div>
@@ -114,6 +114,24 @@
       });
       $('.div3').on('mouseleave', function() {
         $('.enlargeMe3').css({
+          '-webkit-transform' : 'scale(1)',
+          '-moz-transform'    : 'scale(1)',
+          '-ms-transform'     : 'scale(1)',
+          '-o-transform'      : 'scale(1)',
+          'transform'         : 'scale(1)',
+        });
+      });
+      $('.div4').on('mouseenter', function() {
+        $('.enlargeMe4').css({
+          '-webkit-transform' : 'scale(1.3)',
+          '-moz-transform'    : 'scale(1.3)',
+          '-ms-transform'     : 'scale(1.3)',
+          '-o-transform'      : 'scale(1.3)',
+          'transform'         : 'scale(1.3)',
+        });
+      });
+      $('.div4').on('mouseleave', function() {
+        $('.enlargeMe4').css({
           '-webkit-transform' : 'scale(1)',
           '-moz-transform'    : 'scale(1)',
           '-ms-transform'     : 'scale(1)',
