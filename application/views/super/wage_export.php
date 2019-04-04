@@ -24,7 +24,7 @@
           <div class="box">
             <div class="box-body">
               <div>
-                <form class="form-horizontal" action="<?php echo base_url('super_wage/download_page')?>" method="post" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
+                <form class="form-horizontal" action="<?php echo base_url('super_wage/wage_export')?>" method="post" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
                   <fieldset>
                     <div id="legend" class="">
                       <legend class=""></legend>

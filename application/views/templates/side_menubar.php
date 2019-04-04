@@ -188,7 +188,9 @@
           
         <?php endif; ?>
         <?php if(strstr($_SERVER['PHP_SELF'],'confirm')):?>
-          <li id="checkscore"><a href="<?php echo base_url('hr/confirm') ?>"><i class="fa fa-address-book-o"></i> <span>积分确认</span></a></li>
+          <li id="checkscore"><a href="<?php echo base_url('hr/confirm') ?>"><i class="fa fa-address-book-o"></i> <span>弹性福利积点确认</span></a></li>
+          <li id="checksumscore"><a href="<?php echo base_url('hr/confirm_sum') ?>"><i class="fa fa-address-book-o"></i> <span>年度综合积分确认</span></a></li>
+          
         <?php endif; ?>
       </ul>
     </section>

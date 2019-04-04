@@ -12,7 +12,7 @@ class Model_hr_score_content extends CI_Model{
 		return $query->result_array();
 	}
 	public function getName(){
-		$sql = "SELECT content2 FROM hr_score_content";
+		$sql = "SELECT content2,content1 FROM hr_score_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}

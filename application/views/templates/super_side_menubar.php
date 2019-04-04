@@ -252,6 +252,12 @@
             <span> 积点确认</span>
           </a>
         </li>
+        <li id="scoreSumMainMenu">
+          <a href="<?php echo base_url('super_hr/hr_score_sum') ?>">
+            <i class="fa fa-tasks"></i>
+            <span> 年度综合积分</span>
+          </a>
+        </li>
         <?php endif; ?>
         <!-- user permission info -->
         <li id="settingMenu"><a href="<?php echo base_url('super_auth/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>

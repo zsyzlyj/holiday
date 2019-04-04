@@ -118,9 +118,9 @@ class hr extends Admin_Controller{
     public function submit_confirm(){
         $user_id=$this->session->userdata('user_id');
         $name=$this->session->userdata('user_name');
-        echo $name;
+
         $confirm_status=array(
-            'user_id' => $user_id,
+            'user_id' => $this->model_hr_score_content->getByName($name)['content'],
             'name' => $name,
             'status' => '已确认'
         );
@@ -135,5 +135,6 @@ class hr extends Admin_Controller{
         }
         #redirect('hr/confirm','refresh');
     }
-    
+    public function confirm_sum(){
+    }
 }

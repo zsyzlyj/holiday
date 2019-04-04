@@ -1225,10 +1225,11 @@ class Super_wage extends Admin_Controller {
                 }
             }
         }
-        
         $row=1;
         $col=0;
-        #echo var_dump($mark);
+
+        $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
+        
         $counter=0;
         if(!empty($attr)){
             if(empty($wage_set)){
@@ -1240,12 +1241,17 @@ class Super_wage extends Admin_Controller {
                     if($v != '' and $k!='date_tag' and $k!='attr_name1' and in_array($counter,$mark)){
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
                         $col++;
+                        
                     }
                     elseif($counter<$mark['yuedustart']){
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
                         $col++;
                     }elseif($k=='date_tag'){
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, '时间戳');
+                        $col++;
+                    }
+                    else{
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
                         $col++;
                     }
                     
@@ -1264,6 +1270,7 @@ class Super_wage extends Admin_Controller {
                                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
                             }
                             $col++;
+                            
                         }
                         elseif($counter<$mark['yuedustart']){
                             if($a=='user_id'){
@@ -1276,7 +1283,11 @@ class Super_wage extends Admin_Controller {
                         }elseif($a=='date_tag'){
                             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
                             $col++;
-                        }   
+                        }
+                        else{
+                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
+                            $col++;
+                        }
                         $counter++;
                     }
                     $col=0;
@@ -1291,7 +1302,8 @@ class Super_wage extends Admin_Controller {
                     foreach($wtemp['attr'] as $k => $v){
                         if($v != '' and $k!='date_tag' and $k!='attr_name1' and in_array($counter,$mark_set[$c])){
                             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
-                            $col++;    
+                            $col++;
+                             
                         }
                         elseif($counter<$mark_set[$c]['yuedustart']){
                             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
@@ -1301,12 +1313,16 @@ class Super_wage extends Admin_Controller {
                             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, '时间戳');
                             $col++;
                         }
+                        else{
+                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $v);
+                            $col++;
+                        }
                         $counter++;
                     }
+                    
                     $col=0;
                     $counter=0;
                     $row++;
-
                     foreach($wtemp['wage'] as $k => $v){
                         foreach($v as $a => $b){
                             if($b != '' and $a!='date_tag' and $a!='number' and in_array($counter,$mark_set[$c])){
@@ -1317,6 +1333,7 @@ class Super_wage extends Admin_Controller {
                                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
                                 }
                                 $col++;
+                                
                             }
                             elseif($counter<$mark_set[$c]['yuedustart']){
                                 if($a=='user_id'){
@@ -1332,9 +1349,14 @@ class Super_wage extends Admin_Controller {
                                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
                                 $col++;
                             }
+                            else{
+                                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $b);
+                                $col++;
+                            }
                             $counter++;
                             
                         }
+                        
                         $col=0;
                         $counter=0;
                         $row++;
@@ -1343,17 +1365,19 @@ class Super_wage extends Admin_Controller {
                 
             }
         }
-        $col=0;
+        
+
         $objPHPExcel->setActiveSheetIndex(0);
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $filename = date('YmdHis').'.xlsx';
         // Sending headers to force the user to download the file
-        
+
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename='.$filename);
         header('Content-Disposition:filename='.$filename);
         header('Cache-Control: max-age=0');
         $objWriter->save('php://output');
+
     }
     public function wage_export(){
         $this->data['path'] = 'uploads/standard/人员导入模板.xlsx';
@@ -1937,4 +1961,5 @@ class Super_wage extends Admin_Controller {
             $this->render_super_template('super/wage_publish_tax', $this->data);
         }
     }
+    public function download_page(){}
 }
