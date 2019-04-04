@@ -83,7 +83,92 @@ class Users extends Admin_Controller{
 	public function profile(){
 		$this->data['user_info']=$this->model_wage_tag->getTagById($this->data['user_id']);
 		$this->render_template('users/profile', $this->data);
-	}
+    }
+    public function mydeptprofiles(){
+		$user_info=$this->model_wage_tag->getTagById($this->data['user_id']);
+        #$this->data['user_info']=$this->model_wage_tag->getByDept($user_info['dept']);
+        $this->data['user_data'] = "";
+        $this->data['current_dept']="";
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $this->data['user_data'] = $this->model_wage_tag->getByDept($user_info['dept']);
+            $this->data['current_dept'] = $_POST['selected_dept'];
+        }
+        $admin_data = $this->model_wage_tag->getTagById($this->data['user_id']);
+        $admin_result=array();
+        $admin_result=explode('/',$admin_data['dept']);
+        $this->data['dept_options']=$admin_result;
+
+        $this->render_template('users/mydeptprofiles', $this->data);
+    }
+    public function excel_mydeptinfo($dept){
+        $this->load->library('PHPExcel');
+        $this->load->library('PHPExcel/IOFactory');
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
+        $objPHPExcel->setActiveSheetIndex(0);
+        $result = $this->model_wage_tag->exportData($dept);
+        // Field names in the first row
+        $fields = $result->list_fields();
+        $col = 0;
+        foreach ($fields as $field){
+            $v="";
+            switch($field){
+                case 'name':$v="姓名\t";break;
+                case 'dept':$v="部门\t";break;
+                case 'office':$v="科室\t";break;
+                case 'position':$v="岗位\t";break;
+                case 'company':$v="合同签订公司\t";break;
+                case 'marry':$v="婚姻情况\t";break;
+                case 'child':$v="生育情况\t";break;
+                case 'highest_qualification':$v="最高学历\t";break;
+                case 'highest_degree':$v="最高学位\t";break;
+                case 'ft_highest_qualification':$v="全日制最高学历\t";break;
+                case 'ft_highest_degree':$v="全日制最高学位\t";break;
+                case 'service_mode':$v="用工形式\t";break;
+                case 'indate':$v="加入本企业时间\t";break;
+                case 'wage_level':$v="职级薪档\t";break;
+                case 'wage_adjust_stamp':$v="职级调整时间\t";break;
+                case 'level_adjust_stamp':$v="薪档调整时间\t";break;
+                
+                case 'qian3':$v=(date("Y")-3)."年\t";break;
+                case 'qian2':$v=(date("Y")-2)."年\t";break;
+                case 'qian1':$v=(date("Y")-1)."年\t";break;
+                default:break;
+            }
+            if($v != ""){
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
+                $col++;
+            }
+        }
+        // Fetching the table data
+        $row = 2;
+        foreach($result->result() as $data){
+            $col = 0;
+            foreach ($fields as $field){
+                if($field != 'user_id' and $field != 'gender' and $field != 'proof_tag' and $field != 'accumulation'){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
+                    $col++;
+                }
+            }
+            $row++;
+        }
+        $objPHPExcel->setActiveSheetIndex(0);
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $filename = date('YmdHis').".xlsx";
+        // Sending headers to force the user to download the file
+       
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$filename);
+        header("Content-Disposition:filename=".$filename);
+        header('Cache-Control: max-age=0');
+        $objWriter->save('php://output');
+         /**/
+    }
+    public function export_mydeptprofiles(){
+        $user_id=$this->session->userdata('user_id');
+        $my_data = $this->model_wage_tag->getTagById($user_id);
+        $this->excel_mydeptinfo($_POST['current_dept']);
+    }
 	public function proof_Creator($type,$apply_flag){
         $this->load->library('tcpdf.php');
         //实例化 

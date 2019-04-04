@@ -17,7 +17,11 @@ class Model_wage_tag extends CI_Model{
 			return $query->row_array();
 		}
 	}
-
+	public function getByDept($dept){
+		$sql = "SELECT * FROM wage_tag where locate(?,dept)";
+		$query = $this->db->query($sql, array($dept));
+		return $query->result_array();
+	}
 	public function create($data = ''){
 		if($data){
 			$create = $this->db->insert('wage_tag', $data);
@@ -44,7 +48,14 @@ class Model_wage_tag extends CI_Model{
 		$delete = $this->db->delete('wage_tag');
 		return ($delete == true) ? true : false;
 	}
-
+	public function exportData($dept = null){	
+		if($dept){	
+			$sql = "SELECT * FROM wage_tag WHERE locate(?,dept)";
+			$query = $this->db->query($sql, array($dept));
+			return $query;
+		}
+		else return NULL;
+	}
 	public function deleteAll(){
 		$sql='delete from wage_tag';
 		$delete = $this->db->query($sql);

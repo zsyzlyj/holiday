@@ -181,7 +181,11 @@
         <?php endif; ?>
         <?php if(strstr($_SERVER['PHP_SELF'],'users')):?>
           <li id="userProfile"><a href="<?php echo base_url('users/profile') ?>"><i class="fa fa-address-book-o"></i> <span>个人信息</span></a></li>
+          <?php if ($permission == 2):?>
+          <li id="mydept_profiles"><a href="<?php echo base_url('users/mydeptprofiles') ?>"><i class="fa fa-list"></i><span>部门人员信息</span></a></li>
+          <?php endif;?>
           <li id="applyOnPostProof"><a href="<?php echo base_url('users/apply_on_post_proof') ?>"><i class="fa fa-list"></i><span>在职证明申请</span></a></li>
+          
         <?php endif; ?>
         <?php if(strstr($_SERVER['PHP_SELF'],'confirm')):?>
           <li id="checkscore"><a href="<?php echo base_url('hr/confirm') ?>"><i class="fa fa-address-book-o"></i> <span>积分确认</span></a></li>

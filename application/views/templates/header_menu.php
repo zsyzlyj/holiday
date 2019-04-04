@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="javascript:void(0);" class="logo" style="cursor:default">
+    <a href="javascript:void(0);" class="logo" style="cursor:default;text-decoration:none">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b></b></span>
       <!-- logo for regular state and mobile devices -->

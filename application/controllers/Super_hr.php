@@ -436,7 +436,7 @@ class super_hr extends Admin_Controller {
         foreach($score_content as $a =>$b){
             foreach($score_status as $k => $v){
                 if($b['content2']==$v['name']){
-                    array_push($score_list,array('user_id' => '1','name'=>$b['content2'],'status' => $v['status']));
+                    array_push($score_list,array('user_id' => $v['content1'],'name'=>$b['content2'],'status' => $v['status']));
                     $found=true;
                 }
             }

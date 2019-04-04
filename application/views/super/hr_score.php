@@ -40,7 +40,7 @@
               <thead>
                 <tr style="border-color:silver;">
                   <th style="border-color:silver;">序号</th>
-                  <th style="border-color:silver;">身份证</th>
+                  <th style="border-color:silver;">ERP编号</th>
                   <th style="border-color:silver;">姓名</th>
                   <th style="border-color:silver;">状态</th>
                 </tr>

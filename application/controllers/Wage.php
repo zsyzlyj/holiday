@@ -382,13 +382,17 @@ class Wage extends Admin_Controller{
                 $pdf->setCellHeightRatio(2.5); 
                 $pdf->SetFont('songti','',15);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str="\r\n\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n";
+                $str="\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n";
                 $pdf->setCellHeightRatio(1.7); 
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
+                $str="\r\n    重要提示：本证明所证明情况必须真实，如有虚假，中山市住房公积金管理中心保留依法追究相关责任的权利。";
+                $pdf->setCellHeightRatio(1.5); 
+                $pdf->SetFont('songti','B',11);
+                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false); 
                 if(!$apply_flag){
                     $pdf->setCellHeightRatio(1.0); 
                     $pdf->SetFont('songti','',11);
-                    $str="\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
+                    $str="\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
                     $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
                 }
                 break;
@@ -616,6 +620,15 @@ class Wage extends Admin_Controller{
                     }
                 }
             }
+            $log=array(
+                'user_id' => $this->data['user_id'],
+                'username' => $this->data['user_name'],
+                'login_ip' => $_SERVER["REMOTE_ADDR"],
+                'staff_action' => '查看'.$this->data['chosen_month'].'工资',
+                'action_time' => date('Y-m-d H:i:s')
+            );
+            $this->model_log_action->create($log);
+            unset($log);
             $this->render_template('wage/search', $this->data);
             
         }
@@ -635,6 +648,15 @@ class Wage extends Admin_Controller{
                 $this->data['wage_sp_attr']=$this->model_wage_sp_attr->getWageSpByDate($doc_name);
                 
             }
+            $log=array(
+                'user_id' => $this->data['user_id'],
+                'username' => $this->data['user_name'],
+                'login_ip' => $_SERVER["REMOTE_ADDR"],
+                'staff_action' => '查看'.$this->data['chosen_month'].'专项信息',
+                'action_time' => date('Y-m-d H:i:s')
+            );
+            $this->model_log_action->create($log);
+            unset($log);
             $this->render_template('wage/searchsp', $this->data);        
         }
         else{
@@ -653,6 +675,15 @@ class Wage extends Admin_Controller{
                 $this->data['wage_tax_attr']=$this->model_wage_tax_attr->getTaxByDate($doc_name);   
             }
             $this->data['notice']=$this->model_notice->getNoticeLatestTax();
+            $log=array(
+                'user_id' => $this->data['user_id'],
+                'username' => $this->data['user_name'],
+                'login_ip' => $_SERVER["REMOTE_ADDR"],
+                'staff_action' => '查看'.$this->data['chosen_month'].'个税信息',
+                'action_time' => date('Y-m-d H:i:s')
+            );
+            $this->model_log_action->create($log);
+            unset($log);
             $this->render_template('wage/searchtax', $this->data);        
         }
         else{

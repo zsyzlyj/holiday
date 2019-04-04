@@ -203,15 +203,7 @@ class Super_wage extends Admin_Controller {
                     }
                 }
             }
-            $log=array(
-                'user_id' => $this->data['user_id'],
-                'username' => $this->data['user_name'],
-                'login_ip' => $_SERVER["REMOTE_ADDR"],
-                'staff_action' => '查看'.$this->data['chosen_month'].'工资',
-                'action_time' => date('Y-m-d H:i:s')
-            );
-            $this->model_log_action->create($log);
-            unset($log);
+            
             $this->render_super_template('super/wage_search',$this->data);
         }
         else{
