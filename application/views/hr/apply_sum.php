@@ -103,6 +103,8 @@
               </tbody>
             </table>
             <hr />
+            <?php echo $notice['title'].'<br /><br />'.$notice['content'];?>
+            <hr />
             <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal">确认</a>
             <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
               <div class="modal-content-month">

@@ -258,6 +258,19 @@
             <span> 年度综合积分</span>
           </a>
         </li>
+        <li class="treeview" id="hrNoticeNav">
+          <a href="#">
+            <i class="fa fa-bullhorn"></i>
+            <span>年度综合积分确认公告</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="publish_hr_score_sum"><a href="<?php echo base_url('super_hr/hr_publish_score_sum') ?>"><i class="fa fa-circle-o"></i> 发布综合积分公告</a></li>        
+            <li id="manage_score_sum_notice"><a href="<?php echo base_url('super_hr/notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
+          </ul>
+        </li>
         <?php endif; ?>
         <!-- user permission info -->
         <li id="settingMenu"><a href="<?php echo base_url('super_auth/setting') ?>"><i class="glyphicon glyphicon-edit"></i> <span>修改密码</span></a></li>

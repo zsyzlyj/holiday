@@ -8,7 +8,7 @@ class hr extends Admin_Controller{
         $this->not_logged_in();
         $this->data['page_title'] = 'Hr';
         $this->load->model('model_wage_tag');
-        
+        $this->load->model('model_notice');
         $this->load->model('model_hr_score_attr');
         $this->load->model('model_hr_score_content');
         $this->load->model('model_hr_score_sum_attr');
@@ -145,6 +145,7 @@ class hr extends Admin_Controller{
         $this->data['attr_data']=$this->model_hr_score_sum_attr->getData();
         $this->data['user_data']=$this->model_hr_score_sum_content->getById($this->data['user_id']);
         $this->data['status']=$this->model_hr_confirm_status->getByName($this->data['user_name'])['status'];
+        $this->data['notice'] = $this->model_notice->getNoticeLatestHr();
         $this->render_template('hr/apply_sum',$this->data);
     }
     public function submit_confirm_sum(){

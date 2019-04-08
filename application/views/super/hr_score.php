@@ -49,7 +49,6 @@
                 <?php $counter=1;?>
                 <?php foreach($score_list as $k => $v):?>
                 <tr style="border-color:silver;">
-                
                 <td style="border-color:silver;"><?php echo $counter++;?></td>
                 <?php foreach($v as $a => $b):?>
                 <td style="border-color:silver;"><?php echo $b;?></td>

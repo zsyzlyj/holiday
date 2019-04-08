@@ -10,6 +10,7 @@ class super_hr extends Admin_Controller {
         $this->load->model('model_hr_content');
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage');
+        $this->load->model('model_notice');
         $this->load->model('model_hr_score_attr');
         $this->load->model('model_hr_score_content');
         $this->load->model('model_hr_score_sum_attr');
@@ -639,5 +640,60 @@ class super_hr extends Admin_Controller {
         $this->model_hr_confirm_sum_status->reset();
         $this->hr_score_sum();
     }
+    public function hr_publish_score_sum(){
+        $this->form_validation->set_rules('title', 'title', 'required');
+		$this->form_validation->set_rules('content', 'content', 'required');
+		
+        if($this->form_validation->run() == TRUE){
+            // true case
+			$title=$this->input->post('title');
+			$content=$this->input->post('content');
+        	$data = array(
+				'pubtime' => date('Y-m-d H:i:s'),
+				'username' => $this->session->userdata('user_id'),
+        		'title' => $this->input->post('title'),
+				'content' => $this->input->post('content'),
+				'type' => 'hr'
+			);
+			$create = $this->model_notice->create($data);
+        	if($create == true){
+        		$this->session->set_flashdata('success', '公告发布成功');
+        		redirect('super_hr/notification', 'refresh');
+        	}
+        	else{
+        		$this->session->set_flashdata('error', '系统发生未知错误!!');
+        		redirect('super_hr/hr_publish_score_sum', 'refresh');
+        	}
 
+        }
+        else{
+            // false case
+			$notice_data = $this->model_notice->getNoticeData();
+			$result = array();
+			foreach($notice_data as $k => $v){
+				$result[$k] = $v;
+			}
+			$this->data['notice_data'] = $result;
+            $this->render_super_template('super/hr_publish_score_sum', $this->data);
+        }
+    }
+    public function notification(){
+        $notice_data = $this->model_notice->getHrNoticeData();
+		$result = array();		
+		foreach ($notice_data as $k => $v){
+            if($v['type']=='hr'){
+                $v['type']='积分';
+                $result[$k] = $v;
+            }
+		}
+		$this->data['notice_data'] = $result;
+		unset($result);
+        $this->render_super_template('super/hr_notification', $this->data);
+    }
+    public function notification_delete(){
+        $pubtime=$_POST['time'];
+        $this->model_notice->delete($pubtime);
+        $this->session->set_flashdata('success', '公告删除成功！');
+        redirect('super_hr/notification', 'refresh');
+    }
 }
