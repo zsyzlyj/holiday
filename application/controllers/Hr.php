@@ -11,12 +11,18 @@ class hr extends Admin_Controller{
         
         $this->load->model('model_hr_score_attr');
         $this->load->model('model_hr_score_content');
+        $this->load->model('model_hr_score_sum_attr');
+        $this->load->model('model_hr_score_sum_content');
         $this->load->model('model_hr_confirm_status');
+        $this->load->model('model_hr_confirm_sum_status');
         $this->data['permission'] = $this->session->userdata('permission');
         $this->data['user_name'] = $this->session->userdata('user_name');
         $this->data['user_id'] = $this->session->userdata('user_id');
         $this->data['service_mode']= $this->model_wage_tag->getModeById($this->session->userdata('user_id'))['service_mode'];
-	}
+        
+        $this->data['confirm_status']=$this->model_hr_confirm_status->getByName($this->data['user_name'])['status'];
+        $this->data['confirm_sum_status']=$this->model_hr_confirm_sum_status->getById($this->data['user_id'])['status'];
+    }
     public function confirm(){
         $this->data['user_name']=$this->session->userdata('user_name');
         $this->data['url']=$this->pdf_creator($this->data['user_name'],'弹性福利积点确认');
@@ -126,15 +132,39 @@ class hr extends Admin_Controller{
         );
 
         if($this->model_hr_confirm_status->getByName($name)){
-            echo 'update';
             $this->model_hr_confirm_status->update($confirm_status,$user_id);
         }
         else{
-            echo 'create';
             $this->model_hr_confirm_status->create($confirm_status);
         }
+        $this->data['confirm_status']=$this->model_hr_confirm_status->getByName($name)['status'];
         #redirect('hr/confirm','refresh');
     }
+    
     public function confirm_sum(){
+        $this->data['attr_data']=$this->model_hr_score_sum_attr->getData();
+        $this->data['user_data']=$this->model_hr_score_sum_content->getById($this->data['user_id']);
+        $this->data['status']=$this->model_hr_confirm_status->getByName($this->data['user_name'])['status'];
+        $this->render_template('hr/apply_sum',$this->data);
+    }
+    public function submit_confirm_sum(){
+        $user_id=$this->session->userdata('user_id');
+        $name=$this->session->userdata('user_name');
+
+        $confirm_status=array(
+            'user_id' => $user_id,
+            'name' => $name,
+            'status' => '已确认'
+        );
+
+        if($this->model_hr_confirm_sum_status->getById($user_id)){
+            $this->model_hr_confirm_sum_status->update($confirm_status,$user_id);
+        }
+        else{
+            $this->model_hr_confirm_sum_status->create($confirm_status);
+        }
+        $this->data['status']=$this->model_hr_confirm_sum_status->getById($user_id)['status'];
+        $this->session->set_flashdata('success', '提交确认成功');
+        redirect('hr/confirm_sum','refresh');
     }
 }

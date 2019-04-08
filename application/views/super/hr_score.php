@@ -23,7 +23,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
           <form action="<?php echo base_url('super_hr/reset_confirm');?>" style="display:inline" method="POST">
-            <button type="submit" class="btn btn-danger">确认提交</a>
+            <button type="submit" class="btn btn-danger">重置</a>
           </form>
         </div>
       </div><!-- /.modal-content -->

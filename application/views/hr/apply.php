@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        积分确认
+        弹性福利积分确认
       </h1>
     </section>
     <!-- Main content -->
@@ -59,7 +59,7 @@
                   -->
                   <div style="text-align:right">
                   <form action="<?php echo base_url('hr/submit_confirm');?>" style="margin:0px;display:inline;" method="POST">
-                    <?php if($status==NULL or $status=="未确认"):?>
+                    <?php if($confirm_status==NULL):?>
                     <button type="submit" class="btn btn-success">提交申请</button>
                     <?php else:?>
                     <button disabled type="submit" class="btn btn-success">提交申请</button>

@@ -9,7 +9,7 @@
  <!-- Main content -->
   <section class="content">
     
-    <a href="<?php echo base_url('super_hr/hr_score_import');?>" class="btn btn-info">上传积分信息</a>
+    <a href="<?php echo base_url('super_hr/hr_score_sum_import');?>" class="btn btn-info">上传积分信息</a>
     <a href="javascript:void(0)" class="btn btn-danger" data-toggle="modal" data-target="#myModal">重置确认信息</a>
     <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
       <div class="modal-content-month">
@@ -22,8 +22,8 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <form action="<?php echo base_url('super_hr/reset_confirm');?>" style="display:inline" method="POST">
-            <button type="submit" class="btn btn-danger">确认提交</a>
+          <form action="<?php echo base_url('super_hr/reset_confirm_sum');?>" style="display:inline" method="POST">
+            <button type="submit" class="btn btn-danger">重置</a>
           </form>
         </div>
       </div><!-- /.modal-content -->
@@ -40,7 +40,7 @@
               <thead>
                 <tr style="border-color:silver;">
                   <th style="border-color:silver;">序号</th>
-                  <th style="border-color:silver;">ERP编号</th>
+                  <th style="border-color:silver;">身份证号</th>
                   <th style="border-color:silver;">姓名</th>
                   <th style="border-color:silver;">状态</th>
                 </tr>

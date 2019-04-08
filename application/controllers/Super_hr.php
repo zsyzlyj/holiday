@@ -12,7 +12,10 @@ class super_hr extends Admin_Controller {
         $this->load->model('model_wage');
         $this->load->model('model_hr_score_attr');
         $this->load->model('model_hr_score_content');
+        $this->load->model('model_hr_score_sum_attr');
+        $this->load->model('model_hr_score_sum_content');
         $this->load->model('model_hr_confirm_status');
+        $this->load->model('model_hr_confirm_sum_status');
         $this->data['user_name'] = $this->session->userdata('user_id');
         $this->data['user_id'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
@@ -429,7 +432,7 @@ class super_hr extends Admin_Controller {
         return $url;
     }
     public function hr_score(){
-        $score_content=$this->model_hr_score_content->getName();
+        $score_content=$this->model_hr_score_content->getData();
         $score_status=$this->model_hr_confirm_status->getData();
         $score_list=array();
         $found=false;
@@ -438,6 +441,7 @@ class super_hr extends Admin_Controller {
                 if($b['content2']==$v['name']){
                     array_push($score_list,array('user_id' => $b['content1'],'name'=>$b['content2'],'status' => $v['status']));
                     $found=true;
+                    break;
                 }
             }
             if(!$found){
@@ -519,7 +523,7 @@ class super_hr extends Admin_Controller {
                 }
                 else{
                     $this->hr_score_excel_put();
-                    $this->render_super_template('super/hr_score_import',$this->data);
+                    $this->hr_score();
                 }
             }
         }
@@ -532,19 +536,20 @@ class super_hr extends Admin_Controller {
         $this->hr_score();
     }
     public function hr_score_sum(){
-        $score_content=$this->model_hr_score_content->getName();
-        $score_status=$this->model_hr_confirm_status->getData();
+        $score_content=$this->model_hr_score_sum_content->getName();
+        $score_status=$this->model_hr_confirm_sum_status->getData();
         $score_list=array();
         $found=false;
         foreach($score_content as $a =>$b){
             foreach($score_status as $k => $v){
-                if($b['content2']==$v['name']){
-                    array_push($score_list,array('user_id' => $v['content1'],'name'=>$b['content2'],'status' => $v['status']));
+                if($b['content2']==$v['user_id']){
+                    array_push($score_list,array('user_id' => $b['content2'],'name'=>$b['content1'],'status' => $v['status']));
                     $found=true;
+                    break;
                 }
             }
             if(!$found){
-                array_push($score_list,array('user_id' => '1','name'=>$b['content2'],'status' => '未确认'));
+                array_push($score_list,array('user_id' => $b['content2'],'name'=>$b['content1'],'status' => '未确认'));
                 $found=false;
             }
             $found=false;             
@@ -606,10 +611,10 @@ class super_hr extends Admin_Controller {
             }
             unset($tmp);
         }
-        $this->model_hr_score_attr->delete();
-        $this->model_hr_score_content->delete();
-        $this->model_hr_score_attr->create($attr);
-        $this->model_hr_score_content->createbatch($data); 
+        $this->model_hr_score_sum_attr->delete();
+        $this->model_hr_score_sum_content->delete();
+        $this->model_hr_score_sum_attr->create($attr);
+        $this->model_hr_score_sum_content->createbatch($data); 
     }
 
     public function hr_score_sum_import(){
@@ -630,9 +635,9 @@ class super_hr extends Admin_Controller {
             $this->render_super_template('super/hr_score_sum_import',$this->data);
         }
     }
-    public function reset_sum_confirm(){
-        $this->model_hr_confirm_status->reset();
-        $this->hr_score();
+    public function reset_confirm_sum(){
+        $this->model_hr_confirm_sum_status->reset();
+        $this->hr_score_sum();
     }
 
 }
