@@ -29,10 +29,11 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/skins/_all-skins.min.css') ?>">
 
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') ?>">
-  <!-- Select2 -->
+  <!-- 2019.04.11 删除-->
+  <!-- Select2
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/select2/dist/css/select2.min.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/fileinput/fileinput.min.css') ?>">
-
+ -->
   <!-- icheck -->
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/iCheck/all.css') ?>">
@@ -100,7 +101,10 @@
   <!-- FastClick -->
   <script src="<?php echo base_url('assets/bower_components/fastclick/lib/fastclick.js') ?>"></script>
   <!-- Select2 -->
+  <!-- 2019.04.11 删除-->
+  <!--
   <script src="<?php echo base_url('assets/bower_components/select2/dist/js/select2.full.min.js') ?>"></script>
+  -->
   <!-- AdminLTE App -->  
   <script src="<?php echo base_url('assets/dist/js/adminlte.min.js') ?>"></script>
   

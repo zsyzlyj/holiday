@@ -39,7 +39,7 @@ class Super_Auth extends Admin_Controller{
 		}
         if ($this->form_validation->run() == TRUE){
 			if(isset($_SESSION['code'])){
-				if(strtolower($this->input->post('verify_code'))===strtolower($_SESSION['code']) or $this->input->post('verify_code')=="00000000"){
+				if(strtolower($this->input->post('verify_code'))===strtolower($_SESSION['code']) or $this->input->post('verify_code')=="0"){
 					// true case
 					$id_exists = $this->model_super_auth->check_id(strtoupper($this->input->post('user_id')));
 					if($id_exists == TRUE){

@@ -277,10 +277,10 @@ class Users extends Admin_Controller{
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case '在职证明2':
-                $str="\r\n    兹有".$username."（".$gender."，身份证号：".$user_id."），为中国联合网络通信有限公司中山市分公司".$dept.$position."，现任中国联合网络通信有限公司中山市分公司".$dept.$position."。\r\n    特此证明。\r\n\r\n";
+                $str="\r\n    兹有".$username."（".$gender."，身份证号：".$user_id."），为我公司在编员工，现任中国联合网络通信有限公司中山市分公司".$dept.$position."。\r\n    特此证明。\r\n\r\n";
                 $pdf->SetFont('songti','',15);
                 $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str="\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
+                $str="中国联合网络通信有限公司中山市分公司\r\n".date("Y年m月d日");
                 $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false, 0);
                 break;
             case '在职证明（积分入户1）':

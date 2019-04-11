@@ -18,6 +18,11 @@ class Model_users extends CI_Model{
 			return $query->row_array();
 		}
 	}
+	public function getIdByName($name){
+		$sql = 'SELECT user_id,username FROM users WHERE username = ?';
+		$query = $this->db->query($sql, array($name));
+		return $query->result_array();
+	}
 	public function checkUserById($userId = null){
 		if($userId){
 			$sql = "SELECT * FROM users WHERE user_id = ?";	

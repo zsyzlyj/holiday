@@ -45,17 +45,6 @@
                     <td><?php echo $i+1;?></td>
                     <td><?php echo $name[$i]?></td>
                     <td>
-                    <!--
-                      <?php if(!empty($status)):?>
-                        <?php if($status[$i]):?>
-                        <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal<?php echo $i;?>" class="btn btn-info">浏览</a>
-                        <?php else:?>
-                        <a disabled href="javascript:void(0)" data-toggle="modal" data-target="#myModal<?php echo $i;?>" class="btn btn-info">浏览</a>
-                        <?php endif;?>
-                      <?php else:?>
-                        <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal<?php echo $i;?>" class="btn btn-info">浏览</a>
-                      <?php endif;?>
-                    -->
                       <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal<?php echo $i;?>" class="btn btn-info">浏览</a>
                       
                       <!-- 弹窗 -->
@@ -63,9 +52,6 @@
                         <!-- 弹窗内容 -->
                         <div class="modal-content-apply">
                           <div class="modal-header">
-                            <!--
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ><font color="black">×</font></button>
-                            -->
                             <div style="text-align:right">
                             <form action="<?php base_url('wage/apply_wage_proof') ?>" style="margin:0px;display:inline;" method="post">
                               <input type="hidden" name="type" value="<?php echo $name[$i];?>"/>
@@ -87,24 +73,6 @@
                           <div class="modal-body">
                             <iframe width="600" height="800" src="<?php echo base_url($url[$i]);?>"></iframe>
                           </div>
-                          <!-- model-body-apply -->
-                          <!--
-                          <div class="modal-footer">
-                            <button class="btn btn-info" data-dismiss="modal" aria-hidden="true">关闭</button>
-                            <form action="<?php base_url('wage/apply_wage_proof') ?>" style="margin:0px;display:inline;" method="post">
-                              <input type="hidden" name="type" value="<?php echo $name[$i];?>"/>
-                              <?php if(!empty($status)):?>
-                                <?php if($status[$i]):?>
-                                <button type="submit" class="btn btn-success">提交申请</button>
-                                <?php else:?>
-                                <button disabled type="submit" class="btn btn-success">提交申请</button>
-                                <?php endif;?>
-                              <?php else:?>
-                              <button type="submit" class="btn btn-success">提交申请</button>
-                              <?php endif;?>          
-                            </form>
-                          </div>
-                          -->
                           <!-- model-footer-apply -->
                         </div>
                         <!-- model-content-apply -->
@@ -125,7 +93,6 @@
                     <?php else:?>
                       <td></td>
                     <?php endif;?>
-                    
                   </tr>
                   <?php endfor;?>
                 </tbody>

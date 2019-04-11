@@ -5,21 +5,6 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <?php if(strstr($_SERVER['PHP_SELF'],'wage')):?>
-          
-          <!--
-          <li id="wageMainMenu">
-            <a href="<?php echo base_url('wage/staff') ?>">
-              <i class="fa fa-money"></i> <span>我的工资信息</span>
-            </a>
-          </li>
-          -->
-          <!--
-          <li id="wageNoticeMainMenu">
-            <a href="<?php echo base_url('wage/notice') ?>">
-              <i class="fa fa-flag-o"></i> <span>首页</span>
-            </a>
-          </li>
-          -->
           <li id="searchwageMainMenu">
             <a href="<?php echo base_url('wage/search') ?>">
               <i class="fa fa-search"></i> <span>工资明细查询</span>
@@ -47,13 +32,6 @@
               </li>
             </ul>
           </li>
-          <!--
-          <li id="wagechartMainMenu">
-            <a href="<?php echo base_url('wage/wage_chart') ?>">
-              <i class="fa fa-bar-chart"></i> <span>工资统计</span>
-            </a>
-          </li>
-          -->
           <li id="wagedocMainMenu">
             <a href="<?php echo base_url('wage/wage_doc') ?>">
               <i class="fa fa-file-pdf-o"></i> <span>薪酬文件</span>
@@ -67,9 +45,11 @@
             </a>
           </li>
           <?php endif; ?>
+          <!--
           <?php if($service_mode=='合同制'):?>
           <li id="applyWageProof"><a href="<?php echo base_url('wage/apply_wage_proof') ?>"><i class="fa fa-list"></i><span>收入证明申请</span></a></li>
           <?php endif;?>
+          -->
         <?php endif ?>
         <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
 

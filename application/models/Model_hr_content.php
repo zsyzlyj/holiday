@@ -91,7 +91,7 @@ class Model_hr_content extends CI_Model{
 		return $query->result_array();
 	}
 	*/
-	public function getDataByDept($dept = null){
+	public function getByDept($dept = null){
 		if($dept){
 			$query=$this->db->where_in('content13', $dept)->from('hr_content')->get();
 			#$sql = "SELECT * FROM hr_content WHERE locate(?,content13)";
@@ -100,22 +100,22 @@ class Model_hr_content extends CI_Model{
 		}
 	}
 
-	public function getDataById($userId = null){
+	public function getById($userId = null){
 		if($userId){
-			$sql = "SELECT * FROM hr_content WHERE user_id = ?";	
+			$sql = "SELECT * FROM hr_content WHERE content5 = ?";	
 			$query = $this->db->query($sql, array($userId));
 			return $query->row_array();
 		}
 	}
 	
-	public function getDataByDate($date = null){
+	public function getByDate($date = null){
 		if($date){
 			$sql = "SELECT * FROM hr_content WHERE locate(?,date_tag)";	
 			$query = $this->db->query($sql, array($date));
 			return $query->result_array();
 		}
 	}
-	public function getDataByDateAndId($id,$date){
+	public function getByDateAndId($id,$date){
 		if($date and $id){
 			$query=$this->db->where_in('user_id', $id)->get_where('hr_content',array('date_tag'=>$date));
 			#$sql = "SELECT * FROM (select * from hr_content where user_id in ?) as t WHERE locate(?,date_tag)";	
@@ -123,7 +123,7 @@ class Model_hr_content extends CI_Model{
 			return $query->row_array();
 		}
 	}
-	public function getDataByDateAndIdset($id,$date){
+	public function getByDateAndIdset($id,$date){
 		if($date and $id){
 			$query=$this->db->where_in('user_id', $id)->get_where('hr_content',array('date_tag'=>$date));
 			#$sql = "SELECT * FROM (select * from hr_content where user_id in ?) as t WHERE locate(?,date_tag)";	
@@ -131,18 +131,18 @@ class Model_hr_content extends CI_Model{
 			return $query->result_array();
 		}
 	}
-	public function getDataByDateAndDept($dept,$date){
+	public function getByDateAndDept($dept,$date){
 		if($date and $dept){	
 			$sql = "SELECT * FROM (select * from hr_content where locate(?,department)) as t WHERE locate(?,date_tag)";	
 			$query = $this->db->query($sql, array($dept,$date));
 			return $query->result_array();
 		}
 	}
-	public function exportDataData($id = null){
+	public function exportData($id = null){
 		$sql = "SELECT * FROM hr_content";
 		return $this->db->query($sql);
 	}
-	public function exportmydeptDataData($dept=null){
+	public function exportmydeptData($dept=null){
 		if($dept){
 			$sql = "SELECT * FROM hr_content WHERE locate(?,department)";
 			$query = $this->db->query($sql, array($dept));

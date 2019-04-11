@@ -155,6 +155,31 @@
             <hr />
             <div class="row">
             <div class="col-md-12">
+              <?php $counter=0;?>
+              <?php if($column_name): ?>
+                <table class="table">
+                <thead></thead>
+                <tbody>
+                <tr>
+                <?php foreach ($column_name as $k => $v): ?>
+                <?php if($counter<$trueend):?>
+
+                  <?php if(($counter+1)%6==0):?>
+                  </tr><tr>
+                  <?php else:?>
+                  <td><input type="checkbox" value="<?php echo $v;?>"/><?php echo $v;?></td>
+                  <?php endif;?>
+                  <?php $counter++;?>
+                <?php endif; ?>
+                <?php endforeach ?>
+                </tr>
+                </tbody>
+              <?php endif;?>
+              
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-md-12">
               <button class="btn btn-primary">搜索</button>
             </div>
             </div>
@@ -179,8 +204,17 @@
                     <?php if($column_name): ?>
                       <?php foreach ($column_name as $k => $v): ?>
                       <?php if($counter<$trueend):?>
-                        <th style="border-color:silver;"><?php echo $v;$counter++;?></th>
+                        <?php if($v=='序号' or $v=='用工形式' or $v=='员工姓名' or $v=='身份证号码' or $v=='性别' or $v=='所在部门'):?>      
+                          <?php if($v=='所在部门'):?>
+                          <th style="border-color:silver;"><?php echo $v;?></th>
+                          <th style="border-color:silver;">操作</th>
+                          <?php break;?>
+                          <?php else:?>
+                          <th style="border-color:silver;"><?php echo $v;?></th>
+                          <?php endif;?>
+                        <?php endif;?>
                       <?php endif; ?>
+                      <?php $counter++;?>
                       <?php endforeach ?>
                     <?php endif;?>
                   </tr>
@@ -192,12 +226,48 @@
                         <?php $counter=0;?>
                         <?php foreach($v as $a => $b):?>
                         <?php if($counter<$trueend):?>
-                        <td style="border-color:silver;"><?php echo $b;$counter++;?></td>
+                          <?php if($column_name['attr'.($counter+1)]=='序号' or $column_name['attr'.($counter+1)]=='用工形式' or $column_name['attr'.($counter+1)]=='员工姓名' or $column_name['attr'.($counter+1)]=='身份证号码' or $column_name['attr'.($counter+1)]=='性别' or $column_name['attr'.($counter+1)]=='所在部门'):?>      
+                            <?php if($column_name['attr'.($counter+1)]=='身份证号码'):?>
+                            <?php $user_id=$b;?>
+                            <?php endif;?>
+                            <?php if($column_name['attr'.($counter+1)]=='所在部门'):?>
+                            <td style="border-color:silver;"><?php echo $b;?></td>
+                            <td style="border-color:silver;">
+                              <!--
+                              <form id="user_details" action="<?php echo base_url('super_hr/user_details');?>" target="_blank" method="post">
+                              -->
+                              <input type="hidden" name="user_id" value="<?php echo $user_id;?>"/>
+                              <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal" onclick="submitForm();">详细信息</a>
+                              <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                                <div class="modal-content-month">
+                                  <div class="modal-header" style="overflow:scroll;">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><font color="black">×</font></button>
+                                    <h4 class="modal-title">详细信息</h4>
+                                    </div>
+                                  <div class="modal-body" style="">
+
+                                    <h4 style="text-align:left">确认提交吗？</h4>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                    <button type="submit" class="btn btn-success btn-ok">确认提交</a>
+                                  </div>
+                                </div><!-- /.modal-content -->
+                              </div><!-- /.modal -->
+                              <!--</form>-->
+                            </td>
+                            <?php break;?>
+                            <?php else:?>
+                            <td style="border-color:silver;"><?php echo $b;?></td>
+                            <?php endif;?>
+                          <?php endif;?>
                         <?php endif; ?>
+                        <?php $counter++;?>
                         <?php endforeach ?>
                         </tr>
                       <?php endforeach ?>
                     <?php endif; ?>
+                    
                   <!---->
                   </tbody>
                 </table>
@@ -260,5 +330,10 @@
             }
         }      
       });
-    }); 
+    });
+    function submitForm(){
+    //获取form表单对象
+        var form = document.getElementById("user_details");
+        form.submit();//form表单提交
+    }
   </script>

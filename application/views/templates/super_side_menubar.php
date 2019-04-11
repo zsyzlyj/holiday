@@ -189,12 +189,7 @@
         <li id="wageProofMainMenu">
           <a href="<?php echo base_url('super_wage/wage_proof') ?>">
             <i class="fa fa-money"></i>
-            <span class="pull-right-container label label-danger">
-            <?php if($unread):?>
-              <?php echo $unread;?>
-            <?php endif; ?>
-            </span>
-            <span> 证明审核</span>
+            <span> 开具收入证明</span>
           </a>
         </li>
 
@@ -270,6 +265,12 @@
             <li id="publish_hr_score_sum"><a href="<?php echo base_url('super_hr/hr_publish_score_sum') ?>"><i class="fa fa-circle-o"></i> 发布综合积分公告</a></li>        
             <li id="manage_score_sum_notice"><a href="<?php echo base_url('super_hr/notification') ?>"><i class="fa fa-circle-o"></i> 公告历史</a></li>
           </ul>
+        </li>
+        <li id="hrProofMainMenu">
+          <a href="<?php echo base_url('super_hr/hr_proof') ?>">
+            <i class="fa fa-money"></i>
+            <span> 开具证明</span>
+          </a>
         </li>
         <?php endif; ?>
         <!-- user permission info -->
