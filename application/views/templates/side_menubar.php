@@ -45,11 +45,11 @@
             </a>
           </li>
           <?php endif; ?>
-          <!--
+          
           <?php if($service_mode=='合同制'):?>
-          <li id="applyWageProof"><a href="<?php echo base_url('wage/apply_wage_proof') ?>"><i class="fa fa-list"></i><span>收入证明申请</span></a></li>
+          <li id="applyWageProof"><a href="<?php echo base_url('wage/apply_wage_proof') ?>"><i class="fa fa-list"></i><span> 收入证明申请</span></a></li>
           <?php endif;?>
-          -->
+          <!---->
         <?php endif ?>
         <?php if(strstr($_SERVER['PHP_SELF'],'holiday')):?>
 
@@ -164,7 +164,7 @@
           <?php if ($permission == 2):?>
           <li id="mydept_profiles"><a href="<?php echo base_url('users/mydeptprofiles') ?>"><i class="fa fa-list"></i><span>部门人员信息</span></a></li>
           <?php endif;?>
-          <li id="applyOnPostProof"><a href="<?php echo base_url('users/apply_on_post_proof') ?>"><i class="fa fa-list"></i><span>在职证明申请</span></a></li>
+          <!--<li id="applyOnPostProof"><a href="<?php echo base_url('users/apply_on_post_proof') ?>"><i class="fa fa-list"></i><span>在职证明申请</span></a></li>-->
           
         <?php endif; ?>
         <?php if(strstr($_SERVER['PHP_SELF'],'confirm')):?>

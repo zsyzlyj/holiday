@@ -87,7 +87,7 @@
   
   <script type="text/javascript">
     $(document).ready(function() {
-      $("#wageProofMainMenu").addClass('active');
+      $("#wageProofAuditMainMenu").addClass('active');
       $('#proofTable').DataTable({
         language: {
             "sProcessing": "处理中...",

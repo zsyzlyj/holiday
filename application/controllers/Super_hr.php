@@ -73,7 +73,9 @@ class super_hr extends Admin_Controller {
                     $attr['attr'.($colIndex+1)] = $cell;
                 }
                 else{
-                    $tmp['content'.($colIndex+1)] = $cell;
+                    if($colIndex==8 or $colIndex==21 or $colIndex==22 or $colIndex==23 or $colIndex==24 or $colIndex==30 or $colIndex==38 or $colIndex==46  or $colIndex==51)
+                        $tmp['attr'.($colIndex+1)] = gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($cell));
+                    else $tmp['attr'.($colIndex+1)] = $cell;
                 }
                 //$temp[$colIndex] = $cell;
             }
@@ -87,7 +89,7 @@ class super_hr extends Admin_Controller {
         $this->model_hr_attr->delete();
         $this->model_hr_content->delete();
         $this->model_hr_attr->create($attr);
-        $this->model_hr_content->createbatch($data); 
+        $this->model_hr_content->createbatch($data);
     }
 
     public function hr_import(){

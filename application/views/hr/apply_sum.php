@@ -28,136 +28,105 @@
             </div>
             <hr />
             <div class="box-body">
-            <table class="table table-striped table-hover table-bordered">
-              <thead>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="text-align:center;">姓名</td>
-                  <td style="text-align:center;"><?php echo $user_data['content1'];?></td>
-                  <td style="text-align:center;" colspan="2">部门</td>
-                  <td style="text-align:center;" colspan="2"><?php echo $user_data['content3'];?></td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;">绩效积分</td>
-                  <td style="text-align:center;">评定等级</td>
-                  <td style="text-align:center;" colspan="2"><?php echo $user_data['content8'];?></td>
-                  <td style="text-align:center;">绩效积分</td>
-                  <td style="text-align:center;"><?php echo $user_data['content9'];?></td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;" rowspan="2">荣誉积分</td>
-                  <td style="text-align:center;" colspan="5"><?php echo $user_data['content10'];?></td>
-                  <!--<td style="text-align:center;" colspan="5">一星级荣誉<?php echo $user_data['content11'];?>分，二星级荣誉<?php echo $user_data['content12'];?>分，三星级荣誉<?php echo $user_data['content13'];?>分，四星级荣誉<?php echo $user_data['content14'];?>分，五星级荣誉<?php echo $user_data['content15'];?>分</td>
-                -->
-                </tr>
-                <tr>
-                  <td style="text-align:center;" colspan="3">荣誉总积分</td>
-                  <td style="text-align:center;" colspan="2"><?php echo $user_data['content16'];?></td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;" rowspan="4">专业能力认证积分</td>
-                  <td style="text-align:center;">技术职称</td>
-                  <td style="text-align:center;" colspan="2"><?php echo $user_data['content17'];?></td>
-                  <td style="text-align:center;">认证积分</td>
-                  <td style="text-align:center;"><?php echo $user_data['content18'];?></td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;">职业资格</td>
-                  <td style="text-align:center;" colspan="2"><?php echo $user_data['content19'];?></td>
-                  <td style="text-align:center;">认证积分</td>
-                  <td style="text-align:center;"><?php echo $user_data['content20'];?></td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;">不同级认证</td>
-                  <td style="text-align:center;" colspan="2"><?php echo $user_data['content21'];?></td>
-                  <td style="text-align:center;">认证积分</td>
-                  <td style="text-align:center;"><?php echo $user_data['content22'];?></td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;" colspan="3">专业能力认证总积分</td>
-                  <td style="text-align:center;" colspan="2"><?php echo $user_data['content22'];?></td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;" rowspan="3">年度总积分</td>
-                  <td style="text-align:center;" rowspan="2">总积分</td>
-                  <td style="text-align:center;" colspan="4">其中</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;">2017年度剩余积分</td>
-                  <td style="text-align:center;">绩效积分</td>
-                  <td style="text-align:center;">荣誉积分</td>
-                  <td style="text-align:center;">认证积分</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;"><?php echo $user_data['content23'];?></td>
-                  <td style="text-align:center;"><?php echo $user_data['content7'];?></td>
-                  <td style="text-align:center;"><?php echo $user_data['content9'];?></td>
-                  <td style="text-align:center;"><?php echo $user_data['content16'];?></td>
-                  <td style="text-align:center;"><?php echo $user_data['content22'];?></td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;" rowspan="8">员工确认</td>
-                  <td style="text-align:center;" rowspan="8" colspan="5">我已阅知并确认上述结果</td>
-                </tr>
-              </tbody>
-            </table>
-            <hr />
-            <?php echo $notice['title'].'<br /><br />s'.$notice['content'];?>
-            <hr />
-            <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal">确认</a>
-            <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
-              <div class="modal-content-month">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4>请确认</h4>
-                </div>
-                <div class="modal-body">
-                  确认提交？
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                  <form action="<?php echo base_url('hr/submit_confirm_sum');?>" style="margin:0px;display:inline;" method="POST">
-                  <?php if($confirm_sum_status==NULL):?>
-                  <button type="submit" class="btn btn-success btn-ok">确认提交</a>
-                  <?php else:?>
-                  <button disabled type="submit" class="btn btn-success btn-ok">确认提交</a>
-                  <?php endif;?>
-                  </form>
-                </div>
-              </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-            <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal" class="btn btn-info">确认</a>
-            
-            <!-- 弹窗 -->
-            <div id="myModal" class="modal-apply fade" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <!-- 弹窗内容 -->
-              <div class="modal-content-apply">
-                <div class="modal-header">
-                  <!--
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ><font color="black">×</font></button>
+              <table class="table table-striped table-hover table-bordered">
+                <thead>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align:center;">姓名</td>
+                    <td style="text-align:center;"><?php echo $user_data['content1'];?></td>
+                    <td style="text-align:center;" colspan="2">部门</td>
+                    <td style="text-align:center;" colspan="2"><?php echo $user_data['content3'];?></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;">绩效积分</td>
+                    <td style="text-align:center;">评定等级</td>
+                    <td style="text-align:center;" colspan="2"><?php echo $user_data['content8'];?></td>
+                    <td style="text-align:center;">绩效积分</td>
+                    <td style="text-align:center;"><?php echo $user_data['content9'];?></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;" rowspan="2">荣誉积分</td>
+                    <td style="text-align:center;" colspan="5"><?php echo $user_data['content10'];?></td>
+                    <!--<td style="text-align:center;" colspan="5">一星级荣誉<?php echo $user_data['content11'];?>分，二星级荣誉<?php echo $user_data['content12'];?>分，三星级荣誉<?php echo $user_data['content13'];?>分，四星级荣誉<?php echo $user_data['content14'];?>分，五星级荣誉<?php echo $user_data['content15'];?>分</td>
                   -->
-                  <div style="text-align:right"> 
-                  <form action="<?php echo base_url('hr/submit_confirm');?>" style="margin:0px;display:inline;" method="POST">
-                    <?php if($status==NULL or $status=="未确认"):?>
-                    <button type="submit" class="btn btn-success">提交申请</button>
-                    <?php else:?>
-                    <button disabled type="submit" class="btn btn-success">提交申请</button>
-                    <?php endif;?>        
-                  </form>
-                  <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">关闭</button>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;" colspan="3">荣誉总积分</td>
+                    <td style="text-align:center;" colspan="2"><?php echo $user_data['content16'];?></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;" rowspan="4">专业能力认证积分</td>
+                    <td style="text-align:center;">技术职称</td>
+                    <td style="text-align:center;" colspan="2"><?php echo $user_data['content17'];?></td>
+                    <td style="text-align:center;">认证积分</td>
+                    <td style="text-align:center;"><?php echo $user_data['content18'];?></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;">职业资格</td>
+                    <td style="text-align:center;" colspan="2"><?php echo $user_data['content19'];?></td>
+                    <td style="text-align:center;">认证积分</td>
+                    <td style="text-align:center;"><?php echo $user_data['content20'];?></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;">不同级认证</td>
+                    <td style="text-align:center;" colspan="2"><?php echo $user_data['content21'];?></td>
+                    <td style="text-align:center;">认证积分</td>
+                    <td style="text-align:center;"><?php echo $user_data['content22'];?></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;" colspan="3">专业能力认证总积分</td>
+                    <td style="text-align:center;" colspan="2"><?php echo $user_data['content22'];?></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;" rowspan="3">年度总积分</td>
+                    <td style="text-align:center;" rowspan="2">总积分</td>
+                    <td style="text-align:center;" colspan="4">其中</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;">2017年度剩余积分</td>
+                    <td style="text-align:center;">绩效积分</td>
+                    <td style="text-align:center;">荣誉积分</td>
+                    <td style="text-align:center;">认证积分</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;"><?php echo $user_data['content23'];?></td>
+                    <td style="text-align:center;"><?php echo $user_data['content7'];?></td>
+                    <td style="text-align:center;"><?php echo $user_data['content9'];?></td>
+                    <td style="text-align:center;"><?php echo $user_data['content16'];?></td>
+                    <td style="text-align:center;"><?php echo $user_data['content22'];?></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;" rowspan="8">员工确认</td>
+                    <td style="text-align:center;" rowspan="8" colspan="5"><a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal">我已阅知并确认上述结果</a></td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr />
+              <?php echo $notice['title'].'<br /><br />'.$notice['content'];?>
+              <hr />
+              
+              <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">
+                <div class="modal-content-month">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4>请确认</h4>
                   </div>
-                </div>
-                <!-- model-header-apply -->
-                <div class="modal-body">
-                  <iframe width="600" height="800" src="<?php echo base_url($url);?>"></iframe>
-                </div>
-                <!-- model-footer-apply -->
-              </div>
-              <!-- model-content-apply -->
-            </div>
-            <!-- model-apply -->
-            
+                  <div class="modal-body">
+                    信息确认无误？
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <form action="<?php echo base_url('hr/submit_confirm_sum');?>" style="margin:0px;display:inline;" method="POST">
+                    <?php if($confirm_sum_status==NULL):?>
+                    <button type="submit" class="btn btn-success btn-ok">信息确认无误</a>
+                    <?php else:?>
+                    <button disabled type="submit" class="btn btn-success btn-ok">信息确认无误</a>
+                    <?php endif;?>
+                    </form>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal -->
             </div>
           </div>
           <!-- /.box -->

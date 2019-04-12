@@ -524,8 +524,8 @@ class Super_wage extends Admin_Controller {
         $url='proof/'.$username.'-'.$type.'.pdf';
         return $url;
     }
-    /*
-    public function wage_proof(){
+    
+    public function wage_proof_audit(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $apply=array(
                 'submit_status' => '未提交',
@@ -542,7 +542,7 @@ class Super_wage extends Admin_Controller {
         $this->data['apply_data']=$this->model_wage_apply->getApplyData();
         $this->render_super_template('super/wage_proof',$this->data);
     }
-    */
+    /**/
     public function proof_creator(){
         $this->load->library('tcpdf.php');
         //实例化 
@@ -583,7 +583,7 @@ class Super_wage extends Admin_Controller {
         $pdf->setCellHeightRatio(3.0);
         $pdf->AddPage('P', 'A4'); 
         //设置背景图片
-        $img_file = 'assets/images/Unicom.jpg';    
+        #$img_file = 'assets/images/Unicom.jpg';    
         $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
 
         #$user_id=$this->data['user_id'];

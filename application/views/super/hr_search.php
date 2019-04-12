@@ -11,6 +11,7 @@
     <!-- Small boxes (Stat box) -->
     <div class="row">
       <div class="col-md-12 col-xs-12">
+        <a href="<?php echo base_url('super_hr/hr_import') ?>" class="btn btn-primary">上传人员信息</a>
         <div class="box">
           <div class="box-header">
           </div>
@@ -30,7 +31,7 @@
                     <option value="<?php $current_gender;?>" selected="selected"><?php echo $current_gender;?></option>
                     <?php endif;?>
                     <?php foreach($gender_options as $k => $v):?>
-                    <option value="<?php echo $v['content6'];?>"><?php echo $v['content6'];?></option>
+                    <option value="<?php echo $v['attr4'];?>"><?php echo $v['attr4'];?></option>
                     <?php endforeach;?>
                   </select> 
                 </div>
@@ -40,7 +41,7 @@
                   <option value="<?php $current_dept;?>" selected="selected"><?php echo $current_dept;?></option>
                   <?php endif;?>
                   <?php foreach($dept_options as $k => $v):?>
-                    <option value="<?php echo $v['content13'];?>"><?php echo $v['content13'];?></option>
+                    <option value="<?php echo $v['attr10'];?>"><?php echo $v['attr10'];?></option>
                   <?php endforeach;?>
                   </select>
                 </div>
@@ -53,7 +54,7 @@
                   <option value="<?php $current_sect;?>" selected="selected"><?php echo $current_sect;?></option>
                   <?php endif;?>
                   <?php foreach($section_options as $k => $v):?>
-                    <option value="<?php echo $v['content14'];?>"><?php echo $v['content14'];?></option>
+                    <option value="<?php echo $v['attr11'];?>"><?php echo $v['attr11'];?></option>
                   <?php endforeach;?>
                   </select>
                 </div>
@@ -64,7 +65,7 @@
                   <option value="<?php $current_post;?>" selected="selected"><?php echo $current_post;?></option>
                   <?php endif;?>
                   <?php foreach($post_options as $k => $v):?>
-                    <option value="<?php echo $v['content15'];?>"><?php echo $v['content15'];?></option>
+                    <option value="<?php echo $v['attr12'];?>"><?php echo $v['attr12'];?></option>
                   <?php endforeach;?>
                   </select>
                 </div>
@@ -75,7 +76,7 @@
                     <option value="<?php $current_marry;?>" selected="selected"><?php echo $current_marry;?></option>
                     <?php endif;?>
                     <?php foreach($marry_options as $k => $v):?>
-                      <option value="<?php echo $v['content11'];?>"><?php echo $v['content11'];?></option>
+                      <option value="<?php echo $v['attr11'];?>"><?php echo $v['attr11'];?></option>
                     <?php endforeach;?>
                   </select>
                 </div>
@@ -90,7 +91,7 @@
                   <option value="<?php $current_degree;?>" selected="selected"><?php echo $current_degree;?></option>
                   <?php endif;?>
                   <?php foreach($degree_options as $k => $v):?>
-                    <option value="<?php echo $v['content44'];?>"><?php echo $v['content44'];?></option>
+                    <option value="<?php echo $v['attr44'];?>"><?php echo $v['attr44'];?></option>
                   <?php endforeach;?>
                   </select>
                 </div>
@@ -100,7 +101,7 @@
                   <option value="<?php echo $current_equ_degree;?>" selected="selected"><?php echo $current_equ_degree;?></option>
                   <?php endif;?>
                   <?php foreach($equ_degree_options as $k => $v):?>
-                    <option value="<?php echo $v['content51'];?>"><?php echo $v['content51'];?></option>
+                    <option value="<?php echo $v['attr51'];?>"><?php echo $v['attr51'];?></option>
                   <?php endforeach;?>
                   </select>
                 </div>
@@ -110,7 +111,7 @@
                     <option value="<?php echo $current_party;?>"><?php echo $current_party;?></option>
                     <?php endif;?>
                     <?php foreach($party_options as $k => $v):?>
-                      <option value="<?php echo $v['content33'];?>"><?php echo $v['content33'];?></option>
+                      <option value="<?php echo $v['attr33'];?>"><?php echo $v['attr33'];?></option>
                     <?php endforeach;?>
                   </select>
                 </div>
@@ -124,7 +125,7 @@
                   <option value="<?php $current_post_type;?>" selected="selected"><?php echo $current_post_type;?></option>
                   <?php endif;?>
                   <?php foreach($post_type_options as $k => $v):?>
-                    <option value="<?php echo $v['content18'];?>"><?php echo $v['content18'];?></option>
+                    <option value="<?php echo $v['attr18'];?>"><?php echo $v['attr18'];?></option>
                   <?php endforeach;?>
                   </select>
                 </div>
@@ -135,7 +136,7 @@
                   <option value="<?php echo $current_equ_degree;?>" selected="selected"><?php echo $current_equ_degree;?></option>
                   <?php endif;?>
                   <?php foreach($equ_degree_options as $k => $v):?>
-                    <option value="<?php echo $v['content51'];?>"><?php echo $v['content51'];?></option>
+                    <option value="<?php echo $v['attr51'];?>"><?php echo $v['attr51'];?></option>
                   <?php endforeach;?>
                   </select>
                 </div>
@@ -145,7 +146,7 @@
                     <option value="<?php echo $current_party;?>"><?php echo $current_party;?></option>
                     <?php endif;?>
                     <?php foreach($party_options as $k => $v):?>
-                      <option value="<?php echo $v['content33'];?>"><?php echo $v['content33'];?></option>
+                      <option value="<?php echo $v['attr33'];?>"><?php echo $v['attr33'];?></option>
                     <?php endforeach;?>
                   </select>
                 </div>

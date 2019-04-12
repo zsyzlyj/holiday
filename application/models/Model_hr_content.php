@@ -12,65 +12,68 @@ class Model_hr_content extends CI_Model{
 		return $query->result_array();
 	}
 	public function getDept(){
-		$sql = "SELECT distinct(content13) FROM hr_content";
+		$sql = "SELECT distinct(attr13) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function getGender(){
-		$sql = "SELECT distinct(content6) FROM hr_content";
+		$sql = "SELECT distinct(attr6) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function getSection(){
-		$sql = "SELECT distinct(content14) FROM hr_content";
+		$sql = "SELECT distinct(attr14) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function getPost(){
-		$sql = "SELECT distinct(content15) FROM hr_content";
+		$sql = "SELECT distinct(attr15) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 
 	public function getMarry(){
-		$sql = "SELECT distinct(content11) FROM hr_content";
+		$sql = "SELECT distinct(attr11) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function getDegree(){
-		$sql = "SELECT distinct(content44) FROM hr_content";
+		$sql = "SELECT distinct(attr44) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function getEquDegree(){
-		$sql = "SELECT distinct(content51) FROM hr_content";
+		$sql = "SELECT distinct(attr51) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function getParty(){
-		$sql = "SELECT distinct(content33) FROM hr_content";
+		$sql = "SELECT distinct(attr33) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function getPostType(){
-		$sql = "SELECT distinct(content18) FROM hr_content";
+		$sql = "SELECT distinct(attr18) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function search($name,$dept,$gender,$section,$post,$marry,$degree,$equ_degree,$party,$post_type){
 		#echo var_dump($this->db->where_in('content13', $dept)->from('hr_content')->get()->result_array());
 		return array_merge(
-			$this->db->where('content4', $name)->from('hr_content')->get()->result_array(),
-			$this->db->where_in('content13', $dept)->from('hr_content')->get()->result_array(),
-			$this->db->where_in('content14', $section)->from('hr_content')->get()->result_array(),
-			$this->db->where_in('content15', $post)->from('hr_content')->get()->result_array(),
-			$this->db->where_in('content11', $marry)->from('hr_content')->get()->result_array(),
-			$this->db->where_in('content44', $degree)->from('hr_content')->get()->result_array(),
-			$this->db->where_in('content51', $equ_degree)->from('hr_content')->get()->result_array(),
-			$this->db->where_in('content6', $gender)->from('hr_content')->get()->result_array(),
-			$this->db->where_in('content33', $party)->from('hr_content')->get()->result_array(),
-			$this->db->where_in('content18', $post_type)->from('hr_content')->get()->result_array()
+			$this->db->where('attr2', $name)->from('hr_content')->get()->result_array()
 		);
+			/*
+			$this->db->where_in('attr13', $dept)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('attr14', $section)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('attr15', $post)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('attr11', $marry)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('attr44', $degree)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('attr51', $equ_degree)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('attr6', $gender)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('attr33', $party)->from('hr_content')->get()->result_array(),
+			$this->db->where_in('attr18', $post_type)->from('hr_content')->get()->result_array()
+			*/
+
 		#$query=$this->db->where_in('content13', $dept)->where_in('content6', $gender)->where_in('content14', $section)->where_in('content15', $post)->where_in('content11', $marry)->where_in('content44', $degree)->where_in('content51', $equ_degree)->from('hr_content')->get();//->where_in('content13', $dept)->where_in('content13', $dept)->from('hr_content')->get();
 		#return $query->result_array();
 	}
@@ -93,7 +96,7 @@ class Model_hr_content extends CI_Model{
 	*/
 	public function getByDept($dept = null){
 		if($dept){
-			$query=$this->db->where_in('content13', $dept)->from('hr_content')->get();
+			$query=$this->db->where_in('attr13', $dept)->from('hr_content')->get();
 			#$sql = "SELECT * FROM hr_content WHERE locate(?,content13)";
 			#$query = $this->db->query($sql, array($dept));
 			return $query->result_array();
@@ -102,7 +105,7 @@ class Model_hr_content extends CI_Model{
 
 	public function getById($userId = null){
 		if($userId){
-			$sql = "SELECT * FROM hr_content WHERE content5 = ?";	
+			$sql = "SELECT * FROM hr_content WHERE attr5 = ?";	
 			$query = $this->db->query($sql, array($userId));
 			return $query->row_array();
 		}

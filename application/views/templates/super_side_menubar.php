@@ -192,6 +192,17 @@
             <span> 开具收入证明</span>
           </a>
         </li>
+        <li id="wageProofAuditMainMenu">
+          <a href="<?php echo base_url('super_wage/wage_proof_audit') ?>">
+            <i class="fa fa-money"></i>
+             <span class="pull-right-container label label-danger">
+            <?php if($unread):?>
+              <?php echo $unread;?>
+            <?php endif; ?>
+            </span>
+            <span> 证明审核</span>
+          </a>
+        </li>
 
         <!--
         <li class="treeview" id="taxCounterMenu">

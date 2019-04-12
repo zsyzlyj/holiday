@@ -48,7 +48,7 @@
                         <?php foreach($user_info as $k => $v): ?>
                         <tr style="border-color:silver;">
                           <?php foreach($v as $a => $b):?>
-                            <td style="border-color:silver;"><?php echo $b;?></td>
+                            <td style="border-color:silver;vertical-align:center"><?php echo $b;?></td>
                           <?php endforeach; ?>
                           <td style="border-color:silver;">
                             <form action="<?php echo base_url('super_wage/proof_creator');?>" method="POST" target="_blank" style="display:inline">
