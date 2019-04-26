@@ -29,6 +29,7 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>
+          
           <a href="<?php echo base_url('super_hr/hr_import') ?>" class="btn btn-primary">上传人员信息</a>
             <br /> <br />
           <div class="box">
@@ -39,17 +40,36 @@
             <div class="box-body">
               <h3>人员信息表</h3>
               <hr />
+              <?php $counter=0;?>
+              <?php if($column_name): ?>
+              <table class="table">
+                <thead></thead>
+                <tbody>
+                <tr>
+                <?php foreach ($column_name as $k => $v): ?>
+                <?php if($counter<$trueend):?>
+                  <td><a href="javascript:void(0)" id="toggle-vis<?php echo $counter;?>" class="toggle-vis btn btn-default" data-column="<?php echo $counter;?>"><?php echo $v;?></a>
+                  <?php if(($counter+1)%7==0):?>
+                  </tr><tr>
+                  <?php endif;?>
+                  <?php $counter++;?>
+                <?php endif; ?>
+                <?php endforeach ?>
+                </tr>
+                </tbody>
+              </table>
+              <?php endif;?>
+              <hr />
               <div style="overflow:scroll;">
-              <table id="hrTable" class="table table-bordered table-striped silver-board" style="overflow:scroll;word-break:  keep-all;border-color:silver;">
+              <table id="hrTable" class="table table-bordered table-striped silver-board display" style="overflow:scroll;word-break:keep-all;border-color:silver;">
               <thead>
                 <tr style="border-color:silver;">
                   <?php $counter=0;?>
                   <?php if($column_name): ?>
                     <?php foreach ($column_name as $k => $v): ?>
                     <?php if($counter<$trueend):?>
-                      <th style="border-color:silver;"><?php echo $v;$counter++;?></th>
+                      <th style="border-color:silver;" class="hided"><?php echo $v;$counter++;?></th>
                     <?php endif;?>
-                    
                     <?php endforeach ?>
                   <?php endif;?>
                 </tr>
@@ -62,8 +82,12 @@
                       <?php $counter=0;?>
                       <?php foreach($v as $a => $b):?>
                       <?php if($counter<$trueend):?>
-                      <td style="border-color:silver;"><?php echo $b;$counter++;?></td>
-                      <?php endif; ?>
+                        <?php if($b!=''):?>
+                        <td style="border-color:silver;" class="hided"><?php echo $b;$counter++;?></td>
+                        <?php else:?>
+                        <td style="border-color:silver;" class="hided"><?php $counter++;?></td>
+                        <?php endif;?>
+                      <?php endif;?>
                       <?php endforeach ?>
                       </tr>
                     <?php endforeach ?>
@@ -161,14 +185,9 @@
 
   <script type="text/javascript">
     $(document).ready(function(){
-      $("#infoMainMenu").addClass('active');
-      $('#functionTab li:eq(0) a').tab('show');
-      $('#functionTab li a').click(function(){
-        $(this).tab('show');
-        $('#functionTab li:eq(0) a').removeClass('tab-pane in active');
-        $('#functionTab li:eq(0) a').removeClass('active');
-      })
-      $('#hrTable').DataTable({
+      $("#hrMainMenu").addClass('active');
+    
+      var table=$('#hrTable').DataTable({
         language:{
             "sProcessing": "处理中...",
             "sLengthMenu": "显示 _MENU_ 项",
@@ -191,9 +210,25 @@
             "oAria":{
                 "sSortAscending": ": 以升序排列此列",
                 "sSortDescending": ": 以降序排列此列"
-            }
+            },
         }
       });
+      
+      table.columns('.hided').visible(false);
+      $("a.toggle-vis").on( 'click', function (e) {
+          e.preventDefault();
+          // Get the column API object
+          var column = table.column( $(this).attr('data-column') );
+          // Toggle the visibility
+          column.visible( ! column.visible() );
+          if($(this).attr('class').indexOf("info")!=-1){
+            document.getElementById($(this).attr('id')).setAttribute('class','toggle-vis btn btn-default');
+          }
+          else{
+            document.getElementById($(this).attr('id')).setAttribute('class','toggle-vis btn btn-info');
+          }
+      });
+      
       $('#deptTable').DataTable({
         language:{
             "sProcessing": "处理中...",
@@ -272,6 +307,7 @@
             }
         }
       });
+      
     });
     
   </script>

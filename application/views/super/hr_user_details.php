@@ -20,22 +20,30 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <form action="">
+              <form action="<?php echo base_url('super_hr/user_edit');?>" method="post">
+              <?php $counter=0;?>
+              <?php if($column_name): ?>
               <table class="table" style="font-size:17px;font-family:微软雅黑;">
-                <tr style="height:60px;">
-                  <th style="font-size:25px" colspan="3">基本信息</th>
-                </tr>
-                <tr style="height:40px;">
-                  <td style="width:300px">姓名：<input name="user_name" value="<?php echo $hr_data['content4'];?>"></td>
-                  <td style="width:300px">婚姻信息：<input name="marry" value="<?php echo $hr_data['content11'];?>"></td>
-                  <!--<td style="width:300px">入司时间：<?php echo $user_info['indate'];?></td>-->
-                </tr>
-                
-                
-              </table>
+                <table class="table">
+                  <thead></thead>
+                  <tbody>
+                  <tr style="height:60px;">
+                  <?php foreach ($data as $k => $v): ?>
+                  <?php if($counter<$trueend):?>
+                    <td style="width:200px"><?php echo $column_name['attr'.($counter+1)];?>：<input name="<?php echo $k;?>" value="<?php echo $v;?>"></td>
+                    <?php if(($counter+1)%3==0):?>
+                    </tr><tr style="height:60px;">
+                    <?php endif;?>
+                    <?php $counter++;?>
+                  <?php endif; ?>
+                  <?php endforeach ?>
+                  </tr>
+                  </tbody>
+                </table>
+              <?php endif;?>
               <hr />
               <button type="submit" class="btn btn-success">提交修改</button>         
-              <a href="javascript:void(0)" class="btn">返回</button>
+              <a href="javascript:void(0)" class="btn">返回</a>
               </form>
             </div>
             <!-- /.box-body -->
@@ -45,14 +53,11 @@
         <!-- col-md-12 -->
       </div>
       <!-- /.row -->
-      
-
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
   <script type="text/javascript">
-
     $(document).ready(function() {
       $("#userProfile").addClass('active');
     });

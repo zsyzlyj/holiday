@@ -60,6 +60,83 @@ class super_hr extends Admin_Controller {
 
         $data = array();
         $attr = array();
+        $id='';
+        $name='';
+        $user_id='';
+        $gender='';
+        $native='';
+        $minzu='';
+        $age='';
+        $birth='';
+        $marry='';
+        $type='';
+        $dept='';
+        $section='';
+        $post_inner='';
+        $post_outer='';
+        $post_major='';
+        $position='';
+        $party_post='';
+        $position_series='';
+        $position_name='';
+        $salary_level='';
+        $position_adjust_time='';
+        $salary_adjust_time='';
+        $indate='';
+        $companydate='';
+        $totalage='';
+        $companyage='';
+        $probation_end='';
+        $service_mode='';
+        $sign_company='';
+        $sign_start='';
+        $sign_end='';
+        $political_orientation='';
+        $in_party_date='';
+        $pro_name='';
+        $pro_level='';
+        $qualification_name='';
+        $qualification_level='';
+        $qualification_date='';
+        $company_level='';
+        $employment_term='';
+        $highest_qualification='';
+        $highest_degree='';
+        $education_qualification='';
+        $education_school='';
+        $education_major='';
+        $education_date='';
+        $education_degree='';
+        $education_post_qualification='';
+        $education_post_school='';
+        $education_post_major='';
+        $education_post_date='';
+        $education_post_degree='';
+        $elite='';
+        $company_elite='';
+        $professor='';
+        
+
+        $access2006='';
+        $access2007='';
+        $access2008='';
+        $access2009='';
+        $access2010='';
+        $access2011='';
+        $access2012='';
+        $access2013='';
+        $access2014='';
+        $access2015='';
+        $access2016='';
+        $access2017='';
+        $access2018='';
+        $access2019='';
+        $access2020='';
+        $access2021='';
+        $access2022='';
+        $access2023='';
+        $access2024='';
+        $access2025='';
         for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
             $tmp=array();
             for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
@@ -69,17 +146,168 @@ class super_hr extends Admin_Controller {
                 if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
                     $cell = $cell->__toString();
                 }
+                $b=$cell;
                 if($rowIndex==1){
                     $attr['attr'.($colIndex+1)] = $cell;
                 }
                 else{
-                    if($colIndex==8 or $colIndex==21 or $colIndex==22 or $colIndex==23 or $colIndex==24 or $colIndex==30 or $colIndex==38 or $colIndex==46  or $colIndex==51)
-                        $tmp['attr'.($colIndex+1)] = gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($cell));
-                    else $tmp['attr'.($colIndex+1)] = $cell;
+                    switch($attr['attr'.($colIndex+1)]){
+                        case '序号':$id=$b;break;
+                        case '员工姓名':$name=$b;break;
+                        case '身份证号码':$user_id=$b;break;
+                        case '性别':$gender=$b;break;
+                        case '籍贯':$native=$b;break;
+                        case '民族':$minzu=$b;break;
+                        case '年龄':$age=$b;break;
+                        case '出生日期':$birth=$b;break;
+                        case '婚姻状况':$marry=$b;break;
+                        case '分类':$type=$b;break;
+                        case '所在部门':$dept=$b;break;
+                        case '科室':$section=$b;break;
+                        case '岗位（内）':$post_inner=$b;break;
+                        case '岗位（外）':$post_outer=$b;break;
+                        case '职务（主）':$post_major=$b;break;
+                        case '岗位分类':$position=$b;break;
+                        case '党内职务':$party_post=$b;break;
+                        case '职位序列':$position_series=$b;break;
+                        case '职衔称谓':$position_name=$b;break;
+                        case '职级薪档':$salary_level=$b;break;
+                        case '职级调整时间':$position_adjust_time=$b==''?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '薪档调整时间':$salary_adjust_time=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '参加工作时间':$b=='' ?'':$indate=(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '加入本企业时间':$b=='' ?'':$companydate=(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '工龄':$totalage=intval($b);break;
+                        case '司龄':$companyage=intval($b);break;
+                        case '试任期截止时间':$probation_end=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '用工形式':$service_mode=$b;break;
+                        case '合同签订公司':$sign_company=$b;break;
+                        case '合同起始时间':$sign_start=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '合同终止时间':$sign_end=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '政治面貌':$political_orientation=$b;break;
+                        case '入党/团时间':$in_party_date= $b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '专业技术职务资格名称':$pro_name=$b;break;
+                        case '专业技术职务资格等级':$pro_level=$b;break;
+                        case '国家职业资格名称':$qualification_name=$b;break;
+                        case '国家职业资格等级':$qualification_level=$b;break;
+                        case '国家职业资格等级取得日期':$qualification_date=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '公司聘任':$company_level=$b;break;
+                        case '聘期':$employment_term=$b;break;
+                        case '最高学历':$highest_qualification=$b;break;
+                        case '最高学位':$highest_degree=$b;break;
+                        case '全日制教育':$education_qualification=$b;break;
+                        case '毕业院校（全日制）':$education_school=$b;break;
+                        case '所学专业（全日制）':$education_major=$b;break;
+                        case '毕业时间（全日制）':$education_date=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '学位（全日制）':$education_degree=$b;break;
+                        case '在职教育':$education_post_qualification=$b;break;
+                        case '毕业院校（在职教育）':$education_post_school=$b;break;
+                        case '所学专业（在职教育）':$education_post_major=$b;break;
+                        case '毕业时间（在职教育）':$education_post_date=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '学位（在职教育）':$education_post_degree=$b;break;
+                        case '骨干人才信息':$elite=$b;break;
+                        case '集团级战略人才信息':$company_elite=$b;break;
+                        case '技术专家':$professor=$b;break;
+                        case '2006年考核结果':$access2006=$b;break;
+                        case '2007年考核结果':$access2007=$b;break;
+                        case '2008年考核结果':$access2008=$b;break;
+                        case '2009年考核结果':$access2009=$b;break;
+                        case '2010年考核结果':$access2010=$b;break;
+                        case '2011年考核结果':$access2011=$b;break;
+                        case '2012年考核结果':$access2012=$b;break;
+                        case '2013年考核结果':$access2013=$b;break;
+                        case '2014年考核结果':$access2014=$b;break;
+                        case '2015年考核结果':$access2015=$b;break;
+                        case '2016年考核结果':$access2016=$b;break;
+                        case '2017年考核结果':$access2017=$b;break;
+                        case '2018年考核结果':$access2018=$b;break;
+                        case '2019年考核结果':$access2019=$b;break;
+                        case '2020年考核结果':$access2020=$b;break;
+                        case '2021年考核结果':$access2021=$b;break;
+                        case '2022年考核结果':$access2022=$b;break;
+                        case '2023年考核结果':$access2023=$b;break;
+                        case '2024年考核结果':$access2024=$b;break;
+                        case '2025年考核结果':$access2025=$b;break;
+                        default:break;
+                    } 
                 }
-                //$temp[$colIndex] = $cell;
             }
-            #$this->model_hr_content->create($tmp);
+            $tmp=array(
+                'id' => $id,
+                'name' => $name,
+                'user_id' => $user_id,
+                'gender' => $gender,
+                'native' => $native,
+                'minzu' => $minzu,
+                'age' => (string)intval((strtotime(date("Y-m-d"))-strtotime($birth))/86400/365),
+                'birth' => $birth,
+                'marry' => $marry,
+                'type' => $type,
+                'dept' => $dept,
+                'section' => $section,
+                'post_inner' => $post_inner,
+                'post_outer' => $post_outer,
+                'post_major' => $post_major,
+                'position' => $position,
+                'party_post' => $party_post,
+                'position_series' => $position_series,
+                'position_name' => $position_name,
+                'salary_level' => $salary_level,
+                'position_adjust_time' => $position_adjust_time,
+                'salary_adjust_time' => $salary_adjust_time,
+                'indate' => $indate,
+                'companydate' => $companydate,
+                'totalage' => $totalage,
+                'companyage' => $companyage,
+                'probation_end' => $probation_end,
+                'service_mode' => $service_mode,
+                'sign_company' => $sign_company,
+                'sign_start' => $sign_start,
+                'sign_end' => $sign_end,
+                'political_orientation' => $political_orientation,
+                'in_party_date' => $in_party_date,
+                'pro_name' => $pro_name,
+                'pro_level' => $pro_level,
+                'qualification_name' => $qualification_name,
+                'qualification_level' => $qualification_level,
+                'qualification_date' => $qualification_date,
+                'company_level' => $company_level,
+                'employment_term' => $employment_term,
+                'highest_qualification' => $highest_qualification,
+                'highest_degree' => $highest_degree, 
+                'education_qualification' => $education_qualification,
+                'education_school' => $education_school,
+                'education_major' => $education_major,
+                'education_date' => $education_date,
+                'education_degree' => $education_degree,
+                'education_post_qualification' => $education_post_qualification,
+                'education_post_school' => $education_post_school,
+                'education_post_major' => $education_post_major,
+                'education_post_date' => $education_post_date,
+                'education_post_degree' => $education_post_degree,
+                'elite' => $elite,
+                'company_elite' => $company_elite,
+                'professor' => $professor,
+                'access2006' => $access2006,
+                'access2007' => $access2007,
+                'access2008' => $access2008,
+                'access2009' => $access2009,
+                'access2010' => $access2010,
+                'access2011' => $access2011,
+                'access2012' => $access2012,
+                'access2013' => $access2013,
+                'access2014' => $access2014,
+                'access2015' => $access2015,
+                'access2016' => $access2016,
+                'access2017' => $access2017,
+                'access2018' => $access2018,
+                'access2019' => $access2019,
+                'access2020' => $access2020,
+                'access2021' => $access2021,
+                'access2022' => $access2022,
+                'access2023' => $access2023,
+                'access2024' => $access2024,
+                'access2025' => $access2025
+            );   
             if($rowIndex!=1){
                 array_push($data,$tmp);
             }
@@ -101,11 +329,6 @@ class super_hr extends Admin_Controller {
                     $this->render_super_template('super/hr_import',$this->data);
                 }
                 else{
-                    /*
-                    foreach($this->model_hr->getData() as $k => $v){
-                        $this->model_hr->delete($v['user_id']);
-                    }
-                    */
                     $this->hr_excel_put();
                     $this->index();
                 }
@@ -150,9 +373,6 @@ class super_hr extends Admin_Controller {
         $this->data['post_options']=$this->model_hr_content->getPost();
         $this->data['marry_options']=$this->model_hr_content->getMarry();
         $this->data['degree_options']=$this->model_hr_content->getDegree();
-        $this->data['equ_degree_options']=$this->model_hr_content->getEquDegree();
-        $this->data['party_options']=$this->model_hr_content->getParty();
-        $this->data['post_type_options']=$this->model_hr_content->getPostType();
 
         $this->data['column_name']="";
         $this->data['hr_data']="";
@@ -676,7 +896,7 @@ class super_hr extends Admin_Controller {
     }
     public function user_details(){
         $this->data['column_name']=$this->model_hr_attr->getData();
-        $this->data['hr_data']=$this->model_hr_content->getById($_POST['user_id']);
+        $this->data['data']=$this->model_hr_content->getById($_POST['user_id']);
         $this->data['trueend']=(int)str_replace('attr','',array_search(NULL,$this->data['column_name']))-1;
         $this->render_super_template('super/hr_user_details', $this->data);
     }
@@ -899,5 +1119,118 @@ class super_hr extends Admin_Controller {
             $this->data['keyword']=$_POST['user_name'];
         }
         $this->render_super_template('super/hr_proof_search',$this->data);
+    }
+    public function user_edit(){
+        $this->data['column_name']=$this->model_hr_attr->getData();
+        $this->data['data']=$this->model_hr_content->getById($_POST['user_id']);
+        $this->data['trueend']=(int)str_replace('attr','',array_search(NULL,$this->data['column_name']))-1;
+        $this->render_super_template('super/hr_user_details', $this->data);
+    }
+    public function hr_transfer_excel_put(){
+        $this->load->library('phpexcel');//ci框架中引入excel类
+        $this->load->library('PHPExcel/IOFactory');
+        //先做一个文件上传，保存文件
+        $path=$_FILES['file'];
+        $filename=date("Ym");
+        //根据上传类型做不同处理
+        if(strstr($_FILES['file']['name'],'xlsx')){
+            $reader = new PHPExcel_Reader_Excel2007();
+            $filePath = 'uploads/hr/'.$filename.'.xlsx';
+            move_uploaded_file($path['tmp_name'],$filePath);
+        }
+        elseif(strstr($_FILES['file']['name'], 'xls')){
+            $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
+            $filePath = 'uploads/hr/'.$filename.'.xls';
+            move_uploaded_file($path['tmp_name'],$filePath);
+            
+        }
+        $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
+        $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
+        $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
+        
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+        $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+        $columnCnt = array_search($highestColumm, $cellName); 
+
+        $data = array();
+        $attr = array();
+        $id='';
+        $name='';
+        $user_id='';
+        $transfer_date='';
+        $dept_before='';
+        $section_before='';
+        $dept_after='';
+        $section_after='';
+        $position_before='';
+        $position_after='';
+        
+        for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            $tmp=array();
+            for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
+                $cellId = $cellName[$colIndex].$rowIndex;  
+                $cell = $sheet->getCell($cellId)->getValue();
+                $cell = $sheet->getCell($cellId)->getCalculatedValue();
+                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                    $cell = $cell->__toString();
+                }
+                $b=$cell;
+                if($rowIndex==1){
+                    $attr['attr'.($colIndex+1)] = $cell;
+                }
+                else{
+                    switch($attr['attr'.($colIndex+1)]){
+                        case '姓名':$name=$b;break;
+                        case '身份证号码':$user_id=$b;break;
+                        case '调整前部门':$dept_before=$b;break;
+                        case '调整前室\部\厅':$section_before=$b;break;
+                        case '调整前职务、岗位':$position_before=$b;break;
+                        case '调整后部门':$dept_after=$b;break;
+                        case '调整后室\部\厅':$section_after=$b;break;
+                        case '调整后职务、岗位':$position_after=$b;break;
+                        default:break;
+                    } 
+                }
+            }
+            $tmp=array(
+                'name' => $name,
+                'user_id' => $user_id,
+                'dept_before' => $dept_before,
+                'section_before' => $section_before,
+                'position_before' => $position_before,
+                'dept_after' => $dept_after,
+                'section_after' => $section_after,
+                'position_after' => $position_after
+            );   
+            if($rowIndex!=1){
+                array_push($data,$tmp);
+            }
+            unset($tmp);
+        }
+        #echo var_dump($attr);
+        $this->model_hr_transfer_attr->delete();
+        $this->model_hr_transfer_content->delete();
+        $this->model_hr_transfer_attr->create($attr);
+        $this->model_hr_transfer_content->createbatch($data);
+    }
+    public function hr_transfer_import(){
+        if($_FILES){
+            if($_FILES["file"]){
+                if($_FILES["file"]["error"] > 0){
+                    $this->session->set_flashdata('error', '请选择要上传的文件！');
+                    $this->render_super_template('super/hr_transfer_import',$this->data);
+                }
+                else{
+                    $this->hr_transfer_excel_put();
+                    $this->hr_transfer();
+                }
+            }
+        }
+        else{
+            $this->render_super_template('super/hr_transfer_import',$this->data);
+        }
+    }
+    public function hr_transfer(){
+        $this->render_super_template('super/hr_transfer',$this->data);
     }
 }

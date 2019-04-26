@@ -11,7 +11,7 @@
     <!-- Small boxes (Stat box) -->
     <div class="row">
       <div class="col-md-12 col-xs-12">
-        <a href="<?php echo base_url('super_hr/hr_import') ?>" class="btn btn-primary">上传人员信息</a>
+        <a href="<?php echo base_url('super_hr/hr_transfer_import') ?>" class="btn btn-primary">上传人员信息</a>
         <div class="box">
           <div class="box-header">
           </div>
@@ -19,7 +19,7 @@
           <div class="box-body">
             <p style="font-size:25px"><b>高级搜索</b></p>
             <hr />
-            <form action="<?php echo base_url('super_hr/hr_search')?>" method="post">
+            <form action="<?php echo base_url('super_hr/hr_transfer')?>" method="post">
             <div class="col-md-12">
               <div class="row">
                 <div class="col-md-4">姓名：
@@ -300,7 +300,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){ 
-      $("#hrsearchMainMenu").addClass('active');
+      $("#hrTransferMenu").addClass('active');
       
       $('.selectpicker').selectpicker();
 

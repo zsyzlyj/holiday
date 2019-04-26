@@ -221,7 +221,7 @@ class Super_wage extends Admin_Controller {
         $c1 = "零壹贰叁肆伍陆柒捌玖";
         $c2 = "分角圓拾佰仟萬拾佰仟億";
         //精确到分后面就不要了，所以只留两个小数位
-        $num = round($num, 2); 
+        $num = round($num); 
         //将数字转化为整数
         $num = $num * 100;
         if (strlen($num) > 10) {

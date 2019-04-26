@@ -246,10 +246,22 @@
           </a>
         </li>
         -->
+        <li id="hrMainMenu">
+          <a href="<?php echo base_url('super_hr/index') ?>">
+            <i class="fa fa-tasks"></i>
+            <span> 人员信息汇总</span>
+          </a>
+        </li>
         <li id="hrsearchMainMenu">
           <a href="<?php echo base_url('super_hr/hr_search') ?>">
             <i class="fa fa-tasks"></i>
             <span> 条件搜索</span>
+          </a>
+        </li>
+        <li id="hrTransferMenu">
+          <a href="<?php echo base_url('super_hr/hr_transfer') ?>">
+            <i class="fa fa-tasks"></i>
+            <span> 岗位调动信息</span>
           </a>
         </li>
         <li id="scoreMainMenu">

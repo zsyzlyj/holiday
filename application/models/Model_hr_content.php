@@ -12,55 +12,40 @@ class Model_hr_content extends CI_Model{
 		return $query->result_array();
 	}
 	public function getDept(){
-		$sql = "SELECT distinct(attr13) FROM hr_content";
+		$sql = "SELECT distinct(dept) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function getGender(){
-		$sql = "SELECT distinct(attr6) FROM hr_content";
+		$sql = "SELECT distinct(gender) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function getSection(){
-		$sql = "SELECT distinct(attr14) FROM hr_content";
+		$sql = "SELECT distinct(section) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function getPost(){
-		$sql = "SELECT distinct(attr15) FROM hr_content";
+		$sql = "SELECT distinct(position) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 
 	public function getMarry(){
-		$sql = "SELECT distinct(attr11) FROM hr_content";
+		$sql = "SELECT distinct(marry) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function getDegree(){
-		$sql = "SELECT distinct(attr44) FROM hr_content";
-		$query = $this->db->query($sql);
-		return $query->result_array();
-	}
-	public function getEquDegree(){
-		$sql = "SELECT distinct(attr51) FROM hr_content";
-		$query = $this->db->query($sql);
-		return $query->result_array();
-	}
-	public function getParty(){
-		$sql = "SELECT distinct(attr33) FROM hr_content";
-		$query = $this->db->query($sql);
-		return $query->result_array();
-	}
-	public function getPostType(){
-		$sql = "SELECT distinct(attr18) FROM hr_content";
+		$sql = "SELECT distinct(highest_degree) FROM hr_content";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	public function search($name,$dept,$gender,$section,$post,$marry,$degree,$equ_degree,$party,$post_type){
 		#echo var_dump($this->db->where_in('content13', $dept)->from('hr_content')->get()->result_array());
 		return array_merge(
-			$this->db->where('attr2', $name)->from('hr_content')->get()->result_array()
+			$this->db->where('name', $name)->from('hr_content')->get()->result_array()
 		);
 			/*
 			$this->db->where_in('attr13', $dept)->from('hr_content')->get()->result_array(),
@@ -105,7 +90,7 @@ class Model_hr_content extends CI_Model{
 
 	public function getById($userId = null){
 		if($userId){
-			$sql = "SELECT * FROM hr_content WHERE attr5 = ?";	
+			$sql = "SELECT * FROM hr_content WHERE user_id = ?";	
 			$query = $this->db->query($sql, array($userId));
 			return $query->row_array();
 		}
