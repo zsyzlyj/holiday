@@ -259,7 +259,7 @@
           </a>
         </li>
         <li id="hrTransferMenu">
-          <a href="<?php echo base_url('super_hr/hr_transfer') ?>">
+          <a href="<?php echo base_url('super_hr/hr_transfer_search') ?>">
             <i class="fa fa-tasks"></i>
             <span> 岗位调动信息</span>
           </a>

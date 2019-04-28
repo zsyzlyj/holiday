@@ -14,6 +14,8 @@ class super_hr extends Admin_Controller {
         $this->load->model('model_notice');
         $this->load->model('model_hr_score_attr');
         $this->load->model('model_hr_score_content');
+        $this->load->model('model_hr_transfer_attr');
+        $this->load->model('model_hr_transfer_content');
         $this->load->model('model_hr_score_sum_attr');
         $this->load->model('model_hr_score_sum_content');
         $this->load->model('model_hr_confirm_status');
@@ -1126,12 +1128,14 @@ class super_hr extends Admin_Controller {
         $this->data['trueend']=(int)str_replace('attr','',array_search(NULL,$this->data['column_name']))-1;
         $this->render_super_template('super/hr_user_details', $this->data);
     }
+    #用于上传过去的总表
     public function hr_transfer_excel_put(){
         $this->load->library('phpexcel');//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
         //先做一个文件上传，保存文件
         $path=$_FILES['file'];
-        $filename=date("Ym");
+        #$filename=date("Ym");
+        $filename='201001-201902人员调动汇总表';
         //根据上传类型做不同处理
         if(strstr($_FILES['file']['name'],'xlsx')){
             $reader = new PHPExcel_Reader_Excel2007();
@@ -1146,72 +1150,81 @@ class super_hr extends Admin_Controller {
         }
         $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
         $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
-        $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
-        
-        $highestRow = $sheet->getHighestRow(); // 取得总行数
-        $highestColumm = $sheet->getHighestColumn(); // 取得总列数
-        $columnCnt = array_search($highestColumm, $cellName); 
-
-        $data = array();
-        $attr = array();
-        $id='';
-        $name='';
-        $user_id='';
-        $transfer_date='';
-        $dept_before='';
-        $section_before='';
-        $dept_after='';
-        $section_after='';
-        $position_before='';
-        $position_after='';
-        
-        for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
-            $tmp=array();
-            for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
-                $cellId = $cellName[$colIndex].$rowIndex;  
-                $cell = $sheet->getCell($cellId)->getValue();
-                $cell = $sheet->getCell($cellId)->getCalculatedValue();
-                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
-                    $cell = $cell->__toString();
+        $sheetCount = $PHPExcel->getSheetCount();
+        #$sheetCount = 1;
+        for($i=0;$i<$sheetCount;$i++){
+            $sheet = $PHPExcel->getSheet($i); // 读取第一個工作表
+            $del_date=substr($PHPExcel->getSheetNames()[$i],0,4);
+            $highestRow = $sheet->getHighestRow(); // 取得总行数
+            $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+            $columnCnt = array_search($highestColumm, $cellName); 
+    
+            $data = array();
+            $attr = array();
+            $id='';
+            $name='';
+            $user_id='';
+            $transfer_date='';
+            $dept_before='';
+            $section_before='';
+            $dept_after='';
+            $section_after='';
+            $position_before='';
+            $position_after='';
+            $date_tag='';
+            
+            for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+                $tmp=array();
+                for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
+                    $cellId = $cellName[$colIndex].$rowIndex;  
+                    $cell = $sheet->getCell($cellId)->getValue();
+                    $cell = $sheet->getCell($cellId)->getCalculatedValue();
+                    if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                        $cell = $cell->__toString();
+                    }
+                    $b=$cell;
+                    if($rowIndex==1){
+                        $attr['attr'.($colIndex+1)] = $cell;
+                    }
+                    else{
+                        switch($attr['attr'.($colIndex+1)]){
+                            case '姓名':$name=$b;break;
+                            case '身份证号码':$user_id=$b;break;
+                            case '调整前部门':$dept_before=$b;break;
+                            case '调整前室\部\厅':$section_before=$b;break;
+                            case '调整前职务、岗位':$position_before=$b;break;
+                            case '调整后部门':$dept_after=$b;break;
+                            case '调整后室\部\厅':$section_after=$b;break;
+                            case '调整后职务、岗位':$position_after=$b;break;
+                            case '调整后职务、岗位':$position_after=$b;break;
+                            case '调整时间':$date_tag=(string)gmdate('Y-m',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                            default:break;
+                        } 
+                    }
                 }
-                $b=$cell;
-                if($rowIndex==1){
-                    $attr['attr'.($colIndex+1)] = $cell;
+                $tmp=array(
+                    'name' => $name,
+                    'dept_before' => $dept_before,
+                    'section_before' => $section_before,
+                    'position_before' => $position_before,
+                    'dept_after' => $dept_after,
+                    'section_after' => $section_after,
+                    'position_after' => $position_after,
+                    'date_tag' => $date_tag
+                );   
+                if($rowIndex!=1){
+                    array_push($data,$tmp);
                 }
-                else{
-                    switch($attr['attr'.($colIndex+1)]){
-                        case '姓名':$name=$b;break;
-                        case '身份证号码':$user_id=$b;break;
-                        case '调整前部门':$dept_before=$b;break;
-                        case '调整前室\部\厅':$section_before=$b;break;
-                        case '调整前职务、岗位':$position_before=$b;break;
-                        case '调整后部门':$dept_after=$b;break;
-                        case '调整后室\部\厅':$section_after=$b;break;
-                        case '调整后职务、岗位':$position_after=$b;break;
-                        default:break;
-                    } 
-                }
+                unset($tmp);
             }
-            $tmp=array(
-                'name' => $name,
-                'user_id' => $user_id,
-                'dept_before' => $dept_before,
-                'section_before' => $section_before,
-                'position_before' => $position_before,
-                'dept_after' => $dept_after,
-                'section_after' => $section_after,
-                'position_after' => $position_after
-            );   
-            if($rowIndex!=1){
-                array_push($data,$tmp);
-            }
-            unset($tmp);
+            #echo var_dump($attr);
+            $this->model_hr_transfer_attr->deleteByDate($del_date);
+            $this->model_hr_transfer_content->deleteByDate($del_date);
+            #$this->model_hr_transfer_attr->delete();
+            #$this->model_hr_transfer_content->delete();
+            $this->model_hr_transfer_attr->create($attr);
+            $this->model_hr_transfer_content->createbatch($data);
         }
-        #echo var_dump($attr);
-        $this->model_hr_transfer_attr->delete();
-        $this->model_hr_transfer_content->delete();
-        $this->model_hr_transfer_attr->create($attr);
-        $this->model_hr_transfer_content->createbatch($data);
     }
     public function hr_transfer_import(){
         if($_FILES){
@@ -1222,7 +1235,7 @@ class super_hr extends Admin_Controller {
                 }
                 else{
                     $this->hr_transfer_excel_put();
-                    $this->hr_transfer();
+                    redirect('super_hr/hr_transfer_search','refresh');
                 }
             }
         }
@@ -1230,7 +1243,15 @@ class super_hr extends Admin_Controller {
             $this->render_super_template('super/hr_transfer_import',$this->data);
         }
     }
-    public function hr_transfer(){
+    public function hr_transfer_search(){
+        $this->data['hr_data']='';
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $this->data['hr_data'] = $this->model_hr_transfer_content->search($_POST['name']);
+            /**/
+        }
+        
+        $this->data['column_name'] = $this->model_hr_transfer_attr->getData();
+        $this->data['trueend']=(int)str_replace('attr','',array_search(NULL,$this->data['column_name']))-1;
         $this->render_super_template('super/hr_transfer',$this->data);
     }
 }
