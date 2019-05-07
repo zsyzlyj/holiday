@@ -73,7 +73,7 @@ class super_hr extends Admin_Controller {
         $marry='';
         $type='';
         $dept='';
-        $section='';
+        $office='';
         $post_inner='';
         $post_outer='';
         $post_major='';
@@ -82,8 +82,8 @@ class super_hr extends Admin_Controller {
         $position_series='';
         $position_name='';
         $salary_level='';
-        $position_adjust_time='';
-        $salary_adjust_time='';
+        $position_adjust_stamp='';
+        $salary_adjust_stamp='';
         $indate='';
         $companydate='';
         $totalage='';
@@ -104,21 +104,20 @@ class super_hr extends Admin_Controller {
         $employment_term='';
         $highest_qualification='';
         $highest_degree='';
-        $education_qualification='';
-        $education_school='';
-        $education_major='';
-        $education_date='';
-        $education_degree='';
-        $education_post_qualification='';
-        $education_post_school='';
-        $education_post_major='';
-        $education_post_date='';
-        $education_post_degree='';
+        $ft_qualification='';
+        $ft_school='';
+        $ft_major='';
+        $ft_date='';
+        $ft_degree='';
+        $nft_qualification='';
+        $nft_school='';
+        $nft_major='';
+        $nft_date='';
+        $nft_degree='';
         $elite='';
         $company_elite='';
         $professor='';
         
-
         $access2006='';
         $access2007='';
         $access2008='';
@@ -165,7 +164,7 @@ class super_hr extends Admin_Controller {
                         case '婚姻状况':$marry=$b;break;
                         case '分类':$type=$b;break;
                         case '所在部门':$dept=$b;break;
-                        case '科室':$section=$b;break;
+                        case '科室':$office=$b;break;
                         case '岗位（内）':$post_inner=$b;break;
                         case '岗位（外）':$post_outer=$b;break;
                         case '职务（主）':$post_major=$b;break;
@@ -173,9 +172,9 @@ class super_hr extends Admin_Controller {
                         case '党内职务':$party_post=$b;break;
                         case '职位序列':$position_series=$b;break;
                         case '职衔称谓':$position_name=$b;break;
-                        case '职级薪档':$salary_level=$b;break;
-                        case '职级调整时间':$position_adjust_time=$b==''?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
-                        case '薪档调整时间':$salary_adjust_time=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '职级薪档':$wage_level=$b;break;
+                        case '职级调整时间':$position_adjust_stamp=$b==''?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '薪档调整时间':$salary_adjust_stamp=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
                         case '参加工作时间':$b=='' ?'':$indate=(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
                         case '加入本企业时间':$b=='' ?'':$companydate=(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
                         case '工龄':$totalage=intval($b);break;
@@ -196,16 +195,16 @@ class super_hr extends Admin_Controller {
                         case '聘期':$employment_term=$b;break;
                         case '最高学历':$highest_qualification=$b;break;
                         case '最高学位':$highest_degree=$b;break;
-                        case '全日制教育':$education_qualification=$b;break;
-                        case '毕业院校（全日制）':$education_school=$b;break;
-                        case '所学专业（全日制）':$education_major=$b;break;
-                        case '毕业时间（全日制）':$education_date=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
-                        case '学位（全日制）':$education_degree=$b;break;
-                        case '在职教育':$education_post_qualification=$b;break;
-                        case '毕业院校（在职教育）':$education_post_school=$b;break;
-                        case '所学专业（在职教育）':$education_post_major=$b;break;
-                        case '毕业时间（在职教育）':$education_post_date=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
-                        case '学位（在职教育）':$education_post_degree=$b;break;
+                        case '全日制教育':$ft_qualification=$b;break;
+                        case '毕业院校（全日制）':$ft_school=$b;break;
+                        case '所学专业（全日制）':$ft_major=$b;break;
+                        case '毕业时间（全日制）':$ft_date=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '学位（全日制）':$ft_degree=$b;break;
+                        case '在职教育':$nft_qualification=$b;break;
+                        case '毕业院校（在职教育）':$nft_school=$b;break;
+                        case '所学专业（在职教育）':$nft_major=$b;break;
+                        case '毕业时间（在职教育）':$nft_date=$b=='' ?'':(string)gmdate('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        case '学位（在职教育）':$nft_degree=$b;break;
                         case '骨干人才信息':$elite=$b;break;
                         case '集团级战略人才信息':$company_elite=$b;break;
                         case '技术专家':$professor=$b;break;
@@ -245,7 +244,7 @@ class super_hr extends Admin_Controller {
                 'marry' => $marry,
                 'type' => $type,
                 'dept' => $dept,
-                'section' => $section,
+                'office' => $office,
                 'post_inner' => $post_inner,
                 'post_outer' => $post_outer,
                 'post_major' => $post_major,
@@ -254,8 +253,8 @@ class super_hr extends Admin_Controller {
                 'position_series' => $position_series,
                 'position_name' => $position_name,
                 'salary_level' => $salary_level,
-                'position_adjust_time' => $position_adjust_time,
-                'salary_adjust_time' => $salary_adjust_time,
+                'position_adjust_stamp' => $position_adjust_stamp,
+                'salary_adjust_stamp' => $salary_adjust_stamp,
                 'indate' => $indate,
                 'companydate' => $companydate,
                 'totalage' => $totalage,
@@ -276,16 +275,16 @@ class super_hr extends Admin_Controller {
                 'employment_term' => $employment_term,
                 'highest_qualification' => $highest_qualification,
                 'highest_degree' => $highest_degree, 
-                'education_qualification' => $education_qualification,
-                'education_school' => $education_school,
-                'education_major' => $education_major,
-                'education_date' => $education_date,
-                'education_degree' => $education_degree,
-                'education_post_qualification' => $education_post_qualification,
-                'education_post_school' => $education_post_school,
-                'education_post_major' => $education_post_major,
-                'education_post_date' => $education_post_date,
-                'education_post_degree' => $education_post_degree,
+                'ft_qualification' => $ft_qualification,
+                'ft_school' => $ft_school,
+                'ft_major' => $ft_major,
+                'ft_date' => $ft_date,
+                'ft_degree' => $ft_degree,
+                'nft_qualification' => $nft_qualification,
+                'nft_school' => $nft_school,
+                'nft_major' => $nft_major,
+                'nft_date' => $nft_date,
+                'nft_degree' => $nft_degree,
                 'elite' => $elite,
                 'company_elite' => $company_elite,
                 'professor' => $professor,
@@ -369,9 +368,20 @@ class super_hr extends Admin_Controller {
         $this->render_super_template('super/hr_dept',$this->data);
     }
     public function hr_search(){
+        $this->data['hr_data']='';
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $this->data['hr_data'] = $this->model_hr_content->search($_POST['name']);
+        }
+        
+        $this->data['column_name'] = $this->model_hr_attr->getData();
+        $this->data['trueend']=(int)str_replace('attr','',array_search(NULL,$this->data['column_name']))-1;
+        $this->render_super_template('super/hr_search',$this->data);
+    }
+    /*
+    public function hr_search(){
         $this->data['dept_options']=$this->model_hr_content->getDept();
         $this->data['gender_options']=$this->model_hr_content->getGender();
-        $this->data['section_options']=$this->model_hr_content->getSection();
+        $this->data['office_options']=$this->model_hr_content->getoffice();
         $this->data['post_options']=$this->model_hr_content->getPost();
         $this->data['marry_options']=$this->model_hr_content->getMarry();
         $this->data['degree_options']=$this->model_hr_content->getDegree();
@@ -380,7 +390,7 @@ class super_hr extends Admin_Controller {
         $this->data['hr_data']="";
         $this->data['current_dept']="";
         $this->data['current_gender']="";
-        $this->data['current_section']="";
+        $this->data['current_office']="";
         $this->data['current_post']="";
         $this->data['current_marry']="";
         $this->data['current_degree']="";
@@ -389,7 +399,7 @@ class super_hr extends Admin_Controller {
         $this->data['current_post_type']="";
         $selected_dept="";
         $selected_gender="";
-        $selected_section="";
+        $selected_office="";
         $selected_post="";
         $selected_marry="";
         $selected_degree="";
@@ -409,11 +419,11 @@ class super_hr extends Admin_Controller {
             elseif(array_key_exists('current_gender', $_POST)){
                 $selected_gender=$_POST['current_gender'];
             }
-            if(array_key_exists('selected_section', $_POST)){
-                $selected_section=$_POST['selected_section'];
+            if(array_key_exists('selected_office', $_POST)){
+                $selected_office=$_POST['selected_office'];
             }
-            elseif(array_key_exists('current_section', $_POST)){
-                $selected_section=$_POST['current_section'];
+            elseif(array_key_exists('current_office', $_POST)){
+                $selected_office=$_POST['current_office'];
             }
             if(array_key_exists('selected_post', $_POST)){
                 $selected_post=$_POST['selected_post'];
@@ -453,7 +463,7 @@ class super_hr extends Admin_Controller {
             }
             $this->data['current_dept']=empty($selected_dept)?$selected_dept:implode(",", $selected_dept);
             $this->data['current_gender']=empty($selected_gender)?$selected_gender:implode(",", $selected_gender);
-            $this->data['current_section']=empty($selected_section)?$selected_section:implode(",", $selected_section);
+            $this->data['current_office']=empty($selected_office)?$selected_office:implode(",", $selected_office);
             $this->data['current_post']=empty($selected_post)?$selected_post:implode(",", $selected_post);
             $this->data['current_marry']=empty($selected_marry)?$selected_marry:implode(",", $selected_marry);
             $this->data['current_degree']=empty($selected_degree)?$selected_degree:implode(",", $selected_degree);
@@ -463,14 +473,14 @@ class super_hr extends Admin_Controller {
 
             //$this->data['current_dept']=$select_dept;
             //$this->data['current_dept']=$select_dept;
-            $this->data['hr_data'] = $this->model_hr_content->search($_POST['name'],$selected_dept,$selected_gender,$selected_section,$selected_post,$selected_marry,$selected_degree,$selected_equ_degree,$selected_party,$selected_post_type);
-            /**/
+            $this->data['hr_data'] = $this->model_hr_content->search($_POST['name'],$selected_dept,$selected_gender,$selected_office,$selected_post,$selected_marry,$selected_degree,$selected_equ_degree,$selected_party,$selected_post_type);
         }
         
         $this->data['column_name'] = $this->model_hr_attr->getData();
         $this->data['trueend']=(int)str_replace('attr','',array_search(NULL,$this->data['column_name']))-1;
         $this->render_super_template('super/hr_search',$this->data);
     }
+    */
     /**
     *数字金额转换成中文大写金额的函数
     *String Int $num 要转换的小写数字或小写字符串
@@ -946,7 +956,7 @@ class super_hr extends Admin_Controller {
 
         #$user_id=$this->data['user_id'];
         $user_id=$_POST['user_id'];
-        $user_data=$this->model_wage_tag->getTagById($user_id);
+        $user_data=$this->model_hr_content->getById($user_id);
         #$cage=$holiday_data['Companyage'];
         #$user_id=$user_data['user_id'];
         $username=$user_data['name'];
@@ -998,49 +1008,6 @@ class super_hr extends Admin_Controller {
         $html="";
         $pdf->SetFont('songti','',15);
         switch($type){
-            case '收入证明':
-                $str="\r\n    兹证明".$username."(身份证号码：".$user_id.")为中国联合网络通信有限公司中山市分公司正式员工，自".$date."起为我司工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！\r\n";
-                $pdf->setCellHeightRatio(2.5); 
-                $pdf->SetFont('songti','',15);
-                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str="\r\n\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n";
-                $pdf->setCellHeightRatio(1.7); 
-                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
-                $pdf->setCellHeightRatio(1.0); 
-                $pdf->SetFont('songti','',11);
-                $str="\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
-                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
-                break;
-            case '收入证明（农商银行）':
-                $str="\r\n中山农村商业银行股份有限公司：\r\n    兹证明".$username."（身份证号码：".$user_id."）为我单位正式员工，自".$date."起为我单位工作，现于我单位任".$dept.$position."，其月收入（税前）包括工资、奖金、津贴约".$avg."元（大写：".$rmb."），以上情况属实。此证明仅限于申请贷款之用。\r\n    特此证明！";
-                $pdf->setCellHeightRatio(2.5); 
-                $pdf->SetFont('songti','',15);
-                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str="\r\n\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n";
-                $pdf->setCellHeightRatio(1.7); 
-                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
-                $pdf->setCellHeightRatio(1.0); 
-                $pdf->SetFont('songti','',11);
-                $str="\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
-                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
-                break;
-            case '收入证明（公积金）':
-                $str="\r\n中山市住房公积金管理中心：\r\n    为申请住房公积金贷款事宜，兹证明".$username."，性别：".$gender."，身份证号码：".$user_id."，是我单位职工，已在我单位工作满".$period."年，该职工上一年度在我单位总收入约为".$sum."元（大写：".$rmb_sum."）。\r\n\r\n";
-                $pdf->setCellHeightRatio(2.5); 
-                $pdf->SetFont('songti','',15);
-                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false, 0);
-                $str="\r\n\r\n经办人：\t\t\t\t\t\r\n中国联合网络通信有限公司中山市分公司\r\n人力资源与企业发展部\r\n".date("Y年m月d日")."\r\n\r\n";
-                $pdf->setCellHeightRatio(1.7); 
-                $pdf->Write(0,$str,'', 0, 'R', true, 0, false, false); 
-                $str="\r\n    重要提示：本证明所证明情况必须真实，如有虚假，中山市住房公积金管理中心保留依法追究相关责任的权利。";
-                $pdf->setCellHeightRatio(1.5); 
-                $pdf->SetFont('songti','B',11);
-                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false); 
-                $pdf->setCellHeightRatio(1.0); 
-                $pdf->SetFont('songti','',11);
-                $str="\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n中国联合网络通信有限公司中山市分公司\r\n广东省中山市东区长江北路6号\r\n电话：0760-23666666 传真：0760-23666888\r\n网址：http://www.10010.com/";
-                $pdf->Write(0,$str,'', 0, 'L', true, 0, false, false);
-                break;
             case '现实表现证明':
                 $str="\r\n    ".$username."(男，身份证号:".$user_id.")同志自".$date."进入我单位至今，期间一直拥护中国共产党的领导，坚持四项基本原则和党的各项方针政策，深刻学习三个代表重要思想。没有参加“六四”“法轮功”等活动，未发现有任何违法乱纪行为。\r\n    特此证明!\r\n";
                 $pdf->SetFont('songti','',15);
@@ -1129,7 +1096,8 @@ class super_hr extends Admin_Controller {
         $this->render_super_template('super/hr_user_details', $this->data);
     }
     #用于上传过去的总表
-    public function hr_transfer_excel_put(){
+    
+    public function hr_transfer_all_excel_put(){
         $this->load->library('phpexcel');//ci框架中引入excel类
         $this->load->library('PHPExcel/IOFactory');
         //先做一个文件上传，保存文件
@@ -1166,9 +1134,9 @@ class super_hr extends Admin_Controller {
             $user_id='';
             $transfer_date='';
             $dept_before='';
-            $section_before='';
+            $office_before='';
             $dept_after='';
-            $section_after='';
+            $office_after='';
             $position_before='';
             $position_after='';
             $date_tag='';
@@ -1191,13 +1159,13 @@ class super_hr extends Admin_Controller {
                             case '姓名':$name=$b;break;
                             case '身份证号码':$user_id=$b;break;
                             case '调整前部门':$dept_before=$b;break;
-                            case '调整前室\部\厅':$section_before=$b;break;
+                            case '调整前室\部\厅':$office_before=$b;break;
                             case '调整前职务、岗位':$position_before=$b;break;
                             case '调整后部门':$dept_after=$b;break;
-                            case '调整后室\部\厅':$section_after=$b;break;
+                            case '调整后室\部\厅':$office_after=$b;break;
                             case '调整后职务、岗位':$position_after=$b;break;
                             case '调整后职务、岗位':$position_after=$b;break;
-                            case '调整时间':$date_tag=(string)gmdate('Y-m',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                            case '调整时间':$date_tag=$b==''?$b:(string)gmdate('Y-m',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
                             default:break;
                         } 
                     }
@@ -1205,28 +1173,30 @@ class super_hr extends Admin_Controller {
                 $tmp=array(
                     'name' => $name,
                     'dept_before' => $dept_before,
-                    'section_before' => $section_before,
+                    'office_before' => $office_before,
                     'position_before' => $position_before,
                     'dept_after' => $dept_after,
-                    'section_after' => $section_after,
+                    'office_after' => $office_after,
                     'position_after' => $position_after,
                     'date_tag' => $date_tag
                 );   
-                if($rowIndex!=1){
+                if($rowIndex!=1 and $name!=''){
                     array_push($data,$tmp);
                 }
                 unset($tmp);
             }
             #echo var_dump($attr);
-            $this->model_hr_transfer_attr->deleteByDate($del_date);
+            #$this->model_hr_transfer_attr->deleteByDate($del_date);
             $this->model_hr_transfer_content->deleteByDate($del_date);
-            #$this->model_hr_transfer_attr->delete();
+            $this->model_hr_transfer_attr->delete();
             #$this->model_hr_transfer_content->delete();
             $this->model_hr_transfer_attr->create($attr);
             $this->model_hr_transfer_content->createbatch($data);
         }
     }
-    public function hr_transfer_import(){
+    
+    /**/
+    public function hr_transfer_all_import(){
         if($_FILES){
             if($_FILES["file"]){
                 if($_FILES["file"]["error"] > 0){
@@ -1234,8 +1204,132 @@ class super_hr extends Admin_Controller {
                     $this->render_super_template('super/hr_transfer_import',$this->data);
                 }
                 else{
-                    $this->hr_transfer_excel_put();
+                    $this->hr_transfer_all_excel_put();
                     redirect('super_hr/hr_transfer_search','refresh');
+                }
+            }
+        }
+        else{
+            $this->session->set_flashdata('error', '请选择文件!!');
+            $this->render_super_template('super/hr_transfer_import',$this->data);
+        }
+    }
+    
+    public function hr_transfer_excel_put($doc_name){
+        $this->load->library('phpexcel');//ci框架中引入excel类
+        $this->load->library('PHPExcel/IOFactory');
+        //先做一个文件上传，保存文件
+        $path=$_FILES['file'];
+        $filename=date("Ym").'人员调动汇总表';
+        #$filename='201001-201902人员调动汇总表';
+        //根据上传类型做不同处理
+        if(strstr($_FILES['file']['name'],'xlsx')){
+            $reader = new PHPExcel_Reader_Excel2007();
+            $filePath = 'uploads/hr/'.$filename.'.xlsx';
+            move_uploaded_file($path['tmp_name'],$filePath);
+        }
+        elseif(strstr($_FILES['file']['name'], 'xls')){
+            $reader = IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
+            $filePath = 'uploads/hr/'.$filename.'.xls';
+            move_uploaded_file($path['tmp_name'],$filePath);
+        }
+        $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ','BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ','CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ','DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ', 'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU', 'DV', 'DW', 'DX', 'DY', 'DZ'); 
+        $PHPExcel = $reader->load($filePath, 'utf-8'); // 载入excel文件
+        $sheetCount = $PHPExcel->getSheetCount();
+        $sheet = $PHPExcel->getSheet(0); // 读取第一個工作表
+        $del_date=$doc_name;
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+        $highestColumm = $sheet->getHighestColumn(); // 取得总列数
+        $columnCnt = array_search($highestColumm, $cellName); 
+
+        $data = array();
+        $attr = array();
+        $id='';
+        $name='';
+        $user_id='';
+        $transfer_date='';
+        $dept_before='';
+        $office_before='';
+        $dept_after='';
+        $office_after='';
+        $position_before='';
+        $position_after='';
+        $date_tag='';
+        
+        for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+            $tmp=array();
+            for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
+                $cellId = $cellName[$colIndex].$rowIndex;  
+                $cell = $sheet->getCell($cellId)->getValue();
+                $cell = $sheet->getCell($cellId)->getCalculatedValue();
+                if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
+                    $cell = $cell->__toString();
+                }
+                $b=$cell;
+                if($rowIndex==1){
+                    $attr['attr'.($colIndex+1)] = $cell;
+                }
+                else{
+                    switch($attr['attr'.($colIndex+1)]){
+                        case '姓名':$name=$b;break;
+                        case '身份证号码':$user_id=$b;break;
+                        case '调整前部门':$dept_before=$b;break;
+                        case '调整前室\部\厅':$office_before=$b;break;
+                        case '调整前职务、岗位':$position_before=$b;break;
+                        case '调整后部门':$dept_after=$b;break;
+                        case '调整后室\部\厅':$office_after=$b;break;
+                        case '调整后职务、岗位':$position_after=$b;break;
+                        case '调整后职务、岗位':$position_after=$b;break;
+                        case '调整时间':$date_tag=(string)gmdate('Y-m',PHPExcel_Shared_Date::ExcelToPHP(intval($b)));break;
+                        default:break;
+                    } 
+                }
+            }
+            $tmp=array(
+                'name' => $name,
+                'dept_before' => $dept_before,
+                'office_before' => $office_before,
+                'position_before' => $position_before,
+                'dept_after' => $dept_after,
+                'office_after' => $office_after,
+                'position_after' => $position_after,
+                'date_tag' => $date_tag
+            );   
+            if($rowIndex!=1){
+                array_push($data,$tmp);
+            }
+            unset($tmp);
+        }
+        $this->model_hr_transfer_content->deleteByDate($del_date);
+       
+        $this->model_hr_transfer_content->createbatch($data);
+    }
+    public function hr_transfer_import(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST' and array_key_exists('chosen_month',$_POST)){
+            $doc_name=$_POST['chosen_month'];
+            if(strstr($doc_name,'1899')){
+                $this->session->set_flashdata('error', '请选择月份!!');
+                $this->render_super_template('super/wage_import',$this->data);
+            }
+            else{
+                if(strlen($doc_name)<=7 and $doc_name!=''){
+                    if($_FILES){
+                        if($_FILES["file"]){
+                            if($_FILES["file"]["error"] > 0){
+                                $this->session->set_flashdata('error', '请选择要上传的文件！');
+                                $this->render_super_template('super/hr_transfer_import',$this->data);
+                            }
+                            else{
+                                echo 'normal '.$doc_name;
+                                $this->hr_transfer_excel_put($doc_name);
+                                redirect('super_hr/hr_transfer_search','refresh');
+                            }
+                        }
+                    }
+                    else{
+                        $this->session->set_flashdata('error', '请选择文件!!');
+                        $this->render_super_template('super/hr_transfer_import',$this->data);
+                    }
                 }
             }
         }
@@ -1243,6 +1337,7 @@ class super_hr extends Admin_Controller {
             $this->render_super_template('super/hr_transfer_import',$this->data);
         }
     }
+
     public function hr_transfer_search(){
         $this->data['hr_data']='';
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -1251,7 +1346,9 @@ class super_hr extends Admin_Controller {
         }
         
         $this->data['column_name'] = $this->model_hr_transfer_attr->getData();
-        $this->data['trueend']=(int)str_replace('attr','',array_search(NULL,$this->data['column_name']))-1;
+        if($this->data['column_name']){
+            $this->data['trueend']=(int)str_replace('attr','',array_search(NULL,$this->data['column_name']))-1;
+        }
         $this->render_super_template('super/hr_transfer',$this->data);
     }
 }

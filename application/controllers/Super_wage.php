@@ -23,6 +23,7 @@ class Super_wage extends Admin_Controller {
         $this->load->model('model_wage_sp_attr');
         $this->load->model('model_wage_tax');
         $this->load->model('model_wage_tax_attr'); 
+        $this->load->model('model_hr_content'); 
         $this->data['user_name'] = $this->session->userdata('user_id');
         $this->data['user_id'] = $this->session->userdata('user_id');
         if($this->data['user_name']==NULL){
@@ -583,14 +584,16 @@ class Super_wage extends Admin_Controller {
         $pdf->setCellHeightRatio(3.0);
         $pdf->AddPage('P', 'A4'); 
         //设置背景图片
-        #$img_file = 'assets/images/Unicom.jpg';    
+        $img_file = 'assets/images/Unicom.jpg';    
         $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
 
         #$user_id=$this->data['user_id'];
         $user_id=$_POST['user_id'];
-        $user_data=$this->model_wage_tag->getTagById($user_id);
+        #$user_data=$this->model_wage_tag->getTagById($user_id);
         #$cage=$holiday_data['Companyage'];
         #$user_id=$user_data['user_id'];
+        $user_data=$this->model_hr_content->getById($user_id);
+        
         $username=$user_data['name'];
         $date_set=array();
         $date=date('Y年m月d日',strtotime($user_data['indate']));
@@ -616,7 +619,7 @@ class Super_wage extends Admin_Controller {
         }
         $dept=$user_data['dept'];
         $gender=$user_data['gender'];
-        $position=$user_data['position'];
+        $position=$user_data['post_inner'];
         $period=floor((strtotime(date('Y/m/d'))-strtotime($user_data['indate'])) / 60 / 60 / 24 / 365);
         $type=$_POST['type'];
         if(strstr($type,'收入')){

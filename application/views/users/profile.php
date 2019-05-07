@@ -33,10 +33,10 @@
                 <tr style="border:none;height:40px;">
                   <td style="border:none;">部门：<?php echo $user_info['dept'];?></td>
                   <td style="border:none;">科室：<?php echo $user_info['office'];?></td>
-                  <td style="border:none;;">岗位：<?php echo $user_info['position'];?></td>
+                  <td style="border:none;;">岗位：<?php echo $user_info['post_inner'];?></td>
                 </tr>
                 <tr style="border:none;height:40px;">
-                  <td style="border:none;" colspan="3">合同签订公司：<?php echo $user_info['company'];?></td>
+                  <td style="border:none;" colspan="3">合同签订公司：<?php echo $user_info['sign_company'];?></td>
                 </tr>
                 <tr style="height:20px;"></tr>
                 <tr style="height:60px;">
@@ -44,7 +44,7 @@
                 </tr>
                 <tr style="height:40px;">
                   <td style="width:300px">婚姻状态：<?php echo $user_info['marry'];?></td>
-                  <td style="width:300px">生育状况：<?php echo $user_info['child'];?></td>
+                  <!--<td style="width:300px">生育状况：<?php echo $user_info['child'];?></td>-->
                   <td style="width:300px"></td>
                 </tr>
                 
@@ -53,8 +53,8 @@
                   <th style="font-size:25px" colspan="3">教育信息</th>
                 </tr>
                 <tr style="height:40px;">
-                  <td style="width:300px">全日制最高学历：<?php echo $user_info['ft_highest_qualification'];?></td>
-                  <td style="width:300px">全日制最高学位：<?php echo $user_info['ft_highest_degree'];?></td>
+                  <td style="width:300px">全日制最高学历：<?php echo $user_info['ft_qualification'];?></td>
+                  <td style="width:300px">全日制最高学位：<?php echo $user_info['ft_degree'];?></td>
                   <td style="width:300px"></td>
                 </tr>
                 <tr style="border:none;height:40px;">
@@ -68,8 +68,8 @@
                 </tr>
                 <tr style="height:40px;">
                   <td style="width:300px">职级薪档：<?php echo $user_info['wage_level'];?></td>
-                  <td style="width:300px">职级调整时间：<?php echo $user_info['wage_adjust_stamp'];?></td>
-                  <td style="width:300px">薪档调整时间：<?php echo $user_info['level_adjust_stamp'];?></td>
+                  <td style="width:300px">职级调整时间：<?php echo $user_info['position_adjust_stamp'];?></td>
+                  <td style="width:300px">薪档调整时间：<?php echo $user_info['salary_adjust_stamp'];?></td>
                 </tr>
                 <?php if(strstr($func[0]['status'],'开启')):?>
                 <tr>
@@ -96,9 +96,9 @@
                   </thead>
                   <tbody>
                     <tr>
-                    <td style="width:300px;text-align:center;"><?php echo $user_info['qian3'];?></td>
-                    <td style="width:300px;text-align:center;"><?php echo $user_info['qian2'];?></td>
-                    <td style="width:300px;text-align:center;"><?php echo $user_info['qian1'];?></td>
+                    <td style="width:300px;text-align:center;"><?php echo $user_info['access'.(date("Y")-3)];?></td>
+                    <td style="width:300px;text-align:center;"><?php echo $user_info['access'.(date("Y")-2)];?></td>
+                    <td style="width:300px;text-align:center;"><?php echo $user_info['access'.(date("Y")-1)];?></td>
                     </tr>
                   </tbody>
                   </table>

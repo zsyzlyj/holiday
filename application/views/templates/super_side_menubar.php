@@ -245,13 +245,13 @@
             <span> 部门信息</span>
           </a>
         </li>
-        -->
         <li id="hrMainMenu">
           <a href="<?php echo base_url('super_hr/index') ?>">
             <i class="fa fa-tasks"></i>
             <span> 人员信息汇总</span>
           </a>
         </li>
+        -->
         <li id="hrsearchMainMenu">
           <a href="<?php echo base_url('super_hr/hr_search') ?>">
             <i class="fa fa-tasks"></i>

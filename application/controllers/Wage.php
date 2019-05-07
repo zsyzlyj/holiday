@@ -15,7 +15,7 @@ class Wage extends Admin_Controller{
         $this->load->model('model_wage_apply_status');
         $this->load->model('model_wage_tag');
         $this->load->model('model_wage_attr');
-        
+        $this->load->model('model_hr_content');
         $this->load->model('model_func');
         $this->load->model('model_wage_notice');
         $this->load->model('model_notice');
@@ -295,7 +295,9 @@ class Wage extends Admin_Controller{
             $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
         }
         $user_id=$this->data['user_id'];
-        $user_data=$this->model_wage_tag->getTagById($user_id);
+        #$user_data=$this->model_wage_tag->getTagById($user_id);
+        
+        $user_data=$this->model_hr_content->getById($user_id);
         #$cage=$holiday_data['Companyage'];
         #$user_id=$user_data['user_id'];
         $username=$user_data['name'];
@@ -323,7 +325,7 @@ class Wage extends Admin_Controller{
         }
         $dept=$user_data['dept'];
         $gender=$user_data['gender'];
-        $position=$user_data['position'];
+        $position=$user_data['post_outer'];
         $period=floor((strtotime(date('Y/m/d'))-strtotime($user_data['indate'])) / 60 / 60 / 24 / 365);
         
         if(strstr($type,'收入')){

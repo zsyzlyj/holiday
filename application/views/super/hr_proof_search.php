@@ -51,37 +51,37 @@
                             <td style="border-color:silver;vertical-align:center"><?php echo $b;?></td>
                           <?php endforeach; ?>
                           <td style="border-color:silver;">
-                            <form action="<?php echo base_url('super_wage/proof_creator');?>" method="POST" target="_blank" style="display:inline">
+                            <form action="<?php echo base_url('super_hr/proof_creator');?>" method="POST" target="_blank" style="display:inline">
                             <input name="user_id" type="hidden" value="<?php echo $v['user_id'];?>">
                             <input name="type" type="hidden" value="现实表现证明">
                             <button class="btn">现实表现证明</button>
                             </form>
-                            <form action="<?php echo base_url('super_wage/proof_creator');?>" method="POST" target="_blank" style="display:inline">
+                            <form action="<?php echo base_url('super_hr/proof_creator');?>" method="POST" target="_blank" style="display:inline">
                             <input name="user_id" type="hidden" value="<?php echo $v['user_id'];?>">
                             <input name="type" type="hidden" value="在职证明1">
                             <button class="btn">在职证明1</button>
                             </form>
-                            <form action="<?php echo base_url('super_wage/proof_creator');?>" method="POST" target="_blank" style="display:inline">
+                            <form action="<?php echo base_url('super_hr/proof_creator');?>" method="POST" target="_blank" style="display:inline">
                             <input name="user_id" type="hidden" value="<?php echo $v['user_id'];?>">
                             <input name="type" type="hidden" value="在职证明2">
                             <button class="btn">在职证明2</button>
                             </form>
-                            <form action="<?php echo base_url('super_wage/proof_creator');?>" method="POST" target="_blank" style="display:inline">
+                            <form action="<?php echo base_url('super_hr/proof_creator');?>" method="POST" target="_blank" style="display:inline">
                             <input name="user_id" type="hidden" value="<?php echo $v['user_id'];?>">
                             <input name="type" type="hidden" value="在职证明（积分入户1）">
                             <button class="btn">在职证明（积分入户1）</button>
                             </form>
-                            <form action="<?php echo base_url('super_wage/proof_creator');?>" method="POST" target="_blank" style="display:inline">
+                            <form action="<?php echo base_url('super_hr/proof_creator');?>" method="POST" target="_blank" style="display:inline">
                             <input name="user_id" type="hidden" value="<?php echo $v['user_id'];?>">
                             <input name="type" type="hidden" value="在职证明（积分入户2）">
                             <button class="btn">在职证明（积分入户2）</button>
                             </form>
-                            <form action="<?php echo base_url('super_wage/proof_creator');?>" method="POST" target="_blank" style="display:inline">
+                            <form action="<?php echo base_url('super_hr/proof_creator');?>" method="POST" target="_blank" style="display:inline">
                             <input name="user_id" type="hidden" value="<?php echo $v['user_id'];?>">
                             <input name="type" type="hidden" value="在职证明（居住证）">
                             <button class="btn">在职证明（居住证）</button>
                             </form>
-                            <form action="<?php echo base_url('super_wage/proof_creator');?>" method="POST" target="_blank" style="display:inline">
+                            <form action="<?php echo base_url('super_hr/proof_creator');?>" method="POST" target="_blank" style="display:inline">
                             <input name="user_id" type="hidden" value="<?php echo $v['user_id'];?>">
                             <input name="type" type="hidden" value="在职证明（住房补贴）">
                             <button class="btn">在职证明（住房补贴）</button>

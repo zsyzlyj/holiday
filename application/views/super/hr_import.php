@@ -44,7 +44,7 @@
 <!-- /.content-wrapper -->
 <script type="text/javascript">
     $(document).ready(function() {
-      $("#infoMainMenu").addClass('active');
+      $("#hrsearchMainMenu").addClass('active');
     });
     
   </script>

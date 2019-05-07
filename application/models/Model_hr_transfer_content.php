@@ -147,22 +147,8 @@ class Model_hr_transfer_content extends CI_Model{
 		return $query->result_array();
 	}
 	public function deleteByDate($date){
-		$sql="delete from hr_transfer_content where locate(?,date_tag)";
+		$sql="delete from hr_transfer_content where date_tag=?";
 		$delete = $this->db->query($sql,array($date));
 		return ($delete == true)  ? true : false;
-	}
-	public function countAvg($date_set,$user_id){
-		#$query=$this->db->where('user_id',$user_id)->where_in('date_tag', $date_set)->select_avg('total')->from('hr_transfer_content')->get();
-		$query=$this->db->select_avg('total')->where('user_id',$user_id)->where_in('date_tag', $date_set)->get('hr_transfer_content');
-		return $query->row_array();
-	}
-	public function countSum($date_set,$user_id){
-		#$query=$this->db->where('user_id',$user_id)->where_in('date_tag', $date_set)->select_avg('total')->from('hr_transfer_content')->get();
-		$query=$this->db->select_sum('total')->where('user_id',$user_id)->where_in('date_tag', $date_set)->get('hr_transfer_content');
-		return $query->row_array();
-	}
-	public function getDeptByDate($date_set){
-		$query=$this->db->from('hr_transfer_content')->where_in('date_tag', $date_set)->get();
-		return $query->result_array();
 	}
 }
