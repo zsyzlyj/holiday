@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php 
 
 class Users extends Admin_Controller{

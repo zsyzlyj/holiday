@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php 
 
 class Model_hr_transfer_content extends CI_Model{

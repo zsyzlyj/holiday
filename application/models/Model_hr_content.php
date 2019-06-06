@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php 
 
 class Model_hr_content extends CI_Model{

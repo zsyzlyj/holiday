@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 
   <!-- Content Wrapper. Contains page content -->
