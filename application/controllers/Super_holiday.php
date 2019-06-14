@@ -716,9 +716,15 @@ class Super_holiday extends Admin_Controller{
         $this->render_super_template('super/holiday_notification', $this->data);
     }
     public function publish_holiday(){
+        
+        /*
 		$this->form_validation->set_rules('title', 'title', 'required');
 		$this->form_validation->set_rules('content', 'content', 'required');	
-        if($this->form_validation->run() == TRUE){
+        	
+        */
+        #if($this->form_validation->run() == TRUE){
+        if($this->input->post('title')!=null){
+            echo $this->input->post('title').' '.$this->input->post('title');
             // true case
 			$title=$this->input->post('title');
 			$content=$this->input->post('content');
@@ -729,7 +735,8 @@ class Super_holiday extends Admin_Controller{
 				'content' => $this->input->post('content'),
 				'type' => 'holiday'
 			);
-			$create = $this->model_notice->create($data);
+            $create = $this->model_notice->create($data);
+            echo $create;
         	if($create == true){
         		$this->session->set_flashdata('success', '公告发布成功');
         		redirect('super_holiday/notification', 'refresh');
@@ -740,15 +747,19 @@ class Super_holiday extends Admin_Controller{
         	}
         }
         else{
+            
             // false case
             $this->render_super_template('super/holiday_publish_holiday', $this->data);
-        }	
+        }
 	}
 	public function publish_plan(){
+        
+        /*
 		$this->form_validation->set_rules('title', 'title', 'required');
 		$this->form_validation->set_rules('content', 'content', 'required');
-		
-        if($this->form_validation->run() == TRUE){
+		*/
+        #if($this->form_validation->run() == TRUE){
+        if($this->input->post('title')!=null){
             // true case
 			$title=$this->input->post('title');
 			$content=$this->input->post('content');
@@ -773,6 +784,7 @@ class Super_holiday extends Admin_Controller{
             // false case
             $this->render_super_template('super/holiday_publish_plan', $this->data);
         }
+        
     }
     public function notification_delete(){
         $pubtime=$_POST['time'];
