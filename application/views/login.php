@@ -14,7 +14,7 @@
 
 </head>
 
-<body> 
+<body>
 <div class="login_box">
     <div class="login_l_img"><img src="<?php echo base_url('assets/dist/img/login-img.png') ?>" /></div>
         <div class="login">
@@ -51,7 +51,6 @@
     </div>
     
     <div class="copyright">请使用火狐浏览器(Firefox)或谷歌浏览器(Chrome)登录人力资源信息查询系统</div>
-    <div class="copyright"></div>
 </div>
 <script src="<?php echo base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>
 <script type="text/javascript">

@@ -11,7 +11,6 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-md-12 col-xs-12">
-
           <?php if($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -23,9 +22,9 @@
               <?php echo $this->session->flashdata('error'); ?>
             </div>
           <?php endif; ?>   
-          <div class="box" style="overflow:scroll;table-layout:fixed">
+          <div class="box" style="overflow:scroll;white-space: nowrap;">
             <div class="box-header">
-
+            <a href="<?php echo base_url('super_holiday/export_plan') ?>" class="btn btn-warning">导出</a>
             </div>
             
             <!-- /.box-header -->
@@ -36,13 +35,23 @@
                 <tr>
                   <th>姓名</th>
                   <th style="white-space: nowrap">可休假总数</th>
-                  <th>上年可休数</th>
+                  <th>上年剩余可休天数</th>
                   <th>今年可休数</th>
                   <th>荣誉假期数</th>
+                  <!--
                   <th>第一季度</th>
                   <th>第二季度</th>
                   <th>第三季度</th>
                   <th>第四季度</th>
+                  -->          
+
+                  <th style="text-align:center;width:60px">六月</th>
+                  <th style="text-align:center;width:60px">七月</th>
+                  <th style="text-align:center;width:60px">八月</th>
+                  <th style="text-align:center;width:60px">九月</th>
+                  <th style="text-align:center;width:60px">十月</th>
+                  <th style="text-align:center;width:60px">十一月</th>
+                  <th style="text-align:center;width:60px">十二月</th>
                   <th>状态</th>
                   <th>操作</th>
                 </tr>
@@ -56,10 +65,12 @@
                         <td><?php echo $v['Lastyear']; ?></td>
                         <td><?php echo $v['Thisyear']; ?></td>
                         <td><?php echo $v['Bonus']; ?></td>
+                        <!--
                         <td><?php echo $v['firstquater']; ?></td>
                         <td><?php echo $v['secondquater']; ?></td>
                         <td><?php echo $v['thirdquater']; ?></td>
                         <td><?php echo $v['fourthquater']; ?></td>
+                        -->
                         <?php if($v['submit_tag']=='已提交'):?>
                           <td><font color='green'><?php echo $v['submit_tag']; ?></font></td>
                         <?php endif; ?>

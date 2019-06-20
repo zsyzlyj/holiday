@@ -8,7 +8,7 @@ class Super_holiday extends Admin_Controller{
         $this->data['page_title'] = 'Super';
         $this->load->model('model_holiday');
         $this->load->model('model_holiday_doc');
-        $this->load->model('model_plan');
+        $this->load->model('model_plan_seven');
         $this->load->model('model_notice');
         $this->load->model('model_manager');
         $this->load->model('model_users');
@@ -129,7 +129,7 @@ class Super_holiday extends Admin_Controller{
         $columnCnt = array_search($highestColumm, $cellName); 
         //删除所有假期信息，计划，用户   
         $this->model_holiday->deleteAll();
-        $this->model_plan->deleteAll();
+        $this->model_plan_seven->deleteAll();
         $holiday_set=array();
         $plan_set=array();
         $dept="";
@@ -245,8 +245,14 @@ class Super_holiday extends Admin_Controller{
                 
                 $Update_data['Used']=$Update_data['Jan']+$Update_data['Feb']+$Update_data['Mar']+$Update_data['Apr']+$Update_data['May']+$Update_data['Jun']+$Update_data['Jul']+$Update_data['Aug']+$Update_data['Sep']+$Update_data['Oct']+$Update_data['Nov']+$Update_data['Dece'];
                 array_push($holiday_set,$Update_data);
-                $thisyear=$Update_data['Thisyear'];
-                $lastyear=$Update_data['Lastyear'];
+                if($Update_data['Used']>$Update_data['Thisyear']){
+                    $lastyear=0;
+                    $thisyear=$Update_data['Totalday']-$Update_data['Used'];
+                }
+                else{
+                    $thisyear=$Update_data['Thisyear'];
+                    $lastyear=$Update_data['Lastyear']-$Update_data['Used'];    
+                }
                 $bonus=$Update_data['Bonus'];
                 $totalday=$Update_data['Totalday'];
                 $Update_data['Rest']=$Update_data['Totalday']-$Update_data['Used'];
@@ -259,11 +265,20 @@ class Super_holiday extends Admin_Controller{
                     'Thisyear' => $thisyear,
                     'Lastyear' => $lastyear,
                     'Bonus' => $bonus,
-                    'Totalday' => $totalday,
+                    'Totalday' => $Rest,
+                    'Jun' => 0,
+                    'Jul' => 0,
+                    'Aug' => 0,
+                    'Sep' => 0,
+                    'Oct' => 0,
+                    'Nov' => 0,
+                    'Dece' => 0,
+                    /*
                     'firstquater' => 0,
                     'secondquater' => 0,
                     'thirdquater' => 0,
                     'fourthquater' => 0,
+                    */
                     'submit_tag' => 0
                 );
                 array_push($plan_set,$plan_data);
@@ -271,7 +286,7 @@ class Super_holiday extends Admin_Controller{
             }
         }
         $this->model_holiday->createbatch($holiday_set);
-        $this->model_plan->createbatch($plan_set);
+        $this->model_plan_seven->createbatch($plan_set);
         unset($holiday_set);
         unset($plan_set);
     }
@@ -359,7 +374,7 @@ class Super_holiday extends Admin_Controller{
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
         $objPHPExcel->setActiveSheetIndex(0);
-        $result = $this->model_plan->exportPlanData();
+        $result = $this->model_plan_seven->exportPlanData();
         // Field names in the first row
         $fields = $result->list_fields();
         $col = 0;
@@ -372,10 +387,19 @@ class Super_holiday extends Admin_Controller{
                 case 'Lastyear':$v="去年休假数\t";break;
                 case 'Thisyear':$v="今年休假数\t";break;
                 case 'Bonus':$v="荣誉休假数\t";break;
+                case 'Jun':$v="六月\t";break;
+                case 'Jul':$v="七月\t";break;
+                case 'Aug':$v="八月\t";break;
+                case 'Sep':$v="九月\t";break;
+                case 'Oct':$v="十月\t";break;
+                case 'Nov':$v="十一月\t";break;
+                case 'Dece':$v="十二月\t";break;    
+                /*
                 case 'firstquater':$v="第一季度\t";break;
                 case 'secondquater':$v="第二季度\t";break;
                 case 'thirdquater':$v="第三季度\t";break;
                 case 'fourthquater':$v="第四季度\t";break;
+                */
                 default:break;
             }
             if($v!=""){
@@ -395,21 +419,22 @@ class Super_holiday extends Admin_Controller{
             }
             $row++;
         }
-        $objPHPExcel->setActiveSheetIndex(0);
-        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        
         $filename = date('YmdHis').".xlsx";
         // Sending headers to force the user to download the file
+        ob_end_clean();
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'.$filename);
-        header("Content-Disposition:filename=".$filename);
         header('Cache-Control: max-age=0');
+        $objPHPExcel->setActiveSheetIndex(0);
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->save('php://output');
     }
     public function export_plan(){
         $this->excel_plan();
     }
     public function plan(){
-        $plan_data = $this->model_plan->getPlanData();
+        $plan_data = $this->model_plan_seven->getPlanData();
         $result = array();        
         if($plan_data){
             foreach($plan_data as $k => $v){
@@ -442,10 +467,10 @@ class Super_holiday extends Admin_Controller{
                     'submit_tag' => 1
                 );
             }
-            $update = $this->model_plan->update($data,$_POST['user_id']);            
+            $update = $this->model_plan_seven->update($data,$_POST['user_id']);            
             if($update == true){
                 $this->session->set_flashdata('success', '授权完成');
-                $plan_data = $this->model_plan->getPlanData();
+                $plan_data = $this->model_plan_seven->getPlanData();
                 $result = array();        
                 if($plan_data){
                     foreach($plan_data as $k => $v){
@@ -463,7 +488,7 @@ class Super_holiday extends Admin_Controller{
             }
         }
         else{
-            $plan_data = $this->model_plan->getPlanData();
+            $plan_data = $this->model_plan_seven->getPlanData();
             $result = array();        
             if($plan_data){
                 foreach($plan_data as $k => $v){
@@ -716,15 +741,10 @@ class Super_holiday extends Admin_Controller{
         $this->render_super_template('super/holiday_notification', $this->data);
     }
     public function publish_holiday(){
-        
-        /*
 		$this->form_validation->set_rules('title', 'title', 'required');
 		$this->form_validation->set_rules('content', 'content', 'required');	
-        	
-        */
-        #if($this->form_validation->run() == TRUE){
-        if($this->input->post('title')!=null){
-            echo $this->input->post('title').' '.$this->input->post('title');
+        if($this->form_validation->run() == TRUE){
+        #if($this->input->post('title')!=null){
             // true case
 			$title=$this->input->post('title');
 			$content=$this->input->post('content');
@@ -736,7 +756,6 @@ class Super_holiday extends Admin_Controller{
 				'type' => 'holiday'
 			);
             $create = $this->model_notice->create($data);
-            echo $create;
         	if($create == true){
         		$this->session->set_flashdata('success', '公告发布成功');
         		redirect('super_holiday/notification', 'refresh');
@@ -747,19 +766,17 @@ class Super_holiday extends Admin_Controller{
         	}
         }
         else{
-            
             // false case
             $this->render_super_template('super/holiday_publish_holiday', $this->data);
         }
 	}
 	public function publish_plan(){
         
-        /*
 		$this->form_validation->set_rules('title', 'title', 'required');
 		$this->form_validation->set_rules('content', 'content', 'required');
-		*/
-        #if($this->form_validation->run() == TRUE){
-        if($this->input->post('title')!=null){
+		
+        if($this->form_validation->run() == TRUE){
+        #if($this->input->post('title')!=null){
             // true case
 			$title=$this->input->post('title');
 			$content=$this->input->post('content');
@@ -792,143 +809,7 @@ class Super_holiday extends Admin_Controller{
         $this->session->set_flashdata('success', '公告删除成功！');
         redirect('super_holiday/notification', 'refresh');
     }
-
-    public function excel_mydeptplan($dept){
-        $this->load->library('PHPExcel');
-        $this->load->library('PHPExcel/IOFactory');
-        $objPHPExcel = new PHPExcel();
-        $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
- 
-        $objPHPExcel->setActiveSheetIndex(0);
-        $result=array();
-        $result = $this->model_plan->exportmydeptPlanData($dept);
-        // Field names in the first row
-        $fields = $result->list_fields();
-        $col = 0;
-        foreach ($fields as $field){
-            $v="";
-            switch($field){
-                case 'name':$v="姓名\t";break;
-                case 'department':$v="部门\t";break;
-                case 'Thisyear':$v="今年休假数\t";break;
-                case 'Lastyear':$v="去年休假数\t";break;
-                case 'Bonus':$v="荣誉休假数\t";break;
-                case 'Totalday':$v="可休假总数\t";break;                
-                case 'firstquater':$v="第一季度\t";break;
-                case 'secondquater':$v="第二季度\t";break;
-                case 'thirdquater':$v="第三季度\t";break;
-                case 'fourthquater':$v="第四季度\t";break;
-                default:break;
-            }
-            if($v!=""){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
-                $col++;
-            }
-        }
- 
-        // Fetching the table data
-        $row = 2;
-        foreach($result->result() as $data){
-            $col = 0;
-            foreach ($fields as $field){
-                if($field != 'user_id' and $field != 'submit_tag'){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
-                    $col++;
-                }
-            }
-            $row++;
-        }
-        $objPHPExcel->setActiveSheetIndex(0);
- 
-        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
- 
-        $filename = date('YmdHis').".xlsx";
-        
-        // Sending headers to force the user to download the file
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="'.$filename);
-        header("Content-Disposition:filename=".$filename);
-        header('Cache-Control: max-age=0');
- 
-        $objWriter->save('php://output');
-    }
     
-    public function export_mydeptplan(){
-        $user_id=$this->session->userdata('user_id');
-        $my_data = $this->model_plan->getPlanById($user_id);
-        $this->excel_mydeptplan($_POST['current_dept']);
-    }
-    public function excel_mydeptholiday($dept){
-        $this->load->library('PHPExcel');
-        $this->load->library('PHPExcel/IOFactory');
-        $objPHPExcel = new PHPExcel();
-        $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
-        $objPHPExcel->setActiveSheetIndex(0);
-        $result = $this->model_holiday->exportmydeptHolidayData($dept);
-        // Field names in the first row
-        $fields = $result->list_fields();
-        $col = 0;
-        foreach ($fields as $field){
-            $v="";
-            switch($field){
-                case 'name':$v="姓名\t";break;
-                case 'department':$v="部门\t";break;
-                case 'initdate':$v="开始工作时间\t";break;
-                case 'indate':$v="入职时间\t";break;
-                case 'Companyage':$v="社会工龄\t";break;
-                case 'Totalage':$v="公司工龄\t";break;
-                case 'Totalday':$v="可休假总数\t";break;
-                case 'Lastyear':$v="去年休假数\t";break;
-                case 'Thisyear':$v="今年休假数\t";break;
-                case 'Bonus':$v="荣誉休假数\t";break;
-                case 'Used':$v="已休假数\t";break;
-                case 'Rest':$v="未休假数\t";break;
-                case 'Jan':$v="一月\t";break;
-                case 'Feb':$v="二月\t";break;
-                case 'Mar':$v="三月\t";break;
-                case 'Apr':$v="四月\t";break;
-                case 'May':$v="五月\t";break;
-                case 'Jun':$v="六月\t";break;
-                case 'Jul':$v="七月\t";break;
-                case 'Aug':$v="八月\t";break;
-                case 'Sep':$v="九月\t";break;
-                case 'Oct':$v="十月\t";break;
-                case 'Nov':$v="十一月\t";break;
-                case 'Dece':$v="十二月\t";break;    	
-                default:break;
-            }
-            if($v != ""){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $v);
-                $col++;
-            }
-        }
-        // Fetching the table data
-        $row = 2;
-        foreach($result->result() as $data){
-            $col = 0;
-            foreach ($fields as $field){
-                if($field != 'user_id'){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field);
-                    $col++;
-                }
-            }
-            $row++;
-        }
-        $objPHPExcel->setActiveSheetIndex(0);
-        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        $filename = date('YmdHis').".xlsx";
-        // Sending headers to force the user to download the file
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="'.$filename);
-        header("Content-Disposition:filename=".$filename);
-        header('Cache-Control: max-age=0');
-        $objWriter->save('php://output');
-    }
-    public function export_mydeptholiday(){
-        $user_id=$this->session->userdata('user_id');
-        $my_data = $this->model_plan->getPlanById($user_id);
-        $this->excel_mydeptholiday($_POST['current_dept']);
-    }
     public function progress(){
         $this->data['progress']=$this->model_feedback->getFeedbackStatus();
         $this->render_super_template('super/holiday_progress', $this->data);

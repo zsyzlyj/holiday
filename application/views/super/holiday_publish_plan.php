@@ -109,7 +109,7 @@
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-success">发布</button>
+                <button type="submit" onclick="t(this)" class="btn btn-success">发布</button>
                 <a href="<?php echo base_url('super_holiday/notification') ?>" class="btn btn-warning">返回</a>
               </div>
             </form>

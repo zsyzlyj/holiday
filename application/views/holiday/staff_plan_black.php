@@ -65,7 +65,7 @@
                 <thead>
                 <tr style="text-align:center;border-color:black;">
                   <th style="text-align:center;border-color:black;">姓名</th>
-                  <th style="text-align:center;border-color:black;">上年可休数</th>
+                  <th style="text-align:center;border-color:black;">上年剩余可休天数</th>
                   <th style="text-align:center;border-color:black;">今年可休数</th>
                   <th style="text-align:center;border-color:black;">荣誉假期数</th>
                   <th style="text-align:center;border-color:black;">可休假总数</th>

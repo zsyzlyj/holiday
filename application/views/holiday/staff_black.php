@@ -64,11 +64,11 @@
                   <th style="text-align: center;border-color:black;">社会工龄</th>
                   <th style="text-align: center;border-color:black;">公司工龄</th>
                   <th style="text-align: center;border-color:black;">休假总数</th>
-                  <th style="text-align: center;border-color:black;">上年可休数</th>
+                  <th style="text-align: center;border-color:black;">上年剩余可休天数</th>
                   <th style="text-align: center;border-color:black;">今年可休数</th>
                   <th style="text-align: center;border-color:black;">荣誉假期</th>
                   <th style="text-align: center;border-color:black;">已休假数</th>
-                  <th style="text-align: center;border-color:black;">剩下休假数</th>
+                  <th style="text-align: center;border-color:black;">剩余可休假总天数</th>
                   <!--<th style="text-align: center;border-color:black;">操作</th>-->
                 </tr>
                 </thead>

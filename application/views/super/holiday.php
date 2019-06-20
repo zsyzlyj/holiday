@@ -65,7 +65,7 @@
                   <th>十二月</th>
                   
                   <th>已休假数</th>
-                  <th>剩下休假数</th>
+                  <th>剩余可休假总天数</th>
                 </tr>
                 </thead>
                 <tbody>

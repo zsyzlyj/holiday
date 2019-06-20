@@ -71,7 +71,10 @@
                           </div>
                           <!-- model-header-apply -->
                           <div class="modal-body">
-                            <iframe width="600" height="800" src="<?php echo base_url($url[$i]);?>"></iframe>
+                            <!--<iframe width="600" height="800" src="<?php echo base_url($url[$i]);?>"></iframe>-->
+                            <object width="600" height="800" data="<?php echo base_url($url[$i]);?>" type="application/pdf">
+                                <embed width="600" height="800" src="<?php echo base_url($url[$i]);?>" type="application/pdf" />
+                            </object>
                           </div>
                           <!-- model-footer-apply -->
                         </div>

@@ -82,8 +82,8 @@ class Users extends Admin_Controller{
 		}
 	}
 	public function profile(){
-		#$this->data['user_info']=$this->model_wage_tag->getTagById($this->data['user_id']);
-        $this->data['user_info']=$this->model_hr_content->getById($this->data['user_id']);
+		$this->data['user_info']=$this->model_wage_tag->getTagById($this->data['user_id']);
+        #$this->data['user_info']=$this->model_hr_content->getById($this->data['user_id']);
         $this->render_template('users/profile', $this->data);
     }
     public function mydeptprofiles(){

@@ -71,11 +71,11 @@
                   <th style="text-align: center;">加入本企业时间</th> 
                   <th style="text-align: center;">公司工龄</th>
                   <th style="text-align: center;">休假总数</th>
-                  <th style="text-align: center;">上年可休数</th>
+                  <th style="text-align: center;">上年剩余可休天数</th>
                   <th style="text-align: center;">今年可休数</th>
                   <th style="text-align: center;">荣誉假期</th>
                   <th style="text-align: center;">已休假数</th>
-                  <th style="text-align: center;">剩下休假数</th>
+                  <th style="text-align: center;">剩余可休假总天数</th>
                   <!--<th style="text-align: center;">操作</th>-->
                 </tr>
                 </thead>

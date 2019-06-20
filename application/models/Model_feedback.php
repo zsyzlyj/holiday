@@ -11,15 +11,17 @@ class Model_feedback extends CI_Model{
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
-	public function getFeedbackByDept($dept = null){
-		if($dept){	
-			$sql = "SELECT * FROM feedback WHERE locate(?,department)";
+	public function getFeedbackByDept($dept){
+		if($dept){
+			$sql = "SELECT * FROM feedback WHERE department=?";
 			$query = $this->db->query($sql, array($dept));
 			return $query->row_array();
 		}
-		$sql = "SELECT * FROM feedback";
-		$query = $this->db->query($sql);
-		return $query->result_array();
+		else{
+			$sql = "SELECT * FROM feedback";
+			$query = $this->db->query($sql);
+			return $query->result_array();
+		}
 	}
 	public function getFeedbackStatus(){		
 		$sql = "SELECT department,feedback_status,submit_status,confirm_status FROM feedback";

@@ -55,7 +55,7 @@
             <br />
             </form>
             <?php if($holiday_data): ?>  
-            <form style="margin:0px;display:inline;" action='<?php echo base_url('super_holiday/export_mydeptholiday') ?>' method='post'>
+            <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptholiday') ?>' method='post'>
               <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
               <button class="btn btn-warning">导出</button>
             </form>
@@ -75,7 +75,7 @@
                   <th>公司工龄</th>
                   <th>可休假总数</th>
                   <th>荣誉假期</th>
-                  <th>上年可休数</th>
+                  <th>上年剩余可休天数</th>
                   <th>今年可休数</th>
                   <th>一月</th>
                   <th>二月</th>
@@ -91,7 +91,7 @@
                   <th>十二月</th>
                   
                   <th>已休假数</th>
-                  <th>剩下休假数</th>
+                  <th>剩余可休假总天数</th>
                 </tr>
                 </thead>
                 <tbody>

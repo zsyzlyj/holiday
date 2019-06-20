@@ -47,7 +47,7 @@
           <?php endif; ?>
           
           <?php if($service_mode=='合同制'):?>
-          <li id="applyWageProof"><a href="<?php echo base_url('wage/apply_wage_proof') ?>"><i class="fa fa-list"></i><span> 收入证明申请</span></a></li>
+          <!--<li id="applyWageProof"><a href="<?php echo base_url('wage/apply_wage_proof') ?>"><i class="fa fa-list"></i><span> 收入证明申请</span></a></li>-->
           <?php endif;?>
           <!---->
         <?php endif ?>

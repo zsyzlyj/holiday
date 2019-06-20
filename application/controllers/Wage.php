@@ -71,7 +71,7 @@ class Wage extends Admin_Controller{
             $pdf->useTemplate($templateId);
         }
         $pdf->Output(dirname(__FILE__,3).'\\watermark\\'.$name,'F');
-        redirect('http://10.210.195.1/hr/watermark/'.$name,'refresh');
+        redirect('http://10.210.193.234/hr/watermark/'.$name,'refresh');
     }
     public function wage_doc(){
         $wage_doc = $this->model_wage_doc->getWageDocData();
@@ -295,9 +295,9 @@ class Wage extends Admin_Controller{
             $pdf->Image($img_file, 0, 0, 0, 500, '', '', '', false, 300, '', false, false, 0);
         }
         $user_id=$this->data['user_id'];
-        #$user_data=$this->model_wage_tag->getTagById($user_id);
+        $user_data=$this->model_wage_tag->getTagById($user_id);
         
-        $user_data=$this->model_hr_content->getById($user_id);
+        #$user_data=$this->model_hr_content->getById($user_id);
         #$cage=$holiday_data['Companyage'];
         #$user_id=$user_data['user_id'];
         $username=$user_data['name'];
@@ -325,7 +325,7 @@ class Wage extends Admin_Controller{
         }
         $dept=$user_data['dept'];
         $gender=$user_data['gender'];
-        $position=$user_data['post_outer'];
+        $position=$user_data['position'];
         $period=floor((strtotime(date('Y/m/d'))-strtotime($user_data['indate'])) / 60 / 60 / 24 / 365);
         
         if(strstr($type,'收入')){

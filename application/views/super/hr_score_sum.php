@@ -36,7 +36,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table id="hrTable" class="table table-bordered table-striped table-hover" style="table-layout:fixed;border-color:silver;">
+            <table id="hrTable" class="table table-bordered table-striped table-hover" style="white-space: nowrap;;border-color:silver;">
               <thead>
                 <tr style="border-color:silver;">
                   <th style="border-color:silver;">序号</th>

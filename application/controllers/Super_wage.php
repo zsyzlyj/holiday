@@ -6,7 +6,6 @@ class Super_wage extends Admin_Controller {
 	public function __construct(){
         parent::__construct();
         $this->data['page_title'] = 'Super';
-        $this->load->model('model_plan');
         $this->load->model('model_notice');
         $this->load->model('model_dept');
         $this->load->model('model_users');
@@ -589,10 +588,10 @@ class Super_wage extends Admin_Controller {
 
         #$user_id=$this->data['user_id'];
         $user_id=$_POST['user_id'];
-        #$user_data=$this->model_wage_tag->getTagById($user_id);
+        $user_data=$this->model_wage_tag->getTagById($user_id);
         #$cage=$holiday_data['Companyage'];
         #$user_id=$user_data['user_id'];
-        $user_data=$this->model_hr_content->getById($user_id);
+        #$user_data=$this->model_hr_content->getById($user_id);
         
         $username=$user_data['name'];
         $date_set=array();
@@ -800,11 +799,33 @@ class Super_wage extends Admin_Controller {
         $all_dept=array();
         $dept_set=array();
         $attr=array();
+        $name="";
+        $user_id="";
+        $gender="";
+        $dept="";
+        $office="";
+        $position="";
+        $company="";
+        $marry="";
+        $child="";
+        $highest_degree="";
+        $highest_qualification="";
+        $ft_highest_degree="";
+        $ft_highest_qualification="";
+        $service_mode="";
+        $indate="";
+        $proof_tag="";
+        $wage_level="";
+        $wage_adjust_stamp="";
+        $level_adjust_stamp="";
+        $accumulation="";
+
         for($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
             for($colIndex = 0; $colIndex <= $columnCnt; $colIndex++){
                 $cellId = $cellName[$colIndex].$rowIndex;  
                 $cell = $sheet->getCell($cellId)->getValue();
-                $cell = $sheet->getCell($cellId)->getCalculatedValue();
+                
+                #$cell = $sheet->getCell($cellId)->getCalculatedValue();
                 if($cell instanceof PHPExcel_RichText){ //富文本转换字符串
                     $cell = $cell->__toString();
                 }
@@ -812,7 +833,7 @@ class Super_wage extends Admin_Controller {
                 if($rowIndex==1){
                     array_push($attr,$b);
                 }
-                elseif($rowIndex>1){
+                elseif($rowIndex>1 and $b!=''){
                     switch($attr[$colIndex]){
                         case '员工姓名':$name=$b;break;
                         case '身份证号':$user_id=$b;break;
@@ -845,8 +866,9 @@ class Super_wage extends Admin_Controller {
                         $qian1=$b;
                     }
                 }
+                else break;
             }
-            if($rowIndex>1){
+            if($rowIndex>1 and $colIndex>0){
                 //新建用户标识
                 $row_data=array(
                     'name' => $name,

@@ -28,7 +28,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              <table id="wageTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed;border-color:silver;" width="100%">
+              <table id="wageTable" class="table table-bordered table-striped" style="overflow:scroll;white-space: nowrap;;border-color:silver;" width="100%">
                 <thead>
                 <tr style="border-color:silver;">
                   <th style="border-color:silver;" class="col-md-1">发布时间</th>

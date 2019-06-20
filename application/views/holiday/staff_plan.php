@@ -59,14 +59,24 @@
                 <thead>
                 <tr style="text-align:center;">
                   <th style="text-align:center;">姓名</th>
-                  <th style="text-align:center;">上年可休数</th>
+                  <th style="text-align:center;">上年剩余可休天数</th>
                   <th style="text-align:center;">今年可休数</th>
                   <th style="text-align:center;">荣誉假期数</th>
                   <th style="text-align:center;">可休假总数</th>
+                  <!--
                   <th style="text-align:center;">第一季度</th>
                   <th style="text-align:center;">第二季度</th>
                   <th style="text-align:center;">第三季度</th>
                   <th style="text-align:center;">第四季度</th>
+                  -->
+                  
+                  <th style="text-align:center;width:60px">六月</th>
+                  <th style="text-align:center;width:60px">七月</th>
+                  <th style="text-align:center;width:60px">八月</th>
+                  <th style="text-align:center;width:60px">九月</th>
+                  <th style="text-align:center;width:60px">十月</th>
+                  <th style="text-align:center;width:60px">十一月</th>
+                  <th style="text-align:center;width:60px">十二月</th>
                   <th style="text-align:center;">操作</th>
                 </tr>
                 </thead>
@@ -80,21 +90,34 @@
                         <td style="text-align:center;"><font size="4"><?php echo $v['Bonus']; ?></font></td>
                         <td style="text-align:center;"><font size="4"><?php echo $v['Totalday']; ?></font></td>
                         <?php if($v['submit_tag']==1):?>
+                        <td style="text-align: center;"><font size="4"><?php echo $v['Jun']; ?></font></td>
+                        <td style="text-align: center;"><font size="4"><?php echo $v['Jul']; ?></font></td>
+                        <td style="text-align: center;"><font size="4"><?php echo $v['Aug']; ?></font></td>
+                        <td style="text-align: center;"><font size="4"><?php echo $v['Sep']; ?></font></td>
+                        <td style="text-align: center;"><font size="4"><?php echo $v['Oct']; ?></font></td>
+                        <td style="text-align: center;"><font size="4"><?php echo $v['Nov']; ?></font></td>
+                        <td style="text-align: center;"><font size="4"><?php echo $v['Dece']; ?></font></td>
+                        <!--
                         <td style="text-align:center;"><?php echo $v['firstquater']; ?></td>
                         <td style="text-align:center;"><?php echo $v['secondquater']; ?></td>
                         <td style="text-align:center;"><?php echo $v['thirdquater']; ?></td>
                         <td style="text-align:center;"><?php echo $v['fourthquater']; ?></td>
+                        -->
                         <td style="text-align:center;">
-                              <button class="btn btn-success disabled" type="submit"><i class="fa fa-check-circle"></i></button>
-                          </td>
+                            <button class="btn btn-success disabled" type="submit"><i class="fa fa-check-circle"></i></button>
+                        </td>
                         <?php endif; ?>
                         <?php if($v['submit_tag']==0):?>
                         <form role="form" action="<?php echo base_url('holiday/update_plan')?>" method="post" id="updateForm">
                           <input type="hidden" id="total" name="total" value="<?php echo $v['Totalday']; ?>"/>
-                          <td style="text-align:center;"><input type="text" style="width:100px;" id='firstquater' name='firstquater' value="<?php echo $v['firstquater']; ?>"></td>
-                          <td style="text-align:center;"><input type="text" style="width:100px;" id='secondquater' name='secondquater' value="<?php echo $v['secondquater']; ?>"></td>
-                          <td style="text-align:center;"><input type="text" style="width:100px;" id='thirdquater' name='thirdquater' value="<?php echo $v['thirdquater']; ?>"></td>
-                          <td style="text-align:center;"><input type="text" style="width:100px;" id='fourthquater' name='fourthquater' value="<?php echo $v['fourthquater']; ?>"></td>
+                          <td style="text-align: center;"><input type="text" style="width:50px;" id='jun' name='jun' value="<?php echo $v['Jun']; ?>"></td>
+                          <td style="text-align: center;"><input type="text" style="width:50px;" id='jul' name='jul' value="<?php echo $v['Jul']; ?>"></td>
+                          <td style="text-align: center;"><input type="text" style="width:50px;" id='aug' name='aug' value="<?php echo $v['Aug']; ?>"></td>
+                          <td style="text-align: center;"><input type="text" style="width:50px;" id='sep' name='sep' value="<?php echo $v['Sep']; ?>"></td>
+                          <td style="text-align: center;"><input type="text" style="width:50px;" id='oct' name='oct' value="<?php echo $v['Oct']; ?>"></td>
+                          <td style="text-align: center;"><input type="text" style="width:50px;" id='nov' name='nov' value="<?php echo $v['Nov']; ?>"></td>
+                          <td style="text-align: center;"><input type="text" style="width:50px;" id='dec' name='dec' value="<?php echo $v['Dece']; ?>"></td>
+                          
                           <td style="text-align:center;">
                             <a href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-check-circle"></i></a>
                             <div class="modal-month fade" tabindex="-1" data-backdrop="false" role="dialog" id="myModal">

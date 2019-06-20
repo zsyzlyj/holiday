@@ -13,7 +13,6 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-md-12 col-xs-12">
-
           <?php if($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -50,7 +49,7 @@
             <br />
             </form>
             <?php if($holiday_data): ?>  
-            <form style="margin:0px;display:inline;" action='<?php echo base_url('super_holiday/export_mydeptholiday') ?>' method='post'>
+            <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptholiday') ?>' method='post'>
               <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
               <button class="btn btn-warning">导出</button>
             </form>
@@ -60,7 +59,6 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div style="overflow:scroll;">
-              
               <table id="holidayTable" class="table table-bordered table-striped mytdstyle" style="overflow:scroll;white-space: nowrap;">
                 <thead>
                 <tr>
@@ -70,7 +68,7 @@
                   <th>公司工龄</th>
                   <th>可休假总数</th>
                   <th>荣誉假期</th>
-                  <th>上年可休数</th>
+                  <th>上年剩余可休天数</th>
                   <th>今年可休数</th>
                   <th>一月</th>
                   <th>二月</th>
@@ -86,7 +84,7 @@
                   <th>十二月</th>
                   
                   <th>已休假数</th>
-                  <th>剩下休假数</th>
+                  <th>剩余可休假总天数</th>
                 </tr>
                 </thead>
                 <tbody>

@@ -61,7 +61,7 @@
             </div>
             <?php else:?>
             <?php if($plan_data): ?>   
-            <form style="margin:0px;display:inline;" action='<?php echo base_url('super_holiday/export_mydeptholiday') ?>' method='post'>
+            <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptplan') ?>' method='post'>
               <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
               <button class="btn btn-warning">导出</button>
             </form>
@@ -72,18 +72,28 @@
             <div class="box-body">
               <div style="overflow:scroll;">
               
-              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed" width="100%">
+              <table id="holidayTable" class="table table-bordered table-striped" style="overflow:scroll;white-space: nowrap;" width="100%">
                 <thead>
                 <tr>
                   <th>姓名</th>
                   <th>可休假总数</th>
-                  <th>上年可休数</th>
+                  <th>上年剩余可休天数</th>
                   <th>今年可休数</th>
                   <th>荣誉假期数</th>
+                  
+                  <th style="text-align:center;width:60px">六月</th>
+                  <th style="text-align:center;width:60px">七月</th>
+                  <th style="text-align:center;width:60px">八月</th>
+                  <th style="text-align:center;width:60px">九月</th>
+                  <th style="text-align:center;width:60px">十月</th>
+                  <th style="text-align:center;width:60px">十一月</th>
+                  <th style="text-align:center;width:60px">十二月</th>
+                  <!--
                   <th>第一季度</th>
                   <th>第二季度</th>
                   <th>第三季度</th>
                   <th>第四季度</th>
+                  -->
                 </tr>
                 </thead>
                 <tbody>
@@ -95,10 +105,20 @@
                         <td><?php echo $v['Lastyear']; ?></td>
                         <td><?php echo $v['Thisyear']; ?></td>
                         <td><?php echo $v['Bonus']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Jun']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Jul']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Aug']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Sep']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Oct']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Nov']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Dece']; ?></td>
+                        <!--
                         <td><?php echo $v['firstquater']; ?></td>
                         <td><?php echo $v['secondquater']; ?></td>
                         <td><?php echo $v['thirdquater']; ?></td>
                         <td><?php echo $v['fourthquater']; ?></td>
+                        -->
+                        
                       </tr>
                     <?php endforeach ?>
                     </tbody>

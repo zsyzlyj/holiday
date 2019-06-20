@@ -33,7 +33,7 @@
                   <?php if($current_dept==""):?>
                     <option value="">选择部门</option>
                   <?php else:?>
-                    <option value="<?php $current_dept;?>"><?php echo $current_dept;?></option>
+                    <option value="<?php echo $current_dept;?>"><?php echo $current_dept;?></option>
                   <?php endif; ?>
                   <?php foreach($dept_options as $k => $v):?>
                   <?php if($current_dept!=$v):?>
@@ -79,7 +79,7 @@
                 <?php endif; ?>
 
                 
-                <form style="margin:0px;display:inline;" action='<?php echo base_url('super_holiday/export_mydeptplan') ?>' method='post'>
+                <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptplan') ?>' method='post'>
                   <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
                   <?php if(strstr($feedback['confirm_status'],'不同意')):?>
                   <button disabled class="btn btn-warning">导出</button>
@@ -110,7 +110,7 @@
                 <button disabled class="btn btn-success">提交</button>
                 <?php endif; ?>
 
-                <form style="margin:0px;display:inline;" action='<?php echo base_url('super_holiday/export_mydeptplan') ?>' method='post'>
+                <form style="margin:0px;display:inline;" action='<?php echo base_url('holiday/export_mydeptplan') ?>' method='post'>
                   <input type='hidden' name='current_dept' value="<?php echo $current_dept;?>"/>
                   <?php if(strstr($feedback['confirm_status'],'同意')):?>
                   <button class="btn btn-warning">导出</button>
@@ -127,7 +127,7 @@
             <div class="box-body">
               <div style="overflow:scroll;">
               <?php if($current_dept=='营业中心'):?>
-              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed">
+              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;white-space: nowrap;">
                 <thead>
                 <tr>
                   <th>部门</th>
@@ -156,18 +156,27 @@
               </table>
               <?php else: ?>
               <?php if($plan_data):?>
-              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;table-layout:fixed">
+              <table id="planTable" class="table table-bordered table-striped" style="overflow:scroll;white-space: nowrap;">
                 <thead>
                 <tr>
                   <th>姓名</th>
                   <th>可休假总数</th>
-                  <th>上年可休数</th>
+                  <th>上年剩余可休天数</th>
                   <th>今年可休数</th>
                   <th>荣誉假期数</th>
+                  <!--
                   <th>第一季度</th>
                   <th>第二季度</th>
                   <th>第三季度</th>
                   <th>第四季度</th>
+                  -->
+                  <th style="text-align:center;width:60px">六月</th>
+                  <th style="text-align:center;width:60px">七月</th>
+                  <th style="text-align:center;width:60px">八月</th>
+                  <th style="text-align:center;width:60px">九月</th>
+                  <th style="text-align:center;width:60px">十月</th>
+                  <th style="text-align:center;width:60px">十一月</th>
+                  <th style="text-align:center;width:60px">十二月</th>
                   <th>状态</th>
                   <th>操作</th>
                 </tr>
@@ -182,10 +191,19 @@
                         <td><?php echo $v['Lastyear']; ?></td>
                         <td><?php echo $v['Thisyear']; ?></td>
                         <td><?php echo $v['Bonus']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Jun']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Jul']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Aug']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Sep']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Oct']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Nov']; ?></td>
+                        <td style="text-align: center;"><?php echo $v['Dece']; ?></td>
+                        <!--
                         <td><?php echo $v['firstquater']; ?></td>
                         <td><?php echo $v['secondquater']; ?></td>
                         <td><?php echo $v['thirdquater']; ?></td>
                         <td><?php echo $v['fourthquater']; ?></td>
+                        -->
                         
                         <?php if(strstr($v['submit_tag'],'已')):?>
                           <td><font color='green'><?php echo $v['submit_tag']; ?></font></td>
@@ -197,6 +215,7 @@
                         <input type="hidden" id='user_id' name='user_id' value="<?php echo $v['user_id'];?>"/>
                         <input type="hidden" id='submit_auth' name='submit_auth' value="1"/>
                         <input type="hidden" id='submit_revolt' name='submit_revolt' value="0"/>
+                        <input type="hidden" id='cs_dept' name='cs_dept' value="<?php echo $current_dept;?>"/>
                         <?php if(strstr($submit_status,'已') or strstr($v['submit_tag'],'未')):?>
                         <button  disabled class='btn btn-info'>允许重新填写</button>
                         <?php else:?>
